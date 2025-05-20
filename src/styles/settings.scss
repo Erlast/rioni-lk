@@ -1,0 +1,7 @@
+@use 'vuetify/settings' with (
+  $container-max-widths: (
+    'lg': 1280px,
+    'xl': 1280px,
+    'xxl': 1280px
+  )
+);
