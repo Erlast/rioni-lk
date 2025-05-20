@@ -7,7 +7,6 @@
         <div class="account-data-picture-b-acc">
           <div class="account-data-picture-b-acc__name">Номер счета</div>
           <div class="account-data-picture-b-acc__number">D123024</div>
-          <div class="account-data-picture-b-acc__number">D123024</div>
         </div>
       </div>
       <div class="account-data-total"></div>
