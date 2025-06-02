@@ -16,6 +16,6 @@
       <CalendarInvestor></CalendarInvestor>
       <NewsMain></NewsMain>
     </v-col>
-    <v-col><MarketToday></MarketToday></v-col>
+    <v-col cols="2"><MarketToday></MarketToday></v-col>
   </v-row>
 </template>

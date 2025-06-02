@@ -1,8 +1,8 @@
 <template>
   <div class="gr-block-a">
-    <div class="gr-block-a-name">
+    <div class="a-name">
       Новости
-      <div class="gr-block-a-arrow g-arrow-a"></div>
+      <div class="a-arrow g-arrow-a"></div>
     </div>
     <div class="news-block gr-block-a-content bg-color-1">
       <div class="news-block__img"><img src="/tmp/image-news.png" alt="" /></div>

@@ -12,14 +12,27 @@ a {
 
 /* blocks */
 
-.gr-block-a-name {
+/** block a **/
+
+.a-block {
+  display: flex;
+  justify-content: center;
+}
+
+.a-icon {
+  margin-right: 8px;
+  width: 17px;
+  height: 17px;
+}
+
+.a-name {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: 100%;
+  font-size: 14px;
 }
 
-.gr-block-a-arrow {
+.a-arrow {
   margin-left: 7px;
   width: 12px;
   height: 9px;
@@ -29,7 +42,23 @@ a {
   margin-top: 12px;
 }
 
+/** block b **/
+
+.b-block {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.b-block__name {
+  margin-bottom: 12px;
+  color: #2a2a2a;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
 /* interface */
+
 .i-notification {
   width: 150px;
   padding: 12px 12px 16px 12px;
@@ -68,4 +97,26 @@ a {
   background-size: contain;
   background-repeat: no-repeat;
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAICAYAAAAiJnXPAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABsSURBVHgBldC7DcAgDARQ23ggj5CMkIaGJptkGoREwyrsg4CYjg648qQnfwAWCSG83nuZO1ohY0wmojRDhI3EGKXWmlprj3Muo47/diAiiqKr934zHEQhMPPZenrfY63NeApGt/xeKUVmMPIDiQYxqet0Q48AAAAASUVORK5CYII=);
+}
+
+.icon-port {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAD5SURBVHgBrZI9TsNQEIRnnx8RgghqDsAFaGiCKOAOtDR2h8QJQOQUEIQ4SLokl8gVktaKoijeyT5FjvLznCL2VPbup90de4AGJLHi1f3rrbbOurtVGlu85cP/6T7vY0O05ceHC8Krf0FksYCUi8cs2xoBR/dtmz9UZFJWHeTO2EwhKYRJyc4Gfz/SfkiJOiLUoa4Erv4QBKt2TmU39EizSx4/xtTuZJ+xZj7qfZXPFYzkTzfd8GGLdQYOI5MPfzd2jdPYqUEhJ64ic7jspM/iuYQmZkulwkg8bBtE0EcRQD2GoaG/08gQsl5iTf6cej2XpIcTxQXf0YRWLTpLZ0xxHp8AAAAASUVORK5CYII=);
+}
+
+/** std components **/
+
+.btn-std {
+  height: auto !important;
+  padding: 5px 33px !important;
+  background-color: #fff;
+  border-radius: 12px;
+  border: 1px solid #cad9f6;
+  font-size: 14px !important;
+  font-style: normal;
+  font-weight: 500;
+  color: #2e4376;
+  text-transform: none !important;
+  line-height: 5px;
 }

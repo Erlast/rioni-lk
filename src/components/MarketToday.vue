@@ -1,8 +1,8 @@
 <template>
   <div class="gr-block-a">
-    <div class="gr-block-a-name">
+    <div class="a-name">
       Рынок сегодня
-      <div class="gr-block-a-arrow g-arrow-a"></div>
+      <div class="a-arrow g-arrow-a"></div>
     </div>
     <div class="market-block gr-block-a-content bg-color-1">
       <div class="market-block__img"><img src="/tmp/image-cat.png" width="170px" /></div>

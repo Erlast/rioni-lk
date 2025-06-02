@@ -6,7 +6,9 @@ import App from './App.vue'
 import { createVuetify } from 'vuetify'
 
 import './styles/global.scss'
+import './styles/variables.scss'
 import './assets/fonts/webfonts/fonts.scss'
+import '@mdi/font/css/materialdesignicons.css'
 
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
