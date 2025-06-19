@@ -3,11 +3,13 @@ import type { IconSet, IconProps } from 'vuetify'
 import checkOn from './checkOn.vue'
 import checkOff from './checkOff.vue'
 import arrowRightWhite from './arrowRightWhite.vue'
+import arrowRightWhiteB from './arrowRightWhiteB.vue'
 
 const customSvgNameToComponent: any = {
   checkOn,
   checkOff,
-  arrowRightWhite
+  arrowRightWhite,
+  arrowRightWhiteB
 }
 
 const rioniIcons: IconSet = {

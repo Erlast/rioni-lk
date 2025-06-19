@@ -85,7 +85,7 @@
 
   .banner-2 {
     display: flex;
-    width: 145px;
+    width: 142px;
     height: 240px;
     padding: 20px 12px;
     flex-direction: column;

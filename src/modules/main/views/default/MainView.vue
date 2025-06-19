@@ -10,12 +10,12 @@
 <template>
   <v-row>
     <v-col cols="2"><News></News></v-col>
-    <v-col cols="7">
+    <v-col cols="8">
       <Account></Account>
       <Recommendation></Recommendation>
       <CalendarInvestor></CalendarInvestor>
       <NewsMain></NewsMain>
     </v-col>
-    <v-col cols="2"><MarketToday></MarketToday></v-col>
+    <v-col cols="1"><MarketToday></MarketToday></v-col>
   </v-row>
 </template>
