@@ -7,6 +7,8 @@
         <RouterLink to="notification" class="header-menu__element">Уведомления</RouterLink>
         <RouterLink to="profile" class="header-menu__element">Профиль</RouterLink>
         <RouterLink to="analitics" class="header-menu__element">Аналитика</RouterLink>
+        <RouterLink to="reports" class="header-menu__element">Отчеты</RouterLink>
+        <RouterLink to="market" class="header-menu__element">Рынок</RouterLink>
       </nav>
     </div>
     <div class="header-user-panel">

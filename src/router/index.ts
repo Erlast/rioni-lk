@@ -1,11 +1,11 @@
 import { createMemoryHistory, createRouter } from 'vue-router'
-import DefaultView from '@/modules/main/views/default/MainView.vue'
 
-import DefaultLayout from '@/modules/main/layouts/DefaultLayout.vue'
 import MainDefaultView from '@/modules/main/views/default/MainView.vue'
 import NotificationDefaultView from '@/modules/notification/views/default/View.vue'
 import ProfileDefaultView from '@/modules/profile/views/default/View.vue'
-import AnaliticsDefaultView from '@/modules/analitics/views/DefaultView.vue'
+import AnaliticsDefaultView from '@/modules/analitics/views/default/View.vue'
+import ReportsDefaultView from '@/modules/reports/views/default/View.vue'
+import MarketDefaultView from '@/modules/market/views/default/View.vue'
 
 const routes = [
   {
@@ -26,6 +26,14 @@ const routes = [
       {
         path: 'analitics',
         component: AnaliticsDefaultView
+      },
+      {
+        path: 'reports',
+        component: ReportsDefaultView
+      },
+      {
+        path: 'market',
+        component: MarketDefaultView
       }
     ]
   }
