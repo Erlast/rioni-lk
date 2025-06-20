@@ -77,6 +77,7 @@
     position: relative;
     display: flex;
     padding: 30px;
+    margin: auto;
     width: 752px;
     height: 132px;
     border-radius: 30px;
