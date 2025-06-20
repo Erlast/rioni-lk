@@ -183,6 +183,7 @@
   .calendar-head {
     display: flex;
     margin-bottom: 6px;
+    align-items: center;
   }
   .calendar-top-how {
     display: flex;
