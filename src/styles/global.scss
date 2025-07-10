@@ -1,3 +1,11 @@
+@import 'variables.scss';
+:root {
+  --v-scrollbar-offset: 16px;
+  --v-onboarding-step-z: 2410;
+  --v-onboarding-overlay-z: 2400;
+}
+
+// Основные настройки приложения
 #app {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
@@ -5,15 +13,25 @@
 a {
   text-decoration: none;
 }
-/* color */
+
+// Цветовые классы
 .bg-color-1 {
   background-color: #e7f8f0;
 }
 
-/* blocks */
+.bg-color-A1 {
+  background-color: $colorA1;
+}
 
-/** block a **/
+.bg-color-A2 {
+  background-color: $colorA2;
+}
 
+.bg-color-A3 {
+  background-color: $colorA3;
+}
+// Блоки интерфейса
+/** Block A **/
 .a-block {
   display: flex;
   justify-content: center;
@@ -42,12 +60,10 @@ a {
   margin-top: 12px;
 }
 
-/* section */
+/** Block B **/
 .b-section {
   margin-bottom: 28px;
 }
-
-/** block b **/
 
 .b-block {
   display: flex;
@@ -62,8 +78,8 @@ a {
   font-weight: 500;
   line-height: normal;
 }
-/* interface */
 
+// Компоненты уведомлений
 .i-notification {
   width: 150px;
   padding: 12px 12px 16px 12px;
@@ -81,7 +97,6 @@ a {
 
 .i-notification-message {
   color: #4c5d56;
-
   text-align: center;
   font-size: 9px;
   font-style: normal;
@@ -89,9 +104,8 @@ a {
   line-height: normal;
 }
 
-/* images */
-/** arrows **/
-
+// Стрелки и иконки
+/** Стрелки **/
 .g-arrow-a {
   background-size: contain;
   background-repeat: no-repeat;
@@ -101,7 +115,7 @@ a {
 .g-arrow-b {
   background-size: contain;
   background-repeat: no-repeat;
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAICAYAAAAiJnXPAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABsSURBVHgBldC7DcAgDARQ23ggj5CMkIaGJptkGoREwyrsg4CYjg648qQnfwAWCSG83nuZO1ohY0wmojRDhI3EGKXWmlprj3Muo47/diAiiqKr934zHEQhMPPZenrfY63NeApGt/xeKUVmMPIDiQYxqet0Q48AAAAASUVORK5CYII=);
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAICAYAAAAiJnXPAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABsSURBVHgBrZI9TsNQEIRnnx8RgghqDsAFaGiCKOAOtDR2h8QJQOQUEIQ4SLokl8gVktaKoijeyT5FjvLznCL2VPbup90de4AGJLHi1f3rrbbOurtVGlu85cP/6T7vY0O05ceHC8Krf0FksYCUi8cs2xoBR/dtmz9UZFJWHeTO2EwhKYRJyc4Gfz/SfkiJOiLUoa4Erv4QBKt2TmU39EizSx4/xtTuZJ+xZj7qfZXPFYzkTzfd8GGLdQYOI5MPfzd2jdPYqUEhJ64ic7jspM/iuYQmZkulwkg8bBtE0EcRQD2GoaG/08gQsl5iTf6cej2XpIcTxQXf0YRWLTpLZ0xxHp8AAAAASUVORK5CYII=);
 }
 
 .icon-port {
@@ -110,8 +124,7 @@ a {
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAD5SURBVHgBrZI9TsNQEIRnnx8RgghqDsAFaGiCKOAOtDR2h8QJQOQUEIQ4SLokl8gVktaKoijeyT5FjvLznCL2VPbup90de4AGJLHi1f3rrbbOurtVGlu85cP/6T7vY0O05ceHC8Krf0FksYCUi8cs2xoBR/dtmz9UZFJWHeTO2EwhKYRJyc4Gfz/SfkiJOiLUoa4Erv4QBKt2TmU39EizSx4/xtTuZJ+xZj7qfZXPFYzkTzfd8GGLdQYOI5MPfzd2jdPYqUEhJ64ic7jspM/iuYQmZkulwkg8bBtE0EcRQD2GoaG/08gQsl5iTf6cej2XpIcTxQXf0YRWLTpLZ0xxHp8AAAAASUVORK5CYII=);
 }
 
-/** std components **/
-
+// Стандартные компоненты
 .btn-std {
   height: auto !important;
   padding: 5px 33px !important;
@@ -124,4 +137,19 @@ a {
   color: #2e4376;
   text-transform: none !important;
   line-height: 5px;
+}
+
+.btn-b {
+  display: flex;
+  width: 299px;
+  height: 72px;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }

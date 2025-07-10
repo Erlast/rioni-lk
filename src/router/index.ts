@@ -1,12 +1,13 @@
 import { createMemoryHistory, createRouter } from 'vue-router'
 
 import MainDefaultView from '@/modules/main/views/default/MainView.vue'
-import NotificationDefaultView from '@/modules/notification/views/default/View.vue'
-import ProfileDefaultView from '@/modules/profile/views/default/View.vue'
+import PortfolioDefaultView from '@/modules/portfolio/views/default/View.vue'
+import PronounsDefaultView from '@/modules/pronouns/views/default/View.vue'
 import AnaliticsDefaultView from '@/modules/analitics/views/default/View.vue'
 import ReportsDefaultView from '@/modules/reports/views/default/View.vue'
 import MarketDefaultView from '@/modules/market/views/default/View.vue'
-
+import ProfileDefaultView from '@/modules/profile/views/default/View.vue'
+import NotificationDefaultView from '@/modules/notification/views/default/View.vue'
 const routes = [
   {
     path: '/',
@@ -16,24 +17,32 @@ const routes = [
         component: MainDefaultView
       },
       {
-        path: 'notification',
-        component: NotificationDefaultView
+        path: 'portfolio',
+        component: PortfolioDefaultView
       },
       {
-        path: 'profile',
-        component: ProfileDefaultView
+        path: 'pronouns',
+        component: PronounsDefaultView
       },
       {
-        path: 'analitics',
-        component: AnaliticsDefaultView
+        path: 'market',
+        component: MarketDefaultView
       },
       {
         path: 'reports',
         component: ReportsDefaultView
       },
       {
-        path: 'market',
-        component: MarketDefaultView
+        path: 'analitics',
+        component: AnaliticsDefaultView
+      },
+      {
+        path: 'profile',
+        component: ProfileDefaultView
+      },
+      {
+        path: 'notification',
+        component: NotificationDefaultView
       }
     ]
   }

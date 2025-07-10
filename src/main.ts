@@ -6,7 +6,6 @@ import App from './App.vue'
 import { createVuetify } from 'vuetify'
 
 import './styles/global.scss'
-import './styles/variables.scss'
 import './assets/fonts/webfonts/fonts.scss'
 import '@mdi/font/css/materialdesignicons.css'
 import { rioniIcons } from './assets/icons/rioniIcons.ts'

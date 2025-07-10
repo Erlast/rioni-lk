@@ -4,7 +4,7 @@ import vuetify from 'vite-plugin-vuetify'
 
 export default defineConfig({
   server: {
-    //host: '10.129.0.51',
+    // host: '10.129.0.51',
     port: 8080
   },
   plugins: [

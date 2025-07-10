@@ -1,24 +1,27 @@
 <template>
   <div class="header">
-    <div class="header-logo"></div>
+    <RouterLink to="/" class="header-menu__element"><div class="header-logo"></div></RouterLink>
     <div class="header-menu">
       <nav>
-        <RouterLink to="/" class="header-menu__element">Главная</RouterLink>
-        <RouterLink to="notification" class="header-menu__element">Уведомления</RouterLink>
-        <RouterLink to="profile" class="header-menu__element">Профиль</RouterLink>
-        <RouterLink to="analitics" class="header-menu__element">Аналитика</RouterLink>
-        <RouterLink to="reports" class="header-menu__element">Отчеты</RouterLink>
+        <RouterLink to="portfolio" class="header-menu__element">Портфель</RouterLink>
         <RouterLink to="market" class="header-menu__element">Рынок</RouterLink>
+        <RouterLink to="pronouns" class="header-menu__element">Поручения</RouterLink>
+        <RouterLink to="reports" class="header-menu__element">Отчеты</RouterLink>
+        <RouterLink to="analitics" class="header-menu__element">Аналитика</RouterLink>
       </nav>
     </div>
     <div class="header-user-panel">
       <div class="header-user-panel-chat"></div>
-      <div class="header-user-panel-notification"></div>
-      <div class="header-user-panel-profile">
-        <div class="header-user-panel-profile__icon"></div>
-        <div class="header-user-panel-profile__name">Иван 990</div>
-        <div class="header-user-panel-profile__exit"></div>
-      </div>
+      <RouterLink to="notification" class="header-menu__element">
+        <div class="header-user-panel-notification"></div>
+      </RouterLink>
+      <RouterLink to="profile" class="header-menu__element">
+        <div class="header-user-panel-profile">
+          <div class="header-user-panel-profile__icon"></div>
+          <div class="header-user-panel-profile__name">Иван 990</div>
+          <div class="header-user-panel-profile__exit"></div>
+        </div>
+      </RouterLink>
     </div>
   </div>
 </template>
