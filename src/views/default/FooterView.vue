@@ -115,7 +115,7 @@
 <style scoped lang="scss">
   .footer {
     padding: 34px 70px 63px 70px;
-    background-color: #2e4376;
+    background-image: url('/img/footer-bg.png');
   }
   .footer-top {
     display: flex;
