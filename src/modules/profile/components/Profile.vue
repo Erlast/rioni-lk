@@ -1,110 +1,105 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { API_ROUTES } from '@/api';
+  import { onMounted, ref } from 'vue';
+  import type { Profile } from '@/interfaces/profile';
+
+  const simpleProfile = ref<Profile>();
+
+  async function fetchSimpleProfile() {
+    const data = await fetch(API_ROUTES.simpleProfile);
+    const res = (await data.json()) as Profile;
+    simpleProfile.value = res;
+  }
+
+  onMounted(() => {
+    fetchSimpleProfile();
+  });
+</script>
 
 <template>
   <div class="profile b-section">
-    <div class="profile-form">
-      <div class="profile-form-anketa">
-        <div class="form-anketa-cell">
-          <div class="form-anketa-cell__name">Иванов Иван Иванович</div>
-          <div class="form-anketa-cell__value">
-            <span>
-              Верифицирован
-              <div class="form-anketa-cell__verification-icon"></div>
-            </span>
+    <div class="profile-form-bg">
+      <div class="profile-form">
+        <div class="profile-form__label">Карта клиента</div>
+        <div class="profile-form-inside">
+          <div class="profile-form-inside-block">
+            <div
+              class="profile-form-photo"
+              :style="{ 'background-image': `url(${simpleProfile?.photoUrl})` }"
+            ></div>
           </div>
-          <div class="form-anketa-cell__avatar"></div>
-        </div>
-        <div class="form-anketa-cell">
-          <div class="form-anketa-cell__name">Почта</div>
-          <div class="form-anketa-cell__value">
-            ivanovivan@mail.ru
-            <div class="form-anketa-cell__change"></div>
-          </div>
-        </div>
-        <div class="form-anketa-cell">
-          <div class="form-anketa-cell__name">Телефон</div>
-          <div class="form-anketa-cell__value">
-            +955 950 54 54
-            <div class="form-anketa-cell__change"></div>
-          </div>
-        </div>
-        <div class="form-anketa-cell">
-          <div class="form-anketa-cell__name">Адрес</div>
-          <div class="form-anketa-cell__value">
-            Страна, город, ули..
-            <div class="form-anketa-cell__change"></div>
+
+          <div class="profile-form-inside-block">
+            <div class="profile-form-cell">
+              <div class="profile-form-cell-name">Номер БС</div>
+              <div class="profile-form-cell-info">{{ simpleProfile?.nbs }}</div>
+            </div>
+            <div class="profile-form-cell">
+              <div class="profile-form-cell-name">Номер счета ДУ</div>
+              <div class="profile-form-cell-info">{{ simpleProfile?.ndu }}</div>
+            </div>
+            <div class="profile-form-cell">
+              <div class="profile-form-cell-name">Почта</div>
+              <div class="profile-form-cell-info">{{ simpleProfile?.email }}</div>
+            </div>
+            <div class="profile-form-cell">
+              <div class="profile-form-cell-name">Телефон</div>
+              <div class="profile-form-cell-info">{{ simpleProfile?.phone }}</div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="profile-form-anketa">
-        <div class="form-anketa-cell">
-          <div class="form-anketa-cell__name">Личная информация</div>
-          <div class="form-anketa-cell__value">
-            Иванов Иван Иванович
-            <div class="form-anketa-cell__change"></div>
+      <div class="profile-form">
+        <div class="profile-form__label">Персональные данные</div>
+        <div class="profile-form-inside">
+          <div class="profile-form-inside-block profile-form-inside-block-personal-max-width">
+            <div class="profile-form-cell">
+              <div class="profile-form-cell-name">Имя</div>
+              <div class="profile-form-cell-info">
+                {{ simpleProfile?.name }} {{ simpleProfile?.patronymic }}
+                {{ simpleProfile?.surname }}
+              </div>
+            </div>
+            <div class="profile-form-cell">
+              <div class="profile-form-cell-2s-fields">
+                <div class="profile-form-cell-2s-fields-field">
+                  <div class="profile-form-cell-name">Дата рождения</div>
+                  <div class="profile-form-cell-info">{{ simpleProfile?.dateOfBirth }}</div>
+                </div>
+                <div class="profile-form-cell-2s-fields-field">
+                  <div class="profile-form-cell-name">Пол</div>
+                  <div class="profile-form-cell-info">{{ simpleProfile?.gender }}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-form-cell">
+              <div class="profile-form-cell-name">Гражданство</div>
+              <div class="profile-form-cell-info">{{ simpleProfile?.citizenship }}</div>
+            </div>
+            <div class="profile-form-cell">
+              <div class="profile-form-cell-name">Место рождения</div>
+              <div class="profile-form-cell-info">{{ simpleProfile?.placeOfBirth }}</div>
+            </div>
           </div>
-        </div>
-        <div class="form-anketa-cell">
-          <div class="form-anketa-cell__name">Паспорт</div>
-          <div class="form-anketa-cell__value">76 85948434</div>
-        </div>
-        <div class="form-anketa-two-cell">
-          <div class="form-anketa-two-cell__cell">
-            <div class="form-anketa-cell__name">Дата выдачи</div>
-            <div class="form-anketa-cell__value">20.02.2010</div>
+          <div class="profile-form-inside-block">
+            <div class="profile-form-cell">
+              <div class="profile-form-cell-name">Тип документа</div>
+              <div class="profile-form-cell-info">{{ simpleProfile?.documentType }}</div>
+            </div>
+            <div class="profile-form-cell">
+              <div class="profile-form-cell-name">№ паспорта</div>
+              <div class="profile-form-cell-info">{{ simpleProfile?.passportNumber }}</div>
+            </div>
+            <div class="profile-form-cell">
+              <div class="profile-form-cell-name">Дата выдачи</div>
+              <div class="profile-form-cell-info">{{ simpleProfile?.passportIssueDate }}</div>
+            </div>
+            <div class="profile-form-cell">
+              <div class="profile-form-cell-name">Конец срока действия</div>
+              <div class="profile-form-cell-info">{{ simpleProfile?.passportExpiryDate }}</div>
+            </div>
           </div>
-          <div class="form-anketa-two-cell__cell">
-            <div class="form-anketa-cell__name">Конец срока действия</div>
-            <div class="form-anketa-cell__value">20.02.2010</div>
-          </div>
-        </div>
-        <div class="form-anketa-two-cell">
-          <div class="form-anketa-two-cell__cell">
-            <div class="form-anketa-cell__name">Пол</div>
-            <div class="form-anketa-cell__value">Мужской</div>
-          </div>
-          <div class="form-anketa-two-cell__cell">
-            <div class="form-anketa-cell__name">Дата рождения</div>
-            <div class="form-anketa-cell__value">11.05.1995</div>
-          </div>
-        </div>
-        <div class="form-anketa-cell">
-          <div class="form-anketa-cell__name">Гражданство</div>
-          <div class="form-anketa-cell__value">Российская федерация</div>
-        </div>
-        <div class="form-anketa-cell">
-          <div class="form-anketa-cell__name">Место рождения</div>
-          <div class="form-anketa-cell__value">Страна, город, улица, дом, кв</div>
-        </div>
-      </div>
-    </div>
-    <div class="profile-settings">
-      <div class="profile-setting-element">
-        <div class="profile-setting-element-name">
-          <div class="profile-setting-element__icon profile-setting-element__icon-settings"></div>
-          Настройки профиля
-        </div>
-        <div class="profile-setting-element-arrow">
-          <div class="profile-setting-element-arrow__icon"></div>
-        </div>
-      </div>
-      <div class="profile-setting-element">
-        <div class="profile-setting-element-name">
-          <div class="profile-setting-element__icon profile-setting-element__icon-books"></div>
-          Документы и формы
-          <div class="profile-setting-element__warning">Заполните документы</div>
-        </div>
-        <div class="profile-setting-element-arrow">
-          <div class="profile-setting-element-arrow__icon"></div>
-        </div>
-      </div>
-      <div class="profile-setting-element">
-        <div class="profile-setting-element-name">
-          <div class="profile-setting-element__icon profile-setting-element__icon-settings"></div>
-          Реквизиты и операции
-        </div>
-        <div class="profile-setting-element-arrow">
-          <div class="profile-setting-element-arrow__icon"></div>
         </div>
       </div>
     </div>
@@ -115,38 +110,68 @@
   .profile {
     display: flex;
   }
-  .profile-form {
+  .profile-form-bg {
     display: flex;
     margin-right: 20px;
-    padding: 24px 24px 39px 24px;
-    width: 501px;
-    height: 311px;
-    flex-shrink: 0;
+    flex-direction: row;
+  }
+  .profile-form {
+    width: 473px;
+    height: 270px;
+    padding: 24px;
+    margin-right: 12px;
+    border-radius: 30px;
     box-sizing: border-box;
-    border-radius: 20px;
     background: var(--Backgrounds-white, #fff);
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  }
-  .profile-form-anketa {
-    width: 213px;
-    margin-right: 41px;
-  }
-  .form-anketa-cell {
-    margin-bottom: 12px;
-  }
-  .form-anketa-two-cell {
-    display: flex;
-    margin-bottom: 12px;
-    justify-content: space-between;
-  }
-  .form-anketa-cell__name {
-    margin-bottom: 2px;
-    color: var(--Text-type-text, #99abbd);
-    font-family: 'Plus Jakarta Sans';
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+
+    .profile-form__label {
+      color: var(--Text-Text-color, #2a2a2a);
+
+      font-size: 16px;
+    }
+
+    .profile-form-inside {
+      display: flex;
+      flex-direction: row;
+      margin-top: 12px;
+
+      .profile-form-inside-block {
+        margin-right: 60px;
+        min-width: 110px;
+        width: min-content;
+
+        .profile-form-photo {
+          width: 170px;
+          height: 170px;
+          flex-shrink: 0;
+          border-radius: 10px;
+        }
+        .profile-form-cell {
+          margin-bottom: 12px;
+          line-height: 16px;
+          .profile-form-cell-2s-fields {
+            display: flex;
+            .profile-form-cell-2s-fields-field {
+              margin-right: 24px;
+            }
+          }
+          .profile-form-cell-name {
+            color: var(--Text-type-text, #99abbd);
+
+            font-size: 10px;
+          }
+          .profile-form-cell-info {
+            color: var(--Text-dark-blue, #2e4376);
+
+            font-size: 14px;
+          }
+        }
+      }
+
+      .profile-form-inside-block-personal-max-width {
+        width: 190px;
+      }
+    }
   }
   .form-anketa-cell__change {
     width: 12px;
@@ -155,27 +180,7 @@
     background-repeat: no-repeat;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAMCAYAAAC5tzfZAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADiSURBVHgBrZIxD8FQEMfvtS9iMBisdp+gGCxMEquIT2JCXz+C3WowiUGnNsKCj+A7CEm7NJV37qEJ1ZbBLXeXu9/d/V8egx/NGDsYxRwRWX24qYS6xNemDqyPQgip6obpLoqFa+HicQ8YMF41XQkaBDq+T15BYwCIE1VnlJ99fVpiQdEWbY+rhoPVyn/c89ggo5QW9AjoU4RaooAYcB8smpoCVJwIZQGpUBzozkEzRo5MhWqWWyUXkvhltMHf2lyJinp4HNqNmntyOciwr+f9DeL0JJK+yAwBUwecgJUByT3tBok1VqZ9oqfUAAAAAElFTkSuQmCC);
   }
-  .form-anketa-cell__value {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--Text-dark-blue, #2e4376);
-    font-family: 'Plus Jakarta Sans';
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
-  .form-anketa-cell__verification-icon {
-    display: inline-block;
-    margin-left: 3px;
-    width: 10px;
-    height: 10px;
-    flex-shrink: 0;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABZSURBVHgBvYzRCYAwEENjuCXc5vDHdRygncRNtC7iBoIj6KkIFikK/eqDQHiEAEWRtW+ezt9V19bHvEyprqCQt2DwdvsEMjiLffT71yi+cnDbFUMGhKqgCCecNRID/MVDCgAAAABJRU5ErkJggg==);
-  }
+
   .form-anketa-cell__avatar {
     margin: 10px auto;
     width: 66.866px;
