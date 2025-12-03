@@ -1,13 +1,14 @@
-import { createMemoryHistory, createRouter } from 'vue-router'
+import { createMemoryHistory, createRouter } from 'vue-router';
 
-import MainDefaultView from '@/modules/main/views/default/MainView.vue'
-import PortfolioDefaultView from '@/modules/portfolio/views/default/View.vue'
-import PronounsDefaultView from '@/modules/pronouns/views/default/View.vue'
-import AnaliticsDefaultView from '@/modules/analitics/views/default/View.vue'
-import ReportsDefaultView from '@/modules/reports/views/default/View.vue'
-import MarketDefaultView from '@/modules/market/views/default/View.vue'
-import ProfileDefaultView from '@/modules/profile/views/default/View.vue'
-import NotificationDefaultView from '@/modules/notification/views/default/View.vue'
+import MainDefaultView from '@/modules/main/views/default/MainView.vue';
+import PortfolioDefaultView from '@/modules/portfolio/views/default/View.vue';
+import PronounsDefaultView from '@/modules/pronouns/views/default/View.vue';
+import AnaliticsDefaultView from '@/modules/analitics/views/default/View.vue';
+import ReportsDefaultView from '@/modules/reports/views/default/View.vue';
+import MarketDefaultView from '@/modules/market/views/default/View.vue';
+import ProfileDefaultView from '@/modules/profile/views/default/View.vue';
+import NotificationDefaultView from '@/modules/notification/views/default/View.vue';
+import AnketaDefaultView from '@/modules/anketa/views/default/View.vue';
 const routes = [
   {
     path: '/',
@@ -46,11 +47,11 @@ const routes = [
       }
     ]
   }
-]
+];
 
 const router = createRouter({
   history: createMemoryHistory(),
   routes
-})
+});
 
-export default router
+export default router;

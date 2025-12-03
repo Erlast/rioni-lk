@@ -153,3 +153,157 @@ a {
   font-weight: 400;
   line-height: normal;
 }
+.v-theme--light {
+  /*input */
+  .v-field {
+    background: #fff;
+    min-width: 100px;
+  }
+  .v-field__input {
+    min-height: 36px;
+
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+
+  /* select */
+  .v-field__overlay {
+    background-color: #fff;
+    opacity: 1;
+  }
+  .v-field__outline::before {
+    border-style: none;
+  }
+
+  .v-field--variant-filled:hover .v-field__overlay {
+    opacity: 1;
+    background-color: #fff6a4;
+    transition: background-color 1s;
+  }
+  .v-selection-control--density-default {
+    --v-selection-control-size: 26px;
+  }
+
+  .v-input--density-compact .v-field--variant-solo-filled .v-label.v-field-label--floating {
+    top: -1px;
+    font-size: 10px;
+    opacity: 0;
+  }
+
+  .v-field--focused .v-field-label--floating {
+    opacity: 0;
+  }
+
+  .v-field.v-field--active .v-label.v-field-label--floating {
+    visibility: hidden;
+  }
+
+  /* checkbox*/
+  .v-selection-control__wrapper {
+    --v-input-control-height: 0px;
+  }
+  .v-input--density-default {
+    --v-input-control-height: 0px;
+  }
+}
+
+/* формы */
+.modal-window {
+  padding: 20px;
+  background: #fff;
+  border-radius: 30px;
+  .modal-windows-label {
+    display: flex;
+    margin-bottom: 12px;
+    padding: 11px 12px 12px 30px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 36px;
+    border-radius: 16px;
+    background: var(--Elements, #6794da);
+    align-self: stretch;
+    text-align: left;
+    color: var(--Backgrounds-white, #fff);
+
+    .button-close {
+      cursor: pointer;
+      width: 23px;
+      height: 23px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAF2SURBVHgBvVUtV8NAENyrjQcdfDWe+GqC5gegg48uPppgaS2tr0cT3Xp0mEnuwr1wm4S2r/PeNm3ubvbjZrdGFNR1HeGRwOawGHZll75hFewD9mmMOWgcRiFdWItkHCUclKPkIGZ0uRflVOxhz/0szBmIVQc+eXECse/gCQ54LzKzxOkZiIlrae+qwcyWI1Wi2AwQrWAhpSysKJrI58rhHdJ7wXMZWFtirVCcOwk35ImEkSCCGCTbngMSb7kmXgl6uOWHwaZSdD3zYjKQVZYs9ojzoXPYl85kuFG4ltsMqonE7lyrlhFwYyxHgOSHkT1djV0GeJdJWzINnc73U4ilLUU+0cGXI98pG1aBGkc9B1ofNO+NFXwhfy+IGVGGoenIiNlElHGosx85Y5rZYts/1KXH4BXEb/zi1KK18n/BbNfuR0Nup1h2ogM3crtLvsyfRc/JPR4PMg5G+Q5b+xEPklsHjJ4T8w52I7+KIQl1TAlvQqQXwQ+kaaLLnOemQwAAAABJRU5ErkJggg==')
+        no-repeat;
+    }
+  }
+}
+.form {
+  .form-inside {
+    padding: 35px 40px;
+    border-radius: 30px;
+    margin-bottom: 20px;
+    background: var(--Backgrounds-light-blue, #edf6ff);
+
+    .form-inside-block {
+      margin-bottom: 20px;
+    }
+    .form-inside-text-1,
+    .form-inside-text-1 .v-label {
+      color: var(--Text-Text-color, #2a2a2a);
+      font-weight: bold;
+      font-size: 12px;
+    }
+    .form-inside-text-2,
+    .form-inside-text-2 .v-label {
+      color: var(--Text-type-text, #99abbd);
+
+      font-size: 12px;
+    }
+    .form-inside-label {
+      margin-bottom: 20px;
+      color: var(--Backgrounds-Blue, #2c4d90);
+      font-weight: 700;
+      font-size: 22px;
+    }
+    .form-inside-inputs-grid {
+      display: flex;
+      height: 36px;
+      margin: 10px 0px;
+      gap: 8px;
+    }
+    .form-inside-inputs-number {
+      display: flex;
+      width: 36px;
+      height: 36px;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      border-radius: 8px;
+      background: var(--Backgrounds-white, #fff);
+      color: var(--Text-type-text, #99abbd);
+
+      /* Onbording style/Text 14 Regular */
+
+      font-size: 14px;
+
+      font-weight: 400;
+    }
+
+    .form-save {
+      cursor: pointer;
+      display: inline-block;
+
+      padding: 8px 14px 10px 14px;
+      justify-content: center;
+      align-items: center;
+      border-radius: 8px;
+      background: var(--Elements-check, #4ba67c);
+      color: var(--Backgrounds-white, #fff);
+      font-family: 'Plus Jakarta Sans';
+      font-size: 14px;
+    }
+  }
+}
+/* Хелперы */
+.with-50-percent {
+  width: 50%;
+}

@@ -1,6 +1,15 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { provide, ref } from 'vue';
+  import Anketa from '@/modules/profile/components/Anketa.vue';
+
+  let showAnketa = ref(false);
+  provide('showAnketa', showAnketa);
+</script>
 
 <template>
+  <v-dialog v-model="showAnketa" width="auto" scrollable>
+    <Anketa></Anketa>
+  </v-dialog>
   <div class="action b-section">
     <div class="action-bg">
       <div class="action__label">Действия в профиле</div>
@@ -48,7 +57,7 @@
         </div>
         <div class="action-inside-block action-inside-block-bg-2">
           <div class="action-inside-block__name">Анкета</div>
-          <div class="action-inside-block-click">
+          <div class="action-inside-block-click" @click="showAnketa = true">
             <div class="action-inside-block-click-around">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

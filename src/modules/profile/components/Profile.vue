@@ -5,26 +5,20 @@
   import { computed } from 'vue';
 
   const simpleProfile = ref<Profile>();
-  var blur = 0;
+  var hasProtect = ref<boolean>(true);
+
   async function fetchSimpleProfile() {
     const data = await fetch(API_ROUTES.simpleProfile);
     const res = (await data.json()) as Profile;
     simpleProfile.value = res;
   }
 
-  const themeVars = computed(() => ({
-    '--protect-blur': blur
-  }));
   onMounted(() => {
     fetchSimpleProfile();
   });
 
   function onProtect(): void {
-    if (blur === 3) {
-      blur = 0;
-    } else {
-      blur = 3;
-    }
+    hasProtect.value = !hasProtect.value;
   }
 </script>
 
@@ -68,7 +62,7 @@
           <div class="profile-form-icon profile-form__change"></div>
         </div>
 
-        <div class="profile-form-inside" v-bind:style="{ filter: `blur(${blur}px)` }">
+        <div class="profile-form-inside" :class="{ 'profile-form-protect': hasProtect }">
           <div class="profile-form-inside-block profile-form-inside-block-personal-max-width">
             <div class="profile-form-cell">
               <div class="profile-form-cell-name">Имя</div>
