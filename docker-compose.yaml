@@ -1,0 +1,7 @@
+services:
+  web:
+    build: .
+    image: front-nginx
+    ports:
+      - '8080:80'
+    restart: always
