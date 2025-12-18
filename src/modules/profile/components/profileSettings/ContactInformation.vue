@@ -11,9 +11,12 @@
         'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABESURBVHgB3dBBDQAgDEPRlqABCzhBACoRgAREEFQsQQCI2E59Apr0A1JoZg9OCQFCRvI6F15En0JNOEpz3+FGFWoi5gOIOgx7TIafAQAAAABJRU5ErkJggg=='
     }
   ];
+
+
 </script>
 
 <template>
+  <div>
   <div class="form-inside">
     <div class="form-inside-block">
       <div class="form-inside-contact-info-label">Контактная информация</div>
@@ -88,93 +91,113 @@
             <div class="contact-info-status">Подтвержден</div>
           </v-col>
         </div>
-      </div>
-    </div>
 
-    <div class="form-inside-block">
-      <div class="form-inside-label">Вид на жительство и аналоги документа</div>
-      <div class="form-inside-inputs">
-        <div class="form-inside-inputs-label form-inside-text-1">
-          Выберите все страны, где имеется вид на жительство
-        </div>
-        <div class="form-inside-inputs-grid">
-          <v-select
-            label="Кем выдан"
+       <div class="form-inside-warning-message">Внимание! При изменении адреса, Вам необходимо сразу предоставить подтверждающие документы, в противном случае операции по вашему счету будут временно недосутпны</div>
+
+        <div class="d-flex align-center">
+          <v-col cols="12" class="pa-0">
+            <div class="form-inside-inputs-grid justify-space-between align-center">
+              <span class="form-inside-text-2">Адрес регистрации</span>
+              <v-checkbox
+                label="Использовать  как почтовый"
+                class="form-inside-text-2 v-hide-input__details"
+                true-icon="rioni:formCheckOn"
+                false-icon="rioni:formCheckOff"
+              >
+            </v-checkbox>
+            </div>
+            <div class="form-inside-inputs-grid justify-space-between">
+              <v-col cols="4" class="pa-0">
+                   <v-select
+            label="Страна"
             density="compact"
-            :items="['Данные 1', 'Данные 2', 'Данные 4']"
-          ></v-select>
+            :items="['Данные 1', 'Данные 2', 'Данные 4']">   </v-select>
+              </v-col>
+           <v-col cols="3" class="pa-0">
+                  <v-text-field hide-details="auto" class="form-inside-text-3" label="Город"></v-text-field>
+              </v-col>
+              <v-col cols="4" class="pa-0">
+                <v-text-field hide-details="auto" class="form-inside-text-3" label="Индекс"></v-text-field>
+              </v-col>
+            </div>
+                  <div class="form-inside-inputs-grid justify-space-between">
+              <v-col cols="12" class="pa-0">
+                <v-text-field hide-details="auto" class="form-inside-text-3" label="Адрес"></v-text-field>
+              </v-col>
+            </div>
+          </v-col>
+
         </div>
-        <div class="form-inside-inputs-grid">
-          <v-text-field hide-details="auto" label="Номер документа"></v-text-field>
-          <v-text-field hide-details="auto" label="Срок пребывания"></v-text-field>
+       <div class="d-flex align-center">
+          <v-col cols="12" class="pa-0">
+            <div class="form-inside-inputs-grid justify-space-between align-center">
+              <span class="form-inside-text-2">Фактический адрес</span>
+              <v-checkbox
+                label="Использовать  как почтовый"
+                class="form-inside-text-2 v-hide-input__details"
+                true-icon="rioni:formCheckOn"
+                false-icon="rioni:formCheckOff"
+              >
+            </v-checkbox>
+            </div>
+            <div class="form-inside-inputs-grid justify-space-between">
+              <v-col cols="4" class="pa-0">
+                   <v-select
+            label="Страна"
+            density="compact"
+            :items="['Данные 1', 'Данные 2', 'Данные 4']">   </v-select>
+              </v-col>
+           <v-col cols="3" class="pa-0">
+                  <v-text-field hide-details="auto" class="form-inside-text-3" label="Город"></v-text-field>
+              </v-col>
+              <v-col cols="4" class="pa-0">
+                <v-text-field hide-details="auto" class="form-inside-text-3" label="Индекс"></v-text-field>
+              </v-col>
+            </div>
+                  <div class="form-inside-inputs-grid justify-space-between">
+              <v-col cols="12" class="pa-0">
+                <v-text-field hide-details="auto" class="form-inside-text-3" label="Адрес"></v-text-field>
+              </v-col>
+            </div>
+          </v-col>
+
         </div>
-        <div class="form-inside-inputs-grid justify-space-between">
-          <v-checkbox
-            label="Вида на жительства (или аналога) в государстве, отличном от гражданства, не имею"
-            class="form-inside-text-1"
-            true-icon="rioni:formCheckOn"
-            false-icon="rioni:formCheckOff"
-          ></v-checkbox>
-        </div>
+<div > <span class="form-inside-text-2">Для подтверждения данного адреса, вам необходимо  </span> <span class="form-inside-text-4">загрузить документы сюда</span></div>
+
       </div>
     </div>
-    <div class="form-inside-block">
-      <div class="form-inside-label">Место работы</div>
-    </div>
-    <div class="form-inside-inputs">
-      <div class="form-inside-inputs-grid">
-        <v-text-field hide-details="auto" label="Название компании"></v-text-field>
-        <v-text-field hide-details="auto" label="Должность"></v-text-field>
-      </div>
-      <div class="form-inside-inputs-grid">
-        <div class="with-50-percent">
-          <v-text-field hide-details="auto" label="Отрасль"></v-text-field>
-        </div>
-        <div class="d-flex ga-2 with-50-percent">
-          <v-text-field hide-details="auto" label="Номер телефона"></v-text-field>
-          <v-text-field hide-details="auto" label="Сайт"></v-text-field>
-        </div>
-      </div>
-      <v-checkbox
-        label="Состою в некомерческой организации (НКО)"
-        class="form-inside-text-1"
-        true-icon="rioni:formCheckOn"
-        false-icon="rioni:formCheckOff"
-      ></v-checkbox>
-      <v-checkbox
-        label="Состою в неправительственной организации (НПО)"
-        class="form-inside-text-1"
-        true-icon="rioni:formCheckOn"
-        false-icon="rioni:formCheckOff"
-      ></v-checkbox>
-      <v-checkbox
-        label="Статус самозанятого"
-        class="form-inside-text-1"
-        true-icon="rioni:formCheckOn"
-        false-icon="rioni:formCheckOff"
-      ></v-checkbox>
-      <v-checkbox
-        label="Не работаю"
-        class="form-inside-text-1"
-        true-icon="rioni:formCheckOn"
-        false-icon="rioni:formCheckOff"
-      ></v-checkbox>
-    </div>
-    <div class="form-save">Сохранить измменения</div>
-  </div>
+  
+  </div> 
+  
+  
+  <div class="form-save">Сохранить изменения</div></div>
 </template>
 
-<style scoped lang="scss">
-  .flag-img {
+<style scoped lang="scss"> .flag-img {
     display:block;
     margin-left:30px;
-  
-  }
+}
 
+
+  .form-inside-warning-message{
+    display: flex;
+  width: 511px;
+ 
+
+
+  padding: 14px 23px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+    border-radius: 8px;
+  background: var(--Backgrounds-light-green, #E7F8F0);
+  }
 
   .form-inside-contact-info-label {
     color: var(--Text-Text-color, #2a2a2a);
 
+
+    
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
@@ -201,5 +224,4 @@
     color: var(--Backgrounds-white, #fff);
 
     font-size: 14px;
-  }
-</style>
+  }</style>

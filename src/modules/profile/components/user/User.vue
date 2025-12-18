@@ -110,7 +110,7 @@
         false-icon="rioni:formCheckOff"
       ></v-checkbox>
     </div>
-    <div class="form-save">Сохранить измменения</div>
+    <div class="form-save">Сохранить изменения</div>
   </div>
 </template>
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import ContactInformation from '@/modules/profile/components/profileSettings/ContactInformation.vue';
+  import Profile from '@/modules/profile/components/profileSettings/Profile.vue';
 
   import { inject, ref } from 'vue';
 
@@ -18,7 +19,10 @@
         </v-card-title>
 
         <v-card-text>
-          <ContactInformation></ContactInformation>
+          <div class="d-flex ga-3">
+            <ContactInformation></ContactInformation>
+            <Profile></Profile>
+          </div>
         </v-card-text>
         <v-divider></v-divider>
       </div>

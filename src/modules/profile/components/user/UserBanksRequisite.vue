@@ -1,28 +1,42 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { reactive } from 'vue';
+  import { useVuelidate } from '@vuelidate/core';
+  import { email, required, helpers } from '@vuelidate/validators';
 
-  const form = ref();
+  const initialState = {
+    iban: '',
+    email: '',
+    select: null,
+    checkbox: null
+  };
+
+  const state = reactive({
+    ...initialState
+  });
 
   const items = ['Item 1', 'Item 2', 'Item 3', 'Item 4'];
 
-  const name = ref('');
-  const nameRules = ref([
-    v => !!v || 'Name is required',
-    v => (v && v.length <= 10) || 'Name must be 10 characters or less'
-  ]);
-  const select = ref(null);
-  const checkbox = ref(false);
+  const rules = {
+    iban: {
+      required: helpers.withMessage(
+        'Данные неверны или не соответствуют заполненным полям ',
+        required
+      )
+    },
+    email: { required, email },
+    select: { required },
+    items: { required },
+    checkbox: { required }
+  };
 
-  async function validate() {
-    const { valid } = await form.value.validate();
+  const v$ = useVuelidate(rules, state);
 
-    if (valid) alert('Form is valid');
-  }
-  function reset() {
-    form.value.reset();
-  }
-  function resetValidation() {
-    form.value.resetValidation();
+  function clear() {
+    v$.value.$reset();
+
+    for (const [key, value] of Object.entries(initialState)) {
+      state[key] = value;
+    }
   }
 </script>
 
@@ -49,13 +63,22 @@
             <v-text-field hide-details="auto" label="Наименование банка"></v-text-field>
           </div>
           <div class="form-inside-inputs-grid">
-            <v-text-field hide-details="auto" label="IBAN"></v-text-field>
-            <v-text-field hide-details="auto" label="SWIFT"></v-text-field>
+            <v-text-field
+              v-model="state.iban"
+              hide-details="auto"
+              label="IBAN"
+              required
+              :error-messages="v$.iban.$errors.map(e => e.$message)"
+              @blur="v$.iban.$touch"
+              @input="v$.iban.$touch"
+            ></v-text-field>
+
+            <v-text-field hide-details="auto" label="SWIFT" required></v-text-field>
           </div>
           <div class="form-inside-inputs-grid justify-end form-inside-text-2">Заблокировать</div>
         </div>
       </div>
-      <v-btn class="form-save" block @click="validate">Сохранить изменения</v-btn>
+      <v-btn class="form-save" block @click="v$.$validate">Сохранить изменения</v-btn>
     </div>
   </v-form>
 </template>

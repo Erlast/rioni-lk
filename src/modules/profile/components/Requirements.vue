@@ -92,6 +92,7 @@
   .requirements-inside {
     margin-top: 16px;
   }
+
   .requirements-inside-b {
     display: flex;
     align-items: center;
@@ -166,6 +167,7 @@
         padding: 10px 22px;
         color: var(--Text-dark-blue, #2e4376);
         text-align: center;
+
         border-radius: 20px;
         font-size: 12px;
         box-sizing: border-box;

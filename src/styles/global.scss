@@ -274,7 +274,15 @@ a {
       font-weight: 400;
       line-height: normal;
     }
+    .form-inside-text-4,
+    .form-inside-text-4 .v-label {
+      color: var(--Text-dark-blue, #00a4d1);
 
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
     .form-inside-label {
       margin-bottom: 20px;
       color: var(--Backgrounds-Blue, #2c4d90);
@@ -305,19 +313,18 @@ a {
 
       font-weight: 400;
     }
+  }
+  .form-save {
+    cursor: pointer;
+    display: inline-block;
 
-    .form-save {
-      cursor: pointer;
-      display: inline-block;
-
-      padding: 8px 14px 10px 14px;
-      justify-content: center;
-      align-items: center;
-      border-radius: 8px;
-      background: var(--Elements-check, #4ba67c);
-      color: var(--Backgrounds-white, #fff);
-      font-family: 'Plus Jakarta Sans';
-      font-size: 14px;
-    }
+    padding: 8px 14px 10px 14px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    background: var(--Elements-check, #4ba67c);
+    color: var(--Backgrounds-white, #fff);
+    font-family: 'Plus Jakarta Sans';
+    font-size: 14px;
   }
 }
