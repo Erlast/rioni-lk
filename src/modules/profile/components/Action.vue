@@ -1,22 +1,30 @@
 <script setup lang="ts">
   import { provide, ref } from 'vue';
   import Anketa from '@/modules/profile/components/Anketa.vue';
+  import ProfileSettings from '@/modules/profile/components/ProfileSettings.vue';
 
   let showAnketa = ref(false);
+  let showProfileSettings = ref(false);
+
   provide('showAnketa', showAnketa);
+  provide('showProfileSettings', showProfileSettings);
 </script>
 
 <template>
   <v-dialog v-model="showAnketa" width="auto" scrollable>
     <Anketa></Anketa>
   </v-dialog>
+  <v-dialog v-model="showProfileSettings" width="auto" scrollable>
+    <ProfileSettings></ProfileSettings>
+  </v-dialog>
+
   <div class="action b-section">
     <div class="action-bg">
       <div class="action__label">Действия в профиле</div>
       <div class="action-inside">
         <div class="action-inside-block action-inside-block-bg-1">
           <div class="action-inside-block__name">Настройки профиля</div>
-          <div class="action-inside-block-click">
+          <div class="action-inside-block-click" @click="showProfileSettings = true">
             <div class="action-inside-block-click-around">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

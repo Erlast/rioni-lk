@@ -1,9 +1,9 @@
 <script setup lang="ts">
-  import User from '@/modules/profile/components/user/User.vue';
-  import UserBanksRequisite from '@/modules/profile/components/user/UserBanksRequisite.vue';
+  import ContactInformation from '@/modules/profile/components/profileSettings/ContactInformation.vue';
+
   import { inject, ref } from 'vue';
 
-  let showAnketa = inject('showAnketa');
+  let showProfileSettings = inject('showProfileSettings');
 </script>
 
 <template>
@@ -12,14 +12,13 @@
       <div class="form">
         <v-card-title>
           <div class="modal-windows-label">
-            Анкета
-            <div class="button-close" @click="showAnketa = false"></div>
+            Настройки профиля
+            <div class="button-close" @click="showProfileSettings = false"></div>
           </div>
         </v-card-title>
-        <v-divider></v-divider>
+
         <v-card-text>
-          <User></User>
-          <UserBanksRequisite></UserBanksRequisite>
+          <ContactInformation></ContactInformation>
         </v-card-text>
         <v-divider></v-divider>
       </div>

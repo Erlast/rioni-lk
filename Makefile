@@ -1,4 +1,4 @@
 up-prod: 
-	docker compose -p front up
+	docker compose -p rioni-front up
 build-prod: 
-	docker compose -p front build
+	docker compose -p rioni-front build

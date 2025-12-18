@@ -30,6 +30,7 @@ a {
 .bg-color-A3 {
   background-color: $colorA3;
 }
+
 // Блоки интерфейса
 /** Block A **/
 .a-block {
@@ -157,8 +158,10 @@ a {
   /*input */
   .v-field {
     background: #fff;
-    min-width: 100px;
+    min-width: 90px;
+    border-radius: 8px;
   }
+
   .v-field__input {
     min-height: 36px;
 
@@ -199,6 +202,9 @@ a {
   }
 
   /* checkbox*/
+  .v-hide-input__details .v-input__details {
+    display: none;
+  }
   .v-selection-control__wrapper {
     --v-input-control-height: 0px;
   }
@@ -258,16 +264,28 @@ a {
 
       font-size: 12px;
     }
+
+    .form-inside-text-3,
+    .form-inside-text-3 .v-label {
+      color: var(--Text-dark-blue, #2e4376);
+
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+
     .form-inside-label {
       margin-bottom: 20px;
       color: var(--Backgrounds-Blue, #2c4d90);
       font-weight: 700;
       font-size: 22px;
     }
+
     .form-inside-inputs-grid {
       display: flex;
       height: 36px;
-      margin: 10px 0px;
+      margin: 8px 0px;
       gap: 8px;
     }
     .form-inside-inputs-number {
@@ -302,8 +320,4 @@ a {
       font-size: 14px;
     }
   }
-}
-/* Хелперы */
-.with-50-percent {
-  width: 50%;
 }
