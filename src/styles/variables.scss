@@ -1,3 +1,21 @@
 $colorA1: #2c4d90;
 $colorA2: #6794da;
 $colorA3: #4ba67c;
+
+$colorMainBackground: #edf6ff;
+$colorBackgroundBlue: #2c4d90;
+$colorBlackBlack: rgba(0, 0, 0, 1);
+$colorWhiteWhite: rgba(255, 255, 255, 1);
+$colorDarkBlue: #0f171f;
+$colorMiddleBlue: #2c4d90;
+
+@mixin export_css_colors {
+  :root {
+    --color-MainBackground: #{$colorMainBackground};
+    --color-BackgroundBlue: #{$colorBackgroundBlue};
+    --color-BlackBlack: #{$colorBlackBlack};
+    --color-WhiteWhite: #{$colorWhiteWhite};
+    --color-DarkBlue: #{$colorDarkBlue};
+    --color-MiddleBlue: #{$colorMiddleBlue};
+  }
+}

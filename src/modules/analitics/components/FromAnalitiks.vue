@@ -61,8 +61,8 @@
     display: flex;
     flex-direction: column;
     margin-right: 20px;
-    width: 461px;
-    height: 230px;
+    width: 411px;
+    height: 211px;
     padding: 30px;
 
     box-sizing: border-box;

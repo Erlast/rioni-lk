@@ -1,7 +1,37 @@
 @use 'vuetify/settings' with (
   $container-max-widths: (
-    'lg': 1280px,
-    'xl': 1280px,
-    'xxl': 1280px
+    'lg': 1172px,
+    'xl': 1172px,
+    'xxl': 1172px
+  ),
+  $body-font-family: (
+    'Plus Jakarta Sans',
+    sans-serif
+  ),
+  $utilities: (
+    'background-color': (
+      property: 'background-color',
+      class: 'bg',
+      values: (
+        'dark-blue': var(--color-DarkBlue),
+        'middle-blue': var(--color-MiddleBlue)
+      )
+    ),
+    'color': (
+      property: 'color',
+      class: 'color',
+      values: (
+        'dark-blue': var(--color-DarkBlue),
+        'middle-blue': var(--color-MiddleBlue)
+      )
+    ),
+    'text': (
+      property: 'color',
+      class: 'text',
+      values: (
+        'dark-blue': var(--color-DarkBlue),
+        'middle-blue': var(--color-MiddleBlue)
+      )
+    )
   )
 );

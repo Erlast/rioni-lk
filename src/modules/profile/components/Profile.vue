@@ -6,11 +6,21 @@
 
   const simpleProfile = ref<Profile>();
   var hasProtect = ref<boolean>(true);
+  // Get the full current URL
+  const currentUrl = window.location.search;
+
+  // Create a URLSearchParams object to easily work with the parameters
+  const urlParams = new URLSearchParams(currentUrl);
+
+  // Get a specific parameter
+  let userId = urlParams.get('id'); // e.g., for ?myParam=value
+
+  console.log(userId);
 
   async function fetchSimpleProfile() {
-    const data = await fetch(API_ROUTES.simpleProfile);
+    const data = await fetch(API_ROUTES.simpleProfile + '/?userId=' + userId);
     const res = (await data.json()) as Profile;
-    simpleProfile.value = res;
+    simpleProfile.value = res.content[0];
   }
 
   onMounted(() => {

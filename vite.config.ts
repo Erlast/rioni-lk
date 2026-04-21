@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import vuetify from 'vite-plugin-vuetify'
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import vuetify from 'vite-plugin-vuetify';
 
 export default defineConfig({
   /*server: {
@@ -20,5 +20,25 @@ export default defineConfig({
       '@': '/src'
       // '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://51.250.101.25:8080',
+        changeOrigin: true,
+        secure: false
+      }
+    }
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "@/styles/variables.scss" as *;`,
+        api: 'modern-compiler'
+      },
+      sass: {
+        api: 'modern'
+      }
+    }
   }
-})
+});

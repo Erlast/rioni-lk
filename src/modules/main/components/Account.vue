@@ -79,7 +79,7 @@
     padding: 30px;
     margin: auto;
     width: 752px;
-    height: 132px;
+    height: 192px;
     border-radius: 30px;
     border: 1px solid #edf2f8;
 
@@ -134,6 +134,10 @@
 
   .account-data-total__btn {
     margin-top: 21px;
+    line-height: 1 !important;
+    .v-icon--size-default {
+      width: 10px !important;
+    }
   }
 
   .account-data-picture-1 {

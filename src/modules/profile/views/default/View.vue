@@ -8,7 +8,7 @@
 <template>
   <v-row>
     <v-col cols="2"><Notice></Notice></v-col>
-    <v-col cols="9">
+    <v-col cols="10">
       <Profile></Profile>
       <Action></Action>
       <Requirements></Requirements>

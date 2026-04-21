@@ -1,17 +1,26 @@
-@import 'variables.scss';
-:root {
-  --v-scrollbar-offset: 16px;
-  --v-onboarding-step-z: 2410;
-  --v-onboarding-overlay-z: 2400;
-}
+@include export_css_colors;
+
+// :root {
+//   --v-scrollbar-offset: 16px;
+//   --v-onboarding-step-z: 2410;
+//   --v-onboarding-overlay-z: 2400;
+// }
 
 // Основные настройки приложения
 #app {
-  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  background-color: var(--color-MainBackground);
 }
 
 a {
   text-decoration: none;
+}
+
+.v-btn {
+  letter-spacing: normal !important;
+}
+
+.font-default {
+  font-size: 14px;
 }
 
 // Цветовые классы
@@ -57,6 +66,9 @@ a {
   height: 9px;
 }
 
+.gr-block-a {
+  margin-bottom: 20px;
+}
 .gr-block-a-content {
   margin-top: 12px;
 }

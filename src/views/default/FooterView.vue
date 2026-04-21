@@ -1,120 +1,123 @@
 <template>
-  <div class="footer">
-    <div class="footer-top">
-      <div class="footer-top__logo"></div>
-      <div class="footer-top-social">
-        <div class="footer-top-social-element">
-          <div class="footer-top-social-element__img mini-img-f"></div>
-        </div>
-        <div class="footer-top-social-element">
-          <div class="footer-top-social-element__img mini-img-x"></div>
-        </div>
-        <div class="footer-top-social-element">
-          <div class="footer-top-social-element__img mini-img-in"></div>
-        </div>
-        <div class="footer-top-social-element">
-          <div class="footer-top-social-element__img mini-img-y"></div>
-        </div>
-        <div class="footer-top-social-element">
-          <div class="footer-top-social-element__img mini-img-t"></div>
-        </div>
-        <div class="footer-top-social-element">
-          <div class="footer-top-social-element__img mini-img-i"></div>
+  <v-container class="pa-0" max-width="1280">
+    <div class="footer">
+      <div class="footer-top">
+        <div class="footer-top__logo"></div>
+        <div class="footer-top-social">
+          <div class="footer-top-social-element">
+            <div class="footer-top-social-element__img mini-img-f"></div>
+          </div>
+          <div class="footer-top-social-element">
+            <div class="footer-top-social-element__img mini-img-x"></div>
+          </div>
+          <div class="footer-top-social-element">
+            <div class="footer-top-social-element__img mini-img-in"></div>
+          </div>
+          <div class="footer-top-social-element">
+            <div class="footer-top-social-element__img mini-img-y"></div>
+          </div>
+          <div class="footer-top-social-element">
+            <div class="footer-top-social-element__img mini-img-t"></div>
+          </div>
+          <div class="footer-top-social-element">
+            <div class="footer-top-social-element__img mini-img-i"></div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="footer-bottom-item">
-        <div class="footer-bottom-block">
-          <div class="footer-bottom-block__name">Меню</div>
-          <div class="footer-bottom-block__body">
-            <div class="footer-group-menu">
-              <ul class="footer-menu">
-                <li class="footer-menu__item">О нас</li>
-                <li class="footer-menu__item">Почему Риони</li>
-                <li class="footer-menu__item">Услуги</li>
-                <li class="footer-menu__item">Тарифы</li>
-                <li class="footer-menu__item">Обучение</li>
-                <li class="footer-menu__item">Тесты</li>
-              </ul>
-              <ul class="footer-menu">
-                <li class="footer-menu__item">Новости</li>
-                <li class="footer-menu__item">Документы</li>
-                <li class="footer-menu__item">FAQ</li>
-                <li class="footer-menu__item">Карьера</li>
-              </ul>
+      <div class="footer-bottom">
+        <div class="footer-bottom-item">
+          <div class="footer-bottom-block">
+            <div class="footer-bottom-block__name">Меню</div>
+            <div class="footer-bottom-block__body">
+              <div class="footer-group-menu">
+                <ul class="footer-menu">
+                  <li class="footer-menu__item">О нас</li>
+                  <li class="footer-menu__item">Почему Риони</li>
+                  <li class="footer-menu__item">Услуги</li>
+                  <li class="footer-menu__item">Тарифы</li>
+                  <li class="footer-menu__item">Обучение</li>
+                  <li class="footer-menu__item">Тесты</li>
+                </ul>
+                <ul class="footer-menu">
+                  <li class="footer-menu__item">Новости</li>
+                  <li class="footer-menu__item">Документы</li>
+                  <li class="footer-menu__item">FAQ</li>
+                  <li class="footer-menu__item">Карьера</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="footer-bottom-item">
-        <div class="footer-bottom-block">
-          <div class="footer-bottom-block__name">Контакты</div>
-          <div class="footer-bottom-block__body">
-            +995 595 43 66 55
-            <span style="color: #99abbd">(Офис) Пн-Пт 9:00-20:00</span>
+        <div class="footer-bottom-item">
+          <div class="footer-bottom-block">
+            <div class="footer-bottom-block__name">Контакты</div>
+            <div class="footer-bottom-block__body">
+              +995 595 43 66 55
+              <span style="color: #99abbd">(Офис) Пн-Пт 9:00-20:00</span>
+            </div>
+          </div>
+          <div class="footer-bottom-block">
+            <div class="footer-bottom-block__name">Почта</div>
+            <div class="footer-bottom-block__body">адрес.почты@gmail.ru</div>
+          </div>
+
+          <div class="footer-bottom-block">
+            <div class="footer-bottom-block__body">Есть предложения? Свяжитесь с нами</div>
+            <form class="form-feedback">
+              <textarea
+                name="text"
+                class="form-feedback-textarea"
+                placeholder="Комментарий"
+              ></textarea>
+              <input type="submit" value="Отправить" class="form-feedback-button" />
+            </form>
           </div>
         </div>
-        <div class="footer-bottom-block">
-          <div class="footer-bottom-block__name">Почта</div>
-          <div class="footer-bottom-block__body">адрес.почты@gmail.ru</div>
-        </div>
-
-        <div class="footer-bottom-block">
-          <div class="footer-bottom-block__body">Есть предложения? Свяжитесь с нами</div>
-          <form class="form-feedback">
-            <textarea
-              name="text"
-              class="form-feedback-textarea"
-              placeholder="Комментарий"
-            ></textarea>
-            <input type="submit" value="Отправить" class="form-feedback-button" />
-          </form>
-        </div>
+      </div>
+      <div class="footer-bottom-text">
+        <span class="footer-spcial-text">
+          Общество с ограниченной ответственностью «Rioni Capital». ID 405664017.
+          <br />
+          Bloomberg LEI: 254900SE3WOGKBD2RF35. Уважаемые пользователи, обращаем ваше внимание, что
+          до получения лицензии национального банка Грузии компания «RIONI CAPITAL LLC» не оказывает
+          брокерские услуги на финансовом рынке.
+          <br />
+          Ознакомиться с информацией в отношении ООО «Rioni Capital» можно на официальном сайте
+          компании в сети Интернет по адресу: (Link in progress) Получить подробную информацию об
+          услугах и тарифах ООО «Rioni Capital», можно по адресу: I-й переулок - Ольги Сологашвили
+          5, Тбилиси, 0131, Грузия; в сети Интернет по адресу: (Link in progress), по телефону: +995
+          595436655. Ознакомиться с обучающим материалами по финансовым продуктам можно в сети
+          интернет по адресу: (Link in progress). Размещенная на сайте информация носит
+          исключительно информативный характер, не является индивидуальной инвестиционной
+          рекомендацией, гарантией и/или обещанием эффективности деятельности (доходности вложений)
+          в будущем, и финансовые инструменты либо операции, упомянутые в ней, могут не
+          соответствовать вашему инвестиционному профилю и инвестиционным целям и ожиданиям. ООО
+          "Rioni Capital" не гарантирует достижения ожидаемой доходности. Прежде чем начать
+          инвестировать на финансовом рынке, следует внимательно ознакомиться с рисками
+          сопутствующими этому процессу. Стоимость финансовых активов, в которые вы вложили свои
+          средства, может увеличиваться и уменьшаться, результаты инвестирования в прошлом не
+          определяют доходы в будущем, государство не гарантирует доходность ваших инвестиций.
+          Взимание комиссий уменьшит доходность ваших инвестиций. Определение соответствия
+          финансового инструмента либо операции вашим интересам, инвестиционным целям,
+          инвестиционному горизонту и уровню допустимого риска является вашей задачей. ООО «Rioni
+          Capital» не несет ответственности за возможные убытки в случае совершения операций либо
+          инвестирования в финансовые инструменты, упомянутые в данной информации, и не рекомендует
+          использовать указанную информацию в качестве единственного источника информации при
+          принятии инвестиционного решения. Rioni Capital LLC. All rights reserved ® Tbilisi.
+          Georgia.2024
+        </span>
+      </div>
+      <div class="footer-politics">
+        <div class="footer-politics__item">Политика конфиденциальности</div>
+        <div class="footer-politics__item">Политика использования cookies</div>
+        <div class="footer-politics__item">Политика обработки персональных данных</div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span class="footer-spcial-text">
-        Общество с ограниченной ответственностью «Rioni Capital». ID 405664017.
-        <br />
-        Bloomberg LEI: 254900SE3WOGKBD2RF35. Уважаемые пользователи, обращаем ваше внимание, что до
-        получения лицензии национального банка Грузии компания «RIONI CAPITAL LLC» не оказывает
-        брокерские услуги на финансовом рынке.
-        <br />
-        Ознакомиться с информацией в отношении ООО «Rioni Capital» можно на официальном сайте
-        компании в сети Интернет по адресу: (Link in progress) Получить подробную информацию об
-        услугах и тарифах ООО «Rioni Capital», можно по адресу: I-й переулок - Ольги Сологашвили 5,
-        Тбилиси, 0131, Грузия; в сети Интернет по адресу: (Link in progress), по телефону: +995
-        595436655. Ознакомиться с обучающим материалами по финансовым продуктам можно в сети
-        интернет по адресу: (Link in progress). Размещенная на сайте информация носит исключительно
-        информативный характер, не является индивидуальной инвестиционной рекомендацией, гарантией
-        и/или обещанием эффективности деятельности (доходности вложений) в будущем, и финансовые
-        инструменты либо операции, упомянутые в ней, могут не соответствовать вашему инвестиционному
-        профилю и инвестиционным целям и ожиданиям. ООО "Rioni Capital" не гарантирует достижения
-        ожидаемой доходности. Прежде чем начать инвестировать на финансовом рынке, следует
-        внимательно ознакомиться с рисками сопутствующими этому процессу. Стоимость финансовых
-        активов, в которые вы вложили свои средства, может увеличиваться и уменьшаться, результаты
-        инвестирования в прошлом не определяют доходы в будущем, государство не гарантирует
-        доходность ваших инвестиций. Взимание комиссий уменьшит доходность ваших инвестиций.
-        Определение соответствия финансового инструмента либо операции вашим интересам,
-        инвестиционным целям, инвестиционному горизонту и уровню допустимого риска является вашей
-        задачей. ООО «Rioni Capital» не несет ответственности за возможные убытки в случае
-        совершения операций либо инвестирования в финансовые инструменты, упомянутые в данной
-        информации, и не рекомендует использовать указанную информацию в качестве единственного
-        источника информации при принятии инвестиционного решения. Rioni Capital LLC. All rights
-        reserved ® Tbilisi. Georgia.2024
-      </span>
-    </div>
-    <div class="footer-politics">
-      <div class="footer-politics__item">Политика конфиденциальности</div>
-      <div class="footer-politics__item">Политика использования cookies</div>
-      <div class="footer-politics__item">Политика обработки персональных данных</div>
-    </div>
-  </div>
+  </v-container>
 </template>
 <style scoped lang="scss">
   .footer {
-    padding: 34px 70px 63px 70px;
+    padding: 34px 70px 0 70px;
     background-image: url('/img/footer-bg.png');
   }
   .footer-top {
@@ -176,14 +179,20 @@
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAHASURBVHgB7VTPSwJBFJ5ZRwMx6NQxjA4FduisRJT562J4rUP1h4QWHforhA4dRfCQuhIZUYdOQXjOCINuXnYLbHf7RhS2YbI1F0Hwg9mZee+b972ZN7OEjAmUf2q12ja6E9M0VyilL2insVisQFwELZfLQY/H8yw6DMPYTKVSdeISFMbYvszh9XrXiYtQLMtqyxzY0TtxUwiZn0OsaTfyOeqlEhfRvQy9Ou1guIb2pGlaPpPJtMkkgpZKJT8QEh26rjfS6bTOx5VKJYRL47f7cbSteDz+ls1mWSQS2cJxhxVFYXB9or43yWTy1s5nXASLHkQhn8+3iq7BxzjWAjjLPzKkNIcELhCc13IRc17brg82Uq1W77FmD0+k2bURB0CAjsQWRMArLiJbA+EwEryG4PwwQqbEfIC28MdSnsyZYyGQjQHuR7RL8Yn0AftusVicY8QBcNYWr4EkSC6RSBz356qq5tEdCrSZQCCw4WhHEJEdXd0uwoGaHMnWI6ElR0Kk97AF8TvRFo1GW+heJdxZp0IyXucXruE0wCi8kQNMhf4XALdmPEJ4B5OzI4Zsv9Brg0jgfIgc2R+9B20Irvv4BhVtrougF5bqAAAAAElFTkSuQmCC);
   }
 
-  .footer-bottom {
+  .footer-bottom,
+  .footer-bottom-text {
     display: flex;
     margin-bottom: 24px;
-    padding-bottom: 24px;
+    padding-bottom: 0;
     width: 100%;
     border-bottom: 1px solid #1a3472;
     color: #fff;
   }
+
+  .footer-bottom-text {
+     padding-bottom: 24px;
+  }
+
   .footer-bottom-block {
     width: 590px;
     margin-bottom: 30px;
@@ -221,9 +230,9 @@
 
   .form-feedback-button {
     margin-top: 10px;
-    padding: 8px 226px;
+    padding: 8px 126px;
     height: 38px;
-    width: 550px;
+    width: 390px;
     border-radius: 10px;
     background: #1a3472;
 
@@ -244,6 +253,7 @@
     justify-content: flex-start;
     font-size: 10px;
     color: #fff;
+    padding-bottom: 24px;
   }
 
   .footer-politics__item {
