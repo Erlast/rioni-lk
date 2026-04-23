@@ -47,6 +47,7 @@
         :width="size"
         :height="size"
         :max-width="size"
+        cover
         :src="`${accountStore.data.info.photoUrl}`"
         :alt="`${accountStore.data.info.surname} ${accountStore.data.info.name}`"
       />
@@ -61,7 +62,7 @@
         </template>
       </v-btn>
       <v-btn v-if="showDeleteIcon && mobile" icon variant="plain" @click="deleteAvatar">
-        <IconDelete />
+        <v-icon icon="mdi-delete" color="middle-blue"/>
       </v-btn>
       <v-dialog v-model="dialog" max-width="480" class="confirm-dialog">
         <template #default="{ isActive }">

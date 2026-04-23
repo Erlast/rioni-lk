@@ -1,218 +1,125 @@
 <script setup lang="ts">
-  import { API_ROUTES } from '@/api';
-  import { onMounted, ref } from 'vue';
-  import type { Profile } from '@/interfaces/profile';
-  import { computed } from 'vue';
+  import { ref } from 'vue';
+  import { useAccountStore } from '@/stores/accountStore';
+  import { useI18n } from 'vue-i18n';
 
-  const simpleProfile = ref<Profile>();
-  var hasProtect = ref<boolean>(true);
-  // Get the full current URL
-  const currentUrl = window.location.search;
+  const accountStore = useAccountStore();
+  const { t } = useI18n();
+  const hasProtect = ref(true);
 
-  // Create a URLSearchParams object to easily work with the parameters
-  const urlParams = new URLSearchParams(currentUrl);
-
-  // Get a specific parameter
-  let userId = urlParams.get('id'); // e.g., for ?myParam=value
-
-  console.log(userId);
-
-  async function fetchSimpleProfile() {
-    const data = await fetch(API_ROUTES.simpleProfile + '/?userId=' + userId);
-    const res = (await data.json()) as Profile;
-    simpleProfile.value = res.content[0];
-  }
-
-  onMounted(() => {
-    fetchSimpleProfile();
-  });
-
-  function onProtect(): void {
+  const onProtect = () => {
     hasProtect.value = !hasProtect.value;
-  }
+  };
 </script>
 
 <template>
-  <div class="profile b-section">
-    <div class="profile-form-bg">
-      <div class="profile-form">
-        <div class="profile-form__label">Карта клиента</div>
-        <div class="profile-form-inside">
-          <div class="profile-form-inside-block">
-            <div
-              class="profile-form-photo"
-              :style="{ 'background-image': `url(${simpleProfile?.photoUrl})` }"
-            ></div>
-          </div>
+  <v-sheet class="d-flex ga-2">
+    <v-sheet width="50%" class="rounded-xxl pa-6" style="background-color: white !important">
+      <v-sheet class="mb-4">{{ t('profile.cardTitle') }}</v-sheet>
+      <v-sheet class="d-flex ga-10">
+        <v-sheet width="170">
+          <v-img
+            :src="accountStore.data.info.photoUrl"
+            alt="photo"
+            height="170"
+            width="170"
+            aspect-ratio="1/1"
+            rounded="mg"
+            cover
+          />
+        </v-sheet>
 
-          <div class="profile-form-inside-block">
-            <div class="profile-form-cell">
-              <div class="profile-form-cell-name">Номер БС</div>
-              <div class="profile-form-cell-info">{{ simpleProfile?.nbs }}</div>
-            </div>
-            <div class="profile-form-cell">
-              <div class="profile-form-cell-name">Номер счета ДУ</div>
-              <div class="profile-form-cell-info">{{ simpleProfile?.ndu }}</div>
-            </div>
-            <div class="profile-form-cell">
-              <div class="profile-form-cell-name">Почта</div>
-              <div class="profile-form-cell-info">{{ simpleProfile?.email }}</div>
-            </div>
-            <div class="profile-form-cell">
-              <div class="profile-form-cell-name">Телефон</div>
-              <div class="profile-form-cell-info">{{ simpleProfile?.phone }}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="profile-form">
-        <div class="profile-form__label">
-          Персональные данные
-          <div class="profile-form-icon profile-form__show" v-on:click="onProtect()"></div>
-          <div class="profile-form-icon profile-form__change"></div>
-        </div>
+        <v-sheet class="d-flex flex-column ga-2">
+          <v-sheet class="d-flex flex-column">
+            <v-sheet class="font-small text-type-text">{{ t('profile.nbsTitle') }}</v-sheet>
+            <v-sheet class="font-default text-dark-blue">{{ accountStore.data.info.nbs }}</v-sheet>
+          </v-sheet>
+          <v-sheet class="d-flex flex-column">
+            <v-sheet class="font-small text-type-text">{{ t('profile.nduTitle') }}</v-sheet>
+            <v-sheet class="font-default text-dark-blue">{{ accountStore.data.info.ndu }}</v-sheet>
+          </v-sheet>
+          <v-sheet class="d-flex flex-column">
+            <v-sheet class="font-small text-type-text">{{ t('profile.email') }}</v-sheet>
+            <v-sheet class="font-default text-dark-blue">
+              {{ accountStore.data.info.email }}
+            </v-sheet>
+          </v-sheet>
+          <v-sheet class="d-flex flex-column">
+            <v-sheet class="font-small text-type-text">{{ t('profile.phoneNumber') }}</v-sheet>
+            <v-sheet class="font-default text-dark-blue">
+              {{ accountStore.data.info.phone }}
+            </v-sheet>
+          </v-sheet>
+        </v-sheet>
+      </v-sheet>
+    </v-sheet>
+    <v-sheet width="50%" class="rounded-xxl pa-6" style="background-color: white !important">
+      <v-sheet class="d-flex justify-space-between mb-4">
+        <v-sheet class="d-flex ga-2">
+          <v-sheet>{{ t('profile.privateProfileTitle') }}</v-sheet>
+          <v-btn icon density="compact" variant="text" @click="onProtect()">
+            <v-icon :icon="hasProtect ? 'mdi-eye-off' : 'mdi-eye'" color="middle-blue" />
+          </v-btn>
+        </v-sheet>
+        <v-sheet class="d-flex ga-2">
+          <v-btn icon density="compact" :ripple="false" variant="text"><v-icon icon="mdi-square-edit-outline" color="middle-blue" /></v-btn>
+        </v-sheet>
+      </v-sheet>
 
-        <div class="profile-form-inside" :class="{ 'profile-form-protect': hasProtect }">
-          <div class="profile-form-inside-block profile-form-inside-block-personal-max-width">
-            <div class="profile-form-cell">
-              <div class="profile-form-cell-name">Имя</div>
-              <div class="profile-form-cell-info">
-                {{ simpleProfile?.name }} {{ simpleProfile?.patronymic }}
-                {{ simpleProfile?.surname }}
-              </div>
-            </div>
-            <div class="profile-form-cell">
-              <div class="profile-form-cell-2s-fields">
-                <div class="profile-form-cell-2s-fields-field">
-                  <div class="profile-form-cell-name">Дата рождения</div>
-                  <div class="profile-form-cell-info">{{ simpleProfile?.dateOfBirth }}</div>
-                </div>
-                <div class="profile-form-cell-2s-fields-field">
-                  <div class="profile-form-cell-name">Пол</div>
-                  <div class="profile-form-cell-info">{{ simpleProfile?.gender }}</div>
-                </div>
-              </div>
-            </div>
+      <v-sheet class="d-flex ga-10" :class="{ 'profile-form-protect': hasProtect }">
+        <v-sheet class="d-flex flex-column ga-2">
+          <v-sheet class="d-flex flex-column">
+            <v-sheet class="font-small text-type-text">{{ t('profile.fullName') }}</v-sheet>
+            <v-sheet class="font-default text-dark-blue">
+              {{ accountStore.data.info.name }} {{ accountStore.data.info.patronymic }}
+              {{ accountStore.data.info.surname }}
+            </v-sheet>
+          </v-sheet>
+          <v-sheet class="d-flex ga-8">
+            <v-sheet class="d-flex flex-column">
+              <v-sheet class="font-small text-type-text">{{ t('profile.birthdayTitle') }}</v-sheet>
+              <v-sheet class="font-default text-dark-blue">{{ accountStore.data.info.dateOfBirth }}</v-sheet>
+            </v-sheet>
+            <v-sheet class="d-flex flex-column">
+              <v-sheet class="font-small text-type-text">{{ t('profile.gender') }}</v-sheet>
+              <v-sheet class="font-default text-dark-blue">{{ accountStore.data.info.gender }}</v-sheet>
+            </v-sheet>
+          </v-sheet>
 
-            <div class="profile-form-cell">
-              <div class="profile-form-cell-name">Гражданство</div>
-              <div class="profile-form-cell-info">{{ simpleProfile?.citizenship }}</div>
-            </div>
-            <div class="profile-form-cell">
-              <div class="profile-form-cell-name">Место рождения</div>
-              <div class="profile-form-cell-info">{{ simpleProfile?.placeOfBirth }}</div>
-            </div>
-          </div>
-          <div class="profile-form-inside-block">
-            <div class="profile-form-cell">
-              <div class="profile-form-cell-name">Тип документа</div>
-              <div class="profile-form-cell-info">{{ simpleProfile?.documentType }}</div>
-            </div>
-            <div class="profile-form-cell">
-              <div class="profile-form-cell-name">№ паспорта</div>
-              <div class="profile-form-cell-info">{{ simpleProfile?.passportNumber }}</div>
-            </div>
-            <div class="profile-form-cell">
-              <div class="profile-form-cell-name">Дата выдачи</div>
-              <div class="profile-form-cell-info">{{ simpleProfile?.passportIssueDate }}</div>
-            </div>
-            <div class="profile-form-cell">
-              <div class="profile-form-cell-name">Конец срока действия</div>
-              <div class="profile-form-cell-info">{{ simpleProfile?.passportExpiryDate }}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+          <v-sheet class="d-flex flex-column">
+            <v-sheet class="font-small text-type-text">{{ t('profile.citizenship') }}</v-sheet>
+            <v-sheet class="font-default text-dark-blue">{{ accountStore.data.info.citizenship }}</v-sheet>
+          </v-sheet>
+          <v-sheet class="d-flex flex-column">
+            <v-sheet class="font-small text-type-text">{{ t('profile.placeOfBirth') }}</v-sheet>
+            <v-sheet class="font-default text-dark-blue">{{ accountStore.data.info.placeOfBirth }}</v-sheet>
+          </v-sheet>
+        </v-sheet>
+        <v-sheet class="d-flex flex-column ga-2">
+          <v-sheet class="d-flex flex-column">
+            <v-sheet class="font-small text-type-text">{{ t('profile.documentType') }}</v-sheet>
+            <v-sheet class="font-default text-dark-blue">{{ accountStore.data.info.documentType }}</v-sheet>
+          </v-sheet>
+          <v-sheet class="d-flex flex-column">
+            <v-sheet class="font-small text-type-text">{{ t('profile.passportNumber') }}</v-sheet>
+            <v-sheet class="font-default text-dark-blue">{{ accountStore.data.info.passportNumber }}</v-sheet>
+          </v-sheet>
+          <v-sheet class="d-flex flex-column">
+            <v-sheet class="font-small text-type-text">{{ t('profile.passportIssueDate') }}</v-sheet>
+            <v-sheet class="font-default text-dark-blue">{{ accountStore.data.info.passportIssueDate }}</v-sheet>
+          </v-sheet>
+          <v-sheet class="d-flex flex-column">
+            <v-sheet class="font-small text-type-text">{{ t('profile.passportExpiryDate') }}</v-sheet>
+            <v-sheet class="font-default text-dark-blue">{{ accountStore.data.info.passportExpiryDate }}</v-sheet>
+          </v-sheet>
+        </v-sheet>
+      </v-sheet>
+    </v-sheet>
+  </v-sheet>
 </template>
 
 <style scoped lang="scss">
-  .profile {
-    display: flex;
-    position: relative;
-  }
-  .profile-form-bg {
-    display: flex;
-    margin-right: 20px;
-    flex-direction: row;
-  }
-  .profile-form {
-    width: 473px;
-    height: 270px;
-    padding: 24px;
-    margin-right: 12px;
-    border-radius: 30px;
-    box-sizing: border-box;
-    background: var(--Backgrounds-white, #fff);
-
-    .profile-form__label {
-      display: flex;
-      color: var(--Text-Text-color, #2a2a2a);
-
-      font-size: 16px;
-    }
-    .profile-form-icon {
-      margin-left: 10px;
-      width: 22px;
-      height: 22px;
-      background-size: contain;
-      background-repeat: no-repeat;
-      cursor: pointer;
-    }
-    .profile-form__show {
-      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAHbSURBVHgB5ZS9TgJBEMdn9/iw0hPfwITGxMTSRIiJYjSx1sLC3kdQUSR8PIIPYGHjC0iURBMaS2PsjG8ALnSAt+PsfcByt6AJNsZp7nZ35jf/nd0dgD9gDH7fkNmblQ97syyDGQ5Tm4JWW/Rjk+g2ILrK2XdB5IKzW6U0R7bkzqD10q4fv3trRBtAQYj6SUr5TwCTilx5nTZ0CwhJwzqK+qk1DmoGFwrcbiRUwJw5J0iR7cXJp+lDgaBch0bBe3uW3Vrp0p+lg4CxZynhCKy+3VmTdzpUTwbFojSC6WT79IlpeR3JcLdzf1qDoETD7Rt3EsAHt2I+Vy2NQlUlncaPoJ5EKmH8KhjyIQTzEV+UBSOUnDlaaxBVfQB+FXgQqJzDfpyzngkqsv2Y5JiIgBljIcV0ogyuQ9llK+M8maBeHfEiAgZZciNBK4XI9A/VSgANXykNiqlcZRskZkNyHVE/Ox+MRlWqh1HtiUwvGb5S3HJWQXImkV8CyhV9266QhXQCbvYdM9jzmnz6ISWE6IhUekGHKotNgJJiTPm5IwKI2GUO7oiH/CP4ddWNjYEGb99dmMsUFtlMfBk+6RCS1mundvzmx0aAo2CvPzRhTEOZyuyNslTNOmiH/8++ADyM9BuqIpoWAAAAAElFTkSuQmCC);
-    }
-    .profile-form__change {
-      margin-left: auto;
-      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAFSSURBVHgBtZSxToRAEIZnFiKXWJicD6CFnaURuzMRo9HE1gewsNPO9mCpLI29D2AoTbQ4zwdAqyt4CONdZQyXkx13ERLCyR6Q+NOwy8w3/yy7i9BWrsts6n0DAiKDMwYtZePuVEHUOyVwl4EIaxOkE9clRiROgOSjpFxtXNxa3e5mXJkog0PfYTlkG3ozWZUdwZ7xCMMDBPawFn10zBQig5HII8OYcyYrj8oQNXyCl+QYHIODZ4UBF+ZvY+SF/r6va6cIyYyKKAoQAp6ocfoBCbEpZD2aLAXBaZLP6f9aTYiSqePk+2QRROto63qwUgWx+4Mruz8UtUDGF5xXOkG2XCyibU0gmzESlzGK+xE/fH8FvSpBb9y5gQZqfdb+F0SAokmSWvzyXLZGxHfcZ7nBjYW3gIKgEC6UIs3J6rTTHVuxdMX/KDSnNF+eqM9obBXnfwCvgJvAHCULOAAAAABJRU5ErkJggg==);
-    }
-
-    .profile-form-protect {
-      filter: blur(3px);
-    }
-
-    .profile-form-inside {
-      display: flex;
-      flex-direction: row;
-      margin-top: 12px;
-
-      .profile-form-inside-block {
-        margin-right: 60px;
-        min-width: 110px;
-        width: min-content;
-
-        .profile-form-photo {
-          width: 170px;
-          height: 170px;
-          flex-shrink: 0;
-          border-radius: 10px;
-        }
-        .profile-form-cell {
-          margin-bottom: 12px;
-          line-height: 16px;
-          .profile-form-cell-2s-fields {
-            display: flex;
-            .profile-form-cell-2s-fields-field {
-              margin-right: 24px;
-            }
-          }
-          .profile-form-cell-name {
-            color: var(--Text-type-text, #99abbd);
-
-            font-size: 10px;
-          }
-          .profile-form-cell-info {
-            color: var(--Text-dark-blue, #2e4376);
-
-            font-size: 14px;
-          }
-        }
-      }
-
-      .profile-form-inside-block-personal-max-width {
-        width: 190px;
-      }
-    }
+  .profile-form-protect {
+    filter: blur(3px);
   }
 </style>

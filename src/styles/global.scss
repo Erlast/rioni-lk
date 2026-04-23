@@ -1,11 +1,5 @@
 @include export_css_colors;
 
-// :root {
-//   --v-scrollbar-offset: 16px;
-//   --v-onboarding-step-z: 2410;
-//   --v-onboarding-overlay-z: 2400;
-// }
-
 // Основные настройки приложения
 #app {
   background-color: var(--color-MainBackground);
@@ -17,27 +11,28 @@ a {
 
 .v-btn {
   letter-spacing: normal !important;
+  text-transform: none !important;
 }
 
 .font-default {
   font-size: 14px;
 }
 
-// Цветовые классы
-.bg-color-1 {
-  background-color: #e7f8f0;
+.text-gradient {
+  background: linear-gradient(67deg, #103673 40.45%, #4a77c1 81.54%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent;
+  background-clip: text !important;
 }
 
-.bg-color-A1 {
-  background-color: $colorA1;
+.font-small {
+  font-size: 10px;
 }
 
-.bg-color-A2 {
-  background-color: $colorA2;
-}
-
-.bg-color-A3 {
-  background-color: $colorA3;
+.font-big-semibold {
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 40px;
 }
 
 // Блоки интерфейса

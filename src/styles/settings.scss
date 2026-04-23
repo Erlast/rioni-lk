@@ -22,7 +22,8 @@
       class: 'color',
       values: (
         'dark-blue': var(--color-DarkBlue),
-        'middle-blue': var(--color-MiddleBlue)
+        'middle-blue': var(--color-MiddleBlue),
+        'type-text': var(--color-TypeText)
       )
     ),
     'text': (
@@ -30,7 +31,17 @@
       class: 'text',
       values: (
         'dark-blue': var(--color-DarkBlue),
-        'middle-blue': var(--color-MiddleBlue)
+        'middle-blue': var(--color-MiddleBlue),
+        'type-text': var(--color-TypeText)
+      )
+    ),
+    'border-radius': (
+      property: 'border-radius',
+      class: 'rounded',
+      values: (
+        'mg': 10px,
+        'mr': 16px,
+        'xxl': 30px
       )
     )
   )

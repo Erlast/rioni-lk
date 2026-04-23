@@ -4,6 +4,6 @@
 
 <template>
   <v-app>
-    <RouterView class="content" />
+    <RouterView />
   </v-app>
 </template>

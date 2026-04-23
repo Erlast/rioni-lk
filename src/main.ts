@@ -19,6 +19,10 @@ import * as directives from 'vuetify/directives';
 import i18n from './utils/i18n.ts';
 import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
+import dayjs from 'dayjs';
+import updateLocale from 'dayjs/plugin/updateLocale';
+import arraySupport from 'dayjs/plugin/arraySupport';
+import 'dayjs/locale/ru';
 
 const vuetify = createVuetify({
   components,
@@ -48,6 +52,14 @@ const vuetify = createVuetify({
   display: {
     mobileBreakpoint: 960
   }
+});
+
+
+dayjs.extend(updateLocale);
+dayjs.extend(arraySupport);
+dayjs.locale('ru');
+dayjs.updateLocale('ru', {
+  weekStart: 1
 });
 
 const app = createApp(App);

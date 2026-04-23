@@ -13,24 +13,27 @@
 </script>
 
 <template>
-  <HeaderView />
-  <v-main app>
-    <v-sheet class="main-wrapper">
-      <v-container max-width="1280" class="py-12 main-container" :class="{ 'px-0 pt-2 pb-0': mobile }">
-        <RouterView />
-      </v-container>
-    </v-sheet>
-  </v-main>
-  <v-footer class="justify-lg-space-between align-center my-footer">
-    <Footer></Footer>
-  </v-footer>
+    <HeaderView />
+    <v-main app>
+      <v-sheet class="main-wrapper">
+        <v-container
+          max-width="1280"
+          class="py-12 main-container"
+          :class="{ 'px-0 pt-2 pb-0': mobile }"
+        >
+          <RouterView />
+        </v-container>
+      </v-sheet>
+    </v-main>
+    <v-footer class="justify-lg-space-between align-center my-footer">
+      <Footer></Footer>
+    </v-footer>
 </template>
 <style lang="scss">
   .main-container {
     background-color: var(--color-MainBackground);
     padding: 1rem 4rem;
   }
-
   .my-footer {
     box-sizing: border-box;
     padding: 0 !important;

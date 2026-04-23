@@ -8,6 +8,8 @@ $colorBlackBlack: rgba(0, 0, 0, 1);
 $colorWhiteWhite: rgba(255, 255, 255, 1);
 $colorDarkBlue: #0f171f;
 $colorMiddleBlue: #2c4d90;
+$colorTypeText: #99abbd;
+$colorElement: #6794da;
 
 @mixin export_css_colors {
   :root {
@@ -17,5 +19,7 @@ $colorMiddleBlue: #2c4d90;
     --color-WhiteWhite: #{$colorWhiteWhite};
     --color-DarkBlue: #{$colorDarkBlue};
     --color-MiddleBlue: #{$colorMiddleBlue};
+    --color-TypeText: #{$colorTypeText};
+    --color-Element: #{$colorElement};
   }
 }

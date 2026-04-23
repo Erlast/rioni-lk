@@ -6,12 +6,12 @@
 </script>
 
 <template>
-  <v-row>
-    <v-col cols="2"><Notice></Notice></v-col>
-    <v-col cols="10">
+  <v-sheet class="d-flex ga-5">
+    <v-sheet width="180"><Notice></Notice></v-sheet>
+    <v-sheet class="d-flex flex-column ga-4">
       <Profile></Profile>
       <Action></Action>
       <Requirements></Requirements>
-    </v-col>
-  </v-row>
+    </v-sheet>
+  </v-sheet>
 </template>

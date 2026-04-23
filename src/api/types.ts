@@ -14,5 +14,21 @@ export interface IPortfolioModel {
   passportIssueDate: string;
   passportExpiryDate: string;
   nbs: string;
-  nbu: string;
+  ndu: string;
+  account: IAccountModel;
+}
+
+export interface IDictionariesModel {
+  dictionaries: { currencies: ICurrencyModel[] };
+}
+export interface ICurrencyModel {
+  id: number;
+  title: string;
+  symbol: string;
+}
+
+export interface IAccountModel {
+  accountType: string;
+  accountNumber: string;
+  accountCurrencyId: number;
 }
