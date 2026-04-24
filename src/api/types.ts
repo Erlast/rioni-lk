@@ -1,4 +1,4 @@
-export interface IPortfolioModel {
+export interface IProfileModel {
   name: string;
   surname: string;
   patronymic: string;
@@ -15,7 +15,7 @@ export interface IPortfolioModel {
   passportExpiryDate: string;
   nbs: string;
   ndu: string;
-  account: IAccountModel;
+  accounts: IAccountModel[];
 }
 
 export interface IDictionariesModel {
@@ -28,6 +28,7 @@ export interface ICurrencyModel {
 }
 
 export interface IAccountModel {
+  id: number;
   accountType: string;
   accountNumber: string;
   accountCurrencyId: number;

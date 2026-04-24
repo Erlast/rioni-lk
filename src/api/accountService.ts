@@ -1,14 +1,12 @@
 import httpCommunicator from '@/api/httpCommunicator';
 import type { AxiosResponse } from 'axios';
-import { IPortfolioModel } from '@/api/types';
+import { IProfileModel } from '@/api/types';
 
 const accountsService = {
-  async portfolio(id: number) {
-    return httpCommunicator
-      .get(`/profile/${id}`)
-      .then((response: AxiosResponse<IPortfolioModel>) => {
-        return response.data;
-      });
+  async profile(id: number) {
+    return httpCommunicator.get(`/profile/${id}`).then((response: AxiosResponse<IProfileModel>) => {
+      return response.data;
+    });
   },
 
   async deleteAvatar(id: number) {

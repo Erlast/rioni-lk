@@ -1,11 +1,11 @@
 import accountsService from '@/api/accountService';
-import { ICurrencyModel, IPortfolioModel } from '@/api/types';
+import { ICurrencyModel, IProfileModel } from '@/api/types';
 import { defineStore } from 'pinia';
 import { useDictionaryStore } from './dictionariesStore';
 
 interface AccountModel {
   id: number;
-  info: IPortfolioModel;
+  info: IProfileModel;
 }
 interface IState {
   data: AccountModel;
@@ -39,26 +39,28 @@ export const useAccountStore = defineStore<'account', IState, IGetter, IAction>(
         passportExpiryDate: '',
         nbs: '',
         ndu: '',
-        account: {
-          accountType: '',
-          accountNumber: '',
-          accountCurrencyId: 1
-        }
+        accounts: [
+          {
+            accountType: '',
+            accountNumber: '',
+            accountCurrencyId: 1
+          }
+        ]
       }
     }
   }),
   getters: {
     getAccountCurrency: state => {
       const dictionaryStore = useDictionaryStore();
-      return dictionaryStore.currencies.find(
-        item => item.id === state.data.info.account.accountCurrencyId
-      );
+      const firstAccount = state.data.info.accounts[0];
+      if (!firstAccount) return undefined;
+      return dictionaryStore.currencies.find(item => item.id === firstAccount.accountCurrencyId);
     }
   },
   actions: {
     async load() {
       try {
-        const data = await accountsService.portfolio(this.data.id);
+        const data = await accountsService.profile(this.data.id);
         this.data = {
           id: 2,
           info: data
