@@ -23,7 +23,11 @@
       values: (
         'dark-blue': var(--color-DarkBlue),
         'middle-blue': var(--color-MiddleBlue),
-        'type-text': var(--color-TypeText)
+        'type-text': var(--color-TypeText),
+        'element': var(--color-Element),
+        'element-check': var(--color-ElementCheck),
+        'common': var(--color-TextText),
+        'additional-error': var(--color-AdditionalError)
       )
     ),
     'text': (
@@ -32,7 +36,11 @@
       values: (
         'dark-blue': var(--color-DarkBlue),
         'middle-blue': var(--color-MiddleBlue),
-        'type-text': var(--color-TypeText)
+        'type-text': var(--color-TypeText),
+        'element': var(--color-Element),
+        'element-check': var(--color-ElementCheck),
+        'common': var(--color-TextText),
+        'additional-error': var(--color-AdditionalError)
       )
     ),
     'border-radius': (

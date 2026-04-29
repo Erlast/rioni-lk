@@ -1,3 +1,5 @@
+import { InstrumentTypes } from './enum';
+
 export interface IProfileModel {
   name: string;
   surname: string;
@@ -32,4 +34,33 @@ export interface IAccountModel {
   accountType: string;
   accountNumber: string;
   accountCurrencyId: number;
+}
+
+export interface IPortfolioModel {
+  assets: IAssetModel[];
+  profit: IProfitModel;
+  paperSum: number;
+}
+
+export interface IAssetModel {
+  assetId: number;
+  baseTicker: string;
+  baseMarket: string;
+  assetName: string;
+  logo: string;
+  assetTypeCode: InstrumentTypes;
+  currnecy: number;
+  amount: number;
+  profit: number;
+  purchasePrice: number;
+  balanceValue: number;
+  bid: number;
+  ask: number;
+  investedValue: number;
+  active: boolean
+}
+
+export interface IProfitModel {
+  investedSum: number;
+  totalDiff: number;
 }

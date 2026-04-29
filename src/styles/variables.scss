@@ -1,7 +1,3 @@
-$colorA1: #2c4d90;
-$colorA2: #6794da;
-$colorA3: #4ba67c;
-
 $colorMainBackground: #edf6ff;
 $colorBackgroundBlue: #2c4d90;
 $colorBlackBlack: rgba(0, 0, 0, 1);
@@ -10,6 +6,10 @@ $colorDarkBlue: #0f171f;
 $colorMiddleBlue: #2c4d90;
 $colorTypeText: #99abbd;
 $colorElement: #6794da;
+$colorElementCheck: #4ba67c;
+$colorChoosen: #cad9f6;
+$colorTextText: #2a2a2a;
+$colorAdditionalError: #FF5D5D;
 
 @mixin export_css_colors {
   :root {
@@ -21,5 +21,9 @@ $colorElement: #6794da;
     --color-MiddleBlue: #{$colorMiddleBlue};
     --color-TypeText: #{$colorTypeText};
     --color-Element: #{$colorElement};
+    --color-ElementCheck: #{$colorElementCheck};
+    --color-Choosen: #{$colorChoosen};
+    --color-TextText: #{$colorTextText};
+    --color-AdditionalError: #{$colorAdditionalError};
   }
 }

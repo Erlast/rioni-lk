@@ -41,6 +41,7 @@ export const useAccountStore = defineStore<'account', IState, IGetter, IAction>(
         ndu: '',
         accounts: [
           {
+            id: 0,
             accountType: '',
             accountNumber: '',
             accountCurrencyId: 1

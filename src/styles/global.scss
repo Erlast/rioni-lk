@@ -29,14 +29,61 @@ a {
   background: linear-gradient(67deg, #103673 40.45%, #4a77c1 81.54%) !important;
 }
 
+.liner-gradient-light {
+  background: linear-gradient(67deg, #fff 40.45%, #7fa8eb 81.54%) !important;
+}
+
+.text-gradient-light {
+  background: linear-gradient(180deg, #fff 20%, #7fa8eb 81.54%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent;
+  background-clip: text !important;
+}
+
 .font-small {
   font-size: 10px;
+}
+
+.font-smaller {
+  font-size: 12px;
 }
 
 .font-big-semibold {
   font-size: 40px;
   font-weight: 600;
   line-height: 40px;
+}
+
+.font-m {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.v-slide-group__content {
+  gap: 8px;
+
+  .v-btn--size-default {
+    padding: 0;
+  }
+
+  .v-tab {
+    .v-btn__content {
+      padding: 4px 16px;
+    }
+  }
+
+  .v-tab.v-btn {
+    min-width: auto;
+  }
+}
+
+.v-tab:not(.selected, :hover) {
+  .v-btn__content {
+    border-radius: 20px;
+    padding: 4px 16px;
+    transition: 0.3s;
+    color: var(--color-TypeText);
+  }
 }
 
 // Блоки интерфейса

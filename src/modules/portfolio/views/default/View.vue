@@ -7,11 +7,15 @@
   import { useAccountStore } from '@/stores/accountStore';
   import { onMounted, ref, computed } from 'vue';
   import { usePortfolioStore } from '@/stores/portfolioStore';
+  import AssetsTable from '@/components/AssetsTable.vue';
+  import { onUnmounted } from 'vue';
+  import { useAssetsStore } from '@/stores/assetsStore';
 
   const { t } = useI18n();
 
   const accountStore = useAccountStore();
   const portfolioStore = usePortfolioStore();
+  const assetsStore = useAssetsStore();
   const accounts = ref();
   const clickCard = (id: number) => {
     switch (id) {
@@ -54,7 +58,13 @@
 
   onMounted(async () => {
     await portfolioStore.load();
+    await assetsStore.load();
     accounts.value = portfolioStore.data.accounts;
+    assetsStore.startAutoUpdate(1500);
+  });
+
+  onUnmounted(() => {
+    assetsStore.stopAutoUpdate();
   });
 </script>
 
@@ -100,16 +110,76 @@
           v-model="account"
         />
       </v-sheet>
-      <v-sheet
-        class="d-flex flex-column rounded-xxl pa-6"
-        style="background-color: white !important"
-      >
-        <v-sheet class="d-flex flex-column liner-gradient-common pa-4 rounded-mr text-white" width="33%" height="98">
-          <v-sheet>{{ t('portfolio.balanceAccountTitle') }}</v-sheet>
-          <v-sheet>12345 {{ accountStore.getAccountCurrency?.title }}</v-sheet>
+      <v-sheet class="d-flex ga-2">
+        <v-sheet
+          class="d-flex flex-column liner-gradient-common pa-4 rounded-mr text-white"
+          width="33%"
+          height="98"
+          style="line-height: normal"
+        >
+          <v-sheet class="d-flex ga-2 align-center">
+            <v-sheet width="19">
+              <v-img src="/img/balance-icon.png" width="19" />
+            </v-sheet>
+            <v-sheet class="font-default">{{ t('portfolio.balanceAccountTitle') }}</v-sheet>
+          </v-sheet>
+          <v-sheet class="font-m text-gradient-light">
+            12345 {{ accountStore.getAccountCurrency?.title }}
+          </v-sheet>
+        </v-sheet>
+        <v-sheet
+          class="d-flex flex-column pa-4 rounded-mr"
+          width="33%"
+          height="98"
+          style="background: url('/img/balance-2-bg.png') no-repeat !important; line-height: normal"
+        >
+          <v-sheet class="d-flex ga-2 align-center">
+            <v-sheet width="19">
+              <v-img src="/img/wallet-icon.png" width="19" />
+            </v-sheet>
+            <v-sheet class="text-dark-blue font-default">
+              {{ t('portfolio.freeMoneyTitle') }}
+            </v-sheet>
+          </v-sheet>
+          <v-sheet class="font-m text-dark-blue">
+            12345 {{ accountStore.getAccountCurrency?.title }}
+          </v-sheet>
+          <v-sheet class="text-element font-smaller">
+            {{ t('portfolio.inAWay') }} 123 {{ accountStore.getAccountCurrency?.symbol }}
+          </v-sheet>
+        </v-sheet>
+        <v-sheet
+          class="d-flex flex-column pa-4 rounded-mr"
+          width="33%"
+          height="98"
+          style="background-color: white !important; line-height: normal"
+        >
+          <v-sheet class="d-flex ga-2 align-center">
+            <v-sheet width="19">
+              <v-img src="/img/nickel-icon.png" width="19" />
+            </v-sheet>
+            <v-sheet class="text-dark-blue font-default">
+              {{ t('portfolio.todayResultTitle') }}
+            </v-sheet>
+          </v-sheet>
+          <v-sheet class="font-m text-element-check">
+            12345 {{ accountStore.getAccountCurrency?.title }}
+          </v-sheet>
+          <v-sheet class="d-flex ga-1 align-center">
+            <v-sheet class="text-element-check font-smaller">
+              {{ t('portfolio.grow') }} 1,3%
+            </v-sheet>
+            <v-sheet class="triangle-up"></v-sheet>
+          </v-sheet>
         </v-sheet>
       </v-sheet>
-
+      <v-sheet
+        class="d-flex flex-column ga-4 rounded-xxl pa-6"
+        style="background-color: white !important"
+      >
+        <v-sheet class="text-dark-blue">{{ t('portfolio.papersTitle') }}</v-sheet>
+        <AssetsTable />
+      </v-sheet>
       <v-sheet
         class="d-flex flex-column rounded-xxl pa-6"
         style="background-color: white !important"
@@ -137,6 +207,14 @@
       font-size: 16px;
       color: white;
       background: linear-gradient(67deg, #103673 40.45%, #4a77c1 81.54%) !important;
+    }
+  }
+
+  .triangle-up {
+    &::before {
+      content: '\25B2';
+      color: var(--color-ElementCheck);
+      font-size: 12px;
     }
   }
 </style>
