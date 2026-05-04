@@ -1,12 +1,12 @@
 import httpCommunicator from '@/api/httpCommunicator';
 import type { AxiosResponse } from 'axios';
-import { IAccountModel, IPortfolioModel } from '@/api/types';
+import { IPortfoliosModel, IPortfolioModel } from '@/api/types';
 import qs from 'qs';
 
 const portfolioService = {
-  async portfolios(profileId: number): Promise<IAccountModel[]> {
+  async portfolios(profileId: number): Promise<IPortfoliosModel> {
     return httpCommunicator.get(`/portfolios/${profileId}`).then((response: AxiosResponse) => {
-      return response.data.data;
+      return response.data;
     });
   },
   async assets(profileId: number, types: string[] | null): Promise<IPortfolioModel> {

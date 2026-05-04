@@ -1,5 +1,10 @@
 <script setup lang="ts">
-  let items = [
+  import { onMounted, ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
+
+  const { t } = useI18n();
+  const item = ref();
+  const items = [
     {
       name: 'Foo',
       image:
@@ -12,87 +17,111 @@
     }
   ];
 
-
+  onMounted(() => {
+    item.value = items[0];
+  });
 </script>
 
 <template>
-  <div>
-  <div class="form-inside">
-    <div class="form-inside-block">
-      <div class="form-inside-contact-info-label">Контактная информация</div>
-      <div class="form-inside-inputs">
-        <div class="d-flex align-center">
+  <v-sheet class="d-flex flex-column ga-3">
+    <v-sheet
+      class="pa-8"
+      rounded="xxl"
+      style="background-color: var(--color-MainBackground) !important"
+    >
+      <v-sheet class="text-common font-medium">
+        {{ t('profile.modals.settings.contactInformationTitle') }}
+      </v-sheet>
+      <v-sheet class="d-flex flex-column ga-3">
+        <v-sheet class="d-flex align-center">
           <v-col cols="9" class="pa-0">
-            <div class="form-inside-inputs-grid justify-space-between align-center">
-              <span class="form-inside-text-2">E-mail</span>
+            <v-sheet class="d-flex justify-space-between align-center my-3">
+              <v-sheet class="">{{ t('profile.modals.settings.emailTitle') }}</v-sheet>
               <v-checkbox
-                label="Использовать для авторизации"
-                class="form-inside-text-2 v-hide-input__details"
+                :label="t('profile.modals.settings.useForAuthentificationTitle')"
+                hide-details
                 true-icon="rioni:formCheckOn"
                 false-icon="rioni:formCheckOff"
               ></v-checkbox>
-            </div>
-            <div class="d-flex">
-              <v-text-field hide-details="auto" class="form-inside-text-3"></v-text-field>
-            </div>
+            </v-sheet>
+            <v-sheet class="d-flex">
+              <v-text-field
+                variant="solo"
+                flat
+                hide-details="auto"
+                class="form-inside-text-3"
+              ></v-text-field>
+            </v-sheet>
           </v-col>
           <v-col cols="3" class="pa-0 d-flex justify-center">
-            <div class="contact-info-status">Подтвержден</div>
+            <v-sheet>{{ t('profile.modals.settings.confirmedTitle') }}</v-sheet>
           </v-col>
-        </div>
-        <div class="d-flex align-center">
+        </v-sheet>
+        <v-sheet class="d-flex align-center">
           <v-col cols="9" class="pa-0">
-            <div class="form-inside-inputs-grid justify-end align-center">
+            <v-sheet class="d-flex justify-end align-center">
               <v-checkbox
-                label="Использовать для авторизации"
-                class="form-inside-text-2 v-hide-input__details"
+                :label="t('profile.modals.settings.useForAuthentificationTitle')"
+                hide-details
                 true-icon="rioni:formCheckOn"
                 false-icon="rioni:formCheckOff"
               ></v-checkbox>
-            </div>
-            <div class="form-inside-inputs-grid">
-              <v-text-field hide-details="auto" class="form-inside-text-3"></v-text-field>
-            </div>
+            </v-sheet>
+            <v-sheet>
+              <v-text-field
+                variant="solo"
+                flat
+                hide-details="auto"
+                class="form-inside-text-3"
+              ></v-text-field>
+            </v-sheet>
           </v-col>
           <v-col cols="3" class="pa-0 d-flex justify-center">
-            <div class="contact-info-button-confirm">Подтвердить</div>
+            <v-sheet>{{ t('profile.modals.settings.confirmedTitle') }}</v-sheet>
           </v-col>
-        </div>
-        <div class="d-flex align-center">
+        </v-sheet>
+        <v-sheet class="d-flex align-center">
           <v-col cols="9" class="pa-0">
-            <div class="form-inside-inputs-grid justify-space-between align-center">
-              <span class="form-inside-text-2">Телефон</span>
+            <v-sheet class="d-flex justify-space-between align-center">
+              <span class="form-inside-text-2">{{ t('profile.modals.settings.phoneTitle') }}</span>
               <v-checkbox
-                label="Использовать для авторизации"
-                class="form-inside-text-2 v-hide-input__details"
+                :label="t('profile.modals.settings.useForAuthentificationTitle')"
+                hide-details
                 true-icon="rioni:formCheckOn"
                 false-icon="rioni:formCheckOff"
               ></v-checkbox>
-            </div>
-            <div class="form-inside-inputs-grid justify-space-between">
+            </v-sheet>
+            <v-sheet class="d-flex justify-space-between">
               <v-col cols="2" class="pa-0">
-                <v-select density="compact" :items="items">
+                <v-select variant="solo" flat density="compact" :items="items" v-model="item">
                   <template v-slot:item="{ props: itemProps, item }">
-                       <img v-bind="itemProps" :src="item.raw.image" class="flag-img"> 
-                       <br ></br>
+                    <img v-bind="itemProps" :src="item.raw.image" class="flag-img" />
                   </template>
                   <template v-slot:selection="{ item, index }">
-                       <img  :src="item.raw.image" ></img>
+                    <img :src="item.raw.image" />
                   </template>
                 </v-select>
               </v-col>
 
               <v-col cols="9" class="pa-0">
-                <v-text-field hide-details="auto" class="form-inside-text-3"></v-text-field>
+                <v-text-field
+                  variant="solo"
+                  flat
+                  hide-details="auto"
+                  class="form-inside-text-3"
+                ></v-text-field>
               </v-col>
-            </div>
+            </v-sheet>
           </v-col>
           <v-col cols="3" class="pa-0 d-flex justify-center">
-            <div class="contact-info-status">Подтвержден</div>
+            <v-sheet>{{ t('profile.modals.settings.confirmedTitle') }}</v-sheet>
           </v-col>
-        </div>
+        </v-sheet>
 
-       <div class="form-inside-warning-message">Внимание! При изменении адреса, Вам необходимо сразу предоставить подтверждающие документы, в противном случае операции по вашему счету будут временно недосутпны</div>
+        <v-sheet>
+          Внимание! При изменении адреса, Вам необходимо сразу предоставить подтверждающие
+          документы, в противном случае операции по вашему счету будут временно недосутпны
+        </v-sheet>
 
         <div class="d-flex align-center">
           <v-col cols="12" class="pa-0">
@@ -103,32 +132,51 @@
                 class="form-inside-text-2 v-hide-input__details"
                 true-icon="rioni:formCheckOn"
                 false-icon="rioni:formCheckOff"
-              >
-            </v-checkbox>
+              ></v-checkbox>
             </div>
             <div class="form-inside-inputs-grid justify-space-between">
               <v-col cols="4" class="pa-0">
-                   <v-select
-            label="Страна"
-            density="compact"
-            :items="['Данные 1', 'Данные 2', 'Данные 4']">   </v-select>
+                <v-select
+                  variant="solo"
+                  flat
+                  label="Страна"
+                  density="compact"
+                  :items="['Данные 1', 'Данные 2', 'Данные 4']"
+                ></v-select>
               </v-col>
-           <v-col cols="3" class="pa-0">
-                  <v-text-field hide-details="auto" class="form-inside-text-3" label="Город"></v-text-field>
+              <v-col cols="3" class="pa-0">
+                <v-text-field
+                  variant="solo"
+                  flat
+                  hide-details="auto"
+                  class="form-inside-text-3"
+                  label="Город"
+                ></v-text-field>
               </v-col>
               <v-col cols="4" class="pa-0">
-                <v-text-field hide-details="auto" class="form-inside-text-3" label="Индекс"></v-text-field>
+                <v-text-field
+                  variant="solo"
+                  flat
+                  hide-details="auto"
+                  class="form-inside-text-3"
+                  label="Индекс"
+                ></v-text-field>
               </v-col>
             </div>
-                  <div class="form-inside-inputs-grid justify-space-between">
+            <div class="form-inside-inputs-grid justify-space-between">
               <v-col cols="12" class="pa-0">
-                <v-text-field hide-details="auto" class="form-inside-text-3" label="Адрес"></v-text-field>
+                <v-text-field
+                  variant="solo"
+                  flat
+                  hide-details="auto"
+                  class="form-inside-text-3"
+                  label="Адрес"
+                ></v-text-field>
               </v-col>
             </div>
           </v-col>
-
         </div>
-       <div class="d-flex align-center">
+        <div class="d-flex align-center">
           <v-col cols="12" class="pa-0">
             <div class="form-inside-inputs-grid justify-space-between align-center">
               <span class="form-inside-text-2">Фактический адрес</span>
@@ -137,72 +185,82 @@
                 class="form-inside-text-2 v-hide-input__details"
                 true-icon="rioni:formCheckOn"
                 false-icon="rioni:formCheckOff"
-              >
-            </v-checkbox>
+              ></v-checkbox>
             </div>
             <div class="form-inside-inputs-grid justify-space-between">
               <v-col cols="4" class="pa-0">
-                   <v-select
-            label="Страна"
-            density="compact"
-            :items="['Данные 1', 'Данные 2', 'Данные 4']">   </v-select>
+                <v-select
+                  variant="solo"
+                  flat
+                  label="Страна"
+                  density="compact"
+                  :items="['Данные 1', 'Данные 2', 'Данные 4']"
+                ></v-select>
               </v-col>
-           <v-col cols="3" class="pa-0">
-                  <v-text-field hide-details="auto" class="form-inside-text-3" label="Город"></v-text-field>
+              <v-col cols="3" class="pa-0">
+                <v-text-field
+                  variant="solo"
+                  flat
+                  hide-details="auto"
+                  class="form-inside-text-3"
+                  label="Город"
+                ></v-text-field>
               </v-col>
               <v-col cols="4" class="pa-0">
-                <v-text-field hide-details="auto" class="form-inside-text-3" label="Индекс"></v-text-field>
+                <v-text-field
+                  variant="solo"
+                  flat
+                  hide-details="auto"
+                  class="form-inside-text-3"
+                  label="Индекс"
+                ></v-text-field>
               </v-col>
             </div>
-                  <div class="form-inside-inputs-grid justify-space-between">
+            <div class="form-inside-inputs-grid justify-space-between">
               <v-col cols="12" class="pa-0">
-                <v-text-field hide-details="auto" class="form-inside-text-3" label="Адрес"></v-text-field>
+                <v-text-field
+                  variant="solo"
+                  flat
+                  hide-details="auto"
+                  class="form-inside-text-3"
+                  label="Адрес"
+                ></v-text-field>
               </v-col>
             </div>
           </v-col>
-
         </div>
-<div > <span class="form-inside-text-2">Для подтверждения данного адреса, вам необходимо  </span> <span class="form-inside-text-4">загрузить документы сюда</span></div>
-
-      </div>
-    </div>
-  
-  </div> 
-  
-  
-  <div class="form-save">Сохранить изменения</div></div>
+        <div>
+          <span class="form-inside-text-2">Для подтверждения данного адреса, вам необходимо</span>
+          <span class="form-inside-text-4">загрузить документы сюда</span>
+        </div>
+      </v-sheet>
+    </v-sheet>
+    <v-btn variant="flat" rounded="lg" bg="element-check" color="element-check">
+      <v-sheet class="text-white">
+        {{ t('profile.modals.settings.contactInformationSaveBtn') }}
+      </v-sheet>
+    </v-btn>
+  </v-sheet>
 </template>
 
-<style scoped lang="scss"> .flag-img {
-    display:block;
-    margin-left:30px;
-}
+<style scoped lang="scss">
+  .flag-img {
+    display: block;
+    margin-left: 30px;
+  }
 
-
-  .form-inside-warning-message{
+  .form-inside-warning-message {
     display: flex;
-  width: 511px;
- 
+    width: 511px;
 
-
-  padding: 14px 23px;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
+    padding: 14px 23px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
     border-radius: 8px;
-  background: var(--Backgrounds-light-green, #E7F8F0);
+    background: var(--Backgrounds-light-green, #e7f8f0);
   }
 
-  .form-inside-contact-info-label {
-    color: var(--Text-Text-color, #2a2a2a);
-
-
-    
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-  }
   .contact-info-status {
     margin-top: 50px;
     color: var(--Elements-check, #4ba67c);
@@ -224,4 +282,5 @@
     color: var(--Backgrounds-white, #fff);
 
     font-size: 14px;
-  }</style>
+  }
+</style>

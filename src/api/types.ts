@@ -17,7 +17,6 @@ export interface IProfileModel {
   passportExpiryDate: string;
   nbs: string;
   ndu: string;
-  accounts: IAccountModel[];
 }
 
 export interface IDictionariesModel {
@@ -34,6 +33,14 @@ export interface IAccountModel {
   accountType: string;
   accountNumber: string;
   accountCurrencyId: number;
+  balance: number;
+  tradingFunds: number;
+  fundsInTransit: number;
+}
+
+export interface IPortfoliosModel{
+  totalSum: number;
+  accounts: IAccountModel[]
 }
 
 export interface IPortfolioModel {

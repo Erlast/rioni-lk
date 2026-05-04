@@ -17,5 +17,16 @@ export const profile = {
   settingsTitle: 'Настройки профиля',
   actionsTitle: 'Действия в профиле',
   anketaTitle: 'Анкета',
-  tariffTitle: 'Тарифный план'
+  tariffTitle: 'Тарифный план',
+  modals: {
+    settings: {
+      title: 'Настройки профиля',
+      contactInformationTitle: 'Контактная информация',
+      contactInformationSaveBtn: 'Сохранить изменения',
+      emailTitle: 'E-mail',
+      useForAuthentificationTitle: 'Использовать для авторизации',
+      confirmedTitle: 'Подтвержден',
+      phoneTitle: 'Телефон'
+    }
+  }
 };

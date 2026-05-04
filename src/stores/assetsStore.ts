@@ -61,7 +61,7 @@ export const useAssetsStore = defineStore<'assets', IState, IGetters, IActions>(
           this.data.assets = [];
           this.data.profit = { investedSum: 0, totalDiff: 0 };
         }
-        console.log(this.data)
+      
       } catch (error: any) {
         this.error = { name: error.code, message: error.message };
         const notify = useNotify();
@@ -107,7 +107,6 @@ export const useAssetsStore = defineStore<'assets', IState, IGetters, IActions>(
   },
   getters: {
     getAssets(state: IState) {
-      console.log(state.data.assets)
       return state.data.assets.sort((a, b) => {
         return a.active === b.active ? 0 : a.active ? -1 : 1;
       })

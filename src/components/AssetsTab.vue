@@ -126,7 +126,7 @@
           </v-col>
           <v-col class="d-flex table-cell">
             <v-sheet class="d-flex flex-column">
-              <v-sheet class="body-b3">
+              <v-sheet class="font-semibold">
                 {{ item.assetName }}
               </v-sheet>
               <v-sheet class="font-smaller text-type-text">{{ item.baseTicker }}</v-sheet>
@@ -186,7 +186,7 @@
               />
             </div>
             <v-sheet class="d-flex flex-column">
-              <v-sheet class="body-b3">
+              <v-sheet class="font-semibold">
                 {{ item.assetName }}
               </v-sheet>
               <v-sheet class="font-smaller text-type-text">{{ item.baseTicker }}</v-sheet>
@@ -204,30 +204,30 @@
       </v-sheet>
     </div>
     <v-row v-if="props.currentAsset!=='currency' && rawItems && rawItems.length" class="summary">
-      <v-col class="d-flex align-center justify-center table-cell" style="max-width: 70px">
+      <v-col class="d-flex align-center table-cell font-semibold" style="max-width: 70px">
         {{ t('portfolio.table.summary') }}
       </v-col>
-      <v-col class="table-cell d-flex"></v-col>
-      <v-col class="table-cell d-flex align-center" style="max-width: 90px"></v-col>
-      <v-col class="table-cell d-flex align-center" style="max-width: 70px"></v-col>
+      <v-col class="table-cell d-flex">&nbsp;</v-col>
+      <v-col class="table-cell d-flex align-center" style="max-width: 90px">&nbsp;</v-col>
+      <v-col class="table-cell d-flex align-center" style="max-width: 70px">&nbsp;</v-col>
       <v-col class="table-cell d-flex align-center">
         <v-row>
           <v-col style="max-width: 70px"></v-col>
-          <v-col>{{ assetsStore.data.profit.investedSum }}</v-col>
+          <v-col class="font-semibold" style="padding-left:8px;">{{ assetsStore.data.profit.investedSum }}</v-col>
         </v-row>
       </v-col>
-      <v-col class="table-cell d-flex align-center"></v-col>
+      <v-col class="table-cell d-flex align-center">&nbsp;</v-col>
       <v-col class="table-cell d-flex align-center">
-        <v-sheet>{{ assetsStore.data.profit.totalDiff }}</v-sheet>
+        <v-sheet class="font-semibold" style="padding-left:8px;">{{ assetsStore.data.profit.totalDiff }}</v-sheet>
       </v-col>
     </v-row>
     <v-row v-if="props.currentAsset==='currency' && rawItems && rawItems.length" class="summary">
-      <v-col class="d-flex align-center table-cell" style="max-width: 700px">
+      <v-col class="d-flex align-center table-cell font-semibold" style="max-width: 700px">
         {{ t('portfolio.table.summary') }}
       </v-col>
-      <v-col class="table-cell d-flex"></v-col>
+      <v-col class="table-cell d-flex">&nbsp;</v-col>
       <v-col class="table-cell d-flex align-center">
-        <v-sheet>{{ assetsStore.data.profit.investedSum }}</v-sheet>
+        <v-sheet class="font-semibold" style="padding-left:18px;">{{ assetsStore.data.profit.investedSum }}</v-sheet>
       </v-col>
     </v-row>
   </div>

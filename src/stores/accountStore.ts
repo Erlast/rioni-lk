@@ -2,6 +2,7 @@ import accountsService from '@/api/accountService';
 import { ICurrencyModel, IProfileModel } from '@/api/types';
 import { defineStore } from 'pinia';
 import { useDictionaryStore } from './dictionariesStore';
+import { usePortfolioStore } from './portfolioStore';
 
 interface AccountModel {
   id: number;
@@ -38,22 +39,15 @@ export const useAccountStore = defineStore<'account', IState, IGetter, IAction>(
         passportIssueDate: '',
         passportExpiryDate: '',
         nbs: '',
-        ndu: '',
-        accounts: [
-          {
-            id: 0,
-            accountType: '',
-            accountNumber: '',
-            accountCurrencyId: 1
-          }
-        ]
+        ndu: ''
       }
     }
   }),
   getters: {
     getAccountCurrency: state => {
       const dictionaryStore = useDictionaryStore();
-      const firstAccount = state.data.info.accounts[0];
+      const portfolioStore = usePortfolioStore();
+      const firstAccount = portfolioStore.data.currentAccount;
       if (!firstAccount) return undefined;
       return dictionaryStore.currencies.find(item => item.id === firstAccount.accountCurrencyId);
     }

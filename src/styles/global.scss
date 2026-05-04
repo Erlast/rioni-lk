@@ -48,10 +48,19 @@ a {
   font-size: 12px;
 }
 
+.font-semibold {
+  font-weight: 600;
+}
+
 .font-big-semibold {
   font-size: 40px;
   font-weight: 600;
   line-height: 40px;
+}
+
+.font-medium {
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .font-m {
@@ -272,6 +281,17 @@ a {
 }
 
 /* формы */
+
+.v-dialog {
+  .v-card {
+    border-radius: 30px !important;
+
+    .v-card-title,
+    .v-card-text {
+      padding: 0;
+    }
+  }
+}
 .modal-window {
   padding: 20px;
   background: #fff;
@@ -284,10 +304,10 @@ a {
     align-items: center;
     gap: 36px;
     border-radius: 16px;
-    background: var(--Elements, #6794da);
+    background: linear-gradient(67deg, #103673 40.45%, #4a77c1 81.54%) !important;
     align-self: stretch;
     text-align: left;
-    color: var(--Backgrounds-white, #fff);
+    color: #fff;
 
     .button-close {
       cursor: pointer;

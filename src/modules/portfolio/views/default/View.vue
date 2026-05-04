@@ -84,7 +84,7 @@
               <v-img src="/img/topUp-icon.png" alt="top-up-icon" />
             </v-sheet>
             <v-sheet class="font-big-semibold text-gradient">
-              13244,20 {{ accountStore.getAccountCurrency?.title }}
+              {{ portfolioStore.data.totalSum }} {{ accountStore.getAccountCurrency?.title }}
             </v-sheet>
           </v-sheet>
           <v-btn variant="flat" rounded="mr" @click="openTopUp" height="50" class="btn-top-up">
@@ -124,7 +124,8 @@
             <v-sheet class="font-default">{{ t('portfolio.balanceAccountTitle') }}</v-sheet>
           </v-sheet>
           <v-sheet class="font-m text-gradient-light">
-            12345 {{ accountStore.getAccountCurrency?.title }}
+            {{ account && account.balance ? account.balance : 0 }}
+            {{ accountStore.getAccountCurrency?.title }}
           </v-sheet>
         </v-sheet>
         <v-sheet
@@ -142,10 +143,13 @@
             </v-sheet>
           </v-sheet>
           <v-sheet class="font-m text-dark-blue">
-            12345 {{ accountStore.getAccountCurrency?.title }}
+            {{ account && account.tradingFunds ? account.tradingFunds : 0 }}
+            {{ accountStore.getAccountCurrency?.title }}
           </v-sheet>
           <v-sheet class="text-element font-smaller">
-            {{ t('portfolio.inAWay') }} 123 {{ accountStore.getAccountCurrency?.symbol }}
+            {{ t('portfolio.inAWay') }}
+            {{ account && account.fundsInTransit ? account.fundsInTransit : 0 }}
+            {{ accountStore.getAccountCurrency?.symbol }}
           </v-sheet>
         </v-sheet>
         <v-sheet
