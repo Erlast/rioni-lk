@@ -7,6 +7,7 @@ export const portfolio = {
   topUpBtn: 'Пополнить счет',
   balanceAccountTitle: 'Баланс счета',
   freeMoneyTitle: 'Свободные средства',
+  depositTitle: 'Депозит',
   inAWay: 'Средства в пути',
   todayResultTitle: 'Результат за сегодня',
   grow: 'Рост на',

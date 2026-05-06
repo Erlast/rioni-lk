@@ -1,3 +1,6 @@
+@use 'flag-icons/sass/flag-icons' with (
+  $flag-icons-path: 'node_modules/flag-icons/flags'
+);
 @use 'vuetify/settings' with (
   $container-max-widths: (
     'lg': 1172px,
@@ -15,33 +18,37 @@
       values: (
         'dark-blue': var(--color-DarkBlue),
         'middle-blue': var(--color-MiddleBlue),
-        'element-check': var(--color-ElementCheck),
+        'element-check': var(--color-ElementCheck)
       )
     ),
     'color': (
       property: 'color',
       class: 'color',
       values: (
+        'background-blue': var(--color-BackgroundBlue),
         'dark-blue': var(--color-DarkBlue),
         'middle-blue': var(--color-MiddleBlue),
         'type-text': var(--color-TypeText),
         'element': var(--color-Element),
         'element-check': var(--color-ElementCheck),
         'common': var(--color-TextText),
-        'additional-error': var(--color-AdditionalError)
+        'additional-error': var(--color-AdditionalError),
+        'additional-link': var(--color-AdditionalLink)
       )
     ),
     'text': (
       property: 'color',
       class: 'text',
       values: (
+        'background-blue': var(--color-BackgroundBlue),
         'dark-blue': var(--color-DarkBlue),
         'middle-blue': var(--color-MiddleBlue),
         'type-text': var(--color-TypeText),
         'element': var(--color-Element),
         'element-check': var(--color-ElementCheck),
         'common': var(--color-TextText),
-        'additional-error': var(--color-AdditionalError)
+        'additional-error': var(--color-AdditionalError),
+        'additional-link': var(--color-AdditionalLink)
       )
     ),
     'border-radius': (
@@ -50,7 +57,15 @@
       values: (
         'mg': 10px,
         'mr': 16px,
+        '20': 20px,
         'xxl': 30px
+      )
+    ),
+    'border-color': (
+      property: 'border-color',
+      class: 'border-color',
+      values: (
+        'element': var(--color-Element)
       )
     )
   )

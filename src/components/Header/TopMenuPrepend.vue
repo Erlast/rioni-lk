@@ -10,10 +10,10 @@
       name: 'portfolio',
       title: t('header.portfolio')
     },
-    {
-      name: 'market',
-      title: t('header.market')
-    },
+    // {
+    //   name: 'market',
+    //   title: t('header.market')
+    // },
     {
       name: 'pronouns',
       title: t('header.pronouns')
@@ -22,10 +22,10 @@
       name: 'reports',
       title: t('header.reports')
     },
-    {
-      name: 'analitics',
-      title: t('header.analitics')
-    }
+    // {
+    //   name: 'analitics',
+    //   title: t('header.analitics')
+    // }
   ];
 </script>
 

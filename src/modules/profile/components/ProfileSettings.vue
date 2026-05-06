@@ -1,34 +1,40 @@
 <script setup lang="ts">
   import ContactInformation from '@/modules/profile/components/profileSettings/ContactInformation.vue';
   import Profile from '@/modules/profile/components/profileSettings/Profile.vue';
-  import { inject, ref } from 'vue';
-import { useI18n } from 'vue-i18n';
+  import { inject } from 'vue';
+  import { useI18n } from 'vue-i18n';
 
-  const {t} = useI18n()
+  const { t } = useI18n();
   let showProfileSettings = inject('showProfileSettings');
 </script>
 
 <template>
   <v-card width="900">
-    <div class="modal-window">
-      <div class="form">
+    <v-sheet class="modal-window">
+      <v-sheet>
         <v-card-title>
-          <div class="modal-windows-label">
+          <v-sheet class="modal-windows-label">
             {{ t('profile.modals.settings.title') }}
-            <div class="button-close" @click="showProfileSettings = false"></div>
-          </div>
+            <v-sheet class="button-close" @click="showProfileSettings = false"></v-sheet>
+          </v-sheet>
         </v-card-title>
 
         <v-card-text>
-          <div class="d-flex ga-3">
+          <v-sheet class="d-flex ga-3">
             <ContactInformation></ContactInformation>
             <Profile></Profile>
-          </div>
+          </v-sheet>
         </v-card-text>
         <v-divider></v-divider>
-      </div>
-    </div>
+      </v-sheet>
+    </v-sheet>
   </v-card>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+  .modal-window {
+    .modal-windows-label {
+      background: linear-gradient(67deg, #103673 40.45%, #4a77c1 81.54%) !important;
+    }
+  }
+</style>

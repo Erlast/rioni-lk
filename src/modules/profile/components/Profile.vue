@@ -1,11 +1,16 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { provide, ref } from 'vue';
   import { useAccountStore } from '@/stores/accountStore';
   import { useI18n } from 'vue-i18n';
+  import dayjs from 'dayjs';
+  import ProfileData from './profile/ProfileData.vue';
 
   const accountStore = useAccountStore();
   const { t } = useI18n();
   const hasProtect = ref(true);
+  const showProfileData = ref(false);
+
+  provide('showProfileData', showProfileData);
 
   const onProtect = () => {
     hasProtect.value = !hasProtect.value;
@@ -62,7 +67,15 @@
           </v-btn>
         </v-sheet>
         <v-sheet class="d-flex ga-2">
-          <v-btn icon density="compact" :ripple="false" variant="text"><v-icon icon="mdi-square-edit-outline" color="middle-blue" /></v-btn>
+          <v-btn
+            icon
+            density="compact"
+            :ripple="false"
+            variant="text"
+            @click="showProfileData = true"
+          >
+            <v-icon icon="mdi-square-edit-outline" color="middle-blue" />
+          </v-btn>
         </v-sheet>
       </v-sheet>
 
@@ -78,43 +91,77 @@
           <v-sheet class="d-flex ga-8">
             <v-sheet class="d-flex flex-column">
               <v-sheet class="font-small text-type-text">{{ t('profile.birthdayTitle') }}</v-sheet>
-              <v-sheet class="font-default text-dark-blue">{{ accountStore.data.info.dateOfBirth }}</v-sheet>
+              <v-sheet class="font-default text-dark-blue">
+                {{
+                  dayjs(accountStore.data.info.dateOfBirth, 'DD.MM.YYYY', true).format('DD.MM.YYYY')
+                }}
+              </v-sheet>
             </v-sheet>
             <v-sheet class="d-flex flex-column">
               <v-sheet class="font-small text-type-text">{{ t('profile.gender') }}</v-sheet>
-              <v-sheet class="font-default text-dark-blue">{{ accountStore.data.info.gender }}</v-sheet>
+              <v-sheet class="font-default text-dark-blue">
+                {{ accountStore.data.info.gender }}
+              </v-sheet>
             </v-sheet>
           </v-sheet>
 
           <v-sheet class="d-flex flex-column">
             <v-sheet class="font-small text-type-text">{{ t('profile.citizenship') }}</v-sheet>
-            <v-sheet class="font-default text-dark-blue">{{ accountStore.data.info.citizenship }}</v-sheet>
+            <v-sheet class="font-default text-dark-blue">
+              {{ accountStore.data.info.citizenship }}
+            </v-sheet>
           </v-sheet>
           <v-sheet class="d-flex flex-column">
             <v-sheet class="font-small text-type-text">{{ t('profile.placeOfBirth') }}</v-sheet>
-            <v-sheet class="font-default text-dark-blue">{{ accountStore.data.info.placeOfBirth }}</v-sheet>
+            <v-sheet class="font-default text-dark-blue">
+              {{ accountStore.data.info.placeOfBirth }}
+            </v-sheet>
           </v-sheet>
         </v-sheet>
         <v-sheet class="d-flex flex-column ga-2">
           <v-sheet class="d-flex flex-column">
             <v-sheet class="font-small text-type-text">{{ t('profile.documentType') }}</v-sheet>
-            <v-sheet class="font-default text-dark-blue">{{ accountStore.data.info.documentType }}</v-sheet>
+            <v-sheet class="font-default text-dark-blue">
+              {{ accountStore.data.info.documentType }}
+            </v-sheet>
           </v-sheet>
           <v-sheet class="d-flex flex-column">
             <v-sheet class="font-small text-type-text">{{ t('profile.passportNumber') }}</v-sheet>
-            <v-sheet class="font-default text-dark-blue">{{ accountStore.data.info.passportNumber }}</v-sheet>
+            <v-sheet class="font-default text-dark-blue">
+              {{ accountStore.data.info.passportNumber }}
+            </v-sheet>
           </v-sheet>
           <v-sheet class="d-flex flex-column">
-            <v-sheet class="font-small text-type-text">{{ t('profile.passportIssueDate') }}</v-sheet>
-            <v-sheet class="font-default text-dark-blue">{{ accountStore.data.info.passportIssueDate }}</v-sheet>
+            <v-sheet class="font-small text-type-text">
+              {{ t('profile.passportIssueDate') }}
+            </v-sheet>
+            <v-sheet class="font-default text-dark-blue">
+              {{
+                dayjs(accountStore.data.info.passportIssueDate, 'DD.MM.YYYY', true).format(
+                  'DD.MM.YYYY'
+                )
+              }}
+            </v-sheet>
           </v-sheet>
           <v-sheet class="d-flex flex-column">
-            <v-sheet class="font-small text-type-text">{{ t('profile.passportExpiryDate') }}</v-sheet>
-            <v-sheet class="font-default text-dark-blue">{{ accountStore.data.info.passportExpiryDate }}</v-sheet>
+            <v-sheet class="font-small text-type-text">
+              {{ t('profile.passportExpiryDate') }}
+            </v-sheet>
+            <v-sheet class="font-default text-dark-blue">
+              {{
+                dayjs(accountStore.data.info.passportExpiryDate, 'DD.MM.YYYY', true).format(
+                  'DD.MM.YYYY'
+                )
+              }}
+            </v-sheet>
           </v-sheet>
         </v-sheet>
       </v-sheet>
     </v-sheet>
+
+    <v-dialog v-model="showProfileData" width="auto" scrollable>
+      <ProfileData />
+    </v-dialog>
   </v-sheet>
 </template>
 

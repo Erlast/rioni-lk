@@ -5,6 +5,7 @@
   import IAssetsTabProps from '@/components/types/AssetsTable';
   import { useAssetsStore } from '@/stores/assetsStore';
   import { useDictionaryStore } from '@/stores/dictionariesStore';
+import { formatNumber } from '@/utils/number.extensions';
 
   const props = withDefaults(defineProps<IAssetsTabProps>(), {
     currentAsset: 'action'
@@ -144,8 +145,8 @@
           </v-col>
           <v-col class="d-flex table-cell align-center">
             <v-row>
-              <v-col style="max-width: 70px">{{ item.purchasePrice }}</v-col>
-              <v-col>{{ item.investedValue }}</v-col>
+              <v-col style="max-width: 70px">{{ formatNumber(item.purchasePrice) }}</v-col>
+              <v-col>{{ formatNumber(item.investedValue) }}</v-col>
             </v-row>
           </v-col>
           <v-col class="d-flex table-cell align-center">
@@ -161,7 +162,7 @@
                 'text-additional-error': item.profit < 0
               }"
             >
-              {{ item.profit }}
+              {{ formatNumber(item.profit) }}
             </v-sheet>
           </v-col>
         </v-row>
@@ -198,7 +199,7 @@
             </v-sheet>
           </v-col>
           <v-col class="d-flex table-cell align-center">
-            {{ item.investedValue }}
+            {{ formatNumber(item.investedValue) }}
           </v-col>
         </v-row>
       </v-sheet>
@@ -213,12 +214,12 @@
       <v-col class="table-cell d-flex align-center">
         <v-row>
           <v-col style="max-width: 70px"></v-col>
-          <v-col class="font-semibold" style="padding-left:8px;">{{ assetsStore.data.profit.investedSum }}</v-col>
+          <v-col class="font-semibold" style="padding-left:8px;">{{ formatNumber(assetsStore.data.profit.investedSum) }}</v-col>
         </v-row>
       </v-col>
       <v-col class="table-cell d-flex align-center">&nbsp;</v-col>
       <v-col class="table-cell d-flex align-center">
-        <v-sheet class="font-semibold" style="padding-left:8px;">{{ assetsStore.data.profit.totalDiff }}</v-sheet>
+        <v-sheet class="font-semibold" style="padding-left:8px;">{{ formatNumber(assetsStore.data.profit.totalDiff) }}</v-sheet>
       </v-col>
     </v-row>
     <v-row v-if="props.currentAsset==='currency' && rawItems && rawItems.length" class="summary">
@@ -227,7 +228,7 @@
       </v-col>
       <v-col class="table-cell d-flex">&nbsp;</v-col>
       <v-col class="table-cell d-flex align-center">
-        <v-sheet class="font-semibold" style="padding-left:18px;">{{ assetsStore.data.profit.investedSum }}</v-sheet>
+        <v-sheet class="font-semibold" style="padding-left:18px;">{{ formatNumber(assetsStore.data.profit.investedSum) }}</v-sheet>
       </v-col>
     </v-row>
   </div>

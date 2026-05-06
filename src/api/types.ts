@@ -36,6 +36,7 @@ export interface IAccountModel {
   balance: number;
   tradingFunds: number;
   fundsInTransit: number;
+  deposit: number;
 }
 
 export interface IPortfoliosModel{

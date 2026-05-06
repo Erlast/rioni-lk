@@ -4,18 +4,35 @@
 
   const { t } = useI18n();
   const item = ref();
+
+  const openDialogUploadDocuments = () => {
+    console.log('here');
+  };
+
+  const address1 = ref({
+    country: null
+  });
+
+  const address2 = ref({
+    country: null
+  });
+
   const items = [
     {
-      name: 'Foo',
-      image:
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABESURBVHgB3dBBDQAgDEPRlqABCzhBACoRgAREEFQsQQCI2E59Apr0A1JoZg9OCQFCRvI6F15En0JNOEpz3+FGFWoi5gOIOgx7TIafAQAAAABJRU5ErkJggg=='
+      name: 'Россия',
+      image: 'ru'
     },
     {
-      name: 'Foo1',
-      image:
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABESURBVHgB3dBBDQAgDEPRlqABCzhBACoRgAREEFQsQQCI2E59Apr0A1JoZg9OCQFCRvI6F15En0JNOEpz3+FGFWoi5gOIOgx7TIafAQAAAABJRU5ErkJggg=='
+      name: 'Грузия',
+      image: 'ge'
     }
   ];
+
+  function itemProps(item: any) {
+    return {
+      title: item.name
+    };
+  }
 
   onMounted(() => {
     item.value = items[0];
@@ -29,14 +46,16 @@
       rounded="xxl"
       style="background-color: var(--color-MainBackground) !important"
     >
-      <v-sheet class="text-common font-medium">
+      <v-sheet class="text-common font-16">
         {{ t('profile.modals.settings.contactInformationTitle') }}
       </v-sheet>
       <v-sheet class="d-flex flex-column ga-3">
-        <v-sheet class="d-flex align-center">
+        <v-sheet class="d-flex">
           <v-col cols="9" class="pa-0">
-            <v-sheet class="d-flex justify-space-between align-center my-3">
-              <v-sheet class="">{{ t('profile.modals.settings.emailTitle') }}</v-sheet>
+            <v-sheet class="d-flex justify-space-between my-2">
+              <v-sheet class="text-type-text">
+                {{ t('profile.modals.settings.emailTitle') }}
+              </v-sheet>
               <v-checkbox
                 :label="t('profile.modals.settings.useForAuthentificationTitle')"
                 hide-details
@@ -49,17 +68,18 @@
                 variant="solo"
                 flat
                 hide-details="auto"
-                class="form-inside-text-3"
               ></v-text-field>
             </v-sheet>
           </v-col>
-          <v-col cols="3" class="pa-0 d-flex justify-center">
-            <v-sheet>{{ t('profile.modals.settings.confirmedTitle') }}</v-sheet>
+          <v-col cols="3" class="pa-0 d-flex justify-center align-end">
+            <v-sheet class="d-flex align-center text-element-check" height="36">
+              {{ t('profile.modals.settings.confirmedTitle') }}
+            </v-sheet>
           </v-col>
         </v-sheet>
-        <v-sheet class="d-flex align-center">
+        <v-sheet class="d-flex">
           <v-col cols="9" class="pa-0">
-            <v-sheet class="d-flex justify-end align-center">
+            <v-sheet class="d-flex justify-end align-center my-2">
               <v-checkbox
                 :label="t('profile.modals.settings.useForAuthentificationTitle')"
                 hide-details
@@ -72,18 +92,19 @@
                 variant="solo"
                 flat
                 hide-details="auto"
-                class="form-inside-text-3"
               ></v-text-field>
             </v-sheet>
           </v-col>
-          <v-col cols="3" class="pa-0 d-flex justify-center">
-            <v-sheet>{{ t('profile.modals.settings.confirmedTitle') }}</v-sheet>
+          <v-col cols="3" class="pa-0 d-flex justify-center align-end">
+            <v-sheet class="d-flex align-center text-element-check" height="36">
+              {{ t('profile.modals.settings.confirmedTitle') }}
+            </v-sheet>
           </v-col>
         </v-sheet>
-        <v-sheet class="d-flex align-center">
+        <v-sheet class="d-flex">
           <v-col cols="9" class="pa-0">
-            <v-sheet class="d-flex justify-space-between align-center">
-              <span class="form-inside-text-2">{{ t('profile.modals.settings.phoneTitle') }}</span>
+            <v-sheet class="d-flex justify-space-between align-center my-2">
+              <span class="text-type-text">{{ t('profile.modals.settings.phoneTitle') }}</span>
               <v-checkbox
                 :label="t('profile.modals.settings.useForAuthentificationTitle')"
                 hide-details
@@ -93,12 +114,21 @@
             </v-sheet>
             <v-sheet class="d-flex justify-space-between">
               <v-col cols="2" class="pa-0">
-                <v-select variant="solo" flat density="compact" :items="items" v-model="item">
+                <v-select
+                  variant="solo"
+                  flat
+                  density="compact"
+                  :items="items"
+                  hide-details="auto"
+                  v-model="item"
+                >
                   <template v-slot:item="{ props: itemProps, item }">
-                    <img v-bind="itemProps" :src="item.raw.image" class="flag-img" />
+                    <v-list-item v-bind="itemProps" title="">
+                      <span :class="`fi fi-${item.raw.image}`" />
+                    </v-list-item>
                   </template>
                   <template v-slot:selection="{ item, index }">
-                    <img :src="item.raw.image" />
+                    <span :class="`fi fi-${item.raw.image}`" />
                   </template>
                 </v-select>
               </v-col>
@@ -108,131 +138,143 @@
                   variant="solo"
                   flat
                   hide-details="auto"
-                  class="form-inside-text-3"
                 ></v-text-field>
               </v-col>
             </v-sheet>
           </v-col>
-          <v-col cols="3" class="pa-0 d-flex justify-center">
-            <v-sheet>{{ t('profile.modals.settings.confirmedTitle') }}</v-sheet>
+          <v-col cols="3" class="pa-0 d-flex justify-center align-end">
+            <v-sheet class="d-flex align-center text-element-check" height="36">
+              {{ t('profile.modals.settings.confirmedTitle') }}
+            </v-sheet>
           </v-col>
         </v-sheet>
 
+        <v-sheet
+          class="px-6 py-3 font-smaller"
+          style="background-color: var(--color-LightGreen) !important"
+        >
+          {{ t('profile.modals.settings.helpText') }}
+        </v-sheet>
+
+        <v-sheet class="d-flex align-center">
+          <v-col cols="12" class="pa-0">
+            <v-sheet class="d-flex w-100 justify-space-between align-center">
+              <v-sheet class="text-type-text">
+                {{ t('profile.modals.settings.addressTitle') }}
+              </v-sheet>
+              <v-checkbox
+                :label="t('profile.modals.settings.useAsPostTitle')"
+                hide-details
+                true-icon="rioni:formCheckOn"
+                false-icon="rioni:formCheckOff"
+              ></v-checkbox>
+            </v-sheet>
+            <v-sheet class="d-flex justify-space-between">
+              <v-col cols="4" class="pa-0">
+                <v-select
+                  variant="solo"
+                  flat
+                  :label="t('profile.modals.settings.countryTitle')"
+                  density="compact"
+                  :items="items"
+                  :item-props="itemProps"
+                  v-model="address1.country"
+                ></v-select>
+              </v-col>
+              <v-col cols="3" class="pa-0">
+                <v-text-field
+                  variant="solo"
+                  flat
+                  hide-details="auto"
+                  :label="t('profile.modals.settings.cityTitle')"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="4" class="pa-0">
+                <v-text-field
+                  variant="solo"
+                  flat
+                  hide-details="auto"
+                  :label="t('profile.modals.settings.postCodeTitle')"
+                ></v-text-field>
+              </v-col>
+            </v-sheet>
+            <v-sheet>
+              <v-col cols="12" class="pa-0">
+                <v-text-field
+                  variant="solo"
+                  flat
+                  hide-details="auto"
+                  :label="t('profile.modals.settings.addressFormTitle')"
+                ></v-text-field>
+              </v-col>
+            </v-sheet>
+          </v-col>
+        </v-sheet>
         <v-sheet>
-          Внимание! При изменении адреса, Вам необходимо сразу предоставить подтверждающие
-          документы, в противном случае операции по вашему счету будут временно недосутпны
+          <v-col cols="12" class="pa-0">
+            <v-sheet class="d-flex justify-space-between align-center">
+              <v-sheet class="text-type-text">
+                {{ t('profile.modals.settings.address2Title') }}
+              </v-sheet>
+              <v-checkbox
+                :label="t('profile.modals.settings.useAsPostTitle')"
+                hide-details
+                true-icon="rioni:formCheckOn"
+                false-icon="rioni:formCheckOff"
+              ></v-checkbox>
+            </v-sheet>
+            <v-sheet class="d-flex justify-space-between">
+              <v-col cols="4" class="pa-0">
+                <v-select
+                  variant="solo"
+                  flat
+                  :label="t('profile.modals.settings.countryTitle')"
+                  density="compact"
+                  :items="items"
+                  :item-props="itemProps"
+                  v-model="address2.country"
+                ></v-select>
+              </v-col>
+              <v-col cols="3" class="pa-0">
+                <v-text-field
+                  variant="solo"
+                  flat
+                  hide-details="auto"
+                  :label="t('profile.modals.settings.cityTitle')"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="4" class="pa-0">
+                <v-text-field
+                  variant="solo"
+                  flat
+                  hide-details="auto"
+                  :label="t('profile.modals.settings.postCodeTitle')"
+                ></v-text-field>
+              </v-col>
+            </v-sheet>
+            <div class="form-inside-inputs-grid justify-space-between">
+              <v-col cols="12" class="pa-0">
+                <v-text-field
+                  variant="solo"
+                  flat
+                  hide-details="auto"
+                  :label="t('profile.modals.settings.addressFormTitle')"
+                ></v-text-field>
+              </v-col>
+            </div>
+          </v-col>
         </v-sheet>
-
-        <div class="d-flex align-center">
-          <v-col cols="12" class="pa-0">
-            <div class="form-inside-inputs-grid justify-space-between align-center">
-              <span class="form-inside-text-2">Адрес регистрации</span>
-              <v-checkbox
-                label="Использовать  как почтовый"
-                class="form-inside-text-2 v-hide-input__details"
-                true-icon="rioni:formCheckOn"
-                false-icon="rioni:formCheckOff"
-              ></v-checkbox>
-            </div>
-            <div class="form-inside-inputs-grid justify-space-between">
-              <v-col cols="4" class="pa-0">
-                <v-select
-                  variant="solo"
-                  flat
-                  label="Страна"
-                  density="compact"
-                  :items="['Данные 1', 'Данные 2', 'Данные 4']"
-                ></v-select>
-              </v-col>
-              <v-col cols="3" class="pa-0">
-                <v-text-field
-                  variant="solo"
-                  flat
-                  hide-details="auto"
-                  class="form-inside-text-3"
-                  label="Город"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="4" class="pa-0">
-                <v-text-field
-                  variant="solo"
-                  flat
-                  hide-details="auto"
-                  class="form-inside-text-3"
-                  label="Индекс"
-                ></v-text-field>
-              </v-col>
-            </div>
-            <div class="form-inside-inputs-grid justify-space-between">
-              <v-col cols="12" class="pa-0">
-                <v-text-field
-                  variant="solo"
-                  flat
-                  hide-details="auto"
-                  class="form-inside-text-3"
-                  label="Адрес"
-                ></v-text-field>
-              </v-col>
-            </div>
-          </v-col>
-        </div>
-        <div class="d-flex align-center">
-          <v-col cols="12" class="pa-0">
-            <div class="form-inside-inputs-grid justify-space-between align-center">
-              <span class="form-inside-text-2">Фактический адрес</span>
-              <v-checkbox
-                label="Использовать  как почтовый"
-                class="form-inside-text-2 v-hide-input__details"
-                true-icon="rioni:formCheckOn"
-                false-icon="rioni:formCheckOff"
-              ></v-checkbox>
-            </div>
-            <div class="form-inside-inputs-grid justify-space-between">
-              <v-col cols="4" class="pa-0">
-                <v-select
-                  variant="solo"
-                  flat
-                  label="Страна"
-                  density="compact"
-                  :items="['Данные 1', 'Данные 2', 'Данные 4']"
-                ></v-select>
-              </v-col>
-              <v-col cols="3" class="pa-0">
-                <v-text-field
-                  variant="solo"
-                  flat
-                  hide-details="auto"
-                  class="form-inside-text-3"
-                  label="Город"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="4" class="pa-0">
-                <v-text-field
-                  variant="solo"
-                  flat
-                  hide-details="auto"
-                  class="form-inside-text-3"
-                  label="Индекс"
-                ></v-text-field>
-              </v-col>
-            </div>
-            <div class="form-inside-inputs-grid justify-space-between">
-              <v-col cols="12" class="pa-0">
-                <v-text-field
-                  variant="solo"
-                  flat
-                  hide-details="auto"
-                  class="form-inside-text-3"
-                  label="Адрес"
-                ></v-text-field>
-              </v-col>
-            </div>
-          </v-col>
-        </div>
-        <div>
-          <span class="form-inside-text-2">Для подтверждения данного адреса, вам необходимо</span>
-          <span class="form-inside-text-4">загрузить документы сюда</span>
-        </div>
+        <v-sheet class="text-type-text">
+          {{ t('profile.modals.settings.confirmAddressText') }}
+          <span
+            class="text-additional-link"
+            style="cursor: pointer"
+            @click="openDialogUploadDocuments"
+          >
+            {{ t('profile.modals.settings.confirmAddressLinkText') }}
+            <v-icon icon="mdi-arrow-down" size="12" />
+          </span>
+        </v-sheet>
       </v-sheet>
     </v-sheet>
     <v-btn variant="flat" rounded="lg" bg="element-check" color="element-check">
@@ -244,43 +286,9 @@
 </template>
 
 <style scoped lang="scss">
-  .flag-img {
-    display: block;
-    margin-left: 30px;
-  }
-
-  .form-inside-warning-message {
-    display: flex;
-    width: 511px;
-
-    padding: 14px 23px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    border-radius: 8px;
-    background: var(--Backgrounds-light-green, #e7f8f0);
-  }
-
-  .contact-info-status {
-    margin-top: 50px;
-    color: var(--Elements-check, #4ba67c);
-
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
-
-  .contact-info-button-confirm {
-    margin-top: 40px;
-    display: inline-flex;
-    padding: 8px 14px 10px 14px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 8px;
-    background: var(--Elements, #6794da);
-    color: var(--Backgrounds-white, #fff);
-
-    font-size: 14px;
+  .v-checkbox {
+    :deep(.v-label) {
+      color: var(--color-TypeText);
+    }
   }
 </style>

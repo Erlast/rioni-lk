@@ -8,10 +8,10 @@ export type Scope = 'portfolio';
 const DEFAULTS: Record<Scope, TabDef[]> = {
   portfolio: [
     { name: 'action', titleKey: 'portfolio.table.tabs.action' },
-    { name: 'obligation', titleKey: 'portfolio.table.tabs.obligation' },
+    // { name: 'obligation', titleKey: 'portfolio.table.tabs.obligation' },
     { name: 'currency', titleKey: 'portfolio.table.tabs.currency' },
-    { name: 'option', titleKey: 'portfolio.table.tabs.option' },
-    { name: 'futuries', titleKey: 'portfolio.table.tabs.futuries' }
+    // { name: 'option', titleKey: 'portfolio.table.tabs.option' },
+    // { name: 'futuries', titleKey: 'portfolio.table.tabs.futuries' }
   ]
 };
 

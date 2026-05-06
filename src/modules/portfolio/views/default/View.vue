@@ -10,6 +10,7 @@
   import AssetsTable from '@/components/AssetsTable.vue';
   import { onUnmounted } from 'vue';
   import { useAssetsStore } from '@/stores/assetsStore';
+  import { formatNumber } from '@/utils/number.extensions';
 
   const { t } = useI18n();
 
@@ -49,7 +50,7 @@
 
   function itemProps(item: any) {
     return {
-      title: item.accountNumber
+      title: `${item.accountNumber} (${formatNumber(item.balance)})`
     };
   }
 
@@ -72,8 +73,8 @@
   <v-sheet class="d-flex ga-5">
     <v-sheet width="180">
       <Notice></Notice>
-      <Calendar></Calendar>
-      <MarketToday></MarketToday>
+      <!-- <Calendar></Calendar>
+      <MarketToday></MarketToday> -->
     </v-sheet>
     <v-sheet class="d-flex flex-column ga-4" width="100%">
       <v-sheet class="top-up-card d-flex flex-column ga-4 rounded-xxl pa-6">
@@ -84,7 +85,8 @@
               <v-img src="/img/topUp-icon.png" alt="top-up-icon" />
             </v-sheet>
             <v-sheet class="font-big-semibold text-gradient">
-              {{ portfolioStore.data.totalSum }} {{ accountStore.getAccountCurrency?.title }}
+              {{ formatNumber(portfolioStore.data.totalSum) }}
+              {{ accountStore.getAccountCurrency?.title }}
             </v-sheet>
           </v-sheet>
           <v-btn variant="flat" rounded="mr" @click="openTopUp" height="50" class="btn-top-up">
@@ -102,8 +104,8 @@
           :item-props="itemProps"
           hide-details
           menu-icon="mdi-chevron-down"
-          width="200"
-          max-width="200"
+          width="300"
+          max-width="300"
           height="48"
           :items="accounts"
           label=""
@@ -113,7 +115,7 @@
       <v-sheet class="d-flex ga-2">
         <v-sheet
           class="d-flex flex-column liner-gradient-common pa-4 rounded-mr text-white"
-          width="33%"
+          :width="account && account.deposit > 0 ? '25%' : '33%'"
           height="98"
           style="line-height: normal"
         >
@@ -124,13 +126,13 @@
             <v-sheet class="font-default">{{ t('portfolio.balanceAccountTitle') }}</v-sheet>
           </v-sheet>
           <v-sheet class="font-m text-gradient-light">
-            {{ account && account.balance ? account.balance : 0 }}
+            {{ account && account.balance ? formatNumber(account.balance) : 0 }}
             {{ accountStore.getAccountCurrency?.title }}
           </v-sheet>
         </v-sheet>
         <v-sheet
           class="d-flex flex-column pa-4 rounded-mr"
-          width="33%"
+          :width="account && account.deposit > 0 ? '25%' : '33%'"
           height="98"
           style="background: url('/img/balance-2-bg.png') no-repeat !important; line-height: normal"
         >
@@ -143,18 +145,18 @@
             </v-sheet>
           </v-sheet>
           <v-sheet class="font-m text-dark-blue">
-            {{ account && account.tradingFunds ? account.tradingFunds : 0 }}
+            {{ account && account.tradingFunds ? formatNumber(account.tradingFunds) : 0 }}
             {{ accountStore.getAccountCurrency?.title }}
           </v-sheet>
-          <v-sheet class="text-element font-smaller">
+          <v-sheet v-if="account && account.fundsInTransit > 0" class="text-element font-smaller">
             {{ t('portfolio.inAWay') }}
-            {{ account && account.fundsInTransit ? account.fundsInTransit : 0 }}
+            {{ account && account.fundsInTransit ? formatNumber(account.fundsInTransit) : 0 }}
             {{ accountStore.getAccountCurrency?.symbol }}
           </v-sheet>
         </v-sheet>
         <v-sheet
           class="d-flex flex-column pa-4 rounded-mr"
-          width="33%"
+          :width="account && account.deposit > 0 ? '25%' : '33%'"
           height="98"
           style="background-color: white !important; line-height: normal"
         >
@@ -167,13 +169,33 @@
             </v-sheet>
           </v-sheet>
           <v-sheet class="font-m text-element-check">
-            12345 {{ accountStore.getAccountCurrency?.title }}
+            {{ formatNumber(12345) }} {{ accountStore.getAccountCurrency?.title }}
           </v-sheet>
           <v-sheet class="d-flex ga-1 align-center">
             <v-sheet class="text-element-check font-smaller">
               {{ t('portfolio.grow') }} 1,3%
             </v-sheet>
             <v-sheet class="triangle-up"></v-sheet>
+          </v-sheet>
+        </v-sheet>
+        <v-sheet
+          v-if="account && account.deposit > 0"
+          class="d-flex flex-column pa-4 rounded-mr"
+          :width="account && account.deposit > 0 ? '25%' : '33%'"
+          height="98"
+          style="background: url('/img/deposit-bg.png') no-repeat !important; line-height: normal"
+        >
+          <v-sheet class="d-flex ga-2 align-center">
+            <v-sheet width="19">
+              <v-img src="/img/coin-icon.png" width="19" />
+            </v-sheet>
+            <v-sheet class="text-dark-blue font-default">
+              {{ t('portfolio.depositTitle') }}
+            </v-sheet>
+          </v-sheet>
+          <v-sheet class="font-m text-dark-blue">
+            {{ account && account.deposit ? formatNumber(account.deposit) : 0 }}
+            {{ accountStore.getAccountCurrency?.title }}
           </v-sheet>
         </v-sheet>
       </v-sheet>

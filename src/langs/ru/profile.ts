@@ -26,7 +26,52 @@ export const profile = {
       emailTitle: 'E-mail',
       useForAuthentificationTitle: 'Использовать для авторизации',
       confirmedTitle: 'Подтвержден',
-      phoneTitle: 'Телефон'
+      phoneTitle: 'Телефон',
+      helpText:
+        'Внимание! При изменении адреса, Вам необходимо сразу предоставить подтверждающие документы, в противном случае операции по вашему счету будут временно недосутпны',
+      addressTitle: 'Адрес регистрации',
+      address2Title: 'Фактический адрес',
+      useAsPostTitle: 'Использовать  как почтовый',
+      confirmAddressText: 'Для подтверждения данного адреса, вам необходимо',
+      confirmAddressLinkText: 'загрузить документы сюда',
+      countryTitle: 'Страна',
+      cityTitle: 'Город',
+      postCodeTitle: 'Индекс',
+      addressFormTitle: 'Адрес',
+      profileTitle: 'Профиль',
+      nicknameTitle: 'Никнейм',
+      uploadAvatarTitle: 'Загрузить аватар',
+      loginTitle: 'Логин',
+      passwordTitle: 'Пароль'
+    },
+    anketa: {
+      anketaTitle: 'Анкета',
+      taxResidenciesTitle: 'Налоговые резидентства',
+      chooseText1: 'Выберите',
+      chooseText2: 'все страны',
+      chooseText3: 'в которых вы являетесь налоговым резидентом',
+      countryTitle: 'Страна',
+      innTitle: 'ИНН',
+      additionalInformationTitle: 'Дополнительные сведения',
+      beneficiariesTitle: 'Имеются бенефициары',
+      pepTitle: 'Являюсь PEP (politically exposed person)',
+      residenceTitle: ' Вид на жительство и аналоги документа',
+      chooseText4: 'Выберите все страны, где имеется вид на жительство',
+      issuedByTitle: 'Кем выдан',
+      documentNumberTitle: 'Номер документа',
+      durationTitle: 'Срок пребывания',
+      noResidenceTitle:
+        'Вида на жительства (или аналога) в государстве, отличном от гражданства, не имею',
+      placeOfWorkTitle: 'Место работы',
+      specifyPlaceOfworkTitle: 'Укажите место работы',
+      companyNameTitle: 'Название компании',
+      industryTitle: 'Отрасль',
+      jobTitle: 'Должность',
+      phoneNumberTitle: 'Номер телефона',
+      memberOfNPOTitle: 'Состою в некомерческой организации (НКО)',
+      memberOfNGOTitle: 'Состою в неправительственной организации (НПО)',
+      selfEmployedStatusTitle: 'Статус самозанятого',
+      doNotWorkTitle: 'Не работаю'
     }
   }
 };

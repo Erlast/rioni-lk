@@ -2,28 +2,31 @@
   import User from '@/modules/profile/components/user/User.vue';
   import UserBanksRequisite from '@/modules/profile/components/user/UserBanksRequisite.vue';
   import { inject, ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
+
+  const { t } = useI18n();
 
   let showAnketa = inject('showAnketa');
 </script>
 
 <template>
-  <v-card>
-    <div class="modal-window">
-      <div class="form">
+  <v-card width="900">
+    <v-sheet class="modal-window">
+      <v-sheet>
         <v-card-title>
-          <div class="modal-windows-label">
-            Анкета
-            <div class="button-close" @click="showAnketa = false"></div>
-          </div>
+          <v-sheet class="modal-windows-label">
+            {{ t('profile.modals.anketa.anketaTitle') }}
+            <v-sheet class="button-close" @click="showAnketa = false"></v-sheet>
+          </v-sheet>
         </v-card-title>
-        <v-divider></v-divider>
         <v-card-text>
-          <User></User>
-          <UserBanksRequisite></UserBanksRequisite>
+          <v-sheet class="d-flex flex-column ga-3">
+            <User></User>
+            <UserBanksRequisite></UserBanksRequisite>
+          </v-sheet>
         </v-card-text>
-        <v-divider></v-divider>
-      </div>
-    </div>
+      </v-sheet>
+    </v-sheet>
   </v-card>
 </template>
 

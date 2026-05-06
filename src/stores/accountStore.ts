@@ -22,7 +22,7 @@ interface IAction {
 export const useAccountStore = defineStore<'account', IState, IGetter, IAction>('account', {
   state: (): IState => ({
     data: {
-      id: 2,
+      id: 1,
       info: {
         name: 'Test',
         surname: 'User',
@@ -57,7 +57,7 @@ export const useAccountStore = defineStore<'account', IState, IGetter, IAction>(
       try {
         const data = await accountsService.profile(this.data.id);
         this.data = {
-          id: 2,
+          id: 1,
           info: data
         };
       } catch (error) {

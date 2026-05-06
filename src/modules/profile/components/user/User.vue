@@ -1,117 +1,235 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { onMounted, ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
+
+  const { t } = useI18n();
+  const item = ref();
+
+  const items = [
+    {
+      name: 'Россия',
+      image: 'ru'
+    },
+    {
+      name: 'Грузия',
+      image: 'ge'
+    }
+  ];
+
+  onMounted(() => {
+    item.value = items[0];
+  });
+</script>
 
 <template>
-  <div class="form-inside">
-    <div class="form-inside-block">
-      <div class="form-inside-label">Налоговые резидентства</div>
-      <div class="form-inside-inputs">
-        <div class="form-inside-inputs-label form-inside-text-1">
-          Выберите все страны в которых вы являетесь налоговым резидентом
-        </div>
-        <div class="form-inside-inputs-grid">
-          <div class="form-inside-inputs-number">1</div>
+  <v-sheet
+    class="pa-8 d-flex flex-column ga-4"
+    rounded="xxl"
+    style="background-color: var(--color-MainBackground) !important"
+  >
+    <v-sheet class="d-flex flex-column ga-2">
+      <v-sheet class="text-background-blue font-20 font-semibold">
+        {{ t('profile.modals.anketa.taxResidenciesTitle') }}
+      </v-sheet>
+      <v-sheet class="d-flex flex-column ga-2">
+        <v-sheet class="text-common font-smaller">
+          {{ t('profile.modals.anketa.chooseText1') }}
+          <span style="font-weight: 600">{{ t('profile.modals.anketa.chooseText2') }}</span>
+          {{ t('profile.modals.anketa.chooseText3') }}
+        </v-sheet>
+        <v-sheet class="d-flex ga-2 justify-space-between">
+          <v-sheet class="number-count">1</v-sheet>
           <v-select
-            label="Страна"
+            variant="solo"
+            flat
             density="compact"
             :items="['Австралия', 'Австрия', 'Азербайджан', 'Албания', 'Алжир']"
+            hide-details="auto"
+            :label="t('profile.modals.anketa.countryTitle')"
           ></v-select>
-          <v-text-field hide-details="auto" label="ИНН"></v-text-field>
-        </div>
-      </div>
-    </div>
-    <div class="form-inside-block">
-      <div class="form-inside-label">Дополнительные сведения</div>
-      <div class="form-inside-inputs-grid justify-space-between">
+          <v-text-field
+            variant="solo"
+            density="compact"
+            flat
+            hide-details="auto"
+            :label="t('profile.modals.anketa.innTitle')"
+          ></v-text-field>
+        </v-sheet>
+      </v-sheet>
+    </v-sheet>
+    <v-sheet class="d-flex flex-column ga-2">
+      <v-sheet class="text-background-blue font-20 font-semibold">
+        {{ t('profile.modals.anketa.additionalInformationTitle') }}
+      </v-sheet>
+      <v-sheet class="d-flex justify-space-between">
         <v-checkbox
-          label="Имеются бенефициары"
-          class="form-inside-text-1"
+          :label="t('profile.modals.anketa.beneficiariesTitle')"
+          hide-details
           true-icon="rioni:formCheckOn"
           false-icon="rioni:formCheckOff"
         ></v-checkbox>
         <v-checkbox
-          label="Являюсь PEP (politically exposed person)"
-          class="form-inside-text-1"
+          :label="t('profile.modals.anketa.pepTitle')"
+          hide-details
           true-icon="rioni:formCheckOn"
           false-icon="rioni:formCheckOff"
         ></v-checkbox>
-      </div>
-    </div>
-    <div class="form-inside-block">
-      <div class="form-inside-label">Вид на жительство и аналоги документа</div>
-      <div class="form-inside-inputs">
-        <div class="form-inside-inputs-label form-inside-text-1">
-          Выберите все страны, где имеется вид на жительство
-        </div>
-        <div class="form-inside-inputs-grid">
+      </v-sheet>
+    </v-sheet>
+    <v-sheet class="d-flex flex-column ga-2">
+      <v-sheet class="text-background-blue font-20 font-semibold">
+        {{ t('profile.modals.anketa.residenceTitle') }}
+      </v-sheet>
+      <v-sheet class="d-flex flex-column ga-2">
+        <v-sheet class="text-common font-smaller">
+          {{ t('profile.modals.anketa.chooseText4') }}
+        </v-sheet>
+        <v-sheet class="d-flex justify-space-between ga-2">
           <v-select
-            label="Страна"
+            :label="t('profile.modals.anketa.countryTitle')"
+            variant="solo"
+            flat
+            hide-details="auto"
             density="compact"
             :items="['Австралия', 'Австрия', 'Азербайджан', 'Албания', 'Алжир']"
           ></v-select>
           <v-select
-            label="Кем выдан"
+            :label="t('profile.modals.anketa.issuedByTitle')"
+            variant="solo"
+            flat
+            hide-details="auto"
             density="compact"
             :items="['Данные 1', 'Данные 2', 'Данные 4']"
           ></v-select>
-        </div>
-        <div class="form-inside-inputs-grid">
-          <v-text-field hide-details="auto" label="Номер документа"></v-text-field>
-          <v-text-field hide-details="auto" label="Срок пребывания"></v-text-field>
-        </div>
-        <div class="form-inside-inputs-grid justify-space-between">
-          <v-checkbox
-            label="Вида на жительства (или аналога) в государстве, отличном от гражданства, не имею"
-            class="form-inside-text-1"
-            true-icon="rioni:formCheckOn"
-            false-icon="rioni:formCheckOff"
-          ></v-checkbox>
-        </div>
-      </div>
-    </div>
-    <div class="form-inside-block">
-      <div class="form-inside-label">Место работы</div>
-    </div>
-    <div class="form-inside-inputs">
-      <div class="form-inside-inputs-grid">
-        <v-text-field hide-details="auto" label="Название компании"></v-text-field>
-        <v-text-field hide-details="auto" label="Должность"></v-text-field>
-      </div>
-      <div class="form-inside-inputs-grid">
-        <div class="with-50-percent">
-          <v-text-field hide-details="auto" label="Отрасль"></v-text-field>
-        </div>
-        <div class="d-flex ga-2 with-50-percent">
-          <v-text-field hide-details="auto" label="Номер телефона"></v-text-field>
-          <v-text-field hide-details="auto" label="Сайт"></v-text-field>
-        </div>
-      </div>
-      <v-checkbox
-        label="Состою в некомерческой организации (НКО)"
-        class="form-inside-text-1"
-        true-icon="rioni:formCheckOn"
-        false-icon="rioni:formCheckOff"
-      ></v-checkbox>
-      <v-checkbox
-        label="Состою в неправительственной организации (НПО)"
-        class="form-inside-text-1"
-        true-icon="rioni:formCheckOn"
-        false-icon="rioni:formCheckOff"
-      ></v-checkbox>
-      <v-checkbox
-        label="Статус самозанятого"
-        class="form-inside-text-1"
-        true-icon="rioni:formCheckOn"
-        false-icon="rioni:formCheckOff"
-      ></v-checkbox>
-      <v-checkbox
-        label="Не работаю"
-        class="form-inside-text-1"
-        true-icon="rioni:formCheckOn"
-        false-icon="rioni:formCheckOff"
-      ></v-checkbox>
-    </div>
-    <div class="form-save">Сохранить изменения</div>
-  </div>
+        </v-sheet>
+        <v-sheet class="d-flex justify-space-between ga-2">
+          <v-text-field
+            variant="solo"
+            flat
+            hide-details="auto"
+            :label="t('profile.modals.anketa.documentNumberTitle')"
+          ></v-text-field>
+          <v-text-field
+            variant="solo"
+            flat
+            hide-details="auto"
+            :label="t('profile.modals.anketa.durationTitle')"
+          ></v-text-field>
+        </v-sheet>
+
+        <v-checkbox
+          :label="t('profile.modals.anketa.noResidenceTitle')"
+          hide-details="auto"
+          true-icon="rioni:formCheckOn"
+          false-icon="rioni:formCheckOff"
+        ></v-checkbox>
+      </v-sheet>
+    </v-sheet>
+    <v-sheet class="d-flex flex-column ga-2">
+      <v-sheet class="text-background-blue font-20 font-semibold">
+        {{ t('profile.modals.anketa.placeOfWorkTitle') }}
+      </v-sheet>
+      <v-sheet class="text-common font-smaller">
+        {{ t('profile.modals.anketa.specifyPlaceOfworkTitle') }}
+      </v-sheet>
+      <v-sheet class="d-flex flex-column ga-2">
+        <v-sheet class="d-flex justify-space-between ga-2">
+          <v-text-field
+            variant="solo"
+            flat
+            hide-details="auto"
+            :label="t('profile.modals.anketa.companyNameTitle')"
+          ></v-text-field>
+        </v-sheet>
+        <v-sheet class="d-flex justify-space-between ga-2">
+          <v-text-field
+            variant="solo"
+            flat
+            hide-details="auto"
+            :label="t('profile.modals.anketa.industryTitle')"
+          ></v-text-field>
+
+          <v-text-field
+            variant="solo"
+            flat
+            hide-details="auto"
+            :label="t('profile.modals.anketa.jobTitle')"
+          ></v-text-field>
+        </v-sheet>
+        <v-sheet class="d-flex justify-space-between ga-2">
+          <v-sheet class="d-flex ga-2" width="50%">
+            <v-select
+              variant="solo"
+              flat
+              width="100"
+              max-width="100"
+              density="compact"
+              :items="items"
+              hide-details="auto"
+              v-model="item"
+            >
+              <template v-slot:item="{ props: itemProps, item }">
+                <v-list-item v-bind="itemProps" title="">
+                  <span :class="`fi fi-${item.raw.image}`" />
+                </v-list-item>
+              </template>
+              <template v-slot:selection="{ item, index }">
+                <span :class="`fi fi-${item.raw.image}`" />
+              </template>
+            </v-select>
+
+            <v-text-field
+              variant="solo"
+              flat
+              hide-details="auto"
+              :label="t('profile.modals.anketa.phoneNumberTitle')"
+            ></v-text-field>
+          </v-sheet>
+          <v-sheet width="50%">
+            <v-text-field variant="solo" flat hide-details="auto" label="E-mail"></v-text-field>
+          </v-sheet>
+        </v-sheet>
+        <v-checkbox
+          :label="t('profile.modals.anketa.memberOfNPOTitle')"
+          hide-details="auto"
+          true-icon="rioni:formCheckOn"
+          false-icon="rioni:formCheckOff"
+        ></v-checkbox>
+        <v-checkbox
+          :label="t('profile.modals.anketa.memberOfNGOTitle')"
+          hide-details="auto"
+          true-icon="rioni:formCheckOn"
+          false-icon="rioni:formCheckOff"
+        ></v-checkbox>
+        <v-checkbox
+          :label="t('profile.modals.anketa.selfEmployedStatusTitle')"
+          hide-details="auto"
+          true-icon="rioni:formCheckOn"
+          false-icon="rioni:formCheckOff"
+        ></v-checkbox>
+        <v-checkbox
+          :label="t('profile.modals.anketa.doNotWorkTitle')"
+          hide-details="auto"
+          true-icon="rioni:formCheckOn"
+          false-icon="rioni:formCheckOff"
+        ></v-checkbox>
+      </v-sheet>
+    </v-sheet>
+
+    <v-btn variant="flat" rounded="lg" bg="element-check" color="element-check">
+      <v-sheet class="text-white">
+        {{ t('profile.modals.settings.contactInformationSaveBtn') }}
+      </v-sheet>
+    </v-btn>
+  </v-sheet>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+  .number-count {
+    padding: 8px 16px;
+    background-color: white !important;
+    color: var(--color-TypeText) !important;
+    font-size: 14px;
+    border-radius: 8px;
+  }
+</style>

@@ -2,7 +2,7 @@
   import Notice from '@/components/Notice.vue';
   import Profile from '@/modules/profile/components/Profile.vue';
   import Action from '@/modules/profile/components/Action.vue';
-  import Requirements from '@/modules/profile/components/Requirements.vue';
+import Requirements from '@/modules/profile/components/Requirements.vue';
 </script>
 
 <template>
