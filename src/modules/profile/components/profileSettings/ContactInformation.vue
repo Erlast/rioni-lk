@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import { itemsFlags } from '@/utils/data';
   import { onMounted, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
 
@@ -17,17 +18,6 @@
     country: null
   });
 
-  const items = [
-    {
-      name: 'Россия',
-      image: 'ru'
-    },
-    {
-      name: 'Грузия',
-      image: 'ge'
-    }
-  ];
-
   function itemProps(item: any) {
     return {
       title: item.name
@@ -35,7 +25,7 @@
   }
 
   onMounted(() => {
-    item.value = items[0];
+    item.value = itemsFlags[0];
   });
 </script>
 
@@ -64,11 +54,7 @@
               ></v-checkbox>
             </v-sheet>
             <v-sheet class="d-flex">
-              <v-text-field
-                variant="solo"
-                flat
-                hide-details="auto"
-              ></v-text-field>
+              <v-text-field variant="solo" flat hide-details="auto"></v-text-field>
             </v-sheet>
           </v-col>
           <v-col cols="3" class="pa-0 d-flex justify-center align-end">
@@ -88,11 +74,7 @@
               ></v-checkbox>
             </v-sheet>
             <v-sheet>
-              <v-text-field
-                variant="solo"
-                flat
-                hide-details="auto"
-              ></v-text-field>
+              <v-text-field variant="solo" flat hide-details="auto"></v-text-field>
             </v-sheet>
           </v-col>
           <v-col cols="3" class="pa-0 d-flex justify-center align-end">
@@ -118,7 +100,7 @@
                   variant="solo"
                   flat
                   density="compact"
-                  :items="items"
+                  :items="itemsFlags"
                   hide-details="auto"
                   v-model="item"
                 >
@@ -134,11 +116,7 @@
               </v-col>
 
               <v-col cols="9" class="pa-0">
-                <v-text-field
-                  variant="solo"
-                  flat
-                  hide-details="auto"
-                ></v-text-field>
+                <v-text-field variant="solo" flat hide-details="auto"></v-text-field>
               </v-col>
             </v-sheet>
           </v-col>

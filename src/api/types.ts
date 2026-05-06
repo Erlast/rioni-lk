@@ -17,6 +17,8 @@ export interface IProfileModel {
   passportExpiryDate: string;
   nbs: string;
   ndu: string;
+  countryOfBirth: string;
+  cityOfBirth: string;
 }
 
 export interface IDictionariesModel {
@@ -39,9 +41,9 @@ export interface IAccountModel {
   deposit: number;
 }
 
-export interface IPortfoliosModel{
+export interface IPortfoliosModel {
   totalSum: number;
-  accounts: IAccountModel[]
+  accounts: IAccountModel[];
 }
 
 export interface IPortfolioModel {
@@ -65,7 +67,7 @@ export interface IAssetModel {
   bid: number;
   ask: number;
   investedValue: number;
-  active: boolean
+  active: boolean;
 }
 
 export interface IProfitModel {

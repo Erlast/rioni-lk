@@ -72,6 +72,9 @@ export const profile = {
       memberOfNGOTitle: 'Состою в неправительственной организации (НПО)',
       selfEmployedStatusTitle: 'Статус самозанятого',
       doNotWorkTitle: 'Не работаю'
+    },
+    profileData: {
+      title: 'Анкета Бенефициара'
     }
   }
 };
