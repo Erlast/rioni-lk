@@ -92,9 +92,7 @@
             <v-sheet class="d-flex flex-column">
               <v-sheet class="font-small text-type-text">{{ t('profile.birthdayTitle') }}</v-sheet>
               <v-sheet class="font-default text-dark-blue">
-                {{
-                  dayjs(accountStore.data.info.dateOfBirth, 'DD.MM.YYYY', true).format('DD.MM.YYYY')
-                }}
+                {{ dayjs(accountStore.data.info.dateOfBirth).format('DD.MM.YYYY') }}
               </v-sheet>
             </v-sheet>
             <v-sheet class="d-flex flex-column">
@@ -136,23 +134,15 @@
               {{ t('profile.passportIssueDate') }}
             </v-sheet>
             <v-sheet class="font-default text-dark-blue">
-              {{
-                dayjs(accountStore.data.info.passportIssueDate, 'DD.MM.YYYY', true).format(
-                  'DD.MM.YYYY'
-                )
-              }}
+              {{ dayjs(accountStore.data.info.passportIssueDate).format('DD.MM.YYYY') }}
             </v-sheet>
           </v-sheet>
-          <v-sheet class="d-flex flex-column">
+          <v-sheet v-if="accountStore.data.info.passportExpiryDate" class="d-flex flex-column">
             <v-sheet class="font-small text-type-text">
               {{ t('profile.passportExpiryDate') }}
             </v-sheet>
             <v-sheet class="font-default text-dark-blue">
-              {{
-                dayjs(accountStore.data.info.passportExpiryDate, 'DD.MM.YYYY', true).format(
-                  'DD.MM.YYYY'
-                )
-              }}
+              {{ dayjs(accountStore.data.info.passportExpiryDate).format('DD.MM.YYYY') }}
             </v-sheet>
           </v-sheet>
         </v-sheet>

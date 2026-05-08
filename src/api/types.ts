@@ -19,6 +19,16 @@ export interface IProfileModel {
   ndu: string;
   countryOfBirth: string;
   cityOfBirth: string;
+  issuedBy: string;
+  companyName: string;
+  companyIndustry: string;
+  companyPhone: string;
+  companyPosition: string;
+  companyWebsite: string;
+  isNgo: boolean;
+  isNotWorking: boolean;
+  isNpo: boolean;
+  isSelfEmployed: boolean;
 }
 
 export interface IDictionariesModel {

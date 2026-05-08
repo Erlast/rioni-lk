@@ -34,12 +34,24 @@ export const useAccountStore = defineStore<'account', IState, IGetter, IAction>(
         gender: '',
         citizenship: '',
         placeOfBirth: '',
+        countryOfBirth: '',
+        cityOfBirth: '',
         documentType: '',
         passportNumber: '',
         passportIssueDate: '',
         passportExpiryDate: '',
         nbs: '',
-        ndu: ''
+        ndu: '',
+        issuedBy: '',
+        companyName: '',
+        companyIndustry: '',
+        companyPhone: '',
+        companyPosition: '',
+        companyWebsite: '',
+        isNgo: false,
+        isNotWorking: false,
+        isNpo: false,
+        isSelfEmployed: false
       }
     }
   }),

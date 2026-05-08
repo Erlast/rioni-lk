@@ -9,6 +9,10 @@ const accountsService = {
     });
   },
 
+  async profileSave(id: number, data: any) {
+    return httpCommunicator.patch(`/profile/${id}`, data);
+  },
+
   async deleteAvatar(id: number) {
     return httpCommunicator.delete(`/profile/avatar/${id}`);
   }
