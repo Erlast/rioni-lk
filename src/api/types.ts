@@ -2,11 +2,11 @@ import { InstrumentTypes } from './enum';
 
 export interface IProfileModel {
   name: string;
+  nickname: string;
+  login: string;
   surname: string;
   patronymic: string;
   photoUrl: string;
-  email: string;
-  phone: string;
   dateOfBirth: string;
   gender: string;
   citizenship: string;
@@ -29,6 +29,8 @@ export interface IProfileModel {
   isNotWorking: boolean;
   isNpo: boolean;
   isSelfEmployed: boolean;
+  contacts: IProfileContactModel[];
+  addresses: IProfileAddressModel[];
 }
 
 export interface IDictionariesModel {
@@ -83,4 +85,25 @@ export interface IAssetModel {
 export interface IProfitModel {
   investedSum: number;
   totalDiff: number;
+}
+
+export type contactType = 'email' | 'phone';
+
+export interface IProfileContactModel {
+  id: number;
+  contactType: contactType;
+  isMain: boolean;
+  value: string;
+  isConfirmed: boolean;
+}
+export type addressType = 'registration' | 'actual';
+export interface IProfileAddressModel {
+  id: number;
+  addressType: addressType;
+  isMain: boolean;
+  country: string | null;
+  city: string;
+  postcode: string;
+  address: string;
+  isConfirmed: boolean;
 }

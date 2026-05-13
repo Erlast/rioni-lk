@@ -42,7 +42,9 @@ export const profile = {
       nicknameTitle: 'Никнейм',
       uploadAvatarTitle: 'Загрузить аватар',
       loginTitle: 'Логин',
-      passwordTitle: 'Пароль'
+      passwordTitle: 'Пароль',
+      invalidEmail: 'Неверный E-mail',
+      requiredField: 'Обязательное поле'
     },
     anketa: {
       anketaTitle: 'Анкета',

@@ -13,6 +13,14 @@ const accountsService = {
     return httpCommunicator.patch(`/profile/${id}`, data);
   },
 
+  async profileContactsSave(id: number, data: any) {
+    return httpCommunicator.put(`/profile/${id}/contacts`, data);
+  },
+
+  async profileAddressesSave(id: number, data: any) {
+    return httpCommunicator.put(`/profile/${id}/addresses`, data);
+  },
+
   async deleteAvatar(id: number) {
     return httpCommunicator.delete(`/profile/avatar/${id}`);
   }

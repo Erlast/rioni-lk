@@ -111,6 +111,25 @@ a {
     font-size: 12px;
   }
 }
+.v-input--error {
+  .v-field__overlay {
+    border: 1px solid var(--color-AdditionalError);
+  }
+
+  &.v-text-field {
+    .v-input__details {
+      padding-inline: 0px;
+      .v-messages {
+        color: var(--color-AdditionalError) !important;
+      }
+    }
+  }
+
+  :not(.v-field--disabled) .v-label.v-field-label {
+    color: var(--color-AdditionalError) !important;
+  }
+}
+
 
 .v-theme--light {
   /*input */

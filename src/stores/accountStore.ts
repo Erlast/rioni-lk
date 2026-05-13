@@ -13,6 +13,8 @@ interface IState {
 }
 interface IGetter {
   getAccountCurrency: (s: IState) => ICurrencyModel | undefined;
+  getPhone: (s: IState) => string;
+  getEmail: (s: IState) => string;
   [key: string]: any;
 }
 interface IAction {
@@ -25,11 +27,11 @@ export const useAccountStore = defineStore<'account', IState, IGetter, IAction>(
       id: 1,
       info: {
         name: 'Test',
+        nickname: '',
+        login: '',
         surname: 'User',
         patronymic: '',
         photoUrl: '',
-        email: '',
-        phone: '',
         dateOfBirth: '',
         gender: '',
         citizenship: '',
@@ -51,7 +53,9 @@ export const useAccountStore = defineStore<'account', IState, IGetter, IAction>(
         isNgo: false,
         isNotWorking: false,
         isNpo: false,
-        isSelfEmployed: false
+        isSelfEmployed: false,
+        contacts: [],
+        addresses: []
       }
     }
   }),
@@ -62,6 +66,30 @@ export const useAccountStore = defineStore<'account', IState, IGetter, IAction>(
       const firstAccount = portfolioStore.data.currentAccount;
       if (!firstAccount) return undefined;
       return dictionaryStore.currencies.find(item => item.id === firstAccount.accountCurrencyId);
+    },
+    getPhone: state => {
+      if (state.data.info.contacts.length) {
+        const findItem = state.data.info.contacts.find(
+          item => item.isMain && item.contactType === 'phone'
+        );
+        if (!findItem) {
+          return '';
+        }
+        return findItem.value;
+      }
+      return '';
+    },
+    getEmail: state => {
+      if (state.data.info.contacts.length) {
+        const findItem = state.data.info.contacts.find(
+          item => item.isMain && item.contactType === 'email'
+        );
+        if (!findItem) {
+          return '';
+        }
+        return findItem.value;
+      }
+      return '';
     }
   },
   actions: {

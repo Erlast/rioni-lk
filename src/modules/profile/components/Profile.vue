@@ -46,13 +46,13 @@
           <v-sheet class="d-flex flex-column">
             <v-sheet class="font-small text-type-text">{{ t('profile.email') }}</v-sheet>
             <v-sheet class="font-default text-dark-blue">
-              {{ accountStore.data.info.email }}
+              {{ accountStore.getEmail }}
             </v-sheet>
           </v-sheet>
           <v-sheet class="d-flex flex-column">
             <v-sheet class="font-small text-type-text">{{ t('profile.phoneNumber') }}</v-sheet>
             <v-sheet class="font-default text-dark-blue">
-              {{ accountStore.data.info.phone }}
+              {{ accountStore.getPhone }}
             </v-sheet>
           </v-sheet>
         </v-sheet>
@@ -67,13 +67,7 @@
           </v-btn>
         </v-sheet>
         <v-sheet class="d-flex ga-2">
-          <v-btn
-            icon
-            density="compact"
-            :ripple="false"
-            variant="text"
-            @click="showProfileData = true"
-          >
+          <v-btn disabled icon density="compact" :ripple="false" variant="text">
             <v-icon icon="mdi-square-edit-outline" color="middle-blue" />
           </v-btn>
         </v-sheet>
@@ -149,7 +143,7 @@
       </v-sheet>
     </v-sheet>
 
-    <v-dialog v-model="showProfileData" width="auto" scrollable>
+    <v-dialog v-model="showProfileData" width="auto" persistent scrollable>
       <ProfileData />
     </v-dialog>
   </v-sheet>
