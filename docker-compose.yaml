@@ -3,5 +3,5 @@ services:
     build: .
     image: rioni-front-nginx
     ports:
-      - '8080:80'
+      - '8081:80'
     restart: always

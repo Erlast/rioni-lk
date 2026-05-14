@@ -4,6 +4,7 @@ FROM node:23.9.0 AS build-stage
 WORKDIR /app
 COPY package*.json ./
 RUN yarn install
+RUN yarn add esbuild
 COPY . .
 RUN yarn vite build     
 
