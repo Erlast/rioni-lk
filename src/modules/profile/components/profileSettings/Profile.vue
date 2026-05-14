@@ -2,8 +2,9 @@
   import { useAccountStore } from '@/stores/accountStore';
   import { useI18n } from 'vue-i18n';
   import { useVuelidate } from '@vuelidate/core';
-  import { required, helpers } from '@vuelidate/validators';
   import { reactive } from 'vue';
+  import { watch } from 'vue';
+  import AvatarUpload from '@/components/AvatarUpload.vue';
 
   const { t } = useI18n();
   const accountStore = useAccountStore();
@@ -18,7 +19,7 @@
   });
 
   const rules = {};
-   const v$ = useVuelidate(rules, state);
+  const v$ = useVuelidate(rules, state);
 
   defineExpose({
     state,
@@ -43,14 +44,9 @@
           hide-details="auto"
         ></v-text-field>
       </v-sheet>
-      <v-sheet
-        class="d-flex justify-center px-10 py-5 rounded-20 mt-3 border-dashed border-color-element border-sm"
-      >
-        <v-img width="146" height="146" src="/img/avatar-default.png" />
-      </v-sheet>
+
       <v-sheet class="d-flex justify-center">
-        <v-icon icon="mdi-arrow-down" />
-        {{ t('profile.modals.settings.uploadAvatarTitle') }}
+        <avatar-upload />
       </v-sheet>
     </v-sheet>
     <v-sheet
@@ -78,4 +74,11 @@
   </v-sheet>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+  .v-file-upload {
+    :deep(.v-file-upload-divider) {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+  }
+</style>

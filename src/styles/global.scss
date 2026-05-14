@@ -130,6 +130,12 @@ a {
   }
 }
 
+.upload-content {
+  .v-file-upload-divider {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
 
 .v-theme--light {
   /*input */

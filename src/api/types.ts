@@ -29,6 +29,9 @@ export interface IProfileModel {
   isNotWorking: boolean;
   isNpo: boolean;
   isSelfEmployed: boolean;
+  hasBeneficiaries: boolean;
+  isPep: boolean;
+  noResidencePermit: boolean;
   contacts: IProfileContactModel[];
   addresses: IProfileAddressModel[];
 }
@@ -106,4 +109,29 @@ export interface IProfileAddressModel {
   postcode: string;
   address: string;
   isConfirmed: boolean;
+}
+
+export interface ITaxResidenceModel {
+  id: number;
+  country: string | null;
+  inn: string;
+}
+
+export interface IResidencePermit {
+  id: number;
+  country: string | null;
+  issuedBy: string;
+  documentNumber: string;
+  stayPeriod: string;
+}
+
+export interface IBankAccountModel {
+  id: number;
+  country: string | null;
+  bankName: string;
+  iban: string;
+  swift: string;
+  isMain: boolean;
+  isConfirmed: boolean;
+  isBlocked: boolean;
 }

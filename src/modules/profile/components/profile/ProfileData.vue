@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { inject, onMounted, reactive, ref } from 'vue';
+  import { inject, onMounted, reactive, Ref, ref } from 'vue';
   import { useVuelidate } from '@vuelidate/core';
   import { email, required, helpers } from '@vuelidate/validators';
   import { useI18n } from 'vue-i18n';
@@ -10,7 +10,7 @@
   import { useNotify } from '@/stores/notifyStore';
   import accountsService from '@/api/accountService';
 
-  const showProfileData = inject('showProfileData');
+  const showProfileData = inject<Ref<boolean>>('showProfileData', ref(false));
   const item = ref();
   const { t } = useI18n();
   const accountStore = useAccountStore();
@@ -20,8 +20,8 @@
   const initialState = {
     name: accountStore.data.info.name,
     surname: accountStore.data.info.surname,
-    phone: accountStore.data.info.phone,
-    email: accountStore.data.info.email,
+    email: '',
+    phone: '',
     dateOfBirth: accountStore.data.info.dateOfBirth,
     gender: accountStore.data.info.gender ?? 'M',
     citizenship: accountStore.data.info.citizenship,
@@ -58,13 +58,6 @@
         required
       )
     },
-    email: {
-      required: helpers.withMessage(
-        'Данные неверны или не соответствуют заполненным полям ',
-        required
-      ),
-      email
-    },
     surname: {
       required: helpers.withMessage(
         'Данные неверны или не соответствуют заполненным полям ',
@@ -72,12 +65,6 @@
       )
     },
     citizenship: {
-      required: helpers.withMessage(
-        'Данные неверны или не соответствуют заполненным полям ',
-        required
-      )
-    },
-    phone: {
       required: helpers.withMessage(
         'Данные неверны или не соответствуют заполненным полям ',
         required
@@ -247,7 +234,7 @@
                         hide-details="auto"
                         label="Номер документа"
                         required
-                        :error-messages="v$.passportNumber.$errors.map(e => e.$message)"
+                        :error-messages="v$.passportNumber.$errors[0].$message as string"
                         @blur="v$.passportNumber.$touch"
                         @input="v$.passportNumber.$touch"
                       ></v-text-field>
@@ -383,18 +370,18 @@
                 </v-sheet>
               </v-sheet>
               <v-sheet>
-              <v-btn
-                :loading="isSending"
-                variant="flat"
-                rounded="lg"
-                bg="element-check"
-                color="element-check"
-                type="submit"
-              >
-                <v-sheet class="text-white">
-                  {{ t('profile.modals.settings.contactInformationSaveBtn') }}
-                </v-sheet>
-              </v-btn>
+                <v-btn
+                  :loading="isSending"
+                  variant="flat"
+                  rounded="lg"
+                  bg="element-check"
+                  color="element-check"
+                  type="submit"
+                >
+                  <v-sheet class="text-white">
+                    {{ t('profile.modals.settings.contactInformationSaveBtn') }}
+                  </v-sheet>
+                </v-btn>
               </v-sheet>
             </v-sheet>
           </v-form>

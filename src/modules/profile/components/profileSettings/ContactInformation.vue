@@ -46,35 +46,35 @@
     emails: {
       $each: helpers.forEach({
         value: {
-          email: helpers.withMessage(t('profile.modals.settings.invalidEmail'), email)
+          email: helpers.withMessage(t('validations.invalidEmail'), email)
         }
       })
     },
     address1: {
       country: {
         required: helpers.withMessage(
-          t('profile.modals.settings.requiredField'),
+          t('validations.requiredField'),
           requiredIf(() => state.address1.isMain)
         ),
         $autoDirty: true
       },
       city: {
         required: helpers.withMessage(
-          t('profile.modals.settings.requiredField'),
+          t('validations.requiredField'),
           requiredIf(() => state.address1.isMain)
         ),
         $autoDirty: true
       },
       postcode: {
         required: helpers.withMessage(
-          t('profile.modals.settings.requiredField'),
+          t('validations.requiredField'),
           requiredIf(() => state.address1.isMain)
         ),
         $autoDirty: true
       },
       address: {
         required: helpers.withMessage(
-          t('profile.modals.settings.requiredField'),
+          t('validations.requiredField'),
           requiredIf(() => state.address1.isMain)
         ),
         $autoDirty: true
@@ -83,25 +83,25 @@
     address2: {
       country: {
         required: helpers.withMessage(
-          t('profile.modals.settings.requiredField'),
+          t('validations.requiredField'),
           requiredIf(() => state.address2.isMain)
         )
       },
       city: {
         required: helpers.withMessage(
-          t('profile.modals.settings.requiredField'),
+          t('validations.requiredField'),
           requiredIf(() => state.address2.isMain)
         )
       },
       postcode: {
         required: helpers.withMessage(
-          t('profile.modals.settings.requiredField'),
+          t('validations.requiredField'),
           requiredIf(() => state.address2.isMain)
         )
       },
       address: {
         required: helpers.withMessage(
-          t('profile.modals.settings.requiredField'),
+          t('validations.requiredField'),
           requiredIf(() => state.address2.isMain)
         )
       }

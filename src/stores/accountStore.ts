@@ -24,7 +24,7 @@ interface IAction {
 export const useAccountStore = defineStore<'account', IState, IGetter, IAction>('account', {
   state: (): IState => ({
     data: {
-      id: 1,
+      id: 2,
       info: {
         name: 'Test',
         nickname: '',
@@ -54,6 +54,9 @@ export const useAccountStore = defineStore<'account', IState, IGetter, IAction>(
         isNotWorking: false,
         isNpo: false,
         isSelfEmployed: false,
+        hasBeneficiaries: false,
+        isPep: false,
+        noResidencePermit: false,
         contacts: [],
         addresses: []
       }
@@ -97,7 +100,7 @@ export const useAccountStore = defineStore<'account', IState, IGetter, IAction>(
       try {
         const data = await accountsService.profile(this.data.id);
         this.data = {
-          id: 1,
+          id: 2,
           info: data
         };
       } catch (error) {

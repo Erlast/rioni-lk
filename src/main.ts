@@ -23,9 +23,17 @@ import dayjs from 'dayjs';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import arraySupport from 'dayjs/plugin/arraySupport';
 import 'dayjs/locale/ru';
+import { VFileUpload, VFileUploadItem } from 'vuetify/lib/labs/components.js';
+
+
+const allComponents = {
+  ...components,
+  VFileUpload,
+  VFileUploadItem
+};
 
 const vuetify = createVuetify({
-  components,
+  components:allComponents,
   directives,
   theme: {
     defaultTheme: 'light' // 'light' | 'dark' | 'system'

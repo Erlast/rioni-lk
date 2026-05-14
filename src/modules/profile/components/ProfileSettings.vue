@@ -4,13 +4,13 @@
   import Profile from '@/modules/profile/components/profileSettings/Profile.vue';
   import { useAccountStore } from '@/stores/accountStore';
   import { useNotify } from '@/stores/notifyStore';
-  import { inject, ref } from 'vue';
+  import { inject, ref, Ref } from 'vue';
   import { useI18n } from 'vue-i18n';
 
   const { t } = useI18n();
   const isSending = ref(false);
   const accountStore = useAccountStore();
-  const showProfileSettings = inject('showProfileSettings');
+  const showProfileSettings = inject<Ref<boolean>>('showProfileSettings', ref(false));
   const notifyStore = useNotify();
 
   const contactRef = ref<InstanceType<typeof ContactInformation> | null>(null);

@@ -1,11 +1,13 @@
 import { header } from './header';
 import { portfolio } from './portfolio';
 import { profile } from './profile';
+import { validations } from './validations';
 
 export const en = {
   header,
   profile,
   portfolio,
+  validations,
   title: {
     portfolio: 'Личный кабинет — Портфель',
     market: 'Личный кабинет — Рынок',
