@@ -32,10 +32,10 @@
 </script>
 
 <template>
-  <v-dialog v-model="showAnketa" width="auto" scrollable>
+  <v-dialog v-model="showAnketa" width="auto" persistent scrollable>
     <Anketa />
   </v-dialog>
-  <v-dialog v-model="showProfileSettings" width="auto" scrollable>
+  <v-dialog v-model="showProfileSettings" width="auto" persistent scrollable>
     <ProfileSettings />
   </v-dialog>
 

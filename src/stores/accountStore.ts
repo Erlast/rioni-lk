@@ -13,6 +13,8 @@ interface IState {
 }
 interface IGetter {
   getAccountCurrency: (s: IState) => ICurrencyModel | undefined;
+  getPhone: (s: IState) => string;
+  getEmail: (s: IState) => string;
   [key: string]: any;
 }
 interface IAction {
@@ -22,14 +24,14 @@ interface IAction {
 export const useAccountStore = defineStore<'account', IState, IGetter, IAction>('account', {
   state: (): IState => ({
     data: {
-      id: 1,
+      id: 2,
       info: {
         name: 'Test',
+        nickname: '',
+        login: '',
         surname: 'User',
         patronymic: '',
         photoUrl: '',
-        email: '',
-        phone: '',
         dateOfBirth: '',
         gender: '',
         citizenship: '',
@@ -51,7 +53,12 @@ export const useAccountStore = defineStore<'account', IState, IGetter, IAction>(
         isNgo: false,
         isNotWorking: false,
         isNpo: false,
-        isSelfEmployed: false
+        isSelfEmployed: false,
+        hasBeneficiaries: false,
+        isPep: false,
+        noResidencePermit: false,
+        contacts: [],
+        addresses: []
       }
     }
   }),
@@ -62,6 +69,30 @@ export const useAccountStore = defineStore<'account', IState, IGetter, IAction>(
       const firstAccount = portfolioStore.data.currentAccount;
       if (!firstAccount) return undefined;
       return dictionaryStore.currencies.find(item => item.id === firstAccount.accountCurrencyId);
+    },
+    getPhone: state => {
+      if (state.data.info.contacts.length) {
+        const findItem = state.data.info.contacts.find(
+          item => item.isMain && item.contactType === 'phone'
+        );
+        if (!findItem) {
+          return '';
+        }
+        return findItem.value;
+      }
+      return '';
+    },
+    getEmail: state => {
+      if (state.data.info.contacts.length) {
+        const findItem = state.data.info.contacts.find(
+          item => item.isMain && item.contactType === 'email'
+        );
+        if (!findItem) {
+          return '';
+        }
+        return findItem.value;
+      }
+      return '';
     }
   },
   actions: {
@@ -69,7 +100,7 @@ export const useAccountStore = defineStore<'account', IState, IGetter, IAction>(
       try {
         const data = await accountsService.profile(this.data.id);
         this.data = {
-          id: 1,
+          id: 2,
           info: data
         };
       } catch (error) {

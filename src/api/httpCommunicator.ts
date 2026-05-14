@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 
 const httpCommunicator = axios.create({
-  baseURL: `${import.meta.env.VITE_API_BASE_URL || 'http://51.250.101.25:8080/api'}`, // URL API
+  baseURL: `${import.meta.env.VITE_API_BASE_URL}`, // URL API
   timeout: 50000,
   withCredentials: false,
   headers: {

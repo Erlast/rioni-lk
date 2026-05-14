@@ -1,16 +1,16 @@
 <script setup lang="ts">
-  import { inject, onMounted, reactive, ref } from 'vue';
+  import { inject, onMounted, reactive, Ref, ref } from 'vue';
   import { useVuelidate } from '@vuelidate/core';
   import { email, required, helpers } from '@vuelidate/validators';
   import { useI18n } from 'vue-i18n';
-  import { itemsFlags } from '@/utils/data';
+  import { itemsFlags, countries } from '@/utils/data';
   import { useAccountStore } from '@/stores/accountStore';
   import DatePicker from '@/components/BaseComponents/DatePicker.vue';
   import dayjs from 'dayjs';
   import { useNotify } from '@/stores/notifyStore';
   import accountsService from '@/api/accountService';
 
-  const showProfileData = inject('showProfileData');
+  const showProfileData = inject<Ref<boolean>>('showProfileData', ref(false));
   const item = ref();
   const { t } = useI18n();
   const accountStore = useAccountStore();
@@ -20,8 +20,8 @@
   const initialState = {
     name: accountStore.data.info.name,
     surname: accountStore.data.info.surname,
-    phone: accountStore.data.info.phone,
-    email: accountStore.data.info.email,
+    email: '',
+    phone: '',
     dateOfBirth: accountStore.data.info.dateOfBirth,
     gender: accountStore.data.info.gender ?? 'M',
     citizenship: accountStore.data.info.citizenship,
@@ -29,8 +29,6 @@
     passportNumber: accountStore.data.info.passportNumber,
     passportIssueDate: accountStore.data.info.passportIssueDate,
     passportExpiryDate: accountStore.data.info.passportExpiryDate,
-    countryOfBirth: accountStore.data.info.countryOfBirth,
-    cityOfBirth: accountStore.data.info.cityOfBirth,
     issuedBy: accountStore.data.info.issuedBy,
     companyName: accountStore.data.info.companyName,
     companyIndustry: accountStore.data.info.companyIndustry,
@@ -60,13 +58,6 @@
         required
       )
     },
-    email: {
-      required: helpers.withMessage(
-        'Данные неверны или не соответствуют заполненным полям ',
-        required
-      ),
-      email
-    },
     surname: {
       required: helpers.withMessage(
         'Данные неверны или не соответствуют заполненным полям ',
@@ -74,12 +65,6 @@
       )
     },
     citizenship: {
-      required: helpers.withMessage(
-        'Данные неверны или не соответствуют заполненным полям ',
-        required
-      )
-    },
-    phone: {
       required: helpers.withMessage(
         'Данные неверны или не соответствуют заполненным полям ',
         required
@@ -240,28 +225,29 @@
                 <v-sheet class="d-flex flex-column ga-2">
                   <v-sheet class="d-flex">Паспорт</v-sheet>
                   <v-sheet class="d-flex ga-2">
-                    <v-text-field
-                      v-model="state.passportNumber"
+                    <v-sheet width="50%">
+                      <v-text-field
+                        v-model="state.passportNumber"
+                        variant="solo"
+                        density="compact"
+                        flat
+                        hide-details="auto"
+                        label="Номер документа"
+                        required
+                        :error-messages="v$.passportNumber.$errors[0].$message as string"
+                        @blur="v$.passportNumber.$touch"
+                        @input="v$.passportNumber.$touch"
+                      ></v-text-field>
+                    </v-sheet>
+                    <v-autocomplete
                       variant="solo"
-                      density="compact"
-                      flat
-                      hide-details="auto"
-                      label="Номер документа"
-                      required
-                      :error-messages="v$.passportNumber.$errors.map(e => e.$message)"
-                      @blur="v$.passportNumber.$touch"
-                      @input="v$.passportNumber.$touch"
-                    ></v-text-field>
-
-                    <v-select
-                      variant="solo"
                       flat
                       density="compact"
-                      :items="['РФ', 'Грузия']"
+                      :items="countries"
                       hide-details="auto"
                       label="Гражданство"
                       v-model="state.citizenship"
-                    ></v-select>
+                    ></v-autocomplete>
                   </v-sheet>
                   <v-sheet class="d-flex ga-2">
                     <v-text-field
@@ -277,39 +263,6 @@
                     <date-picker label="Дата выдачи" v-model="state.passportIssueDate" />
                     <date-picker label="Срок действия" v-model="state.passportExpiryDate" />
                   </v-sheet>
-                </v-sheet>
-                <v-sheet class="d-flex flex-column ga-2">
-                  <v-sheet class="d-flex">Место рождения</v-sheet>
-                  <v-sheet class="d-flex ga-2">
-                    <v-text-field
-                      variant="solo"
-                      density="compact"
-                      flat
-                      hide-details="auto"
-                      label="Страна"
-                      v-model="state.countryOfBirth"
-                    ></v-text-field>
-
-                    <v-text-field
-                      variant="solo"
-                      density="compact"
-                      flat
-                      hide-details="auto"
-                      label="Город"
-                      v-model="state.cityOfBirth"
-                    ></v-text-field>
-                  </v-sheet>
-                </v-sheet>
-                <v-sheet class="text-type-text font-smaller">
-                  Для подтверждения указанной информации необходимо
-                  <span
-                    class="text-additional-link"
-                    style="cursor: pointer"
-                    @click="openDialogUploadDocuments"
-                  >
-                    загрузить скан паспорта сюда
-                    <v-icon icon="mdi-arrow-down" size="12" />
-                  </span>
                 </v-sheet>
               </v-sheet>
               <v-sheet class="d-flex flex-column ga-2">
@@ -416,18 +369,20 @@
                   ></v-checkbox>
                 </v-sheet>
               </v-sheet>
-              <v-btn
-                :loading="isSending"
-                variant="flat"
-                rounded="lg"
-                bg="element-check"
-                color="element-check"
-                type="submit"
-              >
-                <v-sheet class="text-white">
-                  {{ t('profile.modals.settings.contactInformationSaveBtn') }}
-                </v-sheet>
-              </v-btn>
+              <v-sheet>
+                <v-btn
+                  :loading="isSending"
+                  variant="flat"
+                  rounded="lg"
+                  bg="element-check"
+                  color="element-check"
+                  type="submit"
+                >
+                  <v-sheet class="text-white">
+                    {{ t('profile.modals.settings.contactInformationSaveBtn') }}
+                  </v-sheet>
+                </v-btn>
+              </v-sheet>
             </v-sheet>
           </v-form>
         </v-card-text>
