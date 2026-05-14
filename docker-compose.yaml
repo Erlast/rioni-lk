@@ -3,7 +3,7 @@ services:
     build: .
     image: rioni-front-nginx
     ports:
-      - '8081:80'
+      - '8080:80'
     restart: always
     networks:
       - dev
