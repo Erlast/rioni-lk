@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vuetify from 'vite-plugin-vuetify';
 
-const host = process.env.VITE_API_HOST || 'http://51.250.101.25:8080';
+const host = process.env.VITE_API_HOST;
 
 export default defineConfig({
   /*server: {
