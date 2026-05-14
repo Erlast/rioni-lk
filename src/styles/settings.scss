@@ -1,5 +1,5 @@
 @use 'flag-icons/sass/flag-icons' with (
-  $flag-icons-path: 'node_modules/flag-icons/flags'
+  $flag-icons-path: '/flags'
 );
 @use 'vuetify/settings' with (
   $container-max-widths: (
