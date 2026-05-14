@@ -2,11 +2,11 @@ import { InstrumentTypes } from './enum';
 
 export interface IProfileModel {
   name: string;
+  nickname: string;
+  login: string;
   surname: string;
   patronymic: string;
   photoUrl: string;
-  email: string;
-  phone: string;
   dateOfBirth: string;
   gender: string;
   citizenship: string;
@@ -29,6 +29,11 @@ export interface IProfileModel {
   isNotWorking: boolean;
   isNpo: boolean;
   isSelfEmployed: boolean;
+  hasBeneficiaries: boolean;
+  isPep: boolean;
+  noResidencePermit: boolean;
+  contacts: IProfileContactModel[];
+  addresses: IProfileAddressModel[];
 }
 
 export interface IDictionariesModel {
@@ -83,4 +88,50 @@ export interface IAssetModel {
 export interface IProfitModel {
   investedSum: number;
   totalDiff: number;
+}
+
+export type contactType = 'email' | 'phone';
+
+export interface IProfileContactModel {
+  id: number;
+  contactType: contactType;
+  isMain: boolean;
+  value: string;
+  isConfirmed: boolean;
+}
+export type addressType = 'registration' | 'actual';
+export interface IProfileAddressModel {
+  id: number;
+  addressType: addressType;
+  isMain: boolean;
+  country: string | null;
+  city: string;
+  postcode: string;
+  address: string;
+  isConfirmed: boolean;
+}
+
+export interface ITaxResidenceModel {
+  id: number;
+  country: string | null;
+  inn: string;
+}
+
+export interface IResidencePermit {
+  id: number;
+  country: string | null;
+  issuedBy: string;
+  documentNumber: string;
+  stayPeriod: string;
+}
+
+export interface IBankAccountModel {
+  id: number;
+  country: string | null;
+  bankName: string;
+  iban: string;
+  swift: string;
+  isMain: boolean;
+  isConfirmed: boolean;
+  isBlocked: boolean;
 }

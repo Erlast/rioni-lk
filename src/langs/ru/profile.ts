@@ -71,7 +71,19 @@ export const profile = {
       memberOfNPOTitle: 'Состою в некомерческой организации (НКО)',
       memberOfNGOTitle: 'Состою в неправительственной организации (НПО)',
       selfEmployedStatusTitle: 'Статус самозанятого',
-      doNotWorkTitle: 'Не работаю'
+      doNotWorkTitle: 'Не работаю',
+      addBtn: '+ добавить',
+      bankAccountsTitle: 'Банковские реквизиты',
+      bankAccountIsMain: 'Использовать как основной',
+      bankNameTitle: 'Наименование банка',
+      isConfirmed: 'Подтвержден',
+      isNotConfirmed: 'Не подтвержден',
+      blockBtn: 'Заблокировать',
+      blockedAccount: 'Заблокирован',
+      confirmBlockTitle: 'Подтвердите действие',
+      confirmBlockText: 'Вы точно хотите заблокировать счет?',
+      okBtn: 'ОК',
+      cancelBtn: 'Отмена'
     },
     profileData: {
       title: 'Анкета Бенефициара'
