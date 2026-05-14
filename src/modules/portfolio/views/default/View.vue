@@ -55,7 +55,6 @@
     };
   }
 
-
   onMounted(async () => {
     await portfolioStore.load();
     await assetsStore.load();
