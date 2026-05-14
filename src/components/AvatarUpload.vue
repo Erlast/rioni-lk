@@ -56,7 +56,7 @@
     </template>
     <template v-slot:title>
       <v-sheet
-        class="d-flex justify-center px-10 py-5 rounded-20 mt-3 border-dashed border-color-element border-sm"
+        class="d-flex justify-center px-10 py-5 rounded-20 border-dashed border-color-element border-sm"
       >
         <v-img
           v-if="accountStore.data.info.photoUrl"
@@ -84,11 +84,14 @@
   </v-file-upload>
 </template>
 
-<style scoped>
-  .upload-content{
+<style scoped lang="scss">
+  .upload-content {
     width: max-content;
   }
-  .v-file-upload-dropzone.v-sheet {
-    border-width: 0 !important;
+  .v-file-upload-dropzone {
+    padding: 0 !important;
+    &.v-sheet {
+      border-width: 0 !important;
+    }
   }
 </style>

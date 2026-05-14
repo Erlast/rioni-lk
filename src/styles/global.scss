@@ -137,6 +137,13 @@ a {
   }
 }
 
+.v-file-upload-dropzone {
+  padding: 0 !important;
+  &.v-sheet {
+    border-width: 0 !important;
+  }
+}
+
 .v-theme--light {
   /*input */
   .v-field {
