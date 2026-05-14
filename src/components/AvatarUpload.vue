@@ -83,3 +83,12 @@
     </template>
   </v-file-upload>
 </template>
+
+<style scoped>
+  .upload-content{
+    width: max-content;
+  }
+  .v-file-upload-dropzone.v-sheet {
+    border-width: 0 !important;
+  }
+</style>
