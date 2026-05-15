@@ -24,7 +24,7 @@ import updateLocale from 'dayjs/plugin/updateLocale';
 import arraySupport from 'dayjs/plugin/arraySupport';
 import 'dayjs/locale/ru';
 import { VFileUpload, VFileUploadItem } from 'vuetify/lib/labs/components.js';
-
+import VueApexCharts from 'vue3-apexcharts';
 
 const allComponents = {
   ...components,
@@ -79,4 +79,5 @@ app.use(i18n);
 app.use(pinia);
 app.use(router);
 app.use(vuetify);
+app.use(VueApexCharts);
 app.mount('#app');

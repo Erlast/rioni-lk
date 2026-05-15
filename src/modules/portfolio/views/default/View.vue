@@ -12,6 +12,7 @@
   import { useAssetsStore } from '@/stores/assetsStore';
   import { formatNumber } from '@/utils/number.extensions';
   import { bgThirdCard } from '@/utils/data.ts';
+  import SimpleChart from '@/components/SimpleChart.vue';
 
   const { t } = useI18n();
 
@@ -196,6 +197,13 @@
             {{ accountStore.getAccountCurrency?.title }}
           </v-sheet>
         </v-sheet>
+      </v-sheet>
+      <v-sheet
+        class="d-flex flex-column ga-4 rounded-xxl pa-6"
+        style="background-color: white !important"
+      >
+        <v-sheet class="text-dark-blue">{{ t('portfolio.dynamicTitle') }}</v-sheet>
+        <simple-chart />
       </v-sheet>
       <v-sheet
         class="d-flex flex-column ga-4 rounded-xxl pa-6"

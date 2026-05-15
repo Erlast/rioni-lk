@@ -135,3 +135,8 @@ export interface IBankAccountModel {
   isConfirmed: boolean;
   isBlocked: boolean;
 }
+
+export interface IAccountCostModel {
+  time: number;
+  value: number;
+}

@@ -13,6 +13,7 @@ export const portfolio = {
   grow: 'Рост на',
   papersTitle: 'Состав портфеля',
   emptyData: 'Нет данных',
+  dynamicTitle: 'Динамика портфеля',
   table: {
     tabs: {
       action: 'Акции',
@@ -37,5 +38,16 @@ export const portfolio = {
       totalCurrencyPriceTitle: 'Стоимость'
     },
     summary: 'Всего'
+  },
+  chart: {
+    cost: 'Стоимость',
+    timeframes: {
+      week: 'Неделя',
+      month: 'Месяц',
+      sixMonths: '6 месяцев',
+      year: '1 год',
+      fromYear: 'С 1 января',
+      all: 'Весь период'
+    }
   }
 };
