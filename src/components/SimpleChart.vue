@@ -1,10 +1,12 @@
 <script setup lang="ts">
-  import { onMounted, onUnmounted, ref, nextTick, computed, watch } from 'vue';
+  import { onMounted, ref, nextTick, computed, watch } from 'vue';
   import { TimeframeType, useAccountChartCostStore } from '@/stores/accountChartCostStore';
+  import { usePortfolioStore } from '@/stores/portfolioStore';
   import { useI18n } from 'vue-i18n';
   import { russianMonths } from '@/utils/data.ts';
 
   const accountChartCostStore = useAccountChartCostStore();
+  const portfolioStore = usePortfolioStore();
 
   const { t } = useI18n();
   const loading = ref<boolean>(true);
@@ -26,7 +28,7 @@
     },
     {
       name: t('portfolio.chart.timeframes.sixMonths'),
-      value: '6months'
+      value: 'sixMonths'
     },
     {
       name: t('portfolio.chart.timeframes.year'),
@@ -38,31 +40,41 @@
     },
     {
       name: t('portfolio.chart.timeframes.all'),
-      value: 'all'
+      value: 'allPeriod'
     }
   ];
 
   const changeTimeframe = async (e: TimeframeType) => {
     const finding = timeFrameTypes.find(item => item.value === e);
     accountChartCostStore.timeframe = finding ? finding.value : 'week';
+    loading.value = true;
     await accountChartCostStore.load();
+    await nextTick();
     await loadChart();
+    await nextTick();
+    if (chart.value) {
+      await updateChartData();
+    }
   };
 
-  // Watch for timeframe changes to reload chart
   watch(
     () => accountChartCostStore.timeframe,
     async () => {
       await loadChart();
-    }
+      await nextTick();
+      if (chart.value) {
+        await updateChartData();
+      }
+    },
+    { immediate: false }
   );
 
   const period = computed(() => {
     if (!accountChartCostStore.data || accountChartCostStore.data.length === 0) return '';
 
-    const startDate = new Date(accountChartCostStore.data[0].time);
+    const startDate = new Date(accountChartCostStore.data[0].time * 1000);
     const endDate = new Date(
-      accountChartCostStore.data[accountChartCostStore.data.length - 1].time
+      accountChartCostStore.data[accountChartCostStore.data.length - 1].time * 1000
     );
 
     const formatDate = (date: Date, includeYear: boolean): string => {
@@ -85,11 +97,7 @@
     const values = data.length > 0 ? data.map(d => d.value) : [0];
     const dataMax = Math.max(...values);
     const dataMin = Math.min(...values);
-
-    // Calculate Y-axis range with 6 lines (5 intervals)
     const absMax = Math.max(Math.abs(dataMin), Math.abs(dataMax));
-    
-    // Find a nice step value
     const roughStep = absMax / 3;
     const magnitude = Math.pow(10, Math.floor(Math.log10(roughStep)));
     const normalized = roughStep / magnitude;
@@ -99,21 +107,17 @@
     else if (normalized <= 5) niceStep = 5;
     else niceStep = 10;
     niceStep *= magnitude;
-    
-    // Calculate min/max ensuring 0 line exists and 6 grid lines
+
     let yMin, yMax;
     if (dataMin >= 0) {
-      // All positive - 0 line at bottom
       yMin = 0;
       yMax = niceStep * 5;
     } else if (dataMax <= 0) {
-      // All negative - 0 line at top
       yMin = -niceStep * 5;
       yMax = 0;
     } else {
-      // Spans both - 0 in middle, calculate symmetric range
       const maxAbsValue = Math.max(Math.abs(dataMin), Math.abs(dataMax));
-      const rangeStep = Math.ceil(maxAbsValue / 2.5); // ~2.5 gives us 5 intervals with headroom
+      const rangeStep = Math.ceil(maxAbsValue / 2.5);
       const niceRangeStep = Math.ceil(rangeStep / magnitude) * magnitude;
       yMin = -niceRangeStep * 2;
       yMax = niceRangeStep * 3;
@@ -217,13 +221,11 @@
     };
   });
 
-  let timer: ReturnType<typeof setInterval> | null = null;
-
   const loadChart = async () => {
     loading.value = true;
 
     const chartData = accountChartCostStore.data.map(item => ({
-      x: item.time,
+      x: item.time * 1000,
       y: item.value
     }));
 
@@ -237,8 +239,10 @@
   };
 
   function updateChartData() {
+    if (!chart.value) return;
+
     const chartData = accountChartCostStore.data.map(item => ({
-      x: item.time,
+      x: item.time * 1000,
       y: item.value
     }));
 
@@ -273,20 +277,36 @@
       yMax = niceRangeStep * 3;
     }
 
-    chart.value.updateOptions(
-      {
-        xaxis: {
-          categories: accountChartCostStore.data.map(item => item.time)
+    const updatedOptions = {
+      xaxis: {
+        type: 'datetime',
+        labels: {
+          datetimeUTC: false,
+          format: 'MMM dd'
         },
-        yaxis: {
-          min: yMin,
-          max: yMax
+        axisBorder: {
+          show: false
+        },
+        axisTicks: {
+          show: false
         }
       },
-      false,
-      true
-    );
+      yaxis: {
+        tickAmount: 5,
+        min: yMin,
+        max: yMax,
+        labels: {
+          formatter: (value: number) => {
+            if (Math.abs(value) >= 10000) {
+              return Math.round(value / 1000) + 'k';
+            }
+            return value.toLocaleString();
+          }
+        }
+      }
+    };
 
+    chart.value.updateOptions(updatedOptions, true, true);
     chart.value.updateSeries(
       [
         {
@@ -298,30 +318,22 @@
     );
   }
 
-  function startAutoUpdate(interval: number) {
-    if (timer) {
-      clearInterval(timer);
-    }
-    timer = setInterval(() => {
-      updateChartData();
-    }, interval);
-  }
-
   onMounted(async () => {
+    if (!portfolioStore.data.currentAccount) {
+      await portfolioStore.load();
+      portfolioStore.setCurrentAccount();
+    }
     await accountChartCostStore.load();
-    accountChartCostStore.startAutoUpdate(5000);
-
     await nextTick();
     await loadChart();
+    await nextTick();
 
-    startAutoUpdate(1000);
-  });
-
-  onUnmounted(() => {
-    accountChartCostStore.stopAutoUpdate();
-    if (timer) {
-      clearInterval(timer);
-      timer = null;
+    while (!chart.value) {
+      await nextTick();
+    }
+    await nextTick();
+    if (chart.value) {
+      await updateChartData();
     }
   });
 </script>

@@ -7,8 +7,10 @@ import {
   IIntervalUpdateState,
   intervalUpdateState
 } from '@/stores/intervalUpdateStore';
+import portfolioService from '@/api/portfolioService.ts';
+import { usePortfolioStore } from '@/stores/portfolioStore.ts';
 
-export type TimeframeType = 'week' | 'month' | '6months' | 'year' | 'fromYear' | 'all';
+export type TimeframeType = 'week' | 'month' | 'sixMonths' | 'year' | 'fromYear' | 'allPeriod';
 
 interface IState extends IIntervalUpdateState {
   data: IAccountCostModel[];
@@ -43,9 +45,14 @@ export const useAccountChartCostStore = defineStore<'accountChartCost', IState, 
       ...createIntervalUpdateActions<'accountChartCost'>(),
       async load() {
         this.loading = true;
+        const portfolioStore = usePortfolioStore();
         try {
-          this.data = this.generateMockData;
-
+          this.data = portfolioStore.data.currentAccount
+            ? await portfolioService.portfolioData(
+                portfolioStore.data.currentAccount.id,
+                this.timeframe
+              )
+            : [];
         } catch (error: any) {
           this.error = { name: error.code, message: error.message };
           const notify = useNotify();
@@ -55,8 +62,14 @@ export const useAccountChartCostStore = defineStore<'accountChartCost', IState, 
         }
       },
       async autoUpdate() {
+        const portfolioStore = usePortfolioStore();
         try {
-          this.data = this.generateMockData;
+          this.data = portfolioStore.data.currentAccount
+            ? await portfolioService.portfolioData(
+                portfolioStore.data.currentAccount.id,
+                this.timeframe
+              )
+            : [];
         } catch (error: any) {
           this.error = { name: error.code, message: error.message };
           const notify = useNotify();
@@ -84,7 +97,7 @@ export const useAccountChartCostStore = defineStore<'accountChartCost', IState, 
           case 'month':
             daysToSubtract = 30;
             break;
-          case '6months':
+          case 'sixMonths':
             daysToSubtract = 180;
             break;
           case 'year':
@@ -96,7 +109,7 @@ export const useAccountChartCostStore = defineStore<'accountChartCost', IState, 
               (today.getTime() - januaryFirst.getTime()) / (1000 * 60 * 60 * 24)
             );
             break;
-          case 'all':
+          case 'allPeriod':
           default:
             daysToSubtract = maxDays;
             break;

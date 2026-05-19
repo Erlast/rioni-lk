@@ -1,7 +1,8 @@
 import httpCommunicator from '@/api/httpCommunicator';
 import type { AxiosResponse } from 'axios';
-import { IPortfoliosModel, IPortfolioModel } from '@/api/types';
+import { IPortfoliosModel, IPortfolioModel, IAccountCostModel } from '@/api/types';
 import qs from 'qs';
+import { TimeframeType } from '@/stores/accountChartCostStore.ts';
 
 const portfolioService = {
   async portfolios(profileId: number): Promise<IPortfoliosModel> {
@@ -26,6 +27,11 @@ const portfolioService = {
       .then((response: AxiosResponse) => {
         return response.data;
       });
+  },
+  async portfolioData(accountId: number, timeframe:TimeframeType): Promise<IAccountCostModel[]> {
+    return httpCommunicator.get(`/portfolio/${accountId}?timeframe=${timeframe}`).then((response: AxiosResponse) => {
+      return response.data;
+    });
   }
 };
 
