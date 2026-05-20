@@ -12,6 +12,8 @@ $colorTextText: #2a2a2a;
 $colorAdditionalError: #ff5d5d;
 $colorLightGreen: #e7f8f0;
 $colorAdditionalLink: #00a4d1;
+$colorDarkBlue2: #142b40;
+$colorHardBlue: #2E4376;
 
 @mixin export_css_colors {
   :root {
@@ -29,5 +31,7 @@ $colorAdditionalLink: #00a4d1;
     --color-AdditionalError: #{$colorAdditionalError};
     --color-LightGreen: #{$colorLightGreen};
     --color-AdditionalLink: #{$colorAdditionalLink};
+    --color-DarkBlue2: #{$colorDarkBlue2};
+    --color-HardBlue: #{$colorHardBlue};
   }
 }

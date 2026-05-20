@@ -4,6 +4,8 @@
   import { useDisplay } from 'vuetify/lib/composables/display';
   import { useAccountStore } from '@/stores/accountStore';
   import { onMounted } from 'vue';
+  import HeaderMobileView from '@/views/default/HeaderMobileView.vue';
+  import FooterMobileView from '@/views/default/FooterMobileView.vue';
 
   const { mobile } = useDisplay();
   const accountStore = useAccountStore();
@@ -13,26 +15,27 @@
 </script>
 
 <template>
-    <HeaderView />
-    <v-main app>
-      <v-sheet class="main-wrapper">
-        <v-container
-          max-width="1280"
-          class="py-12 main-container"
-          :class="{ 'px-0 pt-2 pb-0': mobile }"
-        >
-          <RouterView />
-        </v-container>
-      </v-sheet>
-    </v-main>
-    <v-footer class="justify-lg-space-between align-center my-footer">
-      <Footer></Footer>
-    </v-footer>
+  <HeaderMobileView v-if="mobile" />
+  <HeaderView v-else />
+  <v-main app>
+    <v-sheet class="main-wrapper">
+      <v-container
+        max-width="1280"
+        class="py-12 main-container"
+        :class="{ 'px-4': mobile, 'px-12': !mobile }"
+      >
+        <RouterView />
+      </v-container>
+    </v-sheet>
+  </v-main>
+  <v-footer class="justify-lg-space-between align-center my-footer">
+    <FooterMobileView v-if="mobile" />
+    <Footer v-else></Footer>
+  </v-footer>
 </template>
 <style lang="scss">
   .main-container {
     background-color: var(--color-MainBackground);
-    padding: 1rem 4rem;
   }
   .my-footer {
     box-sizing: border-box;

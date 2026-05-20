@@ -1,3 +1,4 @@
+<script setup lang="ts"></script>
 <template>
   <v-container class="pa-0" max-width="1280">
     <div class="footer">
@@ -61,17 +62,15 @@
             <div class="footer-bottom-block__body">адрес.почты@gmail.ru</div>
           </div>
 
-          <div class="footer-bottom-block">
-            <div class="footer-bottom-block__body">Есть предложения? Свяжитесь с нами</div>
-            <form class="form-feedback">
-              <textarea
-                name="text"
-                class="form-feedback-textarea"
-                placeholder="Комментарий"
-              ></textarea>
-              <input type="submit" value="Отправить" class="form-feedback-button" />
-            </form>
-          </div>
+          <v-sheet class="d-flex flex-column ga-2">
+            <v-sheet class="text-white">Есть предложения? Свяжитесь с нами</v-sheet>
+            <v-form>
+              <v-textarea name="text" placeholder="Комментарий" class="text-black" />
+              <v-btn variant="flat" type="submit" class="bg-hard-blue text-white rounded-mg" block>
+                Отправить
+              </v-btn>
+            </v-form>
+          </v-sheet>
         </div>
       </div>
       <div class="footer-bottom-text">
@@ -190,7 +189,7 @@
   }
 
   .footer-bottom-text {
-     padding-bottom: 24px;
+    padding-bottom: 24px;
   }
 
   .footer-bottom-block {
@@ -217,31 +216,6 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-  }
-
-  .form-feedback-textarea {
-    display: block;
-    margin-top: 5px;
-    padding: 15px;
-    width: 520px;
-    height: 100px;
-    border-radius: 10px;
-  }
-
-  .form-feedback-button {
-    margin-top: 10px;
-    padding: 8px 126px;
-    height: 38px;
-    width: 390px;
-    border-radius: 10px;
-    background: #1a3472;
-
-    color: inherit;
-    border: none;
-
-    font: inherit;
-    cursor: pointer;
-    outline: inherit;
   }
 
   .footer-spcial-text {

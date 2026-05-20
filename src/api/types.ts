@@ -140,3 +140,8 @@ export interface IAccountCostModel {
   time: number;
   value: number;
 }
+
+export interface IAccountYieldModel {
+  accountYield: number;
+  accountPercent: number;
+}

@@ -9,7 +9,7 @@ export const ru = {
   portfolio,
   validations,
   title: {
-    portfolio: 'Личный кабинет — Портфель',
+    portfolio: 'Личный кабинет — Счета',
     market: 'Личный кабинет — Рынок',
     analitics: 'Личный кабинет — Аналитика',
     pronouns: 'Личный кабинет — Поручения',

@@ -62,6 +62,7 @@ export const useAccountStore = defineStore<'account', IState, IGetter, IAction>(
       }
     }
   }),
+  persist: true,
   getters: {
     getAccountCurrency: state => {
       const dictionaryStore = useDictionaryStore();

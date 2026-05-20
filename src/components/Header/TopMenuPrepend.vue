@@ -30,7 +30,7 @@
 </script>
 
 <template>
-  <div class="menu-prepend d-flex align-center ga-4">
+  <v-sheet class="menu-prepend d-flex align-center ga-4">
     <div style="width: 180px">
       <v-btn label="" variant="text" :to="{ name: 'portfolio' }" size="default" class="home-logo">
         <template #prepend>
@@ -46,7 +46,7 @@
         :to="{ name: item.name }"
       />
     </v-sheet>
-  </div>
+  </v-sheet>
 </template>
 
 <style scoped lang="scss">

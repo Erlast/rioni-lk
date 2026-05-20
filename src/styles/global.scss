@@ -2,6 +2,15 @@
 
 #app {
   background-color: var(--color-MainBackground);
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+}
+
+html {
+  overflow: auto;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 a {
@@ -41,6 +50,10 @@ a {
 
 .font-small {
   font-size: 10px;
+}
+
+.font-8 {
+  font-size: 8px;
 }
 
 .font-smaller {
@@ -141,6 +154,14 @@ a {
   padding: 0 !important;
   &.v-sheet {
     border-width: 0 !important;
+  }
+}
+
+.v-textarea .v-field__input{
+  mask-image: unset !important;
+  &:focus{
+    background-color: white;
+    border-radius: 10px;
   }
 }
 

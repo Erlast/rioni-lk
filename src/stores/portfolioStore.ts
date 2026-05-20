@@ -27,6 +27,7 @@ export const usePortfolioStore = defineStore<'portfolio', IState, IGetter, IActi
       currentAccount: null
     }
   }),
+  persist: true,
   getters: {},
   actions: {
     async load() {

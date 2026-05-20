@@ -10,7 +10,14 @@ import {
 import portfolioService from '@/api/portfolioService.ts';
 import { usePortfolioStore } from '@/stores/portfolioStore.ts';
 
-export type TimeframeType = 'week' | 'month' | 'sixMonths' | 'year' | 'fromYear' | 'allPeriod';
+export type TimeframeType =
+  | 'day'
+  | 'week'
+  | 'month'
+  | 'sixMonths'
+  | 'year'
+  | 'fromYear'
+  | 'allPeriod';
 
 interface IState extends IIntervalUpdateState {
   data: IAccountCostModel[];

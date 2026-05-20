@@ -1,5 +1,5 @@
 export const header = {
-  portfolio: 'Портфель',
+  portfolio: 'Счета',
   market: 'Рынок',
   pronouns: 'Поручения',
   reports: 'Отчеты',

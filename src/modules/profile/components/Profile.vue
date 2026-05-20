@@ -4,11 +4,13 @@
   import { useI18n } from 'vue-i18n';
   import dayjs from 'dayjs';
   import ProfileData from './profile/ProfileData.vue';
+  import { useDisplay } from 'vuetify';
 
   const accountStore = useAccountStore();
   const { t } = useI18n();
   const hasProtect = ref(true);
   const showProfileData = ref(false);
+  const { mobile } = useDisplay();
 
   provide('showProfileData', showProfileData);
 
@@ -18,16 +20,20 @@
 </script>
 
 <template>
-  <v-sheet class="d-flex ga-2">
-    <v-sheet width="50%" class="rounded-xxl pa-6" style="background-color: white !important">
+  <v-sheet class="d-flex ga-2" :class="{ 'flex-column': mobile }">
+    <v-sheet
+      :width="!mobile ? '50%' : 'auto'"
+      class="rounded-xxl pa-6"
+      style="background-color: white !important"
+    >
       <v-sheet class="mb-4">{{ t('profile.cardTitle') }}</v-sheet>
-      <v-sheet class="d-flex ga-10">
-        <v-sheet width="170">
+      <v-sheet class="d-flex" :class="{ 'flex-row-reverse ga-6': mobile, 'ga-10': !mobile }">
+        <v-sheet :width="mobile ? 127 : 170">
           <v-img
             :src="accountStore.data.info.photoUrl"
             alt="photo"
-            height="170"
-            width="170"
+            :height="mobile ? 127 : 170"
+            :width="mobile ? 127 : 170"
             aspect-ratio="1/1"
             rounded="mg"
             cover
@@ -58,22 +64,34 @@
         </v-sheet>
       </v-sheet>
     </v-sheet>
-    <v-sheet width="50%" class="rounded-xxl pa-6" style="background-color: white !important">
-      <v-sheet class="d-flex justify-space-between mb-4">
+    <v-sheet
+      :width="!mobile ? '50%' : 'auto'"
+      class="rounded-xxl pa-6"
+      style="background-color: white !important"
+    >
+      <v-sheet class="d-flex justify-space-between" :class="{ 'mb-4': !mobile }">
         <v-sheet class="d-flex ga-2">
           <v-sheet>{{ t('profile.privateProfileTitle') }}</v-sheet>
           <v-btn icon density="compact" variant="text" @click="onProtect()">
             <v-icon :icon="hasProtect ? 'mdi-eye-off' : 'mdi-eye'" color="middle-blue" />
           </v-btn>
         </v-sheet>
-        <v-sheet class="d-flex ga-2">
+        <v-sheet class="ga-2">
           <v-btn disabled icon density="compact" :ripple="false" variant="text">
             <v-icon icon="mdi-square-edit-outline" color="middle-blue" />
           </v-btn>
         </v-sheet>
       </v-sheet>
 
-      <v-sheet class="d-flex ga-10" :class="{ 'profile-form-protect': hasProtect }">
+      <v-sheet
+        class="ga-10"
+        :class="{
+          'profile-form-protect': hasProtect && !mobile,
+          'd-none': hasProtect && mobile,
+          'd-flex': !mobile || (mobile && !hasProtect),
+          'mt-4': mobile && !hasProtect
+        }"
+      >
         <v-sheet class="d-flex flex-column ga-2">
           <v-sheet class="d-flex flex-column">
             <v-sheet class="font-small text-type-text">{{ t('profile.fullName') }}</v-sheet>

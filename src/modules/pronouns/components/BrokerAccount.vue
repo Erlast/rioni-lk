@@ -1,91 +1,55 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { useAccountStore } from '@/stores/accountStore.ts';
+  import { usePortfolioStore } from '@/stores/portfolioStore.ts';
+  import { formatNumber } from '@/utils/number.extensions.ts';
+
+  const accountStore = useAccountStore();
+  const portfolioStore = usePortfolioStore();
+</script>
 
 <template>
-  <div class="broker-account">
-    <div class="broker-account-data">
-      <div class="cell cell-row">
-        <div class="name">Брокерский счет</div>
-        <div class="value">D123024</div>
-      </div>
-      <div class="cell cell-col">
-        <div class="name">Стоимость в USD</div>
-        <div class="value value-currency">0,00 USD</div>
-      </div>
-      <div class="cell cell-col">
-        <div class="name">Свободные деньги</div>
-        <div class="value value-free-currency">0,00 USD</div>
-      </div>
-    </div>
-    <div class="broker-account-bg"></div>
-  </div>
+  <v-sheet class="d-flex ga-4">
+    <v-sheet
+      class="d-flex flex-column ga-2 border-md pa-6 border-color-element rounded-xxl"
+      width="291"
+    >
+      <v-sheet class="d-flex flex-column ga-1">
+        <v-sheet>Брокерский счет</v-sheet>
+        <v-sheet class="text-common">
+          {{
+            portfolioStore.data.currentAccount
+              ? portfolioStore.data.currentAccount.accountNumber
+              : ''
+          }}
+        </v-sheet>
+      </v-sheet>
+      <v-sheet>
+        <v-sheet>Стоимость в {{ accountStore.getAccountCurrency?.title }}</v-sheet>
+        <v-sheet class="text-dark-blue-2 font-20 font-semibold">
+          {{
+            portfolioStore.data.currentAccount
+              ? formatNumber(portfolioStore.data.currentAccount.balance)
+              : 0
+          }}
+          {{ accountStore.getAccountCurrency?.title }}
+        </v-sheet>
+      </v-sheet>
+      <v-sheet>
+        <v-sheet>Свободные деньги</v-sheet>
+        <v-sheet class="text-element-check font-20 font-semibold">
+          {{
+            portfolioStore.data.currentAccount && portfolioStore.data.currentAccount.tradingFunds
+              ? formatNumber(portfolioStore.data.currentAccount.tradingFunds)
+              : 0
+          }}
+          {{ accountStore.getAccountCurrency?.title }}
+        </v-sheet>
+      </v-sheet>
+    </v-sheet>
+    <v-sheet class="rounded-xxl">
+      <v-img src="/img/broker-account-portfolio-bg.png" width="auto" class="rounded-xxl"></v-img>
+    </v-sheet>
+  </v-sheet>
 </template>
 
-<style scoped lang="scss">
-  .broker-account {
-    display: flex;
-    position: relative;
-
-    .broker-account-data {
-      width: 291px;
-      height: 235px;
-      padding: 30px;
-      box-sizing: border-box;
-      flex-shrink: 0;
-      border-radius: 30px;
-      border: 2px solid var(--Elements, #6794da);
-
-      .cell {
-        display: flex;
-        margin-bottom: 24px;
-
-        &.cell-row {
-          .value {
-            margin-left: 5px;
-          }
-        }
-
-        &.cell-col {
-          flex-direction: column;
-        }
-
-        .name {
-          color: var(--Text-Text-color, #2a2a2a);
-          font-size: 16px;
-          font-style: normal;
-          font-weight: 500;
-          line-height: normal;
-        }
-
-        .value {
-          color: var(--Text-Text-color, #2a2a2a);
-          font-size: 16px;
-          font-style: normal;
-          font-weight: 500;
-          line-height: normal;
-
-          &.value-currency {
-            color: var(--Text-dark-blue, #2e4376);
-            font-size: 20px;
-            font-weight: 600;
-          }
-
-          &.value-free-currency {
-            @extend .value-currency;
-            color: var(--Elements-check, #4ba67c);
-          }
-        }
-      }
-    }
-
-    .broker-account-bg {
-      margin-left: 25px;
-      width: 631px;
-      height: 235px;
-      border-radius: 30px;
-      background: #e9e9e9;
-      background-image: url('/img/broker-accaunt-portfolio-bg.png');
-      background-size: cover;
-      pointer-events: none;
-    }
-  }
-</style>
+<style scoped lang="scss"></style>
