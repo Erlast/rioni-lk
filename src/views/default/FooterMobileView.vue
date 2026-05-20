@@ -35,7 +35,7 @@
           </v-sheet>
         </v-sheet>
 
-        <v-sheet class="d-flex ga-2">
+        <v-sheet class="d-flex ga-2" max-width="390">
           <v-img src="/img/social/facebook.png" />
           <v-img src="/img/social/xcorp.png" />
           <v-img src="/img/social/linkedin.png" />

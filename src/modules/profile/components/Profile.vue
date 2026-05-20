@@ -27,7 +27,10 @@
       style="background-color: white !important"
     >
       <v-sheet class="mb-4">{{ t('profile.cardTitle') }}</v-sheet>
-      <v-sheet class="d-flex" :class="{ 'flex-row-reverse ga-6': mobile, 'ga-10': !mobile }">
+      <v-sheet
+        class="d-flex"
+        :class="{ 'flex-row-reverse ga-6 justify-space-between': mobile, 'ga-10': !mobile }"
+      >
         <v-sheet :width="mobile ? 127 : 170">
           <v-img
             :src="accountStore.data.info.photoUrl"

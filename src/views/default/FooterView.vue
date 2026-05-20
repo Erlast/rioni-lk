@@ -1,78 +1,70 @@
 <script setup lang="ts"></script>
 <template>
   <v-container class="pa-0" max-width="1280">
-    <div class="footer">
-      <div class="footer-top">
-        <div class="footer-top__logo"></div>
-        <div class="footer-top-social">
-          <div class="footer-top-social-element">
-            <div class="footer-top-social-element__img mini-img-f"></div>
-          </div>
-          <div class="footer-top-social-element">
-            <div class="footer-top-social-element__img mini-img-x"></div>
-          </div>
-          <div class="footer-top-social-element">
-            <div class="footer-top-social-element__img mini-img-in"></div>
-          </div>
-          <div class="footer-top-social-element">
-            <div class="footer-top-social-element__img mini-img-y"></div>
-          </div>
-          <div class="footer-top-social-element">
-            <div class="footer-top-social-element__img mini-img-t"></div>
-          </div>
-          <div class="footer-top-social-element">
-            <div class="footer-top-social-element__img mini-img-i"></div>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <div class="footer-bottom-item">
-          <div class="footer-bottom-block">
-            <div class="footer-bottom-block__name">Меню</div>
-            <div class="footer-bottom-block__body">
-              <div class="footer-group-menu">
-                <ul class="footer-menu">
-                  <li class="footer-menu__item">О нас</li>
-                  <li class="footer-menu__item">Почему Риони</li>
-                  <li class="footer-menu__item">Услуги</li>
-                  <li class="footer-menu__item">Тарифы</li>
-                  <li class="footer-menu__item">Обучение</li>
-                  <li class="footer-menu__item">Тесты</li>
-                </ul>
-                <ul class="footer-menu">
-                  <li class="footer-menu__item">Новости</li>
-                  <li class="footer-menu__item">Документы</li>
-                  <li class="footer-menu__item">FAQ</li>
-                  <li class="footer-menu__item">Карьера</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="footer-bottom-item">
-          <div class="footer-bottom-block">
-            <div class="footer-bottom-block__name">Контакты</div>
-            <div class="footer-bottom-block__body">
-              +995 595 43 66 55
-              <span style="color: #99abbd">(Офис) Пн-Пт 9:00-20:00</span>
-            </div>
-          </div>
-          <div class="footer-bottom-block">
-            <div class="footer-bottom-block__name">Почта</div>
-            <div class="footer-bottom-block__body">адрес.почты@gmail.ru</div>
-          </div>
+    <v-sheet class="footer">
+      <v-sheet class="d-flex ga-2">
+        <v-sheet class="d-flex flex-column ga-6" width="50%">
+          <v-sheet class="footer-top__logo"></v-sheet>
+          <v-sheet>
+            <v-sheet class="text-type-text mb-2">Меню</v-sheet>
+            <v-sheet class="d-flex ga-2">
+              <v-sheet class="d-flex flex-column ga-2 text-white" width="50%">
+                <v-sheet>О нас</v-sheet>
+                <v-sheet>Почему Риони</v-sheet>
+                <v-sheet>Услуги</v-sheet>
+                <v-sheet>Тарифы</v-sheet>
+                <v-sheet>Обучение</v-sheet>
+                <v-sheet>Тесты</v-sheet>
+              </v-sheet>
 
-          <v-sheet class="d-flex flex-column ga-2">
-            <v-sheet class="text-white">Есть предложения? Свяжитесь с нами</v-sheet>
-            <v-form>
-              <v-textarea name="text" placeholder="Комментарий" class="text-black" />
-              <v-btn variant="flat" type="submit" class="bg-hard-blue text-white rounded-mg" block>
-                Отправить
-              </v-btn>
-            </v-form>
+              <v-sheet class="d-flex flex-column ga-2 text-white">
+                <v-sheet>Новости</v-sheet>
+                <v-sheet>Документы</v-sheet>
+                <v-sheet>FAQ</v-sheet>
+                <v-sheet>Карьера</v-sheet>
+              </v-sheet>
+            </v-sheet>
           </v-sheet>
-        </div>
-      </div>
+        </v-sheet>
+        <v-sheet class="d-flex flex-column ga-6">
+          <v-sheet class="d-flex ga-2" max-width="390" height="64">
+            <v-img src="/img/social/facebook.png" height="64" width="64" />
+            <v-img src="/img/social/xcorp.png" height="64" width="64" />
+            <v-img src="/img/social/linkedin.png" height="64" width="64" />
+            <v-img src="/img/social/youtube.png" height="64" width="64" />
+            <v-img src="/img/social/tiktok.png" height="64" width="64" />
+            <v-img src="/img/social/instagram.png" height="64" width="64" />
+          </v-sheet>
+          <v-sheet class="d-flex flex-column ga-4">
+            <v-sheet class="d-flex flex-column ga-2">
+              <v-sheet class="text-type-text">Контакты</v-sheet>
+              <v-sheet class="d-flex ga-2">
+                <v-sheet class="text-white">+995 595 43 66 55</v-sheet>
+                <v-sheet class="text-type-text">(Офис) Пн-Пт 9:00-20:00</v-sheet>
+              </v-sheet>
+            </v-sheet>
+            <v-sheet class="footer-bottom-block">
+              <v-sheet class="text-type-text">Почта</v-sheet>
+              <v-sheet class="text-white">адрес.почты@gmail.ru</v-sheet>
+            </v-sheet>
+
+            <v-sheet class="d-flex flex-column ga-2">
+              <v-sheet class="text-white">Есть предложения? Свяжитесь с нами</v-sheet>
+              <v-form>
+                <v-textarea name="text" placeholder="Комментарий" class="text-black" />
+                <v-btn
+                  variant="flat"
+                  type="submit"
+                  class="bg-hard-blue text-white rounded-mg"
+                  block
+                >
+                  Отправить
+                </v-btn>
+              </v-form>
+            </v-sheet>
+          </v-sheet>
+        </v-sheet>
+      </v-sheet>
       <div class="footer-bottom-text">
         <span class="footer-spcial-text">
           Общество с ограниченной ответственностью «Rioni Capital». ID 405664017.
@@ -111,7 +103,7 @@
         <div class="footer-politics__item">Политика использования cookies</div>
         <div class="footer-politics__item">Политика обработки персональных данных</div>
       </div>
-    </div>
+    </v-sheet>
   </v-container>
 </template>
 <style scoped lang="scss">
