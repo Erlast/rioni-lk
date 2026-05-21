@@ -52,7 +52,7 @@
             </v-list>
 
             <v-list class="bg-background-blue text-white">
-              <v-list-item v-for="item in menuItems" :key="item.name">
+              <v-list-item v-for="item in menuItems" :key="item.name" :to="{ name: item.name }">
                 {{ item.title }}
               </v-list-item>
               <v-list-item>
@@ -93,5 +93,13 @@
   .btn-logout {
     background-color: var(--color-HardBlue);
     color: white;
+  }
+
+  .v-list-item {
+    &.v-list-item--active {
+      .v-list-item__overlay {
+        background-color: var(--color-BackgroundBlue);
+      }
+    }
   }
 </style>
