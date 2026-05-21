@@ -2,9 +2,11 @@ import { header } from './header';
 import { portfolio } from './portfolio';
 import { profile } from './profile';
 import { validations } from './validations';
+import { footer } from './footer.ts';
 
 export const ru = {
   header,
+  footer,
   profile,
   portfolio,
   validations,

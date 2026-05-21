@@ -16,6 +16,7 @@
       property: 'background-color',
       class: 'bg',
       values: (
+        'background-blue': var(--color-BackgroundBlue),
         'dark-blue': var(--color-DarkBlue),
         'middle-blue': var(--color-MiddleBlue),
         'element-check': var(--color-ElementCheck),

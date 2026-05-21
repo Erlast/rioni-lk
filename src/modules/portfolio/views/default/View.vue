@@ -12,6 +12,7 @@
   import SimpleChart from '@/components/SimpleChart.vue';
   import { IAccountYieldModel } from '@/api/types.ts';
   import portfolioService from '@/api/portfolioService.ts';
+  import { useDisplay } from 'vuetify';
 
   const { t } = useI18n();
 
@@ -19,6 +20,7 @@
   const portfolioStore = usePortfolioStore();
   const assetsStore = useAssetsStore();
   const accounts = ref();
+  const { mobile } = useDisplay();
   const accountYield = ref<IAccountYieldModel>({
     accountYield: 0,
     accountPercent: 0
@@ -93,15 +95,24 @@
 
 <template>
   <v-sheet class="d-flex ga-5">
-    <v-sheet width="180">
+    <v-sheet width="180" v-if="!mobile">
       <Notice></Notice>
       <!-- <Calendar></Calendar>
       <MarketToday></MarketToday> -->
     </v-sheet>
     <v-sheet class="d-flex flex-column ga-4" width="100%">
-      <v-sheet class="top-up-card d-flex flex-column ga-4 rounded-xxl pa-6">
+      <v-sheet
+        class="top-up-card d-flex flex-column ga-4 rounded-xxl pa-6"
+        :class="{ 'top-up-card-mobile': mobile, 'top-up-card-desktop': !mobile }"
+        :height="mobile ? 430 : 'auto'"
+        min-height="164"
+      >
         <v-sheet class="text-dark-blue">{{ t('portfolio.balanceTitle') }}</v-sheet>
-        <v-sheet class="d-flex justify-space-between">
+        <v-sheet
+          class="d-flex justify-space-between"
+          :class="{ 'flex-column': mobile }"
+          :height="mobile ? '100%' : 'auto'"
+        >
           <v-sheet class="d-flex ga-2 align-center">
             <v-sheet width="36">
               <v-img src="/img/topUp-icon.png" alt="top-up-icon" />
@@ -134,10 +145,10 @@
           v-model="account"
         />
       </v-sheet>
-      <v-sheet class="d-flex ga-2">
+      <v-sheet class="d-flex ga-2" :class="{ 'flex-column': mobile }">
         <v-sheet
           class="d-flex flex-column liner-gradient-common pa-4 rounded-mr text-white"
-          :width="account && account.deposit > 0 ? '25%' : '33%'"
+          :width="mobile ? '100%' : account && account.deposit > 0 ? '25%' : '33%'"
           height="98"
           style="line-height: normal"
         >
@@ -154,7 +165,7 @@
         </v-sheet>
         <v-sheet
           class="d-flex flex-column pa-4 rounded-mr"
-          :width="account && account.deposit > 0 ? '25%' : '33%'"
+          :width="mobile ? '100%' : account && account.deposit > 0 ? '25%' : '33%'"
           height="98"
           style="background: url('/img/balance-2-bg.png') no-repeat !important; line-height: normal"
         >
@@ -178,7 +189,7 @@
         </v-sheet>
         <v-sheet
           class="d-flex flex-column pa-4 rounded-mr"
-          :width="account && account.deposit > 0 ? '25%' : '33%'"
+          :width="mobile ? '100%' : account && account.deposit > 0 ? '25%' : '33%'"
           height="98"
           style="background-color: white !important; line-height: normal"
         >
@@ -221,7 +232,7 @@
         <v-sheet
           v-if="account && account.deposit > 0"
           class="d-flex flex-column pa-4 rounded-mr"
-          :width="account && account.deposit > 0 ? '25%' : '33%'"
+          :width="mobile ? '100%' : account && account.deposit > 0 ? '25%' : '33%'"
           height="98"
           style="background: url('/img/deposit-bg.png') no-repeat !important; line-height: normal"
         >
@@ -273,7 +284,14 @@
     height: 164px;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url(/img/topUp-bg.png);
+
+    &.top-up-card-desktop {
+      background-image: url(/img/topUp-bg.png) !important;
+    }
+
+    &.top-up-card-mobile {
+      background-image: url(/img/topUp-bg-mobile.png) !important;
+    }
 
     .btn-top-up {
       padding: 0 30px;

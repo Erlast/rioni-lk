@@ -1,3 +1,5 @@
+import i18n from './i18n';
+
 export const itemsFlags = [
   {
     name: 'Россия',
@@ -44,4 +46,27 @@ export const russianMonths = [
   'окт.',
   'нояб.',
   'дек.'
+];
+
+export const menuItem = [
+  {
+    name: 'portfolio',
+    title: i18n.global.t('header.portfolio')
+  },
+  // {
+  //   name: 'market',
+  //   title: t('header.market')
+  // },
+  {
+    name: 'pronouns',
+    title: i18n.global.t('header.pronouns')
+  },
+  {
+    name: 'reports',
+    title: i18n.global.t('header.reports')
+  }
+  // {
+  //   name: 'analitics',
+  //   title: t('header.analitics')
+  // }
 ];

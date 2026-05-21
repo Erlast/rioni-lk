@@ -1,32 +1,12 @@
 <script setup lang="ts">
   import TopMenuElement from '@/components/Header/TopMenuElement.vue';
-  import { useI18n } from 'vue-i18n';
   import RioniLogo from '@/components/RioniLogo.vue';
+  import { menuItem } from '@/utils/data.ts';
+  import { computed } from 'vue';
 
-  const { t } = useI18n();
-
-  const menuItem = [
-    {
-      name: 'portfolio',
-      title: t('header.portfolio')
-    },
-    // {
-    //   name: 'market',
-    //   title: t('header.market')
-    // },
-    {
-      name: 'pronouns',
-      title: t('header.pronouns')
-    },
-    {
-      name: 'reports',
-      title: t('header.reports')
-    },
-    // {
-    //   name: 'analitics',
-    //   title: t('header.analitics')
-    // }
-  ];
+  const menu = computed(() => {
+    return menuItem;
+  });
 </script>
 
 <template>
@@ -40,7 +20,7 @@
     </div>
     <v-sheet class="d-flex align-center bg-transparent top-menu ga-4">
       <TopMenuElement
-        v-for="item in menuItem"
+        v-for="item in menu"
         :key="item.name"
         :label="item.title"
         :to="{ name: item.name }"

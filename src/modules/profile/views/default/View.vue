@@ -11,7 +11,7 @@
 <template>
   <v-sheet class="d-flex ga-5" :class="{ 'flex-column': mobile }">
     <v-sheet v-if="!mobile" width="180"><Notice></Notice></v-sheet>
-    <v-sheet class="d-flex flex-column ga-4">
+    <v-sheet class="d-flex flex-column" :class="{ 'ga-2': mobile, 'ga-4': !mobile }">
       <Profile></Profile>
       <Action></Action>
       <Requirements></Requirements>

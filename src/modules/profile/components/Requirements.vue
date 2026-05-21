@@ -12,7 +12,8 @@
     <v-sheet>Требования брокера</v-sheet>
     <v-sheet class="d-flex flex-column ga-2">
       <v-sheet
-        class="d-flex ga-2 rounded-20 pa-6 align-center"
+        class="d-flex ga-2 rounded-20 pa-6"
+        :class="{ 'align-center': !mobile }"
         style="background-color: white !important"
       >
         <v-sheet>
@@ -32,7 +33,15 @@
           :class="{ 'flex-column': mobile }"
           :max-width="mobile ? 65 : 'auto'"
         >
-          <v-btn v-if="mobile" class="btn-custom" variant="outlined" icon rounded="mr">
+          <v-btn
+            v-if="mobile"
+            class="btn-custom"
+            variant="outlined"
+            icon
+            rounded="mr"
+            width="100%"
+            height="36"
+          >
             <v-img width="16" src="/img/calendar.png" />
           </v-btn>
           <v-btn v-else class="btn-custom" variant="outlined" rounded="mr">
@@ -42,14 +51,23 @@
             Добавить напоминание
           </v-btn>
 
-          <v-btn v-if="mobile" variant="flat" icon rounded="mr" class="btn-custom btn-upload">
+          <v-btn
+            v-if="mobile"
+            variant="flat"
+            icon
+            rounded="mr"
+            class="btn-custom btn-upload"
+            height="36"
+            width="100%"
+          >
             <v-icon icon="mdi-download" />
           </v-btn>
           <v-btn v-else variant="flat" rounded="mr" class="btn-custom btn-upload">Загрузить</v-btn>
         </v-sheet>
       </v-sheet>
       <v-sheet
-        class="d-flex ga-2 rounded-20 pa-6 align-center"
+        class="d-flex ga-2 rounded-20 pa-6"
+        :class="{ 'align-center': !mobile }"
         style="background-color: white !important"
       >
         <v-sheet>
@@ -69,7 +87,14 @@
           :class="{ 'flex-column': mobile }"
           :max-width="mobile ? 65 : 'auto'"
         >
-          <v-btn v-if="mobile" variant="flat" rounded="mr" class="btn-custom btn-created">
+          <v-btn
+            v-if="mobile"
+            variant="flat"
+            rounded="mr"
+            class="btn-custom btn-created"
+            width="100%"
+            height="36"
+          >
             23:30
           </v-btn>
 
@@ -77,14 +102,23 @@
             Напоминание создано
           </v-btn>
 
-          <v-btn v-if="mobile" variant="flat" icon rounded="mr" class="btn-custom btn-upload">
+          <v-btn
+            v-if="mobile"
+            variant="flat"
+            icon
+            rounded="mr"
+            class="btn-custom btn-upload"
+            width="100%"
+            height="36"
+          >
             <v-icon icon="mdi-download" />
           </v-btn>
           <v-btn v-else variant="flat" rounded="mr" class="btn-custom btn-upload">Загрузить</v-btn>
         </v-sheet>
       </v-sheet>
       <v-sheet
-        class="d-flex ga-2 rounded-20 pa-6 align-center"
+        class="d-flex ga-2 rounded-20 pa-6"
+        :class="{ 'align-center': !mobile }"
         style="background-color: white !important"
       >
         <v-sheet>
@@ -100,7 +134,15 @@
           </v-sheet>
         </v-sheet>
         <v-sheet :class="{ 'flex-column': mobile }" :max-width="mobile ? 65 : 'auto'">
-          <v-btn v-if="mobile" variant="flat" rounded="mr" icon class="btn-custom btn-process">
+          <v-btn
+            v-if="mobile"
+            variant="flat"
+            rounded="mr"
+            icon
+            class="btn-custom btn-process"
+            width="100%"
+            height="36"
+          >
             <v-icon icon="mdi-autorenew" />
           </v-btn>
           <v-btn v-else variant="flat" rounded="mr" class="btn-custom btn-process">
@@ -109,7 +151,8 @@
         </v-sheet>
       </v-sheet>
       <v-sheet
-        class="d-flex ga-2 rounded-20 pa-6 align-center"
+        class="d-flex ga-2 rounded-20 pa-6"
+        :class="{ 'align-center': !mobile }"
         style="background-color: white !important"
       >
         <v-sheet>
@@ -129,7 +172,14 @@
           :class="{ 'flex-column': mobile }"
           :max-width="mobile ? 65 : 'auto'"
         >
-          <v-btn v-if="mobile" variant="flat" rounded="mr" class="btn-custom btn-created">
+          <v-btn
+            v-if="mobile"
+            variant="flat"
+            rounded="mr"
+            class="btn-custom btn-created"
+            width="100%"
+            height="36"
+          >
             23:30
           </v-btn>
 
@@ -137,7 +187,15 @@
             Напоминание создано
           </v-btn>
 
-          <v-btn v-if="mobile" variant="flat" icon rounded="mr" class="btn-custom btn-upload">
+          <v-btn
+            v-if="mobile"
+            variant="flat"
+            icon
+            rounded="mr"
+            class="btn-custom btn-upload"
+            width="100%"
+            height="36"
+          >
             <v-icon icon="mdi-download" />
           </v-btn>
           <v-btn v-else variant="flat" rounded="mr" class="btn-custom btn-upload">Загрузить</v-btn>

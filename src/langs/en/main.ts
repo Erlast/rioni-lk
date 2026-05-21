@@ -2,9 +2,11 @@ import { header } from './header';
 import { portfolio } from './portfolio';
 import { profile } from './profile';
 import { validations } from './validations';
+import { footer } from '@/langs/en/footer.ts';
 
 export const en = {
   header,
+  footer,
   profile,
   portfolio,
   validations,
