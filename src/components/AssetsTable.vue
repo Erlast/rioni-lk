@@ -5,11 +5,16 @@
   import { Asset } from './types/AssetsTable';
   import { useAssetsStore } from '@/stores/assetsStore';
   import AssetsTab from '@/components/AssetsTab.vue';
+  import { useDisplay } from 'vuetify';
+  import AssetsTabMobile from '@/components/AssetsTabMobile.vue';
+  import { useMediaQuery } from '@vueuse/core';
 
   const { t, locale } = useI18n();
   const tabsStore = useTabsStore();
   const assetsStore = useAssetsStore();
   const scope: Scope = 'portfolio';
+  const { mobile } = useDisplay();
+  const landscape = useMediaQuery('(orientation: landscape)');
 
   const tabs = tabsStore.tabsFor(scope);
 
@@ -92,10 +97,19 @@
     >
       <v-sheet class="instruments-tables">
         <AssetsTab
-          v-show="instrumentsMain && instrumentsMain.length"
+          v-show="(!mobile || (mobile && landscape)) && instrumentsMain && instrumentsMain.length"
           :current-asset="tab"
           :items="instrumentsMain"
         />
+        <AssetsTabMobile
+          v-show="mobile && !landscape && instrumentsMain && instrumentsMain.length"
+          :current-asset="tab"
+          :items="instrumentsMain"
+        />
+        <v-sheet v-if="mobile && !landscape" class="font-smaller d-flex align-center ga-2 justify-center">
+          <v-icon icon="mdi-screen-rotation"></v-icon>
+          <span>{{ t('portfolio.rotateTip') }}</span>
+        </v-sheet>
         <v-sheet
           v-if="!instrumentsMain.length"
           class="align-center w-100 d-flex align-center justify-center align-self-center rounded-bb-lg empty-table bg-additional-light-grey"

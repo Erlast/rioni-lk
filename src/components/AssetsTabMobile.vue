@@ -5,7 +5,8 @@
   import IAssetsTabProps from '@/components/types/AssetsTable';
   import { useAssetsStore } from '@/stores/assetsStore';
   import { useDictionaryStore } from '@/stores/dictionariesStore';
-import { formatNumber } from '@/utils/number.extensions';
+  import { formatNumber } from '@/utils/number.extensions';
+  import { ICurrencyModel } from '@/api/types.ts';
 
   const props = withDefaults(defineProps<IAssetsTabProps>(), {
     currentAsset: 'action'
@@ -14,13 +15,16 @@ import { formatNumber } from '@/utils/number.extensions';
   const assetsStore = useAssetsStore();
   const { t } = useI18n();
 
-  const currencyCode = (currencyId: number) => {
+  const currencyCode = (currencyId: number): ICurrencyModel => {
     if (!currencyId) {
-      return 'USD';
+      return { id: 0, title: 'USD', symbol: '$' };
     }
     const dictionaryStore = useDictionaryStore();
-
-    return dictionaryStore.currencies.find(item => item.id === currencyId);
+    const finding = dictionaryStore.currencies.find(item => item.id === currencyId);
+    if (!finding) {
+      return { id: 0, title: 'USD', symbol: '$' };
+    }
+    return finding;
   };
 
   const rawItems = computed(() => props.items ?? assetsStore.getPositions ?? []);
@@ -47,33 +51,10 @@ import { formatNumber } from '@/utils/number.extensions';
             </v-sheet>
           </v-sheet>
         </v-col>
-        <v-col class="d-flex table-cell" style="max-width: 90px">
-          {{ t('portfolio.table.columns.currencyTitle') }}
-        </v-col>
-        <v-col class="d-flex table-cell" style="max-width: 70px">
-          {{ t('portfolio.table.columns.amountTitle') }}
-        </v-col>
         <v-col class="d-flex flex-column table-cell">
-          <v-sheet>{{ t('portfolio.table.columns.averagePriceTitle') }}</v-sheet>
-          <v-row>
-            <v-col class="font-smaller text-type-text" style="max-width: 70px">
-              {{ t('portfolio.table.columns.byUnitTitle') }}
-            </v-col>
-            <v-col class="font-smaller text-type-text">
-              {{ t('portfolio.table.columns.totalPriceTitle') }}
-            </v-col>
-          </v-row>
-        </v-col>
-        <v-col class="d-flex flex-column table-cell">
-          <v-sheet>{{ t('portfolio.table.columns.currentPriceTitle') }}</v-sheet>
-          <v-row>
-            <v-col class="font-smaller text-element-check" style="max-width: 70px">
-              {{ t('portfolio.table.columns.bidTitle') }}
-            </v-col>
-            <v-col class="font-smaller text-additional-error">
-              {{ t('portfolio.table.columns.askTitle') }}
-            </v-col>
-          </v-row>
+          <v-sheet>
+            {{ t('portfolio.table.columns.averagePriceTitleMobile') }}
+          </v-sheet>
         </v-col>
         <v-col class="table-cell">
           <v-sheet class="d-flex flex-column">
@@ -93,7 +74,7 @@ import { formatNumber } from '@/utils/number.extensions';
         <v-col class="d-flex table-cell">
           {{ t('portfolio.table.columns.amountTitle') }}
         </v-col>
-        <v-col class="d-flex flex-column table-cell">
+        <v-col class="d-flex flex-column table-cell align-end">
           <v-sheet>{{ t('portfolio.table.columns.totalCurrencyPriceTitle') }}</v-sheet>
         </v-col>
       </v-row>
@@ -116,14 +97,14 @@ import { formatNumber } from '@/utils/number.extensions';
           :data-id="item.assetId"
         >
           <v-col class="d-flex justify-center align-center table-cell pa-0" style="max-width: 70px">
-            <div class="logo-stack">
+            <v-sheet class="logo-stack" width="36">
               <AssetLogo
                 :logo="item.logo"
                 class="logo-stack__logo"
                 :paper-id="item.assetId"
                 :ticker="item.baseTicker"
               />
-            </div>
+            </v-sheet>
           </v-col>
           <v-col class="d-flex table-cell">
             <v-sheet class="d-flex flex-column">
@@ -133,29 +114,10 @@ import { formatNumber } from '@/utils/number.extensions';
               <v-sheet class="font-smaller text-type-text">{{ item.baseTicker }}</v-sheet>
             </v-sheet>
           </v-col>
-          <v-col class="d-flex table-cell align-center" style="max-width: 90px">
-            <v-sheet>
-              {{ currencyCode(item.assetTypeCode) }}
-            </v-sheet>
+          <v-col class="d-flex table-cell align-center justify-start">
+            {{ formatNumber(item.investedValue) }} {{ currencyCode(item.currency).symbol }}
           </v-col>
-          <v-col class="d-flex table-cell align-center" style="max-width: 70px">
-            <v-sheet>
-              {{ item.amount }}
-            </v-sheet>
-          </v-col>
-          <v-col class="d-flex table-cell align-center">
-            <v-row>
-              <v-col style="max-width: 70px">{{ formatNumber(item.purchasePrice) }}</v-col>
-              <v-col>{{ formatNumber(item.investedValue) }}</v-col>
-            </v-row>
-          </v-col>
-          <v-col class="d-flex table-cell align-center">
-            <v-row>
-              <v-col class="text-element-check" style="max-width: 70px">{{ item.bid }}</v-col>
-              <v-col class="text-additional-error">{{ item.ask }}</v-col>
-            </v-row>
-          </v-col>
-          <v-col class="d-flex table-cell align-center">
+          <v-col class="d-flex table-cell align-center justify-end">
             <v-sheet
               :class="{
                 'text-element-check': item.profit >= 0,
@@ -174,18 +136,15 @@ import { formatNumber } from '@/utils/number.extensions';
           class="cursor-pointer currency-row paper-row"
           :data-id="item.assetId"
         >
-          <v-col
-            class="d-flex align-center table-cell ga-2"
-            style="max-width: 700px"
-          >
-            <div class="logo-stack">
+          <v-col class="d-flex align-center table-cell ga-2" style="max-width: 700px">
+            <v-sheet class="logo-stack" width="36">
               <AssetLogo
                 :logo="item.logo"
                 class="logo-stack__logo"
                 :paper-id="item.assetId"
                 :ticker="item.baseTicker"
               />
-            </div>
+            </v-sheet>
             <v-sheet class="d-flex flex-column">
               <v-sheet class="font-semibold">
                 {{ item.assetName }}
@@ -198,37 +157,35 @@ import { formatNumber } from '@/utils/number.extensions';
               {{ item.amount }}
             </v-sheet>
           </v-col>
-          <v-col class="d-flex table-cell align-center">
+          <v-col class="d-flex table-cell align-center justify-end">
             {{ formatNumber(item.investedValue) }}
           </v-col>
         </v-row>
       </v-sheet>
     </div>
-    <v-row v-if="props.currentAsset!=='currency' && rawItems && rawItems.length" class="summary">
+    <v-row v-if="props.currentAsset !== 'currency' && rawItems && rawItems.length" class="summary">
       <v-col class="d-flex align-center table-cell font-semibold" style="max-width: 70px">
         {{ t('portfolio.table.summary') }}
       </v-col>
       <v-col class="table-cell d-flex">&nbsp;</v-col>
-      <v-col class="table-cell d-flex align-center" style="max-width: 90px">&nbsp;</v-col>
-      <v-col class="table-cell d-flex align-center" style="max-width: 70px">&nbsp;</v-col>
-      <v-col class="table-cell d-flex align-center">
-        <v-row>
-          <v-col style="max-width: 70px"></v-col>
-          <v-col class="font-semibold" style="padding-left:8px;">{{ formatNumber(assetsStore.data.profit.investedSum) }}</v-col>
-        </v-row>
+      <v-col class="table-cell d-flex align-center font-semibold">
+        {{ formatNumber(assetsStore.data.profit.investedSum) }}
       </v-col>
-      <v-col class="table-cell d-flex align-center">&nbsp;</v-col>
-      <v-col class="table-cell d-flex align-center">
-        <v-sheet class="font-semibold" style="padding-left:8px;">{{ formatNumber(assetsStore.data.profit.totalDiff) }}</v-sheet>
+      <v-col class="table-cell d-flex align-center justify-end">
+        <v-sheet class="font-semibold" style="padding-left: 8px">
+          {{ formatNumber(assetsStore.data.profit.totalDiff) }}
+        </v-sheet>
       </v-col>
     </v-row>
-    <v-row v-if="props.currentAsset==='currency' && rawItems && rawItems.length" class="summary">
+    <v-row v-if="props.currentAsset === 'currency' && rawItems && rawItems.length" class="summary">
       <v-col class="d-flex align-center table-cell font-semibold" style="max-width: 700px">
         {{ t('portfolio.table.summary') }}
       </v-col>
       <v-col class="table-cell d-flex">&nbsp;</v-col>
-      <v-col class="table-cell d-flex align-center">
-        <v-sheet class="font-semibold" style="padding-left:18px;">{{ formatNumber(assetsStore.data.profit.investedSum) }}</v-sheet>
+      <v-col class="table-cell d-flex align-center justify-end">
+        <v-sheet class="font-semibold" style="padding-left: 18px">
+          {{ formatNumber(assetsStore.data.profit.investedSum) }}
+        </v-sheet>
       </v-col>
     </v-row>
   </div>
@@ -257,37 +214,32 @@ import { formatNumber } from '@/utils/number.extensions';
 
   .table-cell {
     flex-basis: 0;
-    min-width: 70px;
+    min-width: 50px;
     flex-grow: 1;
-    padding: 12px 0;
+    padding: 8px;
+    display: flex;
 
     &.w-42 {
       max-width: 42px !important;
     }
   }
 
-  .currency-row{
-    .table-cell{
-        padding: 12px;
+  .currency-row {
+    .table-cell {
+      padding: 12px;
     }
   }
 
   .summary {
     height: 60px;
-    margin: 10px 0;
+    margin: -8px;
 
     .v-col {
       flex-basis: 0;
-      min-width: 70px;
+      min-width: 50px;
 
       &.w-42 {
         max-width: 42px !important;
-      }
-    }
-
-    .table-cell {
-      &:last-child > div {
-        padding-right: 8px !important;
       }
     }
   }
@@ -295,11 +247,13 @@ import { formatNumber } from '@/utils/number.extensions';
   .papers-header {
     .papers-row {
       margin-bottom: 10px;
+      align-items: center;
     }
   }
 
   .paper-row {
     height: 72px;
+    align-items: center;
 
     .table-cell {
       &:last-child > div {
@@ -308,20 +262,10 @@ import { formatNumber } from '@/utils/number.extensions';
     }
   }
 
-  .papers-row {
-    .table-cell {
-      &:last-child {
-        > div {
-          padding-right: 8px;
-        }
-      }
-    }
-  }
-
   .logo-stack {
     position: relative;
-    width: 48px;
-    height: 48px;
+    width: 36px;
+    height: 36px;
   }
 
   .logo-stack__logo {

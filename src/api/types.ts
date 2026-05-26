@@ -74,7 +74,7 @@ export interface IAssetModel {
   assetName: string;
   logo: string;
   assetTypeCode: InstrumentTypes;
-  currnecy: number;
+  currency: number;
   amount: number;
   profit: number;
   purchasePrice: number;

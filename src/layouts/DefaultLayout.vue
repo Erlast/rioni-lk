@@ -6,17 +6,19 @@
   import { onMounted } from 'vue';
   import HeaderMobileView from '@/views/default/HeaderMobileView.vue';
   import FooterMobileView from '@/views/default/FooterMobileView.vue';
+  import { useMediaQuery } from '@vueuse/core';
 
   const { mobile } = useDisplay();
   const accountStore = useAccountStore();
+  const landscape = useMediaQuery('(orientation: landscape)');
   onMounted(async () => {
     await accountStore.load();
   });
 </script>
 
 <template>
-  <HeaderMobileView v-if="mobile" />
-  <HeaderView v-else />
+  <HeaderMobileView v-if="mobile && !landscape" />
+  <HeaderView v-if="!mobile" />
   <v-main app>
     <v-sheet class="main-wrapper">
       <v-container
@@ -28,7 +30,7 @@
       </v-container>
     </v-sheet>
   </v-main>
-  <v-footer class="justify-lg-space-between align-center my-footer">
+  <v-footer v-if="!landscape" class="justify-lg-space-between align-center my-footer">
     <FooterMobileView v-if="mobile" />
     <Footer v-else></Footer>
   </v-footer>

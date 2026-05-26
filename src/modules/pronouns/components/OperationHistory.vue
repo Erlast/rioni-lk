@@ -1,24 +1,59 @@
 <script setup lang="ts">
   import { ref } from 'vue';
+  import { useDisplay } from 'vuetify';
+  import { useI18n } from 'vue-i18n';
+
+  const { mobile } = useDisplay();
+  const { t } = useI18n();
 
   const headers = ref([
-    { title: '№ Поручения', key: 'numberOperation', align: 'start', sortable: false },
-    { title: 'Дата создания', key: 'created_date', align: 'center', sortable: false },
-    { title: 'Дата исполнения', key: 'operation_date', align: 'center', sortable: false },
-    { title: 'Операция', key: 'operation_type', align: 'center', sortable: false },
-    { title: 'ЦБ', key: 'cb', align: 'center', sortable: false },
-    { title: 'Кол-во', key: 'amount', align: 'center', sortable: false },
-    { title: 'Сумма', key: 'sum', align: 'center', sortable: false },
-    { title: 'Статус', key: 'status', align: 'center', sortable: false }
+    {
+      title: t('pronounce.operationTable.numberOperationTitle'),
+      key: 'numberOperation',
+      align: 'start',
+      sortable: false
+    },
+    {
+      title: t('pronounce.operationTable.createdDateTitle'),
+      key: 'created_date',
+      align: 'center',
+      sortable: false
+    },
+    {
+      title: t('pronounce.operationTable.operationDateTitle'),
+      key: 'operation_date',
+      align: 'center',
+      sortable: false
+    },
+    {
+      title: t('pronounce.operationTable.operationTypeTitle'),
+      key: 'operation_type',
+      align: 'center',
+      sortable: false
+    },
+    { title: t('pronounce.operationTable.cbTitle'), key: 'cb', align: 'center', sortable: false },
+    {
+      title: t('pronounce.operationTable.amountTitle'),
+      key: 'amount',
+      align: 'center',
+      sortable: false
+    },
+    { title: t('pronounce.operationTable.sumTitle'), key: 'sum', align: 'center', sortable: false },
+    {
+      title: t('pronounce.operationTable.statusTitle'),
+      key: 'status',
+      align: 'center',
+      sortable: false
+    }
   ]);
 
   const getStatusClass = (status: string) => {
     switch (status) {
-      case 'В обработке':
+      case t('pronounce.operationTable.statuses.inProcess'):
         return 'text-common';
-      case 'Исполнено':
+      case t('pronounce.operationTable.statuses.completed'):
         return 'text-element-check';
-      case 'Отказано':
+      case t('pronounce.operationTable.statuses.canceled'):
         return 'text-additional-error';
       default:
         return '';
@@ -82,18 +117,28 @@
 <template>
   <v-sheet class="mt-12">
     <v-sheet class="d-flex flex-column ga-4">
-      <v-sheet class="d-flex ga-2">
-        <v-btn variant="flat" rounded="mr" class="btn-custom">Пополнение счета</v-btn>
-        <v-btn variant="flat" rounded="mr" class="btn-custom">Торговые поручения</v-btn>
-        <v-btn variant="flat" rounded="mr" class="btn-custom">Вывод денежных средств</v-btn>
+      <v-sheet class="d-flex ga-2" :class="{ 'flex-column': mobile }">
+        <v-btn variant="flat" rounded="mr" class="btn-custom" :width="mobile ? '100%' : '33%'">
+          {{ t('pronounce.topUpBtn') }}
+        </v-btn>
+        <v-btn variant="flat" rounded="mr" class="btn-custom" :width="mobile ? '100%' : '33%'">
+          {{ t('pronounce.tradeOrdersBtn') }}
+        </v-btn>
+        <v-btn variant="flat" rounded="mr" class="btn-custom" :width="mobile ? '100%' : '33%'">
+          {{ t('pronounce.withdrawalBtn') }}
+        </v-btn>
       </v-sheet>
-      <v-sheet class="d-flex ga-2">
-        <v-btn variant="flat" rounded="mr" class="btn-custom-2">Зачисление бумаг</v-btn>
-        <v-btn variant="flat" rounded="mr" class="btn-custom-2">Перевод бумаг</v-btn>
+      <v-sheet class="d-flex ga-2" :class="{ 'flex-column': mobile }">
+        <v-btn variant="flat" rounded="mr" class="btn-custom-2" :width="mobile ? '100%' : '33%'">
+          {{ t('pronounce.entryPapersBtn') }}
+        </v-btn>
+        <v-btn variant="flat" rounded="mr" class="btn-custom-2" :width="mobile ? '100%' : '33%'">
+          {{ t('pronounce.transferBtn') }}
+        </v-btn>
       </v-sheet>
     </v-sheet>
-    <v-sheet class="d-flex flex-column ga-4 mt-12">
-      <v-sheet class="text-dark-blue font-20">История операций</v-sheet>
+    <v-sheet v-if="!mobile" class="d-flex flex-column ga-4 mt-12">
+      <v-sheet class="text-dark-blue font-20">{{ t('pronounce.historyOrdersTitle') }}</v-sheet>
       <v-sheet class="operation-table">
         <v-data-table-server
           :headers="headers"
@@ -118,7 +163,6 @@
     font-size: 16px;
     color: white;
     height: 72px;
-    width: 33%;
     background: var(--color-MiddleBlue) !important;
   }
 

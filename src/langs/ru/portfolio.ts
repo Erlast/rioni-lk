@@ -14,6 +14,7 @@ export const portfolio = {
   papersTitle: 'Состав портфеля',
   emptyData: 'Нет данных',
   dynamicTitle: 'Динамика портфеля',
+  rotateTip: 'Переверните устройство для просмотра полных данных',
   table: {
     tabs: {
       action: 'Акции',
@@ -23,11 +24,12 @@ export const portfolio = {
       futuries: 'Фьючерсы'
     },
     columns: {
-      columnNameTitle: 'Наименование',
+      columnNameTitle: 'Название',
       columnNameSubtitle: 'Тикер',
       currencyTitle: 'Валюта',
       amountTitle: 'Кол-во',
-      avaragePriceTitle: 'Усредненная цена',
+      averagePriceTitle: 'Усредненная цена',
+      averagePriceTitleMobile: 'Сумма',
       byUnitTitle: 'За ед.',
       totalPriceTitle: 'Всего',
       currentPriceTitle: 'Текущая цена',

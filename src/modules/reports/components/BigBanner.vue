@@ -1,50 +1,23 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { useI18n } from 'vue-i18n';
+
+  const { t } = useI18n();
+</script>
 
 <template>
-  <div class="big-banner b-section">
-    <div class="b-block"></div>
-    <div class="big-banner-content big-banner-content-bg">
-      <div class="big-banner-content-name">Отчеты брокера</div>
-      <div class="big-banner-content-desc">
-        Следите за прошедшими сделками и анализируйте резульаты в удобном для вас формате
-      </div>
-    </div>
-  </div>
+  <v-sheet class="banner-content d-flex pa-8 text-white" rounded="xxl" min-height="230">
+    <v-sheet class="d-flex flex-column justify-end ga-2">
+      <v-sheet class="font-20 font-semibold">{{ t('reports.banner.title') }}</v-sheet>
+      <v-sheet max-width="350">
+        {{ t('reports.banner.subtitle') }}
+      </v-sheet>
+    </v-sheet>
+  </v-sheet>
 </template>
 <style scoped lang="scss">
-  .big-banner-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
-    box-sizing: border-box;
-    height: 243px;
-    padding: 40px;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-start;
-  }
-  .big-banner-content-bg {
+  .banner-content {
     background-image: url('/tmp/big-banner.png');
-  }
-  .big-banner-content-name {
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
-    color: var(--Backgrounds-white, #fff);
-    font-family: 'Plus Jakarta Sans';
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-  }
-
-  .big-banner-content-desc {
-    width: 260px;
-    color: var(--Backgrounds-white, #fff);
-    font-family: 'Plus Jakarta Sans';
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 </style>

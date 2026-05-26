@@ -93,7 +93,7 @@
       class="action-card d-flex position-relative action-inside-block-bg-3"
       :width="mobile ? 'auto' : '33%'"
     >
-      <v-sheet class="pa-4 rounded-mr" width="100%" :style="`background: url(${thirdCardBg}) no-repeat;`">
+      <v-sheet class="pa-4 rounded-mr" width="100%" :style="`background: url(${thirdCardBg}) no-repeat; background-size:cover;`">
         <v-sheet class="text-white">{{ t(actionTitles[2]) }}</v-sheet>
         <v-sheet>
           <v-sheet class="position-absolute top-0 right-0">

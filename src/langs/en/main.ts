@@ -2,7 +2,9 @@ import { header } from './header';
 import { portfolio } from './portfolio';
 import { profile } from './profile';
 import { validations } from './validations';
-import { footer } from '@/langs/en/footer.ts';
+import { footer } from './footer.ts';
+import { pronounce } from './pronounce.ts';
+import { reports } from './reports.ts';
 
 export const en = {
   header,
@@ -10,6 +12,8 @@ export const en = {
   profile,
   portfolio,
   validations,
+  pronounce,
+  reports,
   title: {
     portfolio: 'Личный кабинет — Accounts',
     market: 'Личный кабинет — Рынок',

@@ -3,6 +3,8 @@ import { portfolio } from './portfolio';
 import { profile } from './profile';
 import { validations } from './validations';
 import { footer } from './footer.ts';
+import { pronounce } from './pronounce.ts';
+import { reports } from './reports.ts';
 
 export const ru = {
   header,
@@ -10,6 +12,8 @@ export const ru = {
   profile,
   portfolio,
   validations,
+  pronounce,
+  reports,
   title: {
     portfolio: 'Личный кабинет — Счета',
     market: 'Личный кабинет — Рынок',
