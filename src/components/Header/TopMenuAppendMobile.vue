@@ -1,17 +1,25 @@
 <script setup lang="ts">
   import AvatarUser from '@/components/AvatarUser.vue';
   import { computed, ref } from 'vue';
+  import { useRoute } from 'vue-router';
   import { useAccountStore } from '@/stores/accountStore.ts';
 
   import SocialItems from '@/views/default/footer/SocialItems.vue';
   import { menuItem } from '@/utils/data.ts';
   import CloseButton from '@/components/BaseComponents/CloseButton.vue';
+  import { useI18n } from 'vue-i18n';
   const menu = ref(false);
   const accountStore = useAccountStore();
+  const route = useRoute();
+  const { t } = useI18n();
 
   const menuItems = computed(() => {
     return menuItem;
   });
+
+  const isActive = (itemName: string) => {
+    return route.name === itemName;
+  };
 </script>
 
 <template>
@@ -52,7 +60,13 @@
             </v-list>
 
             <v-list class="bg-background-blue text-white">
-              <v-list-item v-for="item in menuItems" :key="item.name" :to="{ name: item.name }">
+              <v-list-item
+                v-for="item in menuItems"
+                :key="item.name"
+                :to="{ name: item.name }"
+                :active="isActive(item.name)"
+                @click="menu = false"
+              >
                 {{ item.title }}
               </v-list-item>
               <v-list-item>
@@ -60,7 +74,7 @@
                   <template #append>
                     <v-icon icon="mdi-logout" />
                   </template>
-                  Выйти
+                  {{ t('logout') }}
                 </v-btn>
               </v-list-item>
             </v-list>

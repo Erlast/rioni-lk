@@ -1,72 +1,66 @@
 <script setup lang="ts">
-  import { computed, watch, ref } from 'vue'
-  import { useNotify } from '@/stores/notifyStore'
-  import { Notifications, useNotification } from '@kyvg/vue3-notification'
-  import { useDisplay, useTheme } from 'vuetify'
-  import { useI18n } from 'vue-i18n'
-  import CloseButton from '@/components/BaseComponents/CloseButton.vue'
+  import { computed, watch, ref } from 'vue';
+  import { useNotify } from '@/stores/notifyStore';
+  import { Notifications, useNotification } from '@kyvg/vue3-notification';
+  import { useDisplay } from 'vuetify';
+  import { useI18n } from 'vue-i18n';
+  import CloseButton from '@/components/BaseComponents/CloseButton.vue';
 
   type ColorIcon = {
-    success: string
-    info: string
-    warn: string
-    error: string
-  }
+    success: string;
+    info: string;
+    warn: string;
+    error: string;
+  };
 
-  const style = getComputedStyle(document.documentElement)
-  const notifyStore = useNotify()
-  const { notify } = useNotification()
-  const { mobile } = useDisplay()
-  const { t } = useI18n()
-  const theme = useTheme()
+  const style = getComputedStyle(document.documentElement);
+  const notifyStore = useNotify();
+  const { notify } = useNotification();
+  const { mobile } = useDisplay();
+  const { t } = useI18n();
 
-  const displayedNotificationIds = ref(new Set())
+  const displayedNotificationIds = ref(new Set());
 
   const systemFlexColumn = computed(() => {
-    return ['d-flex', notifyStore.description?.length > 30 || mobile.value ? 'flex-column' : 'ga-2']
-  })
+    return [
+      'd-flex',
+      notifyStore.description?.length > 30 || mobile.value ? 'flex-column' : 'ga-2'
+    ];
+  });
   const colorIcon: ColorIcon = {
-    success: theme.global.current.value.dark
-      ? style.getPropertyValue('--color-SuccessBackground')
-      : style.getPropertyValue('--color-SuccessNormal'),
-    info: theme.global.current.value.dark
-      ? style.getPropertyValue('--color-MainBackground')
-      : style.getPropertyValue('--color-MainNormal'),
-    warn: theme.global.current.value.dark
-      ? style.getPropertyValue('--color-WarningsBackground')
-      : style.getPropertyValue('--color-WarningNormal'),
-    error: theme.global.current.value.dark
-      ? style.getPropertyValue('--color-AlertBackground')
-      : style.getPropertyValue('--color-AlertNormal')
-  }
+    success: style.getPropertyValue('--color-LightGreen'),
+    info: style.getPropertyValue('--color-TypeText'),
+    warn: style.getPropertyValue('--color-LightBlue'),
+    error: style.getPropertyValue('--color-AdditionalError')
+  };
 
   const width = computed(() => {
     if (mobile.value) {
-      return 'calc(100dvw - 16px)'
+      return 'calc(100dvw - 16px)';
     }
     switch (notifyStore.group) {
       case 'session':
-        return '620px'
+        return '620px';
       case 'system':
-        return '890px'
+        return '890px';
       case 'app':
-        return '600px'
+        return '600px';
       default:
-        return '890px'
+        return '890px';
     }
-  })
+  });
 
   const formatText = (text: string | undefined) => {
     if (!text) {
-      return ''
+      return '';
     }
 
-    let formatted = text.replace(/\r\n|\r|\n/g, '<br>')
-    const urlRegex = /https?:\/\/[^\s<>"{}|\\^`\[\]]+/g
-    formatted = formatted.replace(urlRegex, url => `<a href="${url}" target="_blank">${url}</a>`)
+    let formatted = text.replace(/\r\n|\r|\n/g, '<br>');
+    const urlRegex = /https?:\/\/[^\s<>"{}|\\^`\[\]]+/g;
+    formatted = formatted.replace(urlRegex, url => `<a href="${url}" target="_blank">${url}</a>`);
 
-    return formatted
-  }
+    return formatted;
+  };
 
   const defaultClasses = [
     'position-relative',
@@ -76,15 +70,15 @@
     'notification',
     `${!mobile.value ? 'pr-14' : ''}`,
     'w-100'
-  ]
+  ];
 
   watch(
     () => notifyStore.notifications,
     newNotifications => {
-      const newItems = newNotifications.filter(n => !displayedNotificationIds.value.has(n.id))
+      const newItems = newNotifications.filter(n => !displayedNotificationIds.value.has(n.id));
 
       newItems.forEach(item => {
-        displayedNotificationIds.value.add(item.id)
+        displayedNotificationIds.value.add(item.id);
         notify({
           id: item.id.toString(),
           title: item.message,
@@ -92,18 +86,18 @@
           type: item.type,
           group: item.group,
           duration: item.duration
-        })
+        });
 
         if (item.duration && item.duration > 0) {
           setTimeout(() => {
-            notifyStore.removeNotification(item.id)
-            displayedNotificationIds.value.delete(item.id)
-          }, item.duration)
+            notifyStore.removeNotification(item.id);
+            displayedNotificationIds.value.delete(item.id);
+          }, item.duration);
         }
-      })
+      });
     },
     { deep: true }
-  )
+  );
 </script>
 
 <template>
@@ -117,7 +111,6 @@
   >
     <template #body="props">
       <div :class="[...defaultClasses, 'notification-system', 'test-copy', props.item.type]">
-        <IconCheckFill :color="theme.global.current.value.dark ? 'white-exact' : 'black-exact'" />
         <div :class="{ 'body-b1-bold': !mobile, 'body-b3-bold': mobile }">
           {{ props.item.title }}
         </div>
@@ -125,8 +118,8 @@
         <CloseButton
           @click="
             () => {
-              props.close()
-              notifyStore.removeNotification(parseInt(props.item.id))
+              props.close();
+              notifyStore.removeNotification(parseInt(props.item.id));
             }
           "
         />
@@ -144,26 +137,27 @@
   >
     <template #body="props">
       <div :class="[...defaultClasses, 'session', 'test-session', props.item.type]">
-        <v-img src="/img/zhdun.png" width="120" />
         <div class="d-flex flex-column ga-4">
           <p class="title-h3">
             {{ props.item.title }}
           </p>
           <div
             :class="{ 'body-b1': !mobile, 'body-b3': mobile }"
-            style="color: var(--color-BlackInactive)"
+            style="color: var(--color-TypeText)"
           >
             {{ t(`notification.sessionEnd.${mobile ? 'mobileDescription' : 'description'}`) }}
           </div>
         </div>
-        <CloseButton
-          @click="
-            () => {
-              props.close()
-              notifyStore.removeNotification(parseInt(props.item.id))
-            }
-          "
-        />
+        <v-sheet class="position-absolute">
+          <CloseButton
+            @click="
+              () => {
+                props.close();
+                notifyStore.removeNotification(parseInt(props.item.id));
+              }
+            "
+          />
+        </v-sheet>
       </div>
     </template>
   </Notifications>
@@ -182,7 +176,7 @@
       >
         <div :class="{ 'align-self-center': !mobile }">
           <v-icon
-            icon="info"
+            icon="mdi-info"
             :color="
               props.item.type ? colorIcon[props.item.type as keyof ColorIcon] : colorIcon.info
             "
@@ -197,8 +191,8 @@
           <CloseButton
             @click="
               () => {
-                props.close()
-                notifyStore.removeNotification(parseInt(props.item.id))
+                props.close();
+                notifyStore.removeNotification(parseInt(props.item.id));
               }
             "
           />
@@ -221,14 +215,16 @@
           {{ props.item.title }}
         </div>
         <div :class="{ 'body-b1': !mobile, 'body-b3': mobile }" v-html="props.item.text"></div>
-        <CloseButton
-          @click="
-            () => {
-              props.close()
-              notifyStore.removeNotification(parseInt(props.item.id))
-            }
-          "
-        />
+        <v-sheet class="position-absolute right-0 pr-4">
+          <CloseButton
+            @click="
+              () => {
+                props.close();
+                notifyStore.removeNotification(parseInt(props.item.id));
+              }
+            "
+          />
+        </v-sheet>
       </div>
     </template>
   </Notifications>
@@ -298,49 +294,24 @@
     height: 100%;
   }
 
-  .v-theme--myCustomLightTheme {
-    .notification {
-      font-weight: 700;
-      padding: 16px;
+  .notification {
+    font-weight: 700;
+    padding: 16px;
 
-      background: $colorWhiteWhite;
+    background: white;
 
-      // types (green, amber, red)
-      &.success {
-        background: $colorSuccessBackground;
-      }
-
-      &.warn,
-      &.session {
-        background: $colorWarningBackground;
-      }
-
-      &.error {
-        background: $colorAlertBackground;
-      }
+    // types (green, amber, red)
+    &.success {
+      background: $colorLightGreen;
     }
-  }
 
-  .v-theme--myCustomDarkTheme {
-    .notification {
-      font-weight: 700;
-      padding: 16px;
+    &.warn,
+    &.session {
+      background: $colorLightBlue;
+    }
 
-      background: $colorBlackBlack;
-
-      // types (green, amber, red)
-      &.success {
-        background: $colorSuccessDark;
-      }
-
-      &.warn,
-      &.session {
-        background: $colorWarningDark;
-      }
-
-      &.error {
-        background: $colorAlertDark;
-      }
+    &.error {
+      background: $colorAdditionalError;
     }
   }
 </style>

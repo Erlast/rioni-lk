@@ -8,7 +8,7 @@
   const { t } = useI18n();
   const { mobile } = useDisplay();
   const emit = defineEmits(['click-card']);
-  const props = defineProps<IActionCardsProps>();
+  defineProps<IActionCardsProps>();
 </script>
 <template>
   <v-sheet class="d-flex ga-2" :class="{ 'flex-column': mobile }">
@@ -132,7 +132,7 @@
     height: 140px;
     :hover circle {
       fill: red;
-      border-radius: 0px 16px 0px 0px;
+      border-radius: 0 16px 0 0;
     }
 
     &.action-inside-block-bg-1 {

@@ -2,6 +2,7 @@
   import { ref } from 'vue';
   import { useDisplay } from 'vuetify';
   import { useI18n } from 'vue-i18n';
+  import { useNotify } from '@/stores/notifyStore.ts';
 
   const { mobile } = useDisplay();
   const { t } = useI18n();
@@ -58,6 +59,11 @@
       default:
         return '';
     }
+  };
+
+  const topUp = () => {
+    // const notify = useNotify();
+    // notify.show('test', 'success','warn');
   };
 
   const operationHistory = ref([
@@ -118,7 +124,13 @@
   <v-sheet class="mt-12">
     <v-sheet class="d-flex flex-column ga-4">
       <v-sheet class="d-flex ga-2" :class="{ 'flex-column': mobile }">
-        <v-btn variant="flat" rounded="mr" class="btn-custom" :width="mobile ? '100%' : '33%'">
+        <v-btn
+          variant="flat"
+          rounded="mr"
+          class="btn-custom"
+          :width="mobile ? '100%' : '33%'"
+          @click="topUp"
+        >
           {{ t('pronounce.topUpBtn') }}
         </v-btn>
         <v-btn variant="flat" rounded="mr" class="btn-custom" :width="mobile ? '100%' : '33%'">

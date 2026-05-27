@@ -1,14 +1,30 @@
+<script lang="ts" setup>
+  import { useAccountStore } from '@/stores/accountStore.ts';
+  import { computed } from 'vue';
+  import { useI18n } from 'vue-i18n';
+
+  const accountStore = useAccountStore();
+  const { t } = useI18n();
+
+  const greetings = computed(() => {
+    if (accountStore.data.info.gender === 'F') {
+      return `${t('notice.mrs')}, ${accountStore.data.info.name} ${accountStore.data.info.patronymic}`;
+    }
+    if (accountStore.data.info.gender === 'M') {
+      return `${t('notice.mr')}, ${accountStore.data.info.name} ${accountStore.data.info.patronymic}`;
+    }
+    return t('notice.mr');
+  });
+</script>
 <template>
   <div class="gr-block-a">
     <div class="notice">
       <div class="notice-icon"><div class="notice-icon-warning"></div></div>
       <div class="notice-inside">
-        <div class="notice-name">Уведомление</div>
+        <div class="notice-name">{{ t('notice.title') }}</div>
 
-        <div class="notice-1-desc">
-          Уважаемый Иван Иваноич! В силу политики компании мы закрываем ваш брокерский счет
-        </div>
-        <div class="notice-1-btn">Заполнить</div>
+        <div class="notice-1-desc">{{ greetings }}! {{ t('notice.text') }}</div>
+        <div class="notice-1-btn">{{ t('notice.fillBtn') }}</div>
       </div>
     </div>
   </div>

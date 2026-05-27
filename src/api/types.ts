@@ -1,5 +1,6 @@
 import { InstrumentTypes } from './enum';
 
+type gender = 'F' | 'M';
 export interface IProfileModel {
   name: string;
   nickname: string;
@@ -8,7 +9,7 @@ export interface IProfileModel {
   patronymic: string;
   photoUrl: string;
   dateOfBirth: string;
-  gender: string;
+  gender: gender;
   citizenship: string;
   placeOfBirth: string;
   documentType: string;

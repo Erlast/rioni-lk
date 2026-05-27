@@ -5,6 +5,7 @@ import { validations } from './validations';
 import { footer } from './footer.ts';
 import { pronounce } from './pronounce.ts';
 import { reports } from './reports.ts';
+import { notice } from './notice.ts';
 
 export const ru = {
   header,
@@ -14,6 +15,9 @@ export const ru = {
   validations,
   pronounce,
   reports,
+  notice,
+  logout: 'Выйти',
+  chooseDate: 'Выберите дату',
   title: {
     portfolio: 'Личный кабинет — Счета',
     market: 'Личный кабинет — Рынок',

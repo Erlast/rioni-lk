@@ -30,9 +30,9 @@
       </v-container>
     </v-sheet>
   </v-main>
-  <v-footer v-if="!landscape" class="justify-lg-space-between align-center my-footer">
-    <FooterMobileView v-if="mobile" />
-    <Footer v-else></Footer>
+  <v-footer class="justify-lg-space-between align-center my-footer">
+    <FooterMobileView v-if="mobile && !landscape" />
+    <Footer v-if="!mobile"></Footer>
   </v-footer>
 </template>
 <style lang="scss">

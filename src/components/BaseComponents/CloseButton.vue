@@ -1,19 +1,21 @@
 <script setup lang="ts">
-  import { useDisplay, useTheme } from 'vuetify'
+  import { useDisplay } from 'vuetify';
 
-  const emits = defineEmits(['click'])
-  const { mobile } = useDisplay()
+  const emits = defineEmits(['click']);
+  const { mobile } = useDisplay();
 </script>
 
 <template>
   <v-icon
+    color="hard-blue"
     role="img"
-    class="btn-close elevation-01-dp"
+    class="button-close rounded-circle"
+    rounded="circle"
     :class="{ 'btn-close-mobile': mobile }"
     style="outline: none"
     @click="emits('click')"
+    icon="mdi-close"
   >
-    <v-icon icon="mdi-close" color="black" />
   </v-icon>
 </template>
 
