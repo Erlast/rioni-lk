@@ -4,10 +4,12 @@
   import ProfileSettings from '@/modules/profile/components/ProfileSettings.vue';
   import ActionCards from '@/components/ActionCards.vue';
   import { useI18n } from 'vue-i18n';
+  import { useDisplay } from 'vuetify';
 
   const { t } = useI18n();
   const showAnketa = ref(false);
   const showProfileSettings = ref(false);
+  const { mobile } = useDisplay();
 
   provide('showAnketa', showAnketa);
   provide('showProfileSettings', showProfileSettings);
@@ -31,10 +33,22 @@
 </script>
 
 <template>
-  <v-dialog v-model="showAnketa" width="auto" persistent scrollable>
+  <v-dialog
+    v-model="showAnketa"
+    width="auto"
+    :min-width="mobile ? '100%' : 900"
+    persistent
+    scrollable
+  >
     <Anketa />
   </v-dialog>
-  <v-dialog v-model="showProfileSettings" width="auto" persistent scrollable>
+  <v-dialog
+    v-model="showProfileSettings"
+    width="auto"
+    :min-width="mobile ? '100%' : 900"
+    persistent
+    scrollable
+  >
     <ProfileSettings />
   </v-dialog>
 

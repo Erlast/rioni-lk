@@ -5,9 +5,11 @@
   import { reactive } from 'vue';
   import { watch } from 'vue';
   import AvatarUpload from '@/components/AvatarUpload.vue';
+  import { useDisplay } from 'vuetify';
 
   const { t } = useI18n();
   const accountStore = useAccountStore();
+  const { mobile } = useDisplay();
 
   const initialState = {
     nickname: accountStore.data.info.nickname,
@@ -30,7 +32,8 @@
 <template>
   <v-sheet class="d-flex flex-column ga-3">
     <v-sheet
-      class="pa-8 d-flex ga-3 flex-column"
+      class="d-flex ga-3 flex-column"
+      :class="{ 'pa-4': mobile, 'pa-8': !mobile }"
       rounded="xxl"
       style="background-color: var(--color-MainBackground) !important"
     >
@@ -50,7 +53,8 @@
       </v-sheet>
     </v-sheet>
     <v-sheet
-      class="pa-8 d-flex ga-3 flex-column"
+      class="d-flex ga-3 flex-column"
+      :class="{ 'pa-4': mobile, 'pa-8': !mobile }"
       rounded="xxl"
       style="background-color: var(--color-MainBackground) !important"
     >

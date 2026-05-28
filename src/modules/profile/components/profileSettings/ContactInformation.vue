@@ -6,10 +6,12 @@
   import { useI18n } from 'vue-i18n';
   import { useVuelidate } from '@vuelidate/core';
   import { email, helpers, requiredIf } from '@vuelidate/validators';
+  import { useDisplay } from 'vuetify';
 
   const { t } = useI18n();
   const item = ref();
   const accountStore = useAccountStore();
+  const { mobile } = useDisplay();
 
   const openDialogUploadDocuments = () => {
     console.log('here');
@@ -223,19 +225,24 @@
 </script>
 
 <template>
-  <v-sheet class="d-flex flex-column ga-3">
-    <v-sheet
-      class="pa-8"
-      rounded="xxl"
-      style="background-color: var(--color-MainBackground) !important"
-    >
-      <v-sheet class="text-common font-16">
-        {{ t('profile.modals.settings.contactInformationTitle') }}
-      </v-sheet>
-      <v-sheet class="d-flex flex-column ga-3">
-        <v-sheet class="d-flex flex-column ga-2">
-          <v-sheet v-for="(contact, idx) in emailContacts" :key="contact.id" class="d-flex">
-            <v-col cols="9" class="pa-0">
+  <v-sheet
+    class="d-flex flex-column ga-3"
+    :class="{ 'pa-4': mobile, 'pa-8': !mobile }"
+    rounded="xxl"
+    style="background-color: var(--color-MainBackground) !important"
+  >
+    <v-sheet class="text-common font-16">
+      {{ t('profile.modals.settings.contactInformationTitle') }}
+    </v-sheet>
+    <v-sheet class="d-flex flex-column ga-3">
+      <v-sheet class="d-flex flex-column ga-2">
+        <v-sheet
+          v-for="(contact, idx) in emailContacts"
+          :key="contact.id"
+          class="d-flex flex-column"
+        >
+          <v-sheet>
+            <v-col :cols="mobile ? 12 : 9" class="pa-0">
               <v-sheet
                 class="d-flex"
                 :class="{ 'justify-space-between': idx === 0, 'justify-end': idx !== 0 }"
@@ -252,7 +259,11 @@
                   false-icon="rioni:formCheckOff"
                 ></v-checkbox>
               </v-sheet>
-
+            </v-col>
+            <v-col v-if="!mobile" cols="3" class="pa-0"></v-col>
+          </v-sheet>
+          <v-sheet class="d-flex">
+            <v-col :cols="mobile ? 10 : 9" class="pa-0">
               <v-sheet class="d-flex">
                 <v-text-field
                   v-model="state.emails[idx].value"
@@ -271,26 +282,41 @@
             </v-col>
             <v-col cols="3" class="pa-0 d-flex justify-center align-end">
               <v-sheet
-                v-if="contact.isConfirmed"
+                v-if="!mobile && contact.isConfirmed"
                 class="d-flex align-center text-element-check"
                 height="36"
               >
                 {{ t('profile.modals.settings.confirmedTitle') }}
               </v-sheet>
+              <v-sheet
+                v-if="mobile && contact.isConfirmed"
+                class="d-flex align-center justify-center rounded-mg"
+                height="36"
+                width="36"
+                style="background-color: var(--color-ElementCheck) !important"
+              >
+                <v-icon icon="mdi-check" color="white" />
+              </v-sheet>
             </v-col>
           </v-sheet>
-          <v-sheet
-            v-if="emailContacts.length < 2"
-            class="text-type-text font-smaller cursor-pointer"
-            @click="addContact('email')"
-          >
-            + добавить E-mail
-          </v-sheet>
         </v-sheet>
+        <v-sheet
+          v-if="emailContacts.length < 2"
+          class="text-type-text font-smaller cursor-pointer"
+          @click="addContact('email')"
+        >
+          + добавить E-mail
+        </v-sheet>
+      </v-sheet>
 
-        <v-sheet class="d-flex flex-column ga-2">
-          <v-sheet v-for="(contact, idx) in phoneContacts" :key="contact.id" class="d-flex">
-            <v-col cols="9" class="pa-0">
+      <v-sheet class="d-flex flex-column ga-2">
+        <v-sheet
+          v-for="(contact, idx) in phoneContacts"
+          :key="contact.id"
+          class="d-flex flex-column"
+        >
+          <v-sheet>
+            <v-col :cols="mobile ? 12 : 9" class="pa-0">
               <v-sheet
                 class="d-flex align-center"
                 :class="{ 'justify-space-between': idx === 0, 'justify-end': idx !== 0 }"
@@ -307,6 +333,11 @@
                   false-icon="rioni:formCheckOff"
                 ></v-checkbox>
               </v-sheet>
+            </v-col>
+            <v-col v-if="!mobile" cols="3" class="pa-0"></v-col>
+          </v-sheet>
+          <v-sheet class="d-flex">
+            <v-col :cols="mobile ? 10 : 9" class="pa-0">
               <v-sheet class="d-flex justify-space-between">
                 <v-col cols="2" class="pa-0">
                   <v-select
@@ -342,185 +373,194 @@
             </v-col>
             <v-col cols="3" class="pa-0 d-flex justify-center align-end">
               <v-sheet
-                v-if="contact.isConfirmed"
+                v-if="!mobile && contact.isConfirmed"
                 class="d-flex align-center text-element-check"
                 height="36"
               >
                 {{ t('profile.modals.settings.confirmedTitle') }}
               </v-sheet>
+              <v-sheet
+                v-if="mobile && contact.isConfirmed"
+                class="d-flex align-center justify-center rounded-mg"
+                height="36"
+                width="36"
+                style="background-color: var(--color-ElementCheck) !important"
+              >
+                <v-icon icon="mdi-check" color="white" />
+              </v-sheet>
             </v-col>
           </v-sheet>
-          <v-sheet
-            v-if="phoneContacts.length < 2"
-            class="text-type-text font-smaller cursor-pointer"
-            @click="addContact('phone')"
-          >
-            + добавить телефон
-          </v-sheet>
         </v-sheet>
-
         <v-sheet
-          class="px-6 py-3 font-smaller"
-          style="background-color: var(--color-LightGreen) !important"
+          v-if="phoneContacts.length < 2"
+          class="text-type-text font-smaller cursor-pointer"
+          @click="addContact('phone')"
         >
-          {{ t('profile.modals.settings.helpText') }}
+          + добавить телефон
         </v-sheet>
+      </v-sheet>
 
-        <v-sheet class="d-flex flex-column ga-2">
-          <v-sheet class="d-flex w-100 justify-space-between align-center">
-            <v-sheet class="text-type-text">
-              {{ t('profile.modals.settings.addressTitle') }}
-            </v-sheet>
-            <v-checkbox
-              :label="t('profile.modals.settings.useAsPostTitle')"
-              :model-value="state.address1.isMain"
-              hide-details
-              true-icon="rioni:formCheckOn"
-              false-icon="rioni:formCheckOff"
-              @update:model-value="
-                val => {
-                  if (val) {
-                    state.address1.isMain = true;
-                    state.address2.isMain = false;
-                  }
+      <v-sheet
+        class="px-6 py-3 font-smaller"
+        style="background-color: var(--color-LightGreen) !important"
+      >
+        {{ t('profile.modals.settings.helpText') }}
+      </v-sheet>
+
+      <v-sheet class="d-flex flex-column ga-2">
+        <v-sheet class="d-flex w-100 justify-space-between align-center">
+          <v-sheet class="text-type-text">
+            {{ t('profile.modals.settings.addressTitle') }}
+          </v-sheet>
+          <v-checkbox
+            :label="t('profile.modals.settings.useAsPostTitle')"
+            :model-value="state.address1.isMain"
+            hide-details
+            true-icon="rioni:formCheckOn"
+            false-icon="rioni:formCheckOff"
+            @update:model-value="
+              val => {
+                if (val) {
+                  state.address1.isMain = true;
+                  state.address2.isMain = false;
                 }
-              "
-            ></v-checkbox>
+              }
+            "
+          ></v-checkbox>
+        </v-sheet>
+        <v-sheet class="d-flex justify-space-between ga-2" :class="{ 'flex-column': mobile }">
+          <v-sheet :width="mobile ? '100%' : '33%'">
+            <v-autocomplete
+              v-model="state.address1.country"
+              variant="solo"
+              hide-details="auto"
+              placeholder="Страна"
+              flat
+              :label="t('profile.modals.settings.countryTitle')"
+              density="compact"
+              auto-select-first
+              clearable
+              :items="countries"
+              :error-messages="v$.address1.country.$errors[0]?.$message as string"
+              @update:modelValue="v$.address1.country.$touch"
+            ></v-autocomplete>
           </v-sheet>
-          <v-sheet class="d-flex justify-space-between ga-2">
-            <v-sheet width="33%">
-              <v-autocomplete
-                v-model="state.address1.country"
-                variant="solo"
-                hide-details="auto"
-                placeholder="Страна"
-                flat
-                :label="t('profile.modals.settings.countryTitle')"
-                density="compact"
-                auto-select-first
-                clearable
-                :items="countries"
-                :error-messages="v$.address1.country.$errors[0]?.$message as string"
-                @update:modelValue="v$.address1.country.$touch"
-              ></v-autocomplete>
-            </v-sheet>
-            <v-sheet width="33%">
-              <v-text-field
-                v-model="state.address1.city"
-                variant="solo"
-                hide-details="auto"
-                flat
-                :label="t('profile.modals.settings.cityTitle')"
-                :error-messages="v$.address1.city.$errors[0]?.$message as string"
-                @update:modelValue="v$.address1.city.$touch"
-              ></v-text-field>
-            </v-sheet>
-            <v-sheet width="33%">
-              <v-text-field
-                v-model="state.address1.postcode"
-                variant="solo"
-                flat
-                hide-details="auto"
-                :label="t('profile.modals.settings.postCodeTitle')"
-                :error-messages="v$.address1.postcode.$errors[0]?.$message as string"
-                @update:modelValue="v$.address1.postcode.$touch"
-              ></v-text-field>
-            </v-sheet>
-          </v-sheet>
-          <v-sheet>
+          <v-sheet :width="mobile ? '100%' : '33%'">
             <v-text-field
-              v-model="state.address1.address"
+              v-model="state.address1.city"
+              variant="solo"
+              hide-details="auto"
+              flat
+              :label="t('profile.modals.settings.cityTitle')"
+              :error-messages="v$.address1.city.$errors[0]?.$message as string"
+              @update:modelValue="v$.address1.city.$touch"
+            ></v-text-field>
+          </v-sheet>
+          <v-sheet :width="mobile ? '100%' : '33%'">
+            <v-text-field
+              v-model="state.address1.postcode"
               variant="solo"
               flat
               hide-details="auto"
-              :label="t('profile.modals.settings.addressFormTitle')"
-              :error-messages="v$.address1.address.$errors[0]?.$message as string"
-              @update:modelValue="v$.address1.address.$touch"
+              :label="t('profile.modals.settings.postCodeTitle')"
+              :error-messages="v$.address1.postcode.$errors[0]?.$message as string"
+              @update:modelValue="v$.address1.postcode.$touch"
             ></v-text-field>
           </v-sheet>
         </v-sheet>
-        <v-sheet class="d-flex flex-column ga-2">
-          <v-sheet class="d-flex justify-space-between align-center">
-            <v-sheet class="text-type-text">
-              {{ t('profile.modals.settings.address2Title') }}
-            </v-sheet>
-            <v-checkbox
-              :label="t('profile.modals.settings.useAsPostTitle')"
-              :model-value="state.address2.isMain"
-              hide-details
-              true-icon="rioni:formCheckOn"
-              false-icon="rioni:formCheckOff"
-              @update:model-value="
-                val => {
-                  if (val) {
-                    state.address2.isMain = true;
-                    state.address1.isMain = false;
-                  }
+        <v-sheet>
+          <v-text-field
+            v-model="state.address1.address"
+            variant="solo"
+            flat
+            hide-details="auto"
+            :label="t('profile.modals.settings.addressFormTitle')"
+            :error-messages="v$.address1.address.$errors[0]?.$message as string"
+            @update:modelValue="v$.address1.address.$touch"
+          ></v-text-field>
+        </v-sheet>
+      </v-sheet>
+      <v-sheet class="d-flex flex-column ga-2">
+        <v-sheet class="d-flex justify-space-between align-center">
+          <v-sheet class="text-type-text">
+            {{ t('profile.modals.settings.address2Title') }}
+          </v-sheet>
+          <v-checkbox
+            :label="t('profile.modals.settings.useAsPostTitle')"
+            :model-value="state.address2.isMain"
+            hide-details
+            true-icon="rioni:formCheckOn"
+            false-icon="rioni:formCheckOff"
+            @update:model-value="
+              val => {
+                if (val) {
+                  state.address2.isMain = true;
+                  state.address1.isMain = false;
                 }
-              "
-            ></v-checkbox>
+              }
+            "
+          ></v-checkbox>
+        </v-sheet>
+        <v-sheet class="d-flex justify-space-between ga-2" :class="{ 'flex-column': mobile }">
+          <v-sheet :width="mobile ? '100%' : '33%'">
+            <v-autocomplete
+              v-model="state.address2.country"
+              variant="solo"
+              hide-details="auto"
+              flat
+              :label="t('profile.modals.settings.countryTitle')"
+              density="compact"
+              :items="countries"
+              clearable
+              :error-messages="v$.address2.country.$errors[0]?.$message as string"
+              @update:modelValue="v$.address2.country.$touch"
+            />
           </v-sheet>
-          <v-sheet class="d-flex justify-space-between ga-2">
-            <v-sheet width="33%">
-              <v-autocomplete
-                v-model="state.address2.country"
-                variant="solo"
-                hide-details="auto"
-                flat
-                :label="t('profile.modals.settings.countryTitle')"
-                density="compact"
-                :items="countries"
-                clearable
-                :error-messages="v$.address2.country.$errors[0]?.$message as string"
-                @update:modelValue="v$.address2.country.$touch"
-              />
-            </v-sheet>
-            <v-sheet width="33%">
-              <v-text-field
-                v-model="state.address2.city"
-                variant="solo"
-                flat
-                hide-details="auto"
-                :label="t('profile.modals.settings.cityTitle')"
-                :error-messages="v$.address2.city.$errors[0]?.$message as string"
-                @update:modelValue="v$.address2.city.$touch"
-              ></v-text-field>
-            </v-sheet>
-            <v-sheet width="33%">
-              <v-text-field
-                v-model="state.address2.postcode"
-                variant="solo"
-                flat
-                hide-details="auto"
-                :label="t('profile.modals.settings.postCodeTitle')"
-                :error-messages="v$.address2.postcode.$errors[0]?.$message as string"
-                @update:modelValue="v$.address2.postcode.$touch"
-              ></v-text-field>
-            </v-sheet>
-          </v-sheet>
-          <v-sheet class="d-flex">
+          <v-sheet :width="mobile ? '100%' : '33%'">
             <v-text-field
-              v-model="state.address2.address"
+              v-model="state.address2.city"
               variant="solo"
               flat
               hide-details="auto"
-              :label="t('profile.modals.settings.addressFormTitle')"
-              :error-messages="v$.address2.address.$errors[0]?.$message as string"
-              @update:modelValue="v$.address2.address.$touch"
+              :label="t('profile.modals.settings.cityTitle')"
+              :error-messages="v$.address2.city.$errors[0]?.$message as string"
+              @update:modelValue="v$.address2.city.$touch"
+            ></v-text-field>
+          </v-sheet>
+          <v-sheet :width="mobile ? '100%' : '33%'">
+            <v-text-field
+              v-model="state.address2.postcode"
+              variant="solo"
+              flat
+              hide-details="auto"
+              :label="t('profile.modals.settings.postCodeTitle')"
+              :error-messages="v$.address2.postcode.$errors[0]?.$message as string"
+              @update:modelValue="v$.address2.postcode.$touch"
             ></v-text-field>
           </v-sheet>
         </v-sheet>
-        <v-sheet class="text-type-text font-smaller">
-          {{ t('profile.modals.settings.confirmAddressText') }}
-          <span
-            class="text-additional-link"
-            style="cursor: pointer"
-            @click="openDialogUploadDocuments"
-          >
-            {{ t('profile.modals.settings.confirmAddressLinkText') }}
-            <v-icon icon="mdi-arrow-down" size="12" />
-          </span>
+        <v-sheet class="d-flex">
+          <v-text-field
+            v-model="state.address2.address"
+            variant="solo"
+            flat
+            hide-details="auto"
+            :label="t('profile.modals.settings.addressFormTitle')"
+            :error-messages="v$.address2.address.$errors[0]?.$message as string"
+            @update:modelValue="v$.address2.address.$touch"
+          ></v-text-field>
         </v-sheet>
+      </v-sheet>
+      <v-sheet class="text-type-text font-smaller">
+        {{ t('profile.modals.settings.confirmAddressText') }}
+        <span
+          class="text-additional-link"
+          style="cursor: pointer"
+          @click="openDialogUploadDocuments"
+        >
+          {{ t('profile.modals.settings.confirmAddressLinkText') }}
+          <v-icon icon="mdi-arrow-down" size="12" />
+        </span>
       </v-sheet>
     </v-sheet>
   </v-sheet>

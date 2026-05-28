@@ -6,12 +6,14 @@
   import { useNotify } from '@/stores/notifyStore';
   import { inject, ref, Ref } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import { useDisplay } from 'vuetify';
 
   const { t } = useI18n();
   const isSending = ref(false);
   const accountStore = useAccountStore();
   const showProfileSettings = inject<Ref<boolean>>('showProfileSettings', ref(false));
   const notifyStore = useNotify();
+  const { mobile } = useDisplay();
 
   const contactRef = ref<InstanceType<typeof ContactInformation> | null>(null);
   const profileRef = ref<InstanceType<typeof Profile> | null>(null);
@@ -48,10 +50,7 @@
         (a: any) => a.country || a.city || a.postcode || a.address
       );
 
-      await accountsService.profileAddressesSave(
-        accountStore.data.id,
-        addressesToSave
-      );
+      await accountsService.profileAddressesSave(accountStore.data.id, addressesToSave);
       await accountStore.load();
       showProfileSettings.value = false;
     } catch (error) {
@@ -63,7 +62,7 @@
 </script>
 
 <template>
-  <v-card width="900">
+  <v-card :width="mobile ? 'auto' : 900">
     <v-sheet class="modal-window">
       <v-sheet>
         <v-card-title>
@@ -76,11 +75,11 @@
         <v-card-text>
           <v-form ref="form" @submit.prevent="handleFormSubmit">
             <v-sheet class="d-flex flex-column ga-2">
-              <v-sheet class="d-flex ga-3">
+              <v-sheet class="d-flex ga-3" :class="{ 'flex-column': mobile }">
                 <ContactInformation ref="contactRef"></ContactInformation>
                 <Profile ref="profileRef"></Profile>
               </v-sheet>
-              <v-sheet>
+              <v-sheet :class="{ 'd-flex justify-center': mobile }">
                 <v-btn
                   :loading="isSending"
                   type="submit"

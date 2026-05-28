@@ -3,14 +3,16 @@
   import UserBanksRequisite from '@/modules/profile/components/user/UserBanksRequisite.vue';
   import { inject, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import { useDisplay } from 'vuetify';
 
   const { t } = useI18n();
+  const { mobile } = useDisplay();
 
   let showAnketa = inject('showAnketa');
 </script>
 
 <template>
-  <v-card width="900">
+  <v-card :width="mobile ? 'auto' : 900">
     <v-sheet class="modal-window">
       <v-sheet>
         <v-card-title>

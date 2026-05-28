@@ -174,7 +174,9 @@
             :width="mobile ? '100%' : account && account.deposit > 0 ? '25%' : '33%'"
             height="98"
             style="
-              background: url('/img/balance-2-bg.png') no-repeat !important;
+              background-image: url('/img/balance-2-bg.png') !important;
+              background-repeat: no-repeat;
+              background-size: cover;
               line-height: normal;
             "
           >
@@ -243,7 +245,12 @@
             class="d-flex flex-column pa-4 rounded-mr"
             :width="mobile ? '100%' : account && account.deposit > 0 ? '25%' : '33%'"
             height="98"
-            style="background: url('/img/deposit-bg.png') no-repeat !important; line-height: normal"
+            style="
+              background-image: url('/img/deposit-bg.png') !important;
+              background-size: cover;
+              background-repeat: no-repeat;
+              line-height: normal;
+            "
           >
             <v-sheet class="d-flex ga-2 align-center">
               <v-sheet width="19">

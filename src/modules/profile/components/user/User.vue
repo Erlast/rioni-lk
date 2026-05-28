@@ -10,6 +10,7 @@
   import DatePicker from '@/components/BaseComponents/DatePicker.vue';
   import { useVuelidate } from '@vuelidate/core';
   import { helpers, requiredIf } from '@vuelidate/validators';
+  import { useDisplay } from 'vuetify';
 
   const { t } = useI18n();
   const item = ref();
@@ -17,6 +18,7 @@
   const accountStore = useAccountStore();
   const isSending = ref(false);
   const showAnketa = inject<Ref<boolean>>('showAnketa', ref(false));
+  const { mobile } = useDisplay();
 
   const state = reactive({
     taxResidences: [] as ITaxResidenceModel[],
@@ -142,7 +144,8 @@
 <template>
   <v-form ref="anketa" @submit.prevent="handleFormSubmit">
     <v-sheet
-      class="pa-8 d-flex flex-column ga-4"
+      class="d-flex flex-column ga-4"
+      :class="{ 'pa-4': mobile, 'pa-8': !mobile }"
       rounded="xxl"
       style="background-color: var(--color-MainBackground) !important"
     >
@@ -160,8 +163,9 @@
             v-for="(residence, index) in state.taxResidences"
             :key="index"
             class="d-flex ga-2 justify-space-between"
+            :class="{ 'flex-column': mobile }"
           >
-            <v-sheet class="d-flex ga-2" width="50%">
+            <v-sheet class="d-flex ga-2" :width="mobile ? '100%' : '50%'">
               <v-sheet>
                 <v-sheet class="number-count">{{ index + 1 }}</v-sheet>
               </v-sheet>
@@ -184,7 +188,8 @@
                 />
               </v-sheet>
             </v-sheet>
-            <v-sheet width="50%">
+
+            <v-sheet :width="mobile ? '100%' : '50%'">
               <v-text-field
                 v-model="state.taxResidences[index].inn"
                 variant="solo"
@@ -211,7 +216,7 @@
         <v-sheet class="text-background-blue font-20 font-semibold">
           {{ t('profile.modals.anketa.additionalInformationTitle') }}
         </v-sheet>
-        <v-sheet class="d-flex justify-space-between">
+        <v-sheet class="d-flex justify-space-between" :class="{ 'flex-column': mobile }">
           <v-checkbox
             v-model="accountStore.data.info.hasBeneficiaries"
             :label="t('profile.modals.anketa.beneficiariesTitle')"
@@ -241,8 +246,8 @@
             :key="index"
             class="d-flex flex-column ga-2"
           >
-            <v-sheet class="d-flex justify-space-between ga-2">
-              <v-sheet width="50%">
+            <v-sheet class="d-flex justify-space-between ga-2" :class="{ 'flex-column': mobile }">
+              <v-sheet :width="mobile ? '100%' : '50%'">
                 <v-autocomplete
                   v-model="permit.country"
                   :label="t('profile.modals.anketa.countryTitle')"
@@ -260,7 +265,7 @@
                   "
                 />
               </v-sheet>
-              <v-sheet width="50%">
+              <v-sheet :width="mobile ? '100%' : '50%'">
                 <v-text-field
                   v-model="permit.issuedBy"
                   variant="solo"
@@ -277,8 +282,8 @@
                 ></v-text-field>
               </v-sheet>
             </v-sheet>
-            <v-sheet class="d-flex justify-space-between ga-2">
-              <v-sheet width="50%">
+            <v-sheet class="d-flex justify-space-between ga-2" :class="{ 'flex-column': mobile }">
+              <v-sheet :width="mobile ? '100%' : '50%'">
                 <v-text-field
                   v-model="permit.documentNumber"
                   variant="solo"
@@ -296,7 +301,7 @@
                   "
                 ></v-text-field>
               </v-sheet>
-              <v-sheet width="50%">
+              <v-sheet :width="mobile ? '100%' : '50%'">
                 <date-picker
                   :label="t('profile.modals.anketa.durationTitle')"
                   v-model="permit.stayPeriod"
@@ -334,7 +339,7 @@
               :label="t('profile.modals.anketa.companyNameTitle')"
             ></v-text-field>
           </v-sheet>
-          <v-sheet class="d-flex justify-space-between ga-2">
+          <v-sheet class="d-flex justify-space-between ga-2" :class="{ 'flex-column': mobile }">
             <v-text-field
               v-model="accountStore.data.info.companyIndustry"
               variant="solo"
@@ -351,8 +356,8 @@
               :label="t('profile.modals.anketa.jobTitle')"
             ></v-text-field>
           </v-sheet>
-          <v-sheet class="d-flex justify-space-between ga-2">
-            <v-sheet class="d-flex ga-2" width="50%">
+          <v-sheet class="d-flex justify-space-between ga-2" :class="{ 'flex-column': mobile }">
+            <v-sheet class="d-flex ga-2" :width="mobile ? '100%' : '50%'">
               <v-select
                 variant="solo"
                 flat
@@ -381,7 +386,7 @@
                 :label="t('profile.modals.anketa.phoneNumberTitle')"
               ></v-text-field>
             </v-sheet>
-            <v-sheet width="50%">
+            <v-sheet :width="mobile ? '100%' : '50%'">
               <v-text-field
                 v-model="accountStore.data.info.companyWebsite"
                 variant="solo"

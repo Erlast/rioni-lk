@@ -8,6 +8,7 @@
   import accountsService from '@/api/accountService';
   import { useAccountStore } from '@/stores/accountStore';
   import { useNotify } from '@/stores/notifyStore';
+  import { useDisplay } from 'vuetify';
 
   const accountStore = useAccountStore();
   const notifyStore = useNotify();
@@ -16,6 +17,7 @@
   const showAnketa = inject<Ref<boolean>>('showAnketa', ref(false));
   const showBlockDialog = ref(false);
   const blockedAccountIndex = ref<number | null>(null);
+  const { mobile } = useDisplay();
 
   const state = reactive({
     bankAccounts: [] as IBankAccountModel[]
@@ -193,8 +195,8 @@
               false-icon="rioni:formCheckOff"
             ></v-checkbox>
           </v-sheet>
-          <v-sheet class="d-flex ga-2">
-            <v-sheet width="50%">
+          <v-sheet class="d-flex ga-2" :class="{ 'flex-column': mobile }">
+            <v-sheet :width="mobile ? '100%' : '50%'">
               <v-autocomplete
                 v-model="bankAccount.country"
                 variant="solo"
@@ -212,7 +214,7 @@
                 "
               />
             </v-sheet>
-            <v-sheet width="50%">
+            <v-sheet :width="mobile ? '100%' : '50%'">
               <v-text-field
                 v-model="bankAccount.bankName"
                 variant="solo"
@@ -299,8 +301,8 @@
             {{ t('profile.modals.anketa.blockedAccount') }}
           </v-sheet>
         </v-sheet>
-        <v-sheet class="d-flex ga-2">
-          <v-sheet width="50%">
+        <v-sheet class="d-flex ga-2" :class="{ 'flex-column': mobile }">
+          <v-sheet :width="mobile ? '100%' : '50%'">
             <v-autocomplete
               v-model="bankAccount.country"
               variant="solo"
@@ -312,7 +314,7 @@
               disabled
             />
           </v-sheet>
-          <v-sheet width="50%">
+          <v-sheet :width="mobile ? '100%' : '50%'">
             <v-text-field
               v-model="bankAccount.bankName"
               variant="solo"
