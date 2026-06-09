@@ -4,7 +4,6 @@ import portfolioService from '@/api/portfolioService';
 import { useAccountStore } from './accountStore';
 
 interface PorfolioStoreModel {
-  totalSum: number;
   accounts: IAccountModel[];
   currentAccount: IAccountModel | null;
 }
@@ -22,7 +21,6 @@ interface IAction {
 export const usePortfolioStore = defineStore<'portfolio', IState, IGetter, IAction>('portfolio', {
   state: (): IState => ({
     data: {
-      totalSum: 0,
       accounts: [],
       currentAccount: null
     }
@@ -33,15 +31,16 @@ export const usePortfolioStore = defineStore<'portfolio', IState, IGetter, IActi
     async load() {
       try {
         const accountStore = useAccountStore();
-        const { totalSum, accounts } = await portfolioService.portfolios(accountStore.data.id);
-        this.data.totalSum = totalSum;
+        const { accounts } = await portfolioService.portfolios();
         this.data.accounts = accounts;
       } catch (error) {
         console.error('Ошибка при получении profile:', error);
       }
     },
     setCurrentAccount() {
-      this.data.currentAccount = this.data.accounts[0];
+      if (!this.data.currentAccount) {
+        this.data.currentAccount = this.data.accounts[0];
+      }
     },
     clearStore() {
       this.$reset();

@@ -7,11 +7,11 @@
   const { t } = useI18n();
 
   const greetings = computed(() => {
-    if (accountStore.data.info.gender === 'F') {
-      return `${t('notice.mrs')}, ${accountStore.data.info.name} ${accountStore.data.info.patronymic}`;
+    if (accountStore.data.gender === 'F') {
+      return `${t('notice.mrs')}, ${accountStore.data.name} ${accountStore.data.patronymic}`;
     }
-    if (accountStore.data.info.gender === 'M') {
-      return `${t('notice.mr')}, ${accountStore.data.info.name} ${accountStore.data.info.patronymic}`;
+    if (accountStore.data.gender === 'M') {
+      return `${t('notice.mr')}, ${accountStore.data.name} ${accountStore.data.patronymic}`;
     }
     return t('notice.mr');
   });

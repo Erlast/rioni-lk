@@ -8,72 +8,72 @@ import {
 } from '@/api/types';
 
 const accountsService = {
-  async profile(id: number) {
-    return httpCommunicator.get(`/profile/${id}`).then((response: AxiosResponse<IProfileModel>) => {
+  async profile() {
+    return httpCommunicator.get(`/profile/me`).then((response: AxiosResponse<IProfileModel>) => {
       return response.data;
     });
   },
 
-  async profileSave(id: number, data: any) {
-    return httpCommunicator.patch(`/profile/${id}`, data);
+  async profileSave(data: any) {
+    return httpCommunicator.patch(`/profile/me`, data);
   },
 
-  async profileContactsSave(id: number, data: any) {
-    return httpCommunicator.put(`/profile/${id}/contacts`, data);
+  async profileContactsSave(data: any) {
+    return httpCommunicator.put(`/profile/me/contacts`, data);
   },
 
-  async profileAddressesSave(id: number, data: any) {
-    return httpCommunicator.put(`/profile/${id}/addresses`, data);
+  async profileAddressesSave(data: any) {
+    return httpCommunicator.put(`/profile/me/addresses`, data);
   },
 
-  async profileTaxResidences(id: number) {
+  async profileTaxResidences() {
     return httpCommunicator
-      .get(`/profile/${id}/tax-residences`)
+      .get(`/profile/me/tax-residences`)
       .then((response: AxiosResponse<ITaxResidenceModel[]>) => {
         return response.data;
       });
   },
 
-  async profileResidencePermits(id: number) {
+  async profileResidencePermits() {
     return httpCommunicator
-      .get(`/profile/${id}/residence-permits`)
+      .get(`/profile/me/residence-permits`)
       .then((response: AxiosResponse<IResidencePermit[]>) => {
         return response.data;
       });
   },
 
-  async profileTaxResidencesSave(id: number, data: any) {
-    return httpCommunicator.put(`/profile/${id}/tax-residences`, data);
+  async profileTaxResidencesSave(data: any) {
+    return httpCommunicator.put(`/profile/me/tax-residences`, data);
   },
 
-  async profileResidencePermitsSave(id: number, data: any) {
-    return httpCommunicator.put(`/profile/${id}/residence-permits`, data);
+  async profileResidencePermitsSave(data: any) {
+    return httpCommunicator.put(`/profile/me/residence-permits`, data);
   },
 
-  async profileBankAccounts(id: number) {
+  async profileBankAccounts() {
     return httpCommunicator
-      .get(`/profile/${id}/bank-accounts`)
+      .get(`/profile/me/bank-accounts`)
       .then((response: AxiosResponse<IBankAccountModel[]>) => {
         return response.data;
       });
   },
 
-  async profileBankAccountsSave(id: number, data: any) {
-    return httpCommunicator.put(`/profile/${id}/bank-accounts`, data);
+  async profileBankAccountsSave(data: any) {
+    return httpCommunicator.put(`/profile/me/bank-accounts`, data);
   },
 
-  async uploadAvatar(id: number, file: File) {
+  async uploadAvatar(file: File) {
     const formData = new FormData();
     formData.append('file', file);
-    return httpCommunicator.post(`/profile/${id}/avatar`, formData, {
+    return httpCommunicator.post(`/profile/me/avatar`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
     });
   },
 
-  async deleteAvatar(id: number) {
-    return httpCommunicator.delete(`/profile/avatar/${id}`);
+  async deleteAvatar() {
+    return httpCommunicator.delete(`/profile/avatar/me`);
   }
 };
 export default accountsService;

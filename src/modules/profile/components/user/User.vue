@@ -111,9 +111,9 @@
       const filteredPermits = state.residencePermits.filter(
         rp => rp.country || rp.issuedBy || rp.documentNumber || rp.stayPeriod
       );
-      await accountsService.profileSave(accountStore.data.id, accountStore.data.info);
-      await accountsService.profileTaxResidencesSave(accountStore.data.id, filteredTaxResidences);
-      await accountsService.profileResidencePermitsSave(accountStore.data.id, filteredPermits);
+      await accountsService.profileSave(accountStore.data);
+      await accountsService.profileTaxResidencesSave(filteredTaxResidences);
+      await accountsService.profileResidencePermitsSave(filteredPermits);
       showAnketa.value = false;
     } catch (error) {
       notifyStore.showServiceError(error);
@@ -124,8 +124,8 @@
 
   onMounted(async () => {
     item.value = itemsFlags[0];
-    state.taxResidences = await accountsService.profileTaxResidences(accountStore.data.id);
-    state.residencePermits = await accountsService.profileResidencePermits(accountStore.data.id);
+    state.taxResidences = await accountsService.profileTaxResidences();
+    state.residencePermits = await accountsService.profileResidencePermits();
     if (!state.taxResidences.length) {
       state.taxResidences.push({ id: 0, country: null, inn: '' });
     }
@@ -218,14 +218,14 @@
         </v-sheet>
         <v-sheet class="d-flex justify-space-between" :class="{ 'flex-column': mobile }">
           <v-checkbox
-            v-model="accountStore.data.info.hasBeneficiaries"
+            v-model="accountStore.data.hasBeneficiaries"
             :label="t('profile.modals.anketa.beneficiariesTitle')"
             hide-details
             true-icon="rioni:formCheckOn"
             false-icon="rioni:formCheckOff"
           ></v-checkbox>
           <v-checkbox
-            v-model="accountStore.data.info.isPep"
+            v-model="accountStore.data.isPep"
             :label="t('profile.modals.anketa.pepTitle')"
             hide-details
             true-icon="rioni:formCheckOn"
@@ -314,7 +314,7 @@
             {{ t('profile.modals.anketa.addBtn') }}
           </v-sheet>
           <v-checkbox
-            v-model="accountStore.data.info.noResidencePermit"
+            v-model="accountStore.data.noResidencePermit"
             :label="t('profile.modals.anketa.noResidenceTitle')"
             hide-details="auto"
             true-icon="rioni:formCheckOn"
@@ -332,7 +332,7 @@
         <v-sheet class="d-flex flex-column ga-2">
           <v-sheet class="d-flex justify-space-between ga-2">
             <v-text-field
-              v-model="accountStore.data.info.companyName"
+              v-model="accountStore.data.companyName"
               variant="solo"
               flat
               hide-details="auto"
@@ -341,7 +341,7 @@
           </v-sheet>
           <v-sheet class="d-flex justify-space-between ga-2" :class="{ 'flex-column': mobile }">
             <v-text-field
-              v-model="accountStore.data.info.companyIndustry"
+              v-model="accountStore.data.companyIndustry"
               variant="solo"
               flat
               hide-details="auto"
@@ -349,7 +349,7 @@
             ></v-text-field>
 
             <v-text-field
-              v-model="accountStore.data.info.companyPosition"
+              v-model="accountStore.data.companyPosition"
               variant="solo"
               flat
               hide-details="auto"
@@ -379,7 +379,7 @@
               </v-select>
 
               <v-text-field
-                v-model="accountStore.data.info.companyPhone"
+                v-model="accountStore.data.companyPhone"
                 variant="solo"
                 flat
                 hide-details="auto"
@@ -388,7 +388,7 @@
             </v-sheet>
             <v-sheet :width="mobile ? '100%' : '50%'">
               <v-text-field
-                v-model="accountStore.data.info.companyWebsite"
+                v-model="accountStore.data.companyWebsite"
                 variant="solo"
                 flat
                 hide-details="auto"
@@ -397,28 +397,28 @@
             </v-sheet>
           </v-sheet>
           <v-checkbox
-            v-model="accountStore.data.info.isNpo"
+            v-model="accountStore.data.isNpo"
             :label="t('profile.modals.anketa.memberOfNPOTitle')"
             hide-details="auto"
             true-icon="rioni:formCheckOn"
             false-icon="rioni:formCheckOff"
           ></v-checkbox>
           <v-checkbox
-            v-model="accountStore.data.info.isNgo"
+            v-model="accountStore.data.isNgo"
             :label="t('profile.modals.anketa.memberOfNGOTitle')"
             hide-details="auto"
             true-icon="rioni:formCheckOn"
             false-icon="rioni:formCheckOff"
           ></v-checkbox>
           <v-checkbox
-            v-model="accountStore.data.info.isSelfEmployed"
+            v-model="accountStore.data.isSelfEmployed"
             :label="t('profile.modals.anketa.selfEmployedStatusTitle')"
             hide-details="auto"
             true-icon="rioni:formCheckOn"
             false-icon="rioni:formCheckOff"
           ></v-checkbox>
           <v-checkbox
-            v-model="accountStore.data.info.isNotWorking"
+            v-model="accountStore.data.isNotWorking"
             :label="t('profile.modals.anketa.doNotWorkTitle')"
             hide-details="auto"
             true-icon="rioni:formCheckOn"

@@ -9,7 +9,6 @@ import {
   IIntervalUpdateState,
   intervalUpdateState
 } from '@/stores/intervalUpdateStore';
-import { useAccountStore } from './accountStore';
 
 interface IState extends IIntervalUpdateState {
   data: IPortfolioModel;
@@ -53,8 +52,7 @@ export const useAssetsStore = defineStore<'assets', IState, IGetters, IActions>(
     async load() {
       this.loading = true;
       try {
-        const accountStore = useAccountStore();
-        const data = await portfolioService.assets(accountStore.data.id, this.types);
+        const data = await portfolioService.assets(this.types);
         if (data) {
           this.data = data;
         } else {
@@ -72,8 +70,7 @@ export const useAssetsStore = defineStore<'assets', IState, IGetters, IActions>(
     },
     async autoUpdate() {
       try {
-        const accountStore = useAccountStore();
-        const data = await portfolioService.assets(accountStore.data.id, this.types);
+        const data = await portfolioService.assets(this.types);
         if (data) {
           this.data = data;
         } else {

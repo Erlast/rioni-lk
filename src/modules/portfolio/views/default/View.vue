@@ -13,6 +13,7 @@
   import portfolioService from '@/api/portfolioService.ts';
   import { useDisplay } from 'vuetify';
   import { useMediaQuery } from '@vueuse/core';
+  import TopUpForm from '@/components/BaseComponents/TopUpForm.vue';
 
   const { t } = useI18n();
 
@@ -41,22 +42,17 @@
     }
   };
 
-  const openTopUp = () => {
-    console.log('opent top up');
-  };
-
   const actionTitles = [
     'portfolio.reportsTitle',
     'portfolio.historyTitle',
     'portfolio.analyticTitle'
   ];
 
-  const account = computed(() => {
-    if (!portfolioStore.data.currentAccount) {
-      portfolioStore.setCurrentAccount();
-    }
-    return portfolioStore.data.currentAccount;
-  });
+  const account = ref(portfolioStore.data.currentAccount);
+
+  const updateAccount = (selectedAccount: any) => {
+    portfolioStore.data.currentAccount = selectedAccount;
+  };
 
   function itemProps(item: any) {
     return {
@@ -75,6 +71,7 @@
   watch(
     () => portfolioStore.data.currentAccount,
     async newAccount => {
+      account.value = newAccount;
       if (newAccount?.id) {
         await loadAccountYield(newAccount.id);
       }
@@ -86,6 +83,8 @@
     await portfolioStore.load();
     await assetsStore.load();
     accounts.value = portfolioStore.data.accounts;
+
+    portfolioStore.setCurrentAccount();
 
     assetsStore.startAutoUpdate(1500);
   });
@@ -128,12 +127,7 @@
                 {{ accountStore.getAccountCurrency?.title }}
               </v-sheet>
             </v-sheet>
-            <v-btn variant="flat" rounded="mr" @click="openTopUp" height="50" class="btn-top-up">
-              <template #prepend>
-                <v-img width="26" src="/img/topUp-btn-icon.png" />
-              </template>
-              {{ t('portfolio.topUpBtn') }}
-            </v-btn>
+            <top-up-form />
           </v-sheet>
         </v-sheet>
         <v-sheet class="d-flex rounded-xxl px-6" style="background-color: white !important">
@@ -149,29 +143,13 @@
             :items="accounts"
             label=""
             v-model="account"
+            @update:model-value="updateAccount"
           />
         </v-sheet>
         <v-sheet class="d-flex ga-2" :class="{ 'flex-column': mobile }">
           <v-sheet
-            class="d-flex flex-column liner-gradient-common pa-4 rounded-mr text-white"
-            :width="mobile ? '100%' : account && account.deposit > 0 ? '25%' : '33%'"
-            height="98"
-            style="line-height: normal"
-          >
-            <v-sheet class="d-flex ga-2 align-center">
-              <v-sheet width="19">
-                <v-img src="/img/balance-icon.png" width="19" />
-              </v-sheet>
-              <v-sheet class="font-default">{{ t('portfolio.balanceAccountTitle') }}</v-sheet>
-            </v-sheet>
-            <v-sheet class="font-m text-gradient-light">
-              {{ account && account.balance ? formatNumber(account.balance) : 0 }}
-              {{ accountStore.getAccountCurrency?.title }}
-            </v-sheet>
-          </v-sheet>
-          <v-sheet
             class="d-flex flex-column pa-4 rounded-mr"
-            :width="mobile ? '100%' : account && account.deposit > 0 ? '25%' : '33%'"
+            :width="mobile ? '100%' : '33%'"
             height="98"
             style="
               background-image: url('/img/balance-2-bg.png') !important;
@@ -200,7 +178,7 @@
           </v-sheet>
           <v-sheet
             class="d-flex flex-column pa-4 rounded-mr"
-            :width="mobile ? '100%' : account && account.deposit > 0 ? '25%' : '33%'"
+            :width="mobile ? '100%' : '33%'"
             height="98"
             style="background-color: white !important; line-height: normal"
           >
@@ -243,7 +221,7 @@
           <v-sheet
             v-if="account && account.deposit > 0"
             class="d-flex flex-column pa-4 rounded-mr"
-            :width="mobile ? '100%' : account && account.deposit > 0 ? '25%' : '33%'"
+            :width="mobile ? '100%' : '33%'"
             height="98"
             style="
               background-image: url('/img/deposit-bg.png') !important;
@@ -308,13 +286,6 @@
 
     &.top-up-card-mobile {
       background-image: url(/img/topUp-bg-mobile.png) !important;
-    }
-
-    .btn-top-up {
-      padding: 0 30px;
-      font-size: 16px;
-      color: white;
-      background: linear-gradient(67deg, #103673 40.45%, #4a77c1 81.54%) !important;
     }
   }
 

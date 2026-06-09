@@ -1,16 +1,15 @@
 <script setup lang="ts">
-  import { useI18n } from 'vue-i18n';
   import AvatarUser from '@/components/AvatarUser.vue';
   import { useRouter } from 'vue-router';
   import { useAccountStore } from '@/stores/accountStore';
+  import authService from '@/api/authService.ts';
 
-  const { t } = useI18n();
   const router = useRouter();
   const accountStore = useAccountStore();
 
   const logout = async () => {
-    //await authService.logout()
-    await router.push('/');
+    await authService.logout()
+    await router.push('/auth');
   };
 </script>
 
@@ -33,7 +32,7 @@
         class="font-default text-capitalize color-dark-blue cursor-pointer"
         @click="router.push({ name: 'profile' })"
       >
-        {{ accountStore.data.info.surname }} {{ accountStore.data.info.name }}
+        {{ accountStore.data.surname }} {{ accountStore.data.name }}
       </v-sheet>
       <v-btn icon density="compact" @click="logout">
         <v-icon icon="mdi-logout" color="middle-blue" />

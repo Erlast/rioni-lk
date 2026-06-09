@@ -10,12 +10,12 @@ import qs from 'qs';
 import { TimeframeType } from '@/stores/accountChartCostStore.ts';
 
 const portfolioService = {
-  async portfolios(profileId: number): Promise<IPortfoliosModel> {
-    return httpCommunicator.get(`/portfolios/${profileId}`).then((response: AxiosResponse) => {
+  async portfolios(): Promise<IPortfoliosModel> {
+    return httpCommunicator.get(`/portfolios`).then((response: AxiosResponse) => {
       return response.data;
     });
   },
-  async assets(profileId: number, types: string[] | null): Promise<IPortfolioModel> {
+  async assets(types: string[] | null): Promise<IPortfolioModel> {
     let config = {};
     if (types) {
       config = {
@@ -28,7 +28,7 @@ const portfolioService = {
       };
     }
     return httpCommunicator
-      .get(`/portfolio/${profileId}/assets`, config)
+      .get(`/portfolio/assets`, config)
       .then((response: AxiosResponse) => {
         return response.data;
       });
@@ -40,7 +40,10 @@ const portfolioService = {
         return response.data;
       });
   },
-  async portfolioAccountYield(accountId: number, timeframe: TimeframeType): Promise<IAccountYieldModel> {
+  async portfolioAccountYield(
+    accountId: number,
+    timeframe: TimeframeType
+  ): Promise<IAccountYieldModel> {
     return httpCommunicator
       .get(`/portfolio/${accountId}/yield?period=${timeframe}`)
       .then((response: AxiosResponse) => {

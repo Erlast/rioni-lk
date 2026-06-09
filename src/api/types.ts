@@ -146,3 +146,26 @@ export interface IAccountYieldModel {
   accountYield: number;
   accountPercent: number;
 }
+
+export interface IAccountAttributes {
+  is_iia: boolean;
+  is_vip: boolean;
+  account_kind: number;
+  part_type: 'pers' | 'org' | string;
+}
+
+export interface ITokenModel {
+  access_token?: string;
+  token_type?: 'bearer' | string;
+  sms_code_id?: number;
+}
+
+export interface ICredentialModel {
+  login: string;
+  password: string;
+}
+
+export interface ICodeModel {
+  sms_code_id: number | undefined;
+  code: string;
+}

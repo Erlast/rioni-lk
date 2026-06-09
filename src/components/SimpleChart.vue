@@ -69,6 +69,22 @@
     { immediate: false }
   );
 
+  watch(
+    () => portfolioStore.data.currentAccount,
+    async newAccount => {
+      if (newAccount) {
+        loading.value = true;
+        await accountChartCostStore.load();
+        await nextTick();
+        await loadChart();
+        await nextTick();
+        if (chart.value) {
+          await updateChartData();
+        }
+      }
+    }
+  );
+
   const period = computed(() => {
     if (!accountChartCostStore.data || accountChartCostStore.data.length === 0) return '';
 

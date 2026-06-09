@@ -25,8 +25,8 @@
         }
 
         try {
-          const data = await accountsService.uploadAvatar(accountStore.data.id, fileUpload.value);
-          accountStore.data.info.photoUrl = data.data.url;
+          const data = await accountsService.uploadAvatar(fileUpload.value);
+          accountStore.data.photoUrl = data.data.url;
         } catch (error) {
           notifyStore.showServiceError(error);
           console.log(error);
@@ -59,10 +59,10 @@
         class="d-flex justify-center px-10 py-5 rounded-20 border-dashed border-color-element border-sm"
       >
         <v-img
-          v-if="accountStore.data.info.photoUrl"
+          v-if="accountStore.data.photoUrl"
           width="146"
           height="146"
-          :src="accountStore.data.info.photoUrl"
+          :src="accountStore.data.photoUrl"
         />
         <v-img v-else width="146" height="146" src="/img/avatar-default.png" />
       </v-sheet>

@@ -33,7 +33,7 @@
       >
         <v-sheet :width="mobile ? 127 : 170">
           <v-img
-            :src="accountStore.data.info.photoUrl"
+            :src="accountStore.data.photoUrl"
             alt="photo"
             :height="mobile ? 127 : 170"
             :width="mobile ? 127 : 170"
@@ -46,11 +46,11 @@
         <v-sheet class="d-flex flex-column ga-2">
           <v-sheet class="d-flex flex-column">
             <v-sheet class="font-small text-type-text">{{ t('profile.nbsTitle') }}</v-sheet>
-            <v-sheet class="font-default text-dark-blue">{{ accountStore.data.info.nbs }}</v-sheet>
+            <v-sheet class="font-default text-dark-blue">{{ accountStore.data.nbs }}</v-sheet>
           </v-sheet>
           <v-sheet class="d-flex flex-column">
             <v-sheet class="font-small text-type-text">{{ t('profile.nduTitle') }}</v-sheet>
-            <v-sheet class="font-default text-dark-blue">{{ accountStore.data.info.ndu }}</v-sheet>
+            <v-sheet class="font-default text-dark-blue">{{ accountStore.data.ndu }}</v-sheet>
           </v-sheet>
           <v-sheet class="d-flex flex-column">
             <v-sheet class="font-small text-type-text">{{ t('profile.email') }}</v-sheet>
@@ -99,21 +99,21 @@
           <v-sheet class="d-flex flex-column">
             <v-sheet class="font-small text-type-text">{{ t('profile.fullName') }}</v-sheet>
             <v-sheet class="font-default text-dark-blue">
-              {{ accountStore.data.info.name }} {{ accountStore.data.info.patronymic }}
-              {{ accountStore.data.info.surname }}
+              {{ accountStore.data.name }} {{ accountStore.data.patronymic }}
+              {{ accountStore.data.surname }}
             </v-sheet>
           </v-sheet>
           <v-sheet class="d-flex ga-8">
             <v-sheet class="d-flex flex-column">
               <v-sheet class="font-small text-type-text">{{ t('profile.birthdayTitle') }}</v-sheet>
               <v-sheet class="font-default text-dark-blue">
-                {{ dayjs(accountStore.data.info.dateOfBirth).format('DD.MM.YYYY') }}
+                {{ dayjs(accountStore.data.dateOfBirth).format('DD.MM.YYYY') }}
               </v-sheet>
             </v-sheet>
             <v-sheet class="d-flex flex-column">
               <v-sheet class="font-small text-type-text">{{ t('profile.gender') }}</v-sheet>
               <v-sheet class="font-default text-dark-blue">
-                {{ accountStore.data.info.gender }}
+                {{ accountStore.data.gender }}
               </v-sheet>
             </v-sheet>
           </v-sheet>
@@ -121,13 +121,13 @@
           <v-sheet class="d-flex flex-column">
             <v-sheet class="font-small text-type-text">{{ t('profile.citizenship') }}</v-sheet>
             <v-sheet class="font-default text-dark-blue">
-              {{ accountStore.data.info.citizenship }}
+              {{ accountStore.data.citizenship }}
             </v-sheet>
           </v-sheet>
           <v-sheet class="d-flex flex-column">
             <v-sheet class="font-small text-type-text">{{ t('profile.placeOfBirth') }}</v-sheet>
             <v-sheet class="font-default text-dark-blue">
-              {{ accountStore.data.info.placeOfBirth }}
+              {{ accountStore.data.placeOfBirth }}
             </v-sheet>
           </v-sheet>
         </v-sheet>
@@ -135,13 +135,13 @@
           <v-sheet class="d-flex flex-column">
             <v-sheet class="font-small text-type-text">{{ t('profile.documentType') }}</v-sheet>
             <v-sheet class="font-default text-dark-blue">
-              {{ accountStore.data.info.documentType }}
+              {{ accountStore.data.documentType }}
             </v-sheet>
           </v-sheet>
           <v-sheet class="d-flex flex-column">
             <v-sheet class="font-small text-type-text">{{ t('profile.passportNumber') }}</v-sheet>
             <v-sheet class="font-default text-dark-blue">
-              {{ accountStore.data.info.passportNumber }}
+              {{ accountStore.data.passportNumber }}
             </v-sheet>
           </v-sheet>
           <v-sheet class="d-flex flex-column">
@@ -149,15 +149,15 @@
               {{ t('profile.passportIssueDate') }}
             </v-sheet>
             <v-sheet class="font-default text-dark-blue">
-              {{ dayjs(accountStore.data.info.passportIssueDate).format('DD.MM.YYYY') }}
+              {{ dayjs(accountStore.data.passportIssueDate).format('DD.MM.YYYY') }}
             </v-sheet>
           </v-sheet>
-          <v-sheet v-if="accountStore.data.info.passportExpiryDate" class="d-flex flex-column">
+          <v-sheet v-if="accountStore.data.passportExpiryDate" class="d-flex flex-column">
             <v-sheet class="font-small text-type-text">
               {{ t('profile.passportExpiryDate') }}
             </v-sheet>
             <v-sheet class="font-default text-dark-blue">
-              {{ dayjs(accountStore.data.info.passportExpiryDate).format('DD.MM.YYYY') }}
+              {{ dayjs(accountStore.data.passportExpiryDate).format('DD.MM.YYYY') }}
             </v-sheet>
           </v-sheet>
         </v-sheet>

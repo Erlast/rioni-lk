@@ -2,7 +2,8 @@
   import { ref } from 'vue';
   import { useDisplay } from 'vuetify';
   import { useI18n } from 'vue-i18n';
-  import { useNotify } from '@/stores/notifyStore.ts';
+  import TopUpForm from '@/components/BaseComponents/TopUpForm.vue';
+  import WithdrawalForm from '@/components/BaseComponents/WithdrawalForm.vue';
 
   const { mobile } = useDisplay();
   const { t } = useI18n();
@@ -61,9 +62,10 @@
     }
   };
 
+  const topUpFormRef = ref<any>(null);
+
   const topUp = () => {
-    // const notify = useNotify();
-    // notify.show('test', 'success','warn');
+    topUpFormRef.value?.openTopUp();
   };
 
   const operationHistory = ref([
@@ -124,21 +126,25 @@
   <v-sheet class="mt-12">
     <v-sheet class="d-flex flex-column ga-4">
       <v-sheet class="d-flex ga-2" :class="{ 'flex-column': mobile }">
-        <v-btn
-          variant="flat"
-          rounded="mr"
-          class="btn-custom"
-          :width="mobile ? '100%' : '33%'"
-          @click="topUp"
-        >
-          {{ t('pronounce.topUpBtn') }}
-        </v-btn>
+        <top-up-form ref="topUpFormRef">
+          <template #button>
+            <v-btn
+              variant="flat"
+              rounded="mr"
+              class="btn-custom"
+              :width="mobile ? '100%' : '33%'"
+              @click="topUp"
+            >
+              {{ t('pronounce.topUpBtn') }}
+            </v-btn>
+          </template>
+        </top-up-form>
+
         <v-btn variant="flat" rounded="mr" class="btn-custom" :width="mobile ? '100%' : '33%'">
           {{ t('pronounce.tradeOrdersBtn') }}
         </v-btn>
-        <v-btn variant="flat" rounded="mr" class="btn-custom" :width="mobile ? '100%' : '33%'">
-          {{ t('pronounce.withdrawalBtn') }}
-        </v-btn>
+
+        <withdrawal-form />
       </v-sheet>
       <v-sheet class="d-flex ga-2" :class="{ 'flex-column': mobile }">
         <v-btn variant="flat" rounded="mr" class="btn-custom-2" :width="mobile ? '100%' : '33%'">

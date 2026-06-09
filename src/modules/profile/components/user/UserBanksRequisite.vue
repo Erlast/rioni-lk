@@ -92,7 +92,7 @@
         }
       }
       try {
-        await accountsService.profileBankAccountsSave(accountStore.data.id, state.bankAccounts);
+        await accountsService.profileBankAccountsSave(state.bankAccounts);
       } catch (error) {
         notifyStore.showServiceError(error);
       }
@@ -139,7 +139,7 @@
           item.iban
       );
 
-      await accountsService.profileBankAccountsSave(accountStore.data.id, filteredBankAccounts);
+      await accountsService.profileBankAccountsSave(filteredBankAccounts);
 
       showAnketa.value = false;
     } catch (error) {
@@ -150,7 +150,7 @@
   };
 
   onMounted(async () => {
-    state.bankAccounts = await accountsService.profileBankAccounts(accountStore.data.id);
+    state.bankAccounts = await accountsService.profileBankAccounts();
     if (!state.bankAccounts.length) {
       state.bankAccounts.push({
         id: 0,

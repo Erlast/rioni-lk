@@ -31,8 +31,8 @@
 
   const handleDialogConfirm = async () => {
     try {
-      await accountsService.deleteAvatar(accountStore.data.id);
-      accountStore.data.info.photoUrl = '';
+      await accountsService.deleteAvatar();
+      accountStore.data.photoUrl = '';
       dialog.value = false;
     } catch (err) {
       console.log(err);
@@ -41,15 +41,15 @@
 </script>
 
 <template>
-    <v-sheet v-if="accountStore.data.info.photoUrl" :class="classNames">
+    <v-sheet v-if="accountStore.data.photoUrl" :class="classNames">
       <v-img
         class="user-avatar"
         :width="size"
         :height="size"
         :max-width="size"
         cover
-        :src="`${accountStore.data.info.photoUrl}`"
-        :alt="`${accountStore.data.info.surname} ${accountStore.data.info.name}`"
+        :src="`${accountStore.data.photoUrl}`"
+        :alt="`${accountStore.data.surname} ${accountStore.data.name}`"
       />
       <v-btn
         v-if="showDeleteIcon && !mobile"
@@ -99,7 +99,7 @@
       </v-dialog>
     </v-sheet>
     <v-sheet v-else :class="{ 'py-4 d-flex justify-center': showDeleteIcon }">
-      <BaseAvatar :full-name="`${accountStore.data.info.surname} ${accountStore.data.info.name}`" />
+      <BaseAvatar :full-name="`${accountStore.data.surname} ${accountStore.data.name}`" />
     </v-sheet>
   
 </template>

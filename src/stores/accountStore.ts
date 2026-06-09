@@ -4,12 +4,8 @@ import { defineStore } from 'pinia';
 import { useDictionaryStore } from './dictionariesStore';
 import { usePortfolioStore } from './portfolioStore';
 
-interface AccountModel {
-  id: number;
-  info: IProfileModel;
-}
 interface IState {
-  data: AccountModel;
+  data: IProfileModel;
 }
 interface IGetter {
   getAccountCurrency: (s: IState) => ICurrencyModel | undefined;
@@ -24,42 +20,39 @@ interface IAction {
 export const useAccountStore = defineStore<'account', IState, IGetter, IAction>('account', {
   state: (): IState => ({
     data: {
-      id: 2,
-      info: {
-        name: 'Test',
-        nickname: '',
-        login: '',
-        surname: 'User',
-        patronymic: '',
-        photoUrl: '',
-        dateOfBirth: '',
-        gender: '',
-        citizenship: '',
-        placeOfBirth: '',
-        countryOfBirth: '',
-        cityOfBirth: '',
-        documentType: '',
-        passportNumber: '',
-        passportIssueDate: '',
-        passportExpiryDate: '',
-        nbs: '',
-        ndu: '',
-        issuedBy: '',
-        companyName: '',
-        companyIndustry: '',
-        companyPhone: '',
-        companyPosition: '',
-        companyWebsite: '',
-        isNgo: false,
-        isNotWorking: false,
-        isNpo: false,
-        isSelfEmployed: false,
-        hasBeneficiaries: false,
-        isPep: false,
-        noResidencePermit: false,
-        contacts: [],
-        addresses: []
-      }
+      name: 'Test',
+      nickname: '',
+      login: '',
+      surname: 'User',
+      patronymic: '',
+      photoUrl: '',
+      dateOfBirth: '',
+      gender: 'M',
+      citizenship: '',
+      placeOfBirth: '',
+      countryOfBirth: '',
+      cityOfBirth: '',
+      documentType: '',
+      passportNumber: '',
+      passportIssueDate: '',
+      passportExpiryDate: '',
+      nbs: '',
+      ndu: '',
+      issuedBy: '',
+      companyName: '',
+      companyIndustry: '',
+      companyPhone: '',
+      companyPosition: '',
+      companyWebsite: '',
+      isNgo: false,
+      isNotWorking: false,
+      isNpo: false,
+      isSelfEmployed: false,
+      hasBeneficiaries: false,
+      isPep: false,
+      noResidencePermit: false,
+      contacts: [],
+      addresses: []
     }
   }),
   persist: true,
@@ -72,8 +65,8 @@ export const useAccountStore = defineStore<'account', IState, IGetter, IAction>(
       return dictionaryStore.currencies.find(item => item.id === firstAccount.accountCurrencyId);
     },
     getPhone: state => {
-      if (state.data.info.contacts.length) {
-        const findItem = state.data.info.contacts.find(
+      if (state.data.contacts.length) {
+        const findItem = state.data.contacts.find(
           item => item.isMain && item.contactType === 'phone'
         );
         if (!findItem) {
@@ -84,8 +77,8 @@ export const useAccountStore = defineStore<'account', IState, IGetter, IAction>(
       return '';
     },
     getEmail: state => {
-      if (state.data.info.contacts.length) {
-        const findItem = state.data.info.contacts.find(
+      if (state.data.contacts.length) {
+        const findItem = state.data.contacts.find(
           item => item.isMain && item.contactType === 'email'
         );
         if (!findItem) {
@@ -99,11 +92,8 @@ export const useAccountStore = defineStore<'account', IState, IGetter, IAction>(
   actions: {
     async load() {
       try {
-        const data = await accountsService.profile(this.data.id);
-        this.data = {
-          id: 2,
-          info: data
-        };
+
+        this.data = await accountsService.profile();
       } catch (error) {
         console.error('Ошибка при получении profile:', error);
       }

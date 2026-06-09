@@ -6,6 +6,9 @@ import { footer } from './footer.ts';
 import { pronounce } from './pronounce.ts';
 import { reports } from './reports.ts';
 import { notice } from './notice.ts';
+import { topUpAccount } from './topUpAccount.ts';
+import { withdrawal } from './withdrawal.ts';
+import { auth } from './auth.ts';
 
 export const ru = {
   header,
@@ -16,8 +19,13 @@ export const ru = {
   pronounce,
   reports,
   notice,
+  topUpAccount,
+  withdrawal,
+  auth,
   logout: 'Выйти',
   chooseDate: 'Выберите дату',
+  back: 'Назад',
+  next: 'Отправить',
   title: {
     portfolio: 'Личный кабинет — Счета',
     market: 'Личный кабинет — Рынок',
@@ -27,5 +35,14 @@ export const ru = {
     notifications: 'Личный кабинет — Уведомления',
     reports: 'Личный кабинет — Отчет',
     notfound: 'Личный кабинет — 404'
+  },
+  errorTemporaryUnavailable: {
+    message: 'Что-то пошло не так',
+    description: 'Временно недоступно'
+  },
+  errors: {
+    pdfGenerateError: 'Ошибка при генерации PDF',
+    pdfNotAvailableForDownload: 'Поделиться файлом невозможно. PDF будет скачан.',
+    downloadError: 'Не удалось поделиться файлом'
   }
 };

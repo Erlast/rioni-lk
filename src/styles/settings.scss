@@ -22,6 +22,7 @@
         'element-check': var(--color-ElementCheck),
         'element': var(--color-Element),
         'hard-blue': var(--color-HardBlue),
+        'type-text': var(--color-TypeText),
       )
     ),
     'color': (
@@ -68,6 +69,7 @@
       property: 'border-radius',
       class: 'rounded',
       values: (
+        'ml': 8px,
         'mg': 10px,
         'mr': 16px,
         '20': 20px,

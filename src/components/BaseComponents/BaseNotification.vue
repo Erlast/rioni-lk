@@ -188,14 +188,16 @@
             v-html="formatText(props.item.title)"
           />
           <div :class="{ 'body-b1': !mobile, 'body-b3': mobile }" v-html="props.item.text"></div>
-          <CloseButton
-            @click="
-              () => {
-                props.close();
-                notifyStore.removeNotification(parseInt(props.item.id));
-              }
-            "
-          />
+          <v-sheet class="position-absolute">
+            <CloseButton
+              @click="
+                () => {
+                  props.close();
+                  notifyStore.removeNotification(parseInt(props.item.id));
+                }
+              "
+            />
+          </v-sheet>
         </div>
       </div>
     </template>

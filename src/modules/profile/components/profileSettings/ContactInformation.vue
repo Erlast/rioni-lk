@@ -18,10 +18,10 @@
   };
 
   const emailContacts = computed(
-    () => accountStore.data.info.contacts?.filter((c: any) => c.contactType === 'email') || []
+    () => accountStore.data.contacts?.filter((c: any) => c.contactType === 'email') || []
   );
   const phoneContacts = computed(
-    () => accountStore.data.info.contacts?.filter((c: any) => c.contactType === 'phone') || []
+    () => accountStore.data.contacts?.filter((c: any) => c.contactType === 'phone') || []
   );
 
   const state = reactive({
@@ -113,7 +113,7 @@
   const v$ = useVuelidate(rules, state);
 
   const syncEmailsToStore = () => {
-    if (!accountStore.data.info.contacts) return;
+    if (!accountStore.data.contacts) return;
     emailContacts.value.forEach((contact, idx) => {
       if (state.emails[idx]) {
         contact.value = state.emails[idx].value;
@@ -130,7 +130,7 @@
   );
 
   const loadAddressesFromStore = () => {
-    const regAddr = accountStore.data.info.addresses?.find(
+    const regAddr = accountStore.data.addresses?.find(
       (a: any) => a.addressType === 'registration'
     );
     if (regAddr) {
@@ -141,7 +141,7 @@
       state.address1.isMain = regAddr.isMain ?? true;
     }
 
-    const actAddr = accountStore.data.info.addresses?.find((a: any) => a.addressType === 'actual');
+    const actAddr = accountStore.data.addresses?.find((a: any) => a.addressType === 'actual');
     if (actAddr) {
       state.address2.country = actAddr.country || null;
       state.address2.city = actAddr.city || '';
@@ -152,45 +152,45 @@
   };
 
   const syncAddressesToStore = () => {
-    if (!accountStore.data.info.addresses) {
-      accountStore.data.info.addresses = [];
+    if (!accountStore.data.addresses) {
+      accountStore.data.addresses = [];
     }
 
-    const regIdx = accountStore.data.info.addresses.findIndex(
+    const regIdx = accountStore.data.addresses.findIndex(
       (a: any) => a.addressType === 'registration'
     );
     const regAddress = {
       ...state.address1,
-      id: regIdx >= 0 ? accountStore.data.info.addresses[regIdx].id : 0,
+      id: regIdx >= 0 ? accountStore.data.addresses[regIdx].id : 0,
       addressType: 'registration' as addressType,
-      isConfirmed: regIdx >= 0 ? accountStore.data.info.addresses[regIdx].isConfirmed : false
+      isConfirmed: regIdx >= 0 ? accountStore.data.addresses[regIdx].isConfirmed : false
     };
 
-    const actIdx = accountStore.data.info.addresses.findIndex(
+    const actIdx = accountStore.data.addresses.findIndex(
       (a: any) => a.addressType === 'actual'
     );
     const actAddress = {
       ...state.address2,
-      id: actIdx >= 0 ? accountStore.data.info.addresses[actIdx].id : 0,
+      id: actIdx >= 0 ? accountStore.data.addresses[actIdx].id : 0,
       addressType: 'actual' as addressType,
-      isConfirmed: actIdx >= 0 ? accountStore.data.info.addresses[actIdx].isConfirmed : false
+      isConfirmed: actIdx >= 0 ? accountStore.data.addresses[actIdx].isConfirmed : false
     };
 
     if (regIdx >= 0) {
-      accountStore.data.info.addresses[regIdx] = regAddress;
+      accountStore.data.addresses[regIdx] = regAddress;
     } else {
-      accountStore.data.info.addresses.push(regAddress);
+      accountStore.data.addresses.push(regAddress);
     }
 
     if (actIdx >= 0) {
-      accountStore.data.info.addresses[actIdx] = actAddress;
+      accountStore.data.addresses[actIdx] = actAddress;
     } else {
-      accountStore.data.info.addresses.push(actAddress);
+      accountStore.data.addresses.push(actAddress);
     }
   };
 
   const addContact = (type: contactType) => {
-    accountStore.data.info.contacts.push({
+    accountStore.data.contacts.push({
       id: 0,
       contactType: type,
       isMain: false,
@@ -216,7 +216,7 @@
   });
 
   watch(
-    () => accountStore.data.info.addresses,
+    () => accountStore.data.addresses,
     () => {
       loadAddressesFromStore();
     },

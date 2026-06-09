@@ -3,7 +3,6 @@
   import { useI18n } from 'vue-i18n';
   import { useVuelidate } from '@vuelidate/core';
   import { reactive } from 'vue';
-  import { watch } from 'vue';
   import AvatarUpload from '@/components/AvatarUpload.vue';
   import { useDisplay } from 'vuetify';
 
@@ -12,8 +11,8 @@
   const { mobile } = useDisplay();
 
   const initialState = {
-    nickname: accountStore.data.info.nickname,
-    login: accountStore.data.info.login
+    nickname: accountStore.data.nickname,
+    login: accountStore.data.login
   };
 
   const state = reactive({

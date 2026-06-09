@@ -40,17 +40,17 @@
         login: profile?.login
       };
 
-      await accountsService.profileSave(accountStore.data.id, payload);
-      const contactsToSave = accountStore.data.info.contacts.filter((c: any) => c.value);
+      await accountsService.profileSave(payload);
+      const contactsToSave = accountStore.data.contacts.filter((c: any) => c.value);
       if (contactsToSave.length > 0) {
-        await accountsService.profileContactsSave(accountStore.data.id, contactsToSave);
+        await accountsService.profileContactsSave(contactsToSave);
       }
 
-      const addressesToSave = accountStore.data.info.addresses.filter(
+      const addressesToSave = accountStore.data.addresses.filter(
         (a: any) => a.country || a.city || a.postcode || a.address
       );
 
-      await accountsService.profileAddressesSave(accountStore.data.id, addressesToSave);
+      await accountsService.profileAddressesSave(addressesToSave);
       await accountStore.load();
       showProfileSettings.value = false;
     } catch (error) {

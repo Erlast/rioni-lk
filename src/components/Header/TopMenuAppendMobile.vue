@@ -1,17 +1,19 @@
 <script setup lang="ts">
   import AvatarUser from '@/components/AvatarUser.vue';
   import { computed, ref } from 'vue';
-  import { useRoute } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
   import { useAccountStore } from '@/stores/accountStore.ts';
 
   import SocialItems from '@/views/default/footer/SocialItems.vue';
   import { menuItem } from '@/utils/data.ts';
   import CloseButton from '@/components/BaseComponents/CloseButton.vue';
   import { useI18n } from 'vue-i18n';
+  import authService from '@/api/authService.ts';
   const menu = ref(false);
   const accountStore = useAccountStore();
   const route = useRoute();
   const { t } = useI18n();
+  const router = useRouter();
 
   const menuItems = computed(() => {
     return menuItem;
@@ -19,6 +21,11 @@
 
   const isActive = (itemName: string) => {
     return route.name === itemName;
+  };
+
+  const logout = async () => {
+    await authService.logout();
+    await router.push('/auth');
   };
 </script>
 
@@ -50,9 +57,7 @@
                 <v-sheet class="d-flex justify-space-between">
                   <v-sheet class="d-flex ga-2 align-center">
                     <AvatarUser ref="topMenuUserMenuAvatar" class="activator-menu" :size="20" />
-                    <v-sheet>
-                      {{ accountStore.data.info.surname }} {{ accountStore.data.info.name }}
-                    </v-sheet>
+                    <v-sheet>{{ accountStore.data.surname }} {{ accountStore.data.name }}</v-sheet>
                   </v-sheet>
                   <v-sheet class="button-close" @click="menu = false"></v-sheet>
                 </v-sheet>
@@ -70,7 +75,7 @@
                 {{ item.title }}
               </v-list-item>
               <v-list-item>
-                <v-btn variant="flat" rounded="mr" class="btn-logout">
+                <v-btn variant="flat" rounded="mr" class="btn-logout" @click="logout">
                   <template #append>
                     <v-icon icon="mdi-logout" />
                   </template>

@@ -14,18 +14,31 @@ import ProfileDefaultView from '@/modules/profile/views/default/View.vue';
 import NotificationDefaultView from '@/modules/notification/views/default/View.vue';
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import { useDictionaryStore } from '@/stores/dictionariesStore';
+import { useAuthStore } from '@/stores/authStore';
+import AuthView from '@/views/AuthView.vue';
+import NotFoundView from '@/views/NotFoundView.vue';
 
 type NavigationResult = RouteLocationRaw | undefined;
 
 export async function handleNavigation(
   to: RouteLocationNormalized,
+  authStore: ReturnType<typeof useAuthStore>,
   dictionaryStore: ReturnType<typeof useDictionaryStore>
 ): Promise<NavigationResult> {
   if (to.meta.disabled) {
     return { name: 'notfound' };
   }
 
-  await dictionaryStore.fetchDictionaries();
+  const isAuthenticated = authStore.isAuthenticated;
+  const entryPoint = authStore.entryPoint;
+
+  async function loadData() {
+    await dictionaryStore.fetchDictionaries();
+  }
+
+  if (isAuthenticated) {
+    await loadData();
+  }
 
   // Установка заголовка страницы
   if (to.path) {
@@ -53,10 +66,35 @@ export async function handleNavigation(
     document.title = 'Rioni - ЛК';
   }
 
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+
+  if (requiresAuth && !isAuthenticated) {
+    authStore.setEntryPoint({ url: to.path, query: to.query });
+    return { name: 'auth' };
+  }
+
+  // Логика редиректов для авторизованных пользователей
+  if (to.name === 'auth' && isAuthenticated) {
+    return { path: '/' };
+  }
+
+  if (entryPoint?.url && isAuthenticated) {
+    const { url, query } = entryPoint;
+    authStore.clearEntryPoint();
+    return { path: url, query };
+  }
+
+
   return undefined;
 }
 
 const routes = [
+  {
+    path: '/auth',
+    name: 'auth',
+    component: AuthView,
+    meta: { requiresAuth: false }
+  },
   {
     path: '/',
     component: DefaultLayout,
@@ -65,39 +103,51 @@ const routes = [
       {
         path: '',
         name: 'portfolio',
-        component: PortfolioDefaultView
+        component: PortfolioDefaultView,
+        meta: { requiresAuth: true }
       },
       {
         path: 'pronouns',
         name: 'pronouns',
-        component: PronounsDefaultView
+        component: PronounsDefaultView,
+        meta: { requiresAuth: true }
       },
       {
         path: 'market',
         name: 'market',
-        component: MarketDefaultView
+        component: MarketDefaultView,
+        meta: { requiresAuth: true }
       },
       {
         path: 'reports',
         name: 'reports',
-        component: ReportsDefaultView
+        component: ReportsDefaultView,
+        meta: { requiresAuth: true }
       },
       {
         path: 'analitics',
         name: 'analitics',
-        component: AnaliticsDefaultView
+        component: AnaliticsDefaultView,
+        meta: { requiresAuth: true }
       },
       {
         path: 'profile',
         name: 'profile',
-        component: ProfileDefaultView
+        component: ProfileDefaultView,
+        meta: { requiresAuth: true }
       },
       {
         path: 'notification',
         name: 'notification',
-        component: NotificationDefaultView
+        component: NotificationDefaultView,
+        meta: { requiresAuth: true }
       }
     ]
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'notfound',
+    component: NotFoundView
   }
 ];
 
@@ -107,10 +157,10 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  const dictionariesStore = useDictionaryStore()
-
+  const dictionariesStore = useDictionaryStore();
+  const authStore = useAuthStore();
   try {
-    const result = await handleNavigation(to, dictionariesStore);
+    const result = await handleNavigation(to, authStore, dictionariesStore);
 
     if (result) {
       next(result);

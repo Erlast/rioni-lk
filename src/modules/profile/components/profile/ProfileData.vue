@@ -90,7 +90,7 @@
           passportExpiryDate: passportExpiryDate ? passportExpiryDate.format('YYYY-MM-DD') : null
         };
 
-        await accountsService.profileSave(accountStore.data.id, payload);
+        await accountsService.profileSave(payload);
         await accountStore.load();
         showProfileData.value = false;
       } catch (error) {
