@@ -1,46 +1,58 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { computed, onMounted, ref } from 'vue';
   import { useDisplay } from 'vuetify';
   import { useI18n } from 'vue-i18n';
   import TopUpForm from '@/components/BaseComponents/TopUpForm.vue';
   import WithdrawalForm from '@/components/BaseComponents/WithdrawalForm.vue';
+  import { usePortfolioStore } from '@/stores/portfolioStore.ts';
+  import ordersService from '@/api/ordersService.ts';
+  import { IOrderModel } from '@/api/types.ts';
+  import dayjs from 'dayjs';
 
   const { mobile } = useDisplay();
   const { t } = useI18n();
+  const portfolioStore = usePortfolioStore();
+  const operations = ref<IOrderModel[]>([]);
+  const totalCount = ref(0);
 
   const headers = ref([
     {
       title: t('pronounce.operationTable.numberOperationTitle'),
-      key: 'numberOperation',
+      key: 'orderNumber',
       align: 'start',
       sortable: false
     },
     {
       title: t('pronounce.operationTable.createdDateTitle'),
-      key: 'created_date',
+      key: 'createdAt',
       align: 'center',
       sortable: false
     },
     {
       title: t('pronounce.operationTable.operationDateTitle'),
-      key: 'operation_date',
+      key: 'executedAt',
       align: 'center',
       sortable: false
     },
     {
       title: t('pronounce.operationTable.operationTypeTitle'),
-      key: 'operation_type',
+      key: 'operation',
       align: 'center',
       sortable: false
     },
     { title: t('pronounce.operationTable.cbTitle'), key: 'cb', align: 'center', sortable: false },
     {
       title: t('pronounce.operationTable.amountTitle'),
+      key: 'quantity',
+      align: 'center',
+      sortable: false
+    },
+    {
+      title: t('pronounce.operationTable.sumTitle'),
       key: 'amount',
       align: 'center',
       sortable: false
     },
-    { title: t('pronounce.operationTable.sumTitle'), key: 'sum', align: 'center', sortable: false },
     {
       title: t('pronounce.operationTable.statusTitle'),
       key: 'status',
@@ -49,13 +61,13 @@
     }
   ]);
 
-  const getStatusClass = (status: string) => {
+  const getStatusClass = (status: number) => {
     switch (status) {
-      case t('pronounce.operationTable.statuses.inProcess'):
+      case 1:
         return 'text-common';
-      case t('pronounce.operationTable.statuses.completed'):
+      case 2:
         return 'text-element-check';
-      case t('pronounce.operationTable.statuses.canceled'):
+      case 3:
         return 'text-additional-error';
       default:
         return '';
@@ -64,62 +76,31 @@
 
   const topUpFormRef = ref<any>(null);
 
+  const getStatus = (status: number) => {
+    switch (status) {
+      case 1:
+        return t('pronounce.operationTable.statuses.inProcess');
+      case 2:
+        return t('pronounce.operationTable.statuses.completed');
+      case 3:
+        return t('pronounce.operationTable.statuses.canceled');
+      default:
+        return '-';
+    }
+  };
+
   const topUp = () => {
     topUpFormRef.value?.openTopUp();
   };
 
-  const operationHistory = ref([
-    {
-      numberOperation: 3934920,
-      created_date: '18.05.2025',
-      operation_date: '18.05.2025',
-      operation_type: 'Перевод ДС',
-      cb: '-',
-      amount: '-',
-      sum: '450,04',
-      status: 'В обработке'
-    },
-    {
-      numberOperation: 3058334,
-      created_date: '17.05.2025',
-      operation_date: '17.05.2025',
-      operation_type: 'Зачисление ДС',
-      cb: '-',
-      amount: '-',
-      sum: '334,51',
-      status: 'Исполнено'
-    },
-    {
-      numberOperation: 4553505,
-      created_date: '17.05.2025',
-      operation_date: '17.05.2025',
-      operation_type: 'Списание ДС',
-      cb: '-',
-      amount: '-',
-      sum: '752,90',
-      status: 'Отказано'
-    },
-    {
-      numberOperation: 2927095,
-      created_date: '15.05.2025',
-      operation_date: '15.05.2025',
-      operation_type: 'Зачисление ДС',
-      cb: '-',
-      amount: '-',
-      sum: '656,12',
-      status: 'Исполнено'
-    },
-    {
-      numberOperation: 2758040,
-      created_date: '13.05.2025',
-      operation_date: '13.05.2025',
-      operation_type: 'Зачисление ДС',
-      cb: '-',
-      amount: '-',
-      sum: '118,59',
-      status: 'Исполнено'
+  onMounted(async () => {
+    if (portfolioStore.data.currentAccount && portfolioStore.data.currentAccount.id) {
+      const { data, total } = await ordersService.orders(portfolioStore.data.currentAccount.id);
+
+      operations.value = data;
+      totalCount.value = total;
     }
-  ]);
+  });
 </script>
 
 <template>
@@ -160,13 +141,33 @@
       <v-sheet class="operation-table">
         <v-data-table-server
           :headers="headers"
-          :items="operationHistory"
-          :items-length="operationHistory.length"
+          :items="operations"
+          :items-length="operations.length"
           hide-default-footer
         >
+          <template #[`item.createdAt`]="{ item }">
+            <v-sheet>
+              {{ item.createdAt ? dayjs(item.createdAt).format('DD.MM.YYYY') : '-' }}
+            </v-sheet>
+          </template>
+          <template #[`item.executedAt`]="{ item }">
+            <v-sheet>
+              {{ item.executedAt ? dayjs(item.executedAt).format('DD.MM.YYYY') : '-' }}
+            </v-sheet>
+          </template>
           <template #[`item.status`]="{ item }">
             <v-sheet class="font-semibold" :class="getStatusClass(item.status)">
-              {{ item.status }}
+              {{ getStatus(item.status) }}
+            </v-sheet>
+          </template>
+          <template #[`item.cb`]="{ item }">
+            <v-sheet>
+              {{ item.cb ?? '-' }}
+            </v-sheet>
+          </template>
+          <template #[`item.quantity`]="{ item }">
+            <v-sheet>
+              {{ item.quantity ?? '-' }}
             </v-sheet>
           </template>
         </v-data-table-server>

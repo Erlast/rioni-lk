@@ -1,8 +1,8 @@
 <script setup lang="ts">
   import News from '@/components/News.vue'
-  import FromAnalitiks from '@/modules/analitics/components/FromAnalitiks.vue'
-  import InvestTeaching from '@/modules/analitics/components/InvestTeaching.vue'
-  import InvestCalendar from '@/modules/analitics/components/InvestCalendar.vue'
+  import FromAnalitiks from '../../components/FromAnalitiks.vue'
+  import InvestTeaching from '../../components/InvestTeaching.vue'
+  import InvestCalendar from '../../components/InvestCalendar.vue'
 </script>
 
 <template>

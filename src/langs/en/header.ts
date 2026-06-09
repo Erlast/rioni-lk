@@ -1,7 +1,7 @@
 export const header = {
-  portfolio: 'Accounts',
-  market: 'Рынок',
-  pronouns: 'Поручения',
-  reports: 'Отчеты',
-  analitics: 'Аналитика'
+  portfolio: 'Portfolio',
+  market: 'Market',
+  pronouns: 'Assignments',
+  reports: 'Reports',
+  analytics: 'Analytics'
 };

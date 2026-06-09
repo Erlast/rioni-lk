@@ -7,7 +7,7 @@ import {
 import i18n from '@/utils/i18n';
 import PortfolioDefaultView from '@/modules/portfolio/views/default/View.vue';
 import PronounsDefaultView from '@/modules/pronouns/views/default/View.vue';
-import AnaliticsDefaultView from '@/modules/analitics/views/default/View.vue';
+import AnalyticsDefaultView from '../modules/analytics/views/default/View.vue';
 import ReportsDefaultView from '@/modules/reports/views/default/View.vue';
 import MarketDefaultView from '@/modules/market/views/default/View.vue';
 import ProfileDefaultView from '@/modules/profile/views/default/View.vue';
@@ -98,7 +98,6 @@ const routes = [
   {
     path: '/',
     component: DefaultLayout,
-
     children: [
       {
         path: '',
@@ -125,9 +124,9 @@ const routes = [
         meta: { requiresAuth: true }
       },
       {
-        path: 'analitics',
-        name: 'analitics',
-        component: AnaliticsDefaultView,
+        path: 'analytics',
+        name: 'analytics',
+        component: AnalyticsDefaultView,
         meta: { requiresAuth: true }
       },
       {

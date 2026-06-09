@@ -169,3 +169,20 @@ export interface ICodeModel {
   sms_code_id: number | undefined;
   code: string;
 }
+
+export interface IOrdersModel {
+  orders: IOrderModel[];
+}
+
+export interface IOrderModel {
+  id: number;
+  account_id: number;
+  order_number: string;
+  created_at: string;
+  executed_at: string;
+  operation: string;
+  cb: string;
+  quantity: number;
+  amount: number;
+  status: number;
+}

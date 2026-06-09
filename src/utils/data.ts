@@ -63,7 +63,7 @@ export const menuItem = [
     title: i18n.global.t('header.reports')
   }
   // {
-  //   name: 'analitics',
-  //   title: t('header.analitics')
+  //   name: 'analytics',
+  //   title: t('header.analytics')
   // }
 ];
