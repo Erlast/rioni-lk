@@ -1,7 +1,7 @@
 export const notice = {
-  title: 'Уведомление',
-  mrs: 'Уважаемая',
-  mr: 'Уважаемый',
-  text: 'В силу политики компании мы закрываем ваш брокерский счет',
-  fillBtn: 'Заполнить'
+  title: 'Notification',
+  mrs: 'Dear',
+  mr: 'Dear',
+  text: 'Due to company Internal policy, we are closing your brokerage account.',
+  fillBtn: 'Fill in'
 };

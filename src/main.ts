@@ -26,6 +26,8 @@ import 'dayjs/locale/ru';
 import { VFileUpload, VFileUploadItem } from 'vuetify/lib/labs/components.js';
 import VueApexCharts from 'vue3-apexcharts';
 
+const savedLocale = localStorage.getItem('user-locale') || 'ru';
+
 const allComponents = {
   ...components,
   VFileUpload,
@@ -33,7 +35,7 @@ const allComponents = {
 };
 
 const vuetify = createVuetify({
-  components:allComponents,
+  components: allComponents,
   directives,
   theme: {
     defaultTheme: 'light' // 'light' | 'dark' | 'system'
@@ -62,12 +64,11 @@ const vuetify = createVuetify({
   }
 });
 
-
 dayjs.extend(updateLocale);
 dayjs.extend(arraySupport);
-dayjs.locale('ru');
-dayjs.updateLocale('ru', {
-  weekStart: 1
+dayjs.locale(savedLocale);
+dayjs.updateLocale(savedLocale, {
+  weekStart: savedLocale === 'ru' ? 1 : 0
 });
 
 const app = createApp(App);

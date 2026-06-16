@@ -3,18 +3,20 @@
   import { useRouter } from 'vue-router';
   import { useAccountStore } from '@/stores/accountStore';
   import authService from '@/api/authService.ts';
+  import LanguageSelect from '@/components/LanguageSelect.vue';
 
   const router = useRouter();
   const accountStore = useAccountStore();
 
   const logout = async () => {
-    await authService.logout()
+    await authService.logout();
     await router.push('/auth');
   };
 </script>
 
 <template>
   <v-sheet class="user-menu d-flex align-center ga-4">
+    <LanguageSelect />
     <v-btn icon density="compact" :to="{ name: 'notification' }">
       <v-icon icon="mdi-forum" color="middle-blue" />
     </v-btn>

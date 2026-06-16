@@ -12,11 +12,9 @@
     <v-sheet class="d-flex ga-2">
       <v-sheet class="d-flex flex-column ga-2 text-white" width="50%">
         <v-sheet>{{ t('footer.menu.about') }}</v-sheet>
-        <v-sheet>{{ t('footer.menu.whyRioni') }}</v-sheet>
         <v-sheet>{{ t('footer.menu.services') }}</v-sheet>
         <v-sheet>{{ t('footer.menu.tariffs') }}</v-sheet>
         <v-sheet>{{ t('footer.menu.education') }}</v-sheet>
-        <v-sheet>{{ t('footer.menu.tests') }}</v-sheet>
       </v-sheet>
 
       <v-sheet class="d-flex flex-column ga-2 text-white">

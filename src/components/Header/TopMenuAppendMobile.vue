@@ -72,7 +72,7 @@
                 :active="isActive(item.name)"
                 @click="menu = false"
               >
-                {{ item.title }}
+                {{ t(item.title) }}
               </v-list-item>
               <v-list-item>
                 <v-btn variant="flat" rounded="mr" class="btn-logout" @click="logout">

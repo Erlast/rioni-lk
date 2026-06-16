@@ -3,9 +3,15 @@
   import RioniLogo from '@/components/RioniLogo.vue';
   import { menuItem } from '@/utils/data.ts';
   import { computed } from 'vue';
+  import { useI18n } from 'vue-i18n';
+
+  const { t } = useI18n();
 
   const menu = computed(() => {
-    return menuItem;
+    return menuItem.map(item => ({
+      ...item,
+      title: t(item.title)
+    }));
   });
 </script>
 

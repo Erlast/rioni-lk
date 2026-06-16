@@ -1,9 +1,12 @@
 import { createI18n } from 'vue-i18n';
-import { messages } from '@/langs/main'
+import { messages } from '@/langs/main';
+
+const savedLocale = localStorage.getItem('user-locale') || 'ru';
 
 const i18n = createI18n({
   legacy: false,
-  locale: 'ru', // Установите язык по умолчанию
+  locale: savedLocale,
+  fallbackLocale: 'en',
   messages
 });
 

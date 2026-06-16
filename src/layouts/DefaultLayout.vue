@@ -7,10 +7,12 @@
   import HeaderMobileView from '@/views/default/HeaderMobileView.vue';
   import FooterMobileView from '@/views/default/FooterMobileView.vue';
   import { useMediaQuery } from '@vueuse/core';
+  import { useRoute } from 'vue-router';
 
   const { mobile } = useDisplay();
   const accountStore = useAccountStore();
   const landscape = useMediaQuery('(orientation: landscape)');
+  const route = useRoute();
   onMounted(async () => {
     await accountStore.load();
   });
@@ -25,6 +27,7 @@
         max-width="1280"
         class="py-12 main-container"
         :class="{ 'px-4': mobile, 'px-12': !mobile }"
+        :style="route.name === 'pronouns' ? 'background-color:white !important;' : ''"
       >
         <RouterView />
       </v-container>

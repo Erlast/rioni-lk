@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed, onMounted, ref } from 'vue';
+  import { onMounted, ref } from 'vue';
   import { useDisplay } from 'vuetify';
   import { useI18n } from 'vue-i18n';
   import TopUpForm from '@/components/BaseComponents/TopUpForm.vue';
@@ -121,19 +121,7 @@
           </template>
         </top-up-form>
 
-        <v-btn variant="flat" rounded="mr" class="btn-custom" :width="mobile ? '100%' : '33%'">
-          {{ t('pronounce.tradeOrdersBtn') }}
-        </v-btn>
-
         <withdrawal-form />
-      </v-sheet>
-      <v-sheet class="d-flex ga-2" :class="{ 'flex-column': mobile }">
-        <v-btn variant="flat" rounded="mr" class="btn-custom-2" :width="mobile ? '100%' : '33%'">
-          {{ t('pronounce.entryPapersBtn') }}
-        </v-btn>
-        <v-btn variant="flat" rounded="mr" class="btn-custom-2" :width="mobile ? '100%' : '33%'">
-          {{ t('pronounce.transferBtn') }}
-        </v-btn>
       </v-sheet>
     </v-sheet>
     <v-sheet v-if="!mobile" class="d-flex flex-column ga-4 mt-12">
@@ -194,12 +182,34 @@
     background: var(--color-Element) !important;
   }
   .v-table {
+    background-color: #fafafa;
+    border-radius: 16px;
     :deep(thead) {
-      background-color: var(--color-LightGreen);
       color: var(--color-ElementCheck);
     }
     :deep(.v-data-table__th) {
+      background-color: var(--color-LightGreen);
       border-width: 0;
+    }
+
+    :deep(tbody) {
+      background-color: #fafafa;
+    }
+
+    :deep(.v-data-table__th:first-child) {
+      border-radius: 16px 0 0 16px;
+    }
+
+    :deep(.v-data-table__th:last-child) {
+      border-radius: 0 16px 16px 0;
+    }
+
+    :deep(.v-data-table__tr:last-child .v-data-table__td:first-child) {
+      border-radius: 16px 0 0 16px;
+    }
+
+    :deep(.v-data-table__tr:last-child .v-data-table__td:last-child) {
+      border-radius: 0 16px 16px 0;
     }
 
     :deep(.v-data-table__td) {

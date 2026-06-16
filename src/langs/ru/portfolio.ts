@@ -1,11 +1,10 @@
 export const portfolio = {
   actionTitle: 'Действия',
   reportsTitle: 'Отчетность',
+  balanceTitle: 'Баланс портфеля',
   historyTitle: 'История операций',
   analyticTitle: 'Аналитика',
-  balanceTitle: 'Баланс портфеля',
   topUpBtn: 'Пополнить счет',
-  balanceAccountTitle: 'Баланс счета',
   freeMoneyTitle: 'Свободные средства',
   depositTitle: 'Депозит',
   inAWay: 'Средства в пути',

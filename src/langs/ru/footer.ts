@@ -38,11 +38,9 @@ export const footer = {
   menuTitle: 'Меню',
   menu: {
     about: 'О нас',
-    whyRioni: 'Почему Риони',
     services: 'Услуги',
     tariffs: 'Тарифы',
     education: 'Обучение',
-    tests: 'Тесты',
     news: 'Новости',
     documents: 'Документы',
     career: 'Карьера'

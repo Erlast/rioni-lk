@@ -38,7 +38,7 @@
   const rules = {
     code: {
       required: helpers.withMessage(
-        t('validation.required', { field: t('auth.codeLabel') }),
+        t('validations.required', { field: t('auth.codeLabel') }),
         required
       )
       //$autoDirty: true
@@ -76,11 +76,14 @@
   const sendSmsAgain = async () => {
     try {
       if (typeof authStore.dataSms !== 'undefined') {
-        authStore.setTimerSms(60);
+        authStore.setTimerSms(300);
         authStore.setSmsSend(true);
         code.value = '';
         v.value.code.$reset();
-        await authService.login(authStore.dataSms);
+        btnDisabled.value = false;
+        const response = await authService.login(authStore.dataSms);
+
+        authStore.setIdAuth(response.sms_code_id);
       } else {
         throw new Error('Credential is undefined');
       }
@@ -137,22 +140,22 @@
 <template>
   <v-sheet class="rounded-xxl pa-5" style="background-color: var(--color-LightBlue) !important">
     <v-sheet class="text-hard-blue font-22">{{ t('auth.codeTitle') }}</v-sheet>
-    <v-sheet class="text-type-text font-smaller">Enter the confirmation code</v-sheet>
+    <v-sheet class="text-type-text font-smaller">{{ t('auth.enterConfirmationCode') }}</v-sheet>
     <v-form ref="loginForm" fast-fail @submit.prevent="sendSms">
-      <v-sheet class="mt-4">
+      <v-sheet class="mt-2">
         <v-otp-input
           ref="otpInputRef"
           v-model="code"
           autocomplete="one-time-code"
           inputmode="numeric"
-          bg-color="invert-black-white"
           max-width="246"
           focused
           :error="!!v.code.$errors.length"
         ></v-otp-input>
         <v-sheet
           v-if="!!v.code.$errors.length"
-          :class="['body-b3', v.code.$errors.length ? 'error-message' : '']"
+          class="d-flex justify-center mb-2"
+          :class="[v.code.$errors.length ? 'text-additional-error' : '']"
         >
           {{ v.code.$errors[0].$message }}
         </v-sheet>
@@ -192,7 +195,7 @@
         >
           <v-sheet class="text-hard-blue">{{ t('back') }}</v-sheet>
         </v-btn>
-        <div v-if="authStore.timerSms > 0" class="d-flex b2-bold mb-6 justify-start">
+        <div v-if="authStore.timerSms > 0" class="d-flex font-small mb-6 justify-start">
           <Timer v-model="authStore.timerSms" />
         </div>
       </v-sheet>

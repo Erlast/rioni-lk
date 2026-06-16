@@ -3,12 +3,12 @@
   import { TimeframeType, useAccountChartCostStore } from '@/stores/accountChartCostStore';
   import { usePortfolioStore } from '@/stores/portfolioStore';
   import { useI18n } from 'vue-i18n';
-  import { russianMonths } from '@/utils/data.ts';
+  import { englishMonths, monthsByLocale } from '@/utils/data.ts';
 
   const accountChartCostStore = useAccountChartCostStore();
   const portfolioStore = usePortfolioStore();
 
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const loading = ref<boolean>(true);
   const series = ref<any[]>([]);
   const chart = ref<any>(null);
@@ -17,7 +17,7 @@
     value: TimeframeType;
     name: string;
   }
-  const timeFrameTypes: TimeframeTypes[] = [
+  const timeFrameTypes = computed<TimeframeTypes[]>(() => [
     {
       name: t('portfolio.chart.timeframes.week'),
       value: 'week'
@@ -42,10 +42,10 @@
       name: t('portfolio.chart.timeframes.all'),
       value: 'allPeriod'
     }
-  ];
+  ]);
 
   const changeTimeframe = async (e: TimeframeType) => {
-    const finding = timeFrameTypes.find(item => item.value === e);
+    const finding = timeFrameTypes.value.find(item => item.value === e);
     accountChartCostStore.timeframe = finding ? finding.value : 'week';
     loading.value = true;
     await accountChartCostStore.load();
@@ -86,6 +86,7 @@
   );
 
   const period = computed(() => {
+    const currentLocale = locale.value;
     if (!accountChartCostStore.data || accountChartCostStore.data.length === 0) return '';
 
     const startDate = new Date(accountChartCostStore.data[0].time * 1000);
@@ -95,8 +96,11 @@
 
     const formatDate = (date: Date, includeYear: boolean): string => {
       const day = date.getDate();
-      const month = russianMonths[date.getMonth()];
-      return includeYear ? `${day} ${month} ${date.getFullYear()}г` : `${day} ${month}`;
+      const months = monthsByLocale[currentLocale] || englishMonths;
+      const month = months[date.getMonth()];
+      return includeYear
+        ? `${day} ${month} ${date.getFullYear()}${currentLocale === 'ru' ? 'г' : ''}`
+        : `${day} ${month}`;
     };
 
     const startYear = startDate.getFullYear();

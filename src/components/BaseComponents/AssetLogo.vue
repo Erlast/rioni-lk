@@ -20,7 +20,7 @@
     max-width="48"
     max-height="48"
     class="img-zoom"
-    :src="logo"
+    :src="logo ?? null"
     lazy-src="/img/no-img.png"
     :alt="ticker + paperType"
   />

@@ -5,10 +5,8 @@
   import { useI18n } from 'vue-i18n';
   import type { ICredentialModel } from '@/api/types';
   import { useNotify } from '@/stores/notifyStore.ts';
-  import { useRouter } from 'vue-router';
   import { useDisplay, useTheme } from 'vuetify';
   import { loginStoreData } from '@/utils/loginHelper.ts';
-  import RioniLogo from '@/components/RioniLogo.vue';
 
   const loading = ref(false);
   const login = ref('');
@@ -18,7 +16,6 @@
   const $externalResults = ref<{ [key: string]: string[] }>({});
 
   const { mobile } = useDisplay();
-  const theme = useTheme();
 
   const initialState = {
     login: login,
@@ -34,7 +31,7 @@
   const rules = {
     login: {
       required: helpers.withMessage(
-        t('validations.required', { field: t('auth.loginOrPhone') }),
+        t('validations.required', { field: t('auth.login') }),
         required
       ),
       $autoDirty: true
@@ -82,11 +79,11 @@
 
 <template>
   <v-sheet class="rounded-xxl pa-5" style="background-color: var(--color-LightBlue) !important">
-    <v-sheet class="text-hard-blue font-22 mb-6">Вход</v-sheet>
+    <v-sheet class="text-hard-blue font-22 mb-6">{{ t('auth.enterTitle') }}</v-sheet>
     <v-form id="loginForm" ref="loginForm" fast-fail @submit.prevent="loginHandle">
       <v-sheet class="d-flex flex-column ga-4">
         <v-sheet class="d-flex flex-column ga-2">
-          <v-sheet class="text-type-text font-smaller">Логин</v-sheet>
+          <v-sheet class="text-type-text font-smaller">{{ t('auth.login') }}</v-sheet>
           <v-text-field
             v-model="login"
             variant="solo"
@@ -98,7 +95,7 @@
           />
         </v-sheet>
         <v-sheet class="d-flex flex-column ga-2">
-          <v-sheet class="text-type-text font-smaller">Пароль</v-sheet>
+          <v-sheet class="text-type-text font-smaller">{{ t('auth.password') }}</v-sheet>
           <v-text-field
             v-model="password"
             variant="solo"
@@ -131,7 +128,7 @@
             type="submit"
             block
           >
-            <v-sheet class="text-white">Продолжить</v-sheet>
+            <v-sheet class="text-white">{{t('auth.continue')}}</v-sheet>
           </v-btn>
         </v-sheet>
       </v-sheet>

@@ -26,25 +26,23 @@ export const footer = {
     '      финансовые инструменты, упомянутые в данной информации, и не рекомендует использовать\n' +
     '      указанную информацию в качестве единственного источника информации при принятии\n' +
     '      инвестиционного решения. Rioni Capital LLC. All rights reserved ® Tbilisi. Georgia.2024',
-  contactsTitle: 'Контакты',
-  officePeriod: '(Офис) Пн-Пт 9:00-20:00',
-  emailTitle: 'Почта',
-  feedbackTitle: 'Есть предложения? Свяжитесь с нами',
-  feedbackPlaceholder: 'Комментарий',
-  feedbackSubmit: 'Отправить',
+  contactsTitle: 'Contact',
+  officePeriod: '(office) from-to 9:00-20:00',
+  emailTitle: 'Email',
+  feedbackTitle: 'Any suggestions? Contact us',
+  feedbackPlaceholder: 'Comment',
+  feedbackSubmit: 'Send',
   link1: 'Политика конфиденциальности',
   link2: 'Политика использования cookies',
   link3: 'Политика обработки персональных данных',
-  menuTitle: 'Меню',
+  menuTitle: 'Menu',
   menu: {
-    about: 'О нас',
-    whyRioni: 'Почему Риони',
-    services: 'Услуги',
-    tariffs: 'Тарифы',
-    education: 'Обучение',
-    tests: 'Тесты',
-    news: 'Новости',
-    documents: 'Документы',
-    career: 'Карьера'
+    about: 'About us',
+    services: 'Services',
+    tariffs: 'Tariff',
+    education: 'Education',
+    news: 'News',
+    documents: 'Documents',
+    career: 'Career'
   }
 };

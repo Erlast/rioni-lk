@@ -11,7 +11,7 @@ const DEFAULTS: Record<Scope, TabDef[]> = {
     // { name: 'obligation', titleKey: 'portfolio.table.tabs.obligation' },
     { name: 'currency', titleKey: 'portfolio.table.tabs.currency' },
     // { name: 'option', titleKey: 'portfolio.table.tabs.option' },
-    // { name: 'futuries', titleKey: 'portfolio.table.tabs.futuries' }
+    // { name: 'futures', titleKey: 'portfolio.table.tabs.futures' }
   ]
 };
 
