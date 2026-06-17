@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue';
+  import { computed, onMounted, reactive, ref, watch } from 'vue';
   import { useDisplay } from 'vuetify';
   import { useI18n } from 'vue-i18n';
   import TopUpForm from '@/components/BaseComponents/TopUpForm.vue';
@@ -8,12 +8,85 @@
   import ordersService from '@/api/ordersService.ts';
   import { IOrderModel } from '@/api/types.ts';
   import dayjs from 'dayjs';
+  import DatePickerRange from '@/components/BaseComponents/DatePickerRange.vue';
+  import { FilterOrdersRequestModel, OperationTypes } from '@/components/types/OperationHistory.ts';
+  import { debounce } from 'lodash-es';
 
   const { mobile } = useDisplay();
   const { t } = useI18n();
   const portfolioStore = usePortfolioStore();
   const operations = ref<IOrderModel[]>([]);
   const totalCount = ref(0);
+
+  const filterData = reactive<Partial<FilterOrdersRequestModel>>({
+    periodStart: undefined,
+    periodEnd: undefined,
+    status: undefined,
+    operationType: undefined
+  });
+
+  const tableOptions = reactive({
+    page: 1,
+    itemsPerPage: 10
+  });
+
+  const period = computed({
+    get: () => {
+      return [filterData.periodStart, filterData.periodEnd];
+    },
+    set: value => {
+      filterData.periodStart = value[0];
+      filterData.periodEnd = value[1];
+    }
+  });
+
+  const operationTypes = computed({
+    get: () => filterData.operationType,
+    set: (value: OperationTypes) => {
+      filterData.operationType = value;
+    }
+  });
+
+  const operationStatus = computed({
+    get: () => filterData.status,
+    set: (value: number) => {
+      filterData.status = value;
+    }
+  });
+
+  const startDate = computed(() => {
+    return dayjs().subtract(1, 'month').toDate();
+  });
+
+  const operationTypesItems = [
+    {
+      title: 'Перевод ДС',
+      value: 'Перевод ДС'
+    },
+    {
+      title: 'Зачисление ДС',
+      value: 'Зачисление ДС'
+    },
+    {
+      title: 'Списание ДС',
+      value: 'Списание ДС'
+    }
+  ];
+
+  const operationStatusItems = [
+    {
+      title: 'В обработке',
+      value: 1
+    },
+    {
+      title: 'Исполнено',
+      value: 2
+    },
+    {
+      title: 'Отказано',
+      value: 3
+    }
+  ];
 
   const headers = ref([
     {
@@ -93,13 +166,42 @@
     topUpFormRef.value?.openTopUp();
   };
 
-  onMounted(async () => {
+  const handlerFetch = debounce(() => {
+    fetchData();
+  }, 200);
+
+  const fetchData = async () => {
+    const args: FilterOrdersRequestModel = {
+      page: tableOptions.page,
+      limit: tableOptions.itemsPerPage,
+      ...filterData
+    };
     if (portfolioStore.data.currentAccount && portfolioStore.data.currentAccount.id) {
-      const { data, total } = await ordersService.orders(portfolioStore.data.currentAccount.id);
+      const { data, total } = await ordersService.orders(
+        portfolioStore.data.currentAccount.id,
+        args
+      );
 
       operations.value = data;
       totalCount.value = total;
     }
+  };
+
+  const onChangeOrderHistory = () => {
+    tableOptions.page = 1;
+    tableOptions.itemsPerPage = 10;
+    handlerFetch();
+  };
+
+  watch(
+    () => period.value,
+    () => {
+      onChangeOrderHistory();
+    }
+  );
+
+  onMounted(async () => {
+    await fetchData();
   });
 </script>
 
@@ -125,10 +227,54 @@
       </v-sheet>
     </v-sheet>
     <v-sheet v-if="!mobile" class="d-flex flex-column ga-4 mt-12">
-      <v-sheet class="text-dark-blue font-20">{{ t('pronounce.historyOrdersTitle') }}</v-sheet>
+      <v-sheet class="d-flex justify-space-between">
+        <v-sheet class="text-dark-blue font-20">{{ t('pronounce.historyOrdersTitle') }}</v-sheet>
+        <v-sheet class="d-flex ga-2 align-center">
+          <v-sheet class="d-flex align-center" min-width="240">
+            <DatePickerRange
+              v-model="period"
+              :max-date="new Date()"
+              :start-date="mobile ? new Date() : startDate"
+              :multi-calendars="mobile ? false : 2"
+            />
+          </v-sheet>
+          <v-sheet class="d-flex align-center" width="180">
+            <v-select
+              v-model="operationTypes"
+              variant="solo"
+              flat
+              hide-details="auto"
+              label="Тип операции"
+              placeholder="Тип операции"
+              density="compact"
+              menu-icon="mdi-chevron-down"
+              clearable
+              :items="operationTypesItems"
+              @update:modelValue="onChangeOrderHistory"
+            ></v-select>
+          </v-sheet>
+          <v-sheet class="d-flex align-center" width="160">
+            <v-select
+              v-model="operationStatus"
+              variant="solo"
+              flat
+              hide-details="auto"
+              label="Статус"
+              placeholder="Статус"
+              density="compact"
+              menu-icon="mdi-chevron-down"
+              clearable
+              :items="operationStatusItems"
+              @update:modelValue="onChangeOrderHistory"
+            ></v-select>
+          </v-sheet>
+        </v-sheet>
+      </v-sheet>
       <v-sheet class="operation-table">
         <v-data-table-server
           :headers="headers"
+          :page="tableOptions.page"
+          :items-per-page="tableOptions.itemsPerPage"
           :items="operations"
           :items-length="operations.length"
           hide-default-footer

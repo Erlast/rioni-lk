@@ -103,7 +103,6 @@
         width="100%"
         flat
         class="date-picker-v"
-        bg-color="invert-black-white"
         inputmode="none"
         autocomplete="off"
         :disabled="disabled"

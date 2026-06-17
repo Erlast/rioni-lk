@@ -20,7 +20,7 @@ export const portfolio = {
       obligation: 'Облигации',
       option: 'Опционы',
       currency: 'Валюты',
-      futuries: 'Фьючерсы'
+      futures: 'Фьючерсы'
     },
     columns: {
       columnNameTitle: 'Название',
