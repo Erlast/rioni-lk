@@ -283,11 +283,11 @@
         }
 
         pdf.save('rioni-capital-requisites.pdf');
-        notifyStore.show('PDF успешно скачан', '', 'success', '', 2000);
+        notifyStore.show('PDF успешно скачан', '', 'success', 'app', 2000);
       })
       .catch((error) => {
         console.error('Error generating PDF:', error);
-        notifyStore.show('Ошибка при генерации PDF', '', 'error', '', 2000);
+        notifyStore.show('Ошибка при генерации PDF', '', 'error', 'app', 2000);
       })
       .finally(() => {
         document.body.removeChild(tempDiv);
@@ -954,10 +954,10 @@
           <v-sheet class="d-flex ga-2 mt-4">
             <v-btn variant="flat" rounded="ml" class="btn-custom flex-grow-1" @click="downloadPDF(); previewDialog = false;">
               <v-icon icon="mdi-download" class="mr-2"></v-icon>
-              {{ t('topUpAccount.downloadPdf') || 'Скачать PDF' }}
+              {{ t('topUpAccount.downloadPdf') }}
             </v-btn>
             <v-btn variant="outlined" rounded="ml" class="flex-grow-1" @click="previewDialog = false">
-              {{ t('topUpAccount.close') || 'Закрыть' }}
+              {{ t('topUpAccount.close') }}
             </v-btn>
           </v-sheet>
         </v-card-text>
@@ -991,9 +991,9 @@
           <v-icon icon="mdi-share-variant" class="mr-2"></v-icon>
           {{ t('topUpAccount.share') || 'Поделиться' }}
         </v-btn>
-        <v-btn variant="outlined" rounded="ml" class="flex-grow-1" @click="downloadPDF(); closePdfPreview();">
+        <v-btn variant="outlined" rounded="ml" class="flex-grow-1" @click="closePdfPreview();">
           <v-icon icon="mdi-download" class="mr-2"></v-icon>
-          {{ t('topUpAccount.downloadPdf') || 'Скачать' }}
+          {{ t('topUpAccount.close')}}
         </v-btn>
       </v-sheet>
     </v-card>

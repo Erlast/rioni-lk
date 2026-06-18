@@ -99,7 +99,7 @@
           <v-col class="d-flex justify-center align-center table-cell pa-0" style="max-width: 70px">
             <v-sheet class="logo-stack" width="36">
               <AssetLogo
-                :logo="item.logo"
+                :logo="`/img/logos/${item.logo}`"
                 class="logo-stack__logo"
                 :paper-id="item.assetId"
                 :ticker="item.baseTicker"
@@ -139,7 +139,7 @@
           <v-col class="d-flex align-center table-cell ga-2" style="max-width: 700px">
             <v-sheet class="logo-stack" width="36">
               <AssetLogo
-                :logo="item.logo"
+                :logo="`/img/logos/${item.logo}`"
                 class="logo-stack__logo"
                 :paper-id="item.assetId"
                 :ticker="item.baseTicker"

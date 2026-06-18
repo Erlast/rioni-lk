@@ -30,7 +30,6 @@ export const usePortfolioStore = defineStore<'portfolio', IState, IGetter, IActi
   actions: {
     async load() {
       try {
-        const accountStore = useAccountStore();
         const { accounts } = await portfolioService.portfolios();
         this.data.accounts = accounts;
       } catch (error) {
@@ -40,6 +39,12 @@ export const usePortfolioStore = defineStore<'portfolio', IState, IGetter, IActi
     setCurrentAccount() {
       if (!this.data.currentAccount) {
         this.data.currentAccount = this.data.accounts[0];
+      } else {
+        const findAccount = this.data.accounts.find(
+          item => item.id === this.data.currentAccount?.id
+        );
+
+        this.data.currentAccount = findAccount ?? null;
       }
     },
     clearStore() {

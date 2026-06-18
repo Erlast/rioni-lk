@@ -14,6 +14,7 @@
   import { useDisplay } from 'vuetify';
   import { useMediaQuery } from '@vueuse/core';
   import TopUpForm from '@/components/BaseComponents/TopUpForm.vue';
+  import router from '@/router';
 
   const { t } = useI18n();
 
@@ -32,10 +33,10 @@
   const clickCard = (id: number) => {
     switch (id) {
       case 1:
-        //click modal 1
+        router.push('/reports');
         break;
       case 2:
-        //click modal 2
+        router.push('/pronouns');
         break;
       default:
         break;
@@ -45,7 +46,7 @@
   const actionTitles = [
     'portfolio.reportsTitle',
     'portfolio.historyTitle',
-    'portfolio.analyticTitle'
+    // 'portfolio.analyticTitle'
   ];
 
   const account = ref(portfolioStore.data.currentAccount);

@@ -208,7 +208,7 @@
 <template>
   <v-sheet class="mt-12">
     <v-sheet class="d-flex flex-column ga-4">
-      <v-sheet class="d-flex ga-2" :class="{ 'flex-column': mobile }">
+      <v-sheet class="d-flex ga-3" :class="{ 'flex-column': mobile }">
         <top-up-form ref="topUpFormRef">
           <template #button>
             <v-btn

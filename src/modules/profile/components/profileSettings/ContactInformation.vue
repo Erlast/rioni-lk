@@ -1,15 +1,15 @@
 <script setup lang="ts">
   import { addressType, contactType } from '@/api/types';
   import { useAccountStore } from '@/stores/accountStore';
-  import { countries, itemsFlags } from '@/utils/data';
-  import { onMounted, ref, computed, reactive, watch } from 'vue';
+  import { countries } from '@/utils/data';
+  import { computed, onMounted, reactive, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useVuelidate } from '@vuelidate/core';
   import { email, helpers, requiredIf } from '@vuelidate/validators';
   import { useDisplay } from 'vuetify';
+  import PhoneFields from '@/components/BaseComponents/PhoneFields.vue';
 
   const { t } = useI18n();
-  const item = ref();
   const accountStore = useAccountStore();
   const { mobile } = useDisplay();
 
@@ -130,9 +130,7 @@
   );
 
   const loadAddressesFromStore = () => {
-    const regAddr = accountStore.data.addresses?.find(
-      (a: any) => a.addressType === 'registration'
-    );
+    const regAddr = accountStore.data.addresses?.find((a: any) => a.addressType === 'registration');
     if (regAddr) {
       state.address1.country = regAddr.country || null;
       state.address1.city = regAddr.city || '';
@@ -166,9 +164,7 @@
       isConfirmed: regIdx >= 0 ? accountStore.data.addresses[regIdx].isConfirmed : false
     };
 
-    const actIdx = accountStore.data.addresses.findIndex(
-      (a: any) => a.addressType === 'actual'
-    );
+    const actIdx = accountStore.data.addresses.findIndex((a: any) => a.addressType === 'actual');
     const actAddress = {
       ...state.address2,
       id: actIdx >= 0 ? accountStore.data.addresses[actIdx].id : 0,
@@ -200,8 +196,7 @@
   };
 
   const validateAll = async () => {
-    const result = await v$.value.$validate();
-    return result;
+    return await v$.value.$validate();
   };
 
   defineExpose({
@@ -211,7 +206,6 @@
   });
 
   onMounted(() => {
-    item.value = itemsFlags[0];
     loadAddressesFromStore();
   });
 
@@ -334,42 +328,13 @@
                 ></v-checkbox>
               </v-sheet>
             </v-col>
-            <v-col v-if="!mobile" cols="3" class="pa-0"></v-col>
+            <v-col v-if="!mobile" cols="3" class="pa-0">
+
+            </v-col>
           </v-sheet>
           <v-sheet class="d-flex">
             <v-col :cols="mobile ? 10 : 9" class="pa-0">
-              <v-sheet class="d-flex justify-space-between">
-                <v-col cols="2" class="pa-0">
-                  <v-select
-                    :disabled="contact.isMain"
-                    variant="solo"
-                    flat
-                    density="compact"
-                    :items="itemsFlags"
-                    hide-details="auto"
-                    v-model="item"
-                  >
-                    <template v-slot:item="{ props: itemProps, item }">
-                      <v-list-item v-bind="itemProps" title="">
-                        <span :class="`fi fi-${item.raw.image}`" />
-                      </v-list-item>
-                    </template>
-                    <template v-slot:selection="{ item, index }">
-                      <span :class="`fi fi-${item.raw.image}`" />
-                    </template>
-                  </v-select>
-                </v-col>
-
-                <v-col cols="9" class="pa-0">
-                  <v-text-field
-                    :model-value="contact.value"
-                    :disabled="contact.isMain"
-                    variant="solo"
-                    flat
-                    hide-details="auto"
-                  ></v-text-field>
-                </v-col>
-              </v-sheet>
+              <PhoneFields v-model="contact.value" :idx="idx" :is-main="contact.isMain" />
             </v-col>
             <v-col cols="3" class="pa-0 d-flex justify-center align-end">
               <v-sheet

@@ -16,9 +16,8 @@
 
 <template>
   <v-img
-    rounded="lg"
-    max-width="48"
-    max-height="48"
+    max-width="36"
+    max-height="36"
     class="img-zoom"
     :src="logo ?? null"
     lazy-src="/img/no-img.png"
@@ -27,6 +26,9 @@
 </template>
 
 <style scoped lang="scss">
+  .img-zoom {
+    border-radius: 50%;
+  }
   .logo-disabled {
     filter: grayscale(100%) opacity(0.8);
     transition: all 0.2s ease;

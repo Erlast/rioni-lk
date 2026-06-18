@@ -5,7 +5,7 @@
   import IAssetsTabProps from '@/components/types/AssetsTable';
   import { useAssetsStore } from '@/stores/assetsStore';
   import { useDictionaryStore } from '@/stores/dictionariesStore';
-import { formatNumber } from '@/utils/number.extensions';
+  import { formatNumber } from '@/utils/number.extensions';
 
   const props = withDefaults(defineProps<IAssetsTabProps>(), {
     currentAsset: 'action'
@@ -118,7 +118,7 @@ import { formatNumber } from '@/utils/number.extensions';
           <v-col class="d-flex justify-center align-center table-cell pa-0" style="max-width: 70px">
             <div class="logo-stack">
               <AssetLogo
-                :logo="item.logo"
+                :logo="`/img/logos/${item.logo}`"
                 class="logo-stack__logo"
                 :paper-id="item.assetId"
                 :ticker="item.baseTicker"
@@ -174,13 +174,10 @@ import { formatNumber } from '@/utils/number.extensions';
           class="cursor-pointer currency-row paper-row"
           :data-id="item.assetId"
         >
-          <v-col
-            class="d-flex align-center table-cell ga-2"
-            style="max-width: 700px"
-          >
+          <v-col class="d-flex align-center table-cell ga-2" style="max-width: 700px">
             <div class="logo-stack">
               <AssetLogo
-                :logo="item.logo"
+                :logo="`/img/logos/${item.logo}`"
                 class="logo-stack__logo"
                 :paper-id="item.assetId"
                 :ticker="item.baseTicker"
@@ -204,7 +201,7 @@ import { formatNumber } from '@/utils/number.extensions';
         </v-row>
       </v-sheet>
     </div>
-    <v-row v-if="props.currentAsset!=='currency' && rawItems && rawItems.length" class="summary">
+    <v-row v-if="props.currentAsset !== 'currency' && rawItems && rawItems.length" class="summary">
       <v-col class="d-flex align-center table-cell font-semibold" style="max-width: 70px">
         {{ t('portfolio.table.summary') }}
       </v-col>
@@ -214,21 +211,27 @@ import { formatNumber } from '@/utils/number.extensions';
       <v-col class="table-cell d-flex align-center">
         <v-row>
           <v-col style="max-width: 70px"></v-col>
-          <v-col class="font-semibold" style="padding-left:8px;">{{ formatNumber(assetsStore.data.profit.investedSum) }}</v-col>
+          <v-col class="font-semibold" style="padding-left: 8px">
+            {{ formatNumber(assetsStore.data.profit.investedSum) }}
+          </v-col>
         </v-row>
       </v-col>
       <v-col class="table-cell d-flex align-center">&nbsp;</v-col>
       <v-col class="table-cell d-flex align-center">
-        <v-sheet class="font-semibold" style="padding-left:8px;">{{ formatNumber(assetsStore.data.profit.totalDiff) }}</v-sheet>
+        <v-sheet class="font-semibold" style="padding-left: 8px">
+          {{ formatNumber(assetsStore.data.profit.totalDiff) }}
+        </v-sheet>
       </v-col>
     </v-row>
-    <v-row v-if="props.currentAsset==='currency' && rawItems && rawItems.length" class="summary">
+    <v-row v-if="props.currentAsset === 'currency' && rawItems && rawItems.length" class="summary">
       <v-col class="d-flex align-center table-cell font-semibold" style="max-width: 700px">
         {{ t('portfolio.table.summary') }}
       </v-col>
       <v-col class="table-cell d-flex">&nbsp;</v-col>
       <v-col class="table-cell d-flex align-center">
-        <v-sheet class="font-semibold" style="padding-left:18px;">{{ formatNumber(assetsStore.data.profit.investedSum) }}</v-sheet>
+        <v-sheet class="font-semibold" style="padding-left: 18px">
+          {{ formatNumber(assetsStore.data.profit.investedSum) }}
+        </v-sheet>
       </v-col>
     </v-row>
   </div>
@@ -266,9 +269,9 @@ import { formatNumber } from '@/utils/number.extensions';
     }
   }
 
-  .currency-row{
-    .table-cell{
-        padding: 12px;
+  .currency-row {
+    .table-cell {
+      padding: 12px;
     }
   }
 
@@ -320,8 +323,8 @@ import { formatNumber } from '@/utils/number.extensions';
 
   .logo-stack {
     position: relative;
-    width: 48px;
-    height: 48px;
+    width: 36px;
+    height: 36px;
   }
 
   .logo-stack__logo {

@@ -17,7 +17,7 @@ export const topUpAccount = {
   sendBtn: 'Отправить реквизиты',
   previewTitle: 'Предпросмотр реквизитов',
   pdfPreview: 'Предпросмотр',
-  downloadPdf: 'Скачать',
+  downloadPdf: 'Скачать PDF',
   close: 'Закрыть',
-  share: 'Поделиться'
+  share: 'Поделиться',
 };

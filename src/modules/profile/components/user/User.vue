@@ -11,6 +11,7 @@
   import { useVuelidate } from '@vuelidate/core';
   import { helpers, requiredIf } from '@vuelidate/validators';
   import { useDisplay } from 'vuetify';
+  import PhoneFields from '@/components/BaseComponents/PhoneFields.vue';
 
   const { t } = useI18n();
   const item = ref();
@@ -358,33 +359,8 @@
           </v-sheet>
           <v-sheet class="d-flex justify-space-between ga-2" :class="{ 'flex-column': mobile }">
             <v-sheet class="d-flex ga-2" :width="mobile ? '100%' : '50%'">
-              <v-select
-                variant="solo"
-                flat
-                width="100"
-                max-width="100"
-                density="compact"
-                :items="itemsFlags"
-                hide-details="auto"
-                v-model="item"
-              >
-                <template v-slot:item="{ props: itemProps, item }">
-                  <v-list-item v-bind="itemProps" title="">
-                    <span :class="`fi fi-${item.raw.image}`" />
-                  </v-list-item>
-                </template>
-                <template v-slot:selection="{ item, index }">
-                  <span :class="`fi fi-${item.raw.image}`" />
-                </template>
-              </v-select>
+              <PhoneFields v-model="accountStore.data.companyPhone" />
 
-              <v-text-field
-                v-model="accountStore.data.companyPhone"
-                variant="solo"
-                flat
-                hide-details="auto"
-                :label="t('profile.modals.anketa.phoneNumberTitle')"
-              ></v-text-field>
             </v-sheet>
             <v-sheet :width="mobile ? '100%' : '50%'">
               <v-text-field
