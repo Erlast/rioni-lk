@@ -9,6 +9,8 @@ import { notice } from './notice.ts';
 import { auth } from './auth.ts';
 import { topUpAccount } from './topUpAccount.ts';
 import { withdrawal } from './withdrawal.ts';
+import { countries } from './countries.ts';
+import { calendar } from './calendar.ts';
 
 export const en = {
   header,
@@ -22,28 +24,31 @@ export const en = {
   topUpAccount,
   withdrawal,
   auth,
+  countries,
+  calendar,
   logout: 'Logout',
-  chooseDate: 'Выберите дату',
+  chooseDate: 'Choose Date',
   back: 'Back',
   next: 'Send',
+  phoneNumber: 'Phone Number',
   title: {
-    auth: 'Личный какбинет - Вход',
-    portfolio: 'Личный кабинет — Счета',
-    market: 'Личный кабинет — Рынок',
-    analytics: 'Личный кабинет — Аналитика',
-    pronouns: 'Личный кабинет — Поручения',
-    profile: 'Личный кабинет — Профиль',
-    notifications: 'Личный кабинет — Уведомления',
-    reports: 'Личный кабинет — Отчет',
-    notfound: 'Личный кабинет — 404'
+    auth: 'Personal account - Login',
+    portfolio: 'Personal account — Portfolio',
+    market: 'Personal account — Market',
+    analytics: 'Personal account — Analytics',
+    pronouns: 'Personal account — Assignments',
+    profile: 'Personal account — Profile',
+    notifications: 'Personal account — Notifications',
+    reports: 'Personal account — Reports',
+    notfound: 'Personal account — 404'
   },
   errorTemporaryUnavailable: {
-    message: 'Что-то пошло не так',
-    description: 'Временно недоступно'
+    message: 'Something went wrong. Please try again later',
+    description: 'Unavailable'
   },
   errors: {
-    pdfGenerateError: 'Ошибка при генерации PDF',
-    pdfNotAvailableForDownload: 'Поделиться файлом невозможно. PDF будет скачан.',
-    downloadError: 'Не удалось поделиться файлом'
+    pdfGenerateError: 'PDF generate error',
+    pdfNotAvailableForDownload: 'Not available for share. PDF will be downloaded.',
+    downloadError: 'Share error'
   }
 };

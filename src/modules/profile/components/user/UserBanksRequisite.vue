@@ -3,14 +3,12 @@
   import { useVuelidate } from '@vuelidate/core';
   import { requiredIf, helpers } from '@vuelidate/validators';
   import { useI18n } from 'vue-i18n';
-  import { countries, itemsFlags } from '@/utils/data';
   import { IBankAccountModel } from '@/api/types';
   import accountsService from '@/api/accountService';
-  import { useAccountStore } from '@/stores/accountStore';
   import { useNotify } from '@/stores/notifyStore';
   import { useDisplay } from 'vuetify';
+  import CountryAutocomplete from '@/components/BaseComponents/CountryAutocomplete.vue';
 
-  const accountStore = useAccountStore();
   const notifyStore = useNotify();
   const { t } = useI18n();
   const isSending = ref(false);
@@ -197,14 +195,8 @@
           </v-sheet>
           <v-sheet class="d-flex ga-2" :class="{ 'flex-column': mobile }">
             <v-sheet :width="mobile ? '100%' : '50%'">
-              <v-autocomplete
+              <CountryAutocomplete
                 v-model="bankAccount.country"
-                variant="solo"
-                flat
-                density="compact"
-                :items="countries"
-                hide-details="auto"
-                :label="t('profile.modals.anketa.countryTitle')"
                 :error="v$.bankAccounts.$each.$response.$errors[index]?.country?.$invalid"
                 :error-messages="
                   v$.bankAccounts.$each.$response.$errors[index]?.country?.length
@@ -303,14 +295,8 @@
         </v-sheet>
         <v-sheet class="d-flex ga-2" :class="{ 'flex-column': mobile }">
           <v-sheet :width="mobile ? '100%' : '50%'">
-            <v-autocomplete
+            <CountryAutocomplete
               v-model="bankAccount.country"
-              variant="solo"
-              flat
-              density="compact"
-              :items="countries"
-              hide-details="auto"
-              :label="t('profile.modals.anketa.countryTitle')"
               disabled
             />
           </v-sheet>

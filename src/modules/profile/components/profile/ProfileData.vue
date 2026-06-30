@@ -1,44 +1,44 @@
 <script setup lang="ts">
   import { inject, onMounted, reactive, Ref, ref } from 'vue';
   import { useVuelidate } from '@vuelidate/core';
-  import { email, required, helpers } from '@vuelidate/validators';
+  import { required, helpers } from '@vuelidate/validators';
   import { useI18n } from 'vue-i18n';
-  import { itemsFlags, countries } from '@/utils/data';
   import { useAccountStore } from '@/stores/accountStore';
   import DatePicker from '@/components/BaseComponents/DatePicker.vue';
   import dayjs from 'dayjs';
   import { useNotify } from '@/stores/notifyStore';
   import accountsService from '@/api/accountService';
+  import CountryAutocomplete from '@/components/BaseComponents/CountryAutocomplete.vue';
+  import PhoneFields from '@/components/BaseComponents/PhoneFields.vue';
 
   const showProfileData = inject<Ref<boolean>>('showProfileData', ref(false));
-  const item = ref();
   const { t } = useI18n();
   const accountStore = useAccountStore();
   const isSending = ref(false);
   const notifyStore = useNotify();
 
   const initialState = {
-    name: accountStore.data.info.name,
-    surname: accountStore.data.info.surname,
+    name: accountStore.data.name,
+    surname: accountStore.data.surname,
     email: '',
     phone: '',
-    dateOfBirth: accountStore.data.info.dateOfBirth,
-    gender: accountStore.data.info.gender ?? 'M',
-    citizenship: accountStore.data.info.citizenship,
+    dateOfBirth: accountStore.data.dateOfBirth,
+    gender: accountStore.data.gender ?? 'M',
+    citizenship: accountStore.data.citizenship,
     documentType: 'passport',
-    passportNumber: accountStore.data.info.passportNumber,
-    passportIssueDate: accountStore.data.info.passportIssueDate,
-    passportExpiryDate: accountStore.data.info.passportExpiryDate,
-    issuedBy: accountStore.data.info.issuedBy,
-    companyName: accountStore.data.info.companyName,
-    companyIndustry: accountStore.data.info.companyIndustry,
-    companyPosition: accountStore.data.info.companyPosition,
-    companyPhone: accountStore.data.info.companyPhone,
-    companyWebsite: accountStore.data.info.companyWebsite,
-    isNgo: accountStore.data.info.isNgo,
-    isNotWorkinhg: accountStore.data.info.isNotWorking,
-    isNpo: accountStore.data.info.isNpo,
-    isSelfEmployed: accountStore.data.info.isSelfEmployed
+    passportNumber: accountStore.data.passportNumber,
+    passportIssueDate: accountStore.data.passportIssueDate,
+    passportExpiryDate: accountStore.data.passportExpiryDate,
+    issuedBy: accountStore.data.issuedBy,
+    companyName: accountStore.data.companyName,
+    companyIndustry: accountStore.data.companyIndustry,
+    companyPosition: accountStore.data.companyPosition,
+    companyPhone: accountStore.data.companyPhone,
+    companyWebsite: accountStore.data.companyWebsite,
+    isNgo: accountStore.data.isNgo,
+    isNotWorkinhg: accountStore.data.isNotWorking,
+    isNpo: accountStore.data.isNpo,
+    isSelfEmployed: accountStore.data.isSelfEmployed
   };
 
   const state = reactive({
@@ -104,10 +104,6 @@
   const openDialogUploadDocuments = () => {
     console.log('here');
   };
-
-  onMounted(() => {
-    item.value = itemsFlags[0];
-  });
 </script>
 
 <template>
@@ -184,33 +180,7 @@
                   </v-sheet>
                   <v-sheet class="d-flex ga-2">
                     <v-sheet class="d-flex ga-2" width="50%">
-                      <v-select
-                        width="100"
-                        max-width="100"
-                        variant="solo"
-                        flat
-                        density="compact"
-                        :items="itemsFlags"
-                        hide-details="auto"
-                        v-model="item"
-                      >
-                        <template v-slot:item="{ props: itemProps, item }">
-                          <v-list-item v-bind="itemProps" title="">
-                            <span :class="`fi fi-${item.raw.image}`" />
-                          </v-list-item>
-                        </template>
-                        <template v-slot:selection="{ item, index }">
-                          <span :class="`fi fi-${item.raw.image}`" />
-                        </template>
-                      </v-select>
-                      <v-text-field
-                        variant="solo"
-                        density="compact"
-                        flat
-                        hide-details="auto"
-                        label="Номер телефона"
-                        v-model="state.phone"
-                      ></v-text-field>
+                      <PhoneFields v-model="state.phone" />
                     </v-sheet>
                     <v-text-field
                       variant="solo"
@@ -239,15 +209,7 @@
                         @input="v$.passportNumber.$touch"
                       ></v-text-field>
                     </v-sheet>
-                    <v-autocomplete
-                      variant="solo"
-                      flat
-                      density="compact"
-                      :items="countries"
-                      hide-details="auto"
-                      label="Гражданство"
-                      v-model="state.citizenship"
-                    ></v-autocomplete>
+                    <CountryAutocomplete v-model="state.citizenship" />
                   </v-sheet>
                   <v-sheet class="d-flex ga-2">
                     <v-text-field
@@ -301,33 +263,7 @@
                   </v-sheet>
                   <v-sheet class="d-flex justify-space-between ga-2">
                     <v-sheet class="d-flex ga-2" width="50%">
-                      <v-select
-                        variant="solo"
-                        flat
-                        width="100"
-                        max-width="100"
-                        density="compact"
-                        :items="itemsFlags"
-                        hide-details="auto"
-                        v-model="item"
-                      >
-                        <template v-slot:item="{ props: itemProps, item }">
-                          <v-list-item v-bind="itemProps" title="">
-                            <span :class="`fi fi-${item.raw.image}`" />
-                          </v-list-item>
-                        </template>
-                        <template v-slot:selection="{ item, index }">
-                          <span :class="`fi fi-${item.raw.image}`" />
-                        </template>
-                      </v-select>
-
-                      <v-text-field
-                        v-model="state.companyPhone"
-                        variant="solo"
-                        flat
-                        hide-details="auto"
-                        :label="t('profile.modals.anketa.phoneNumberTitle')"
-                      ></v-text-field>
+                      <PhoneFields v-model="state.companyPhone" />
                     </v-sheet>
                     <v-sheet width="50%">
                       <v-text-field

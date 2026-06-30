@@ -60,30 +60,30 @@
 
   const operationTypesItems = [
     {
-      title: 'Перевод ДС',
-      value: 'Перевод ДС'
+      title: t('pronounce.operationTable.operationTypes.trans'),
+      value: 'trans'
     },
     {
-      title: 'Зачисление ДС',
-      value: 'Зачисление ДС'
+      title: t('pronounce.operationTable.operationTypes.credit'),
+      value: 'credit'
     },
     {
-      title: 'Списание ДС',
-      value: 'Списание ДС'
+      title: t('pronounce.operationTable.operationTypes.writeOff'),
+      value: 'writeOff'
     }
   ];
 
   const operationStatusItems = [
     {
-      title: 'В обработке',
+      title: t('pronounce.operationTable.statuses.inProcess'),
       value: 1
     },
     {
-      title: 'Исполнено',
+      title: t('pronounce.operationTable.statuses.completed'),
       value: 2
     },
     {
-      title: 'Отказано',
+      title: t('pronounce.operationTable.statuses.canceled'),
       value: 3
     }
   ];
@@ -233,6 +233,7 @@
           <v-sheet class="d-flex align-center" min-width="240">
             <DatePickerRange
               v-model="period"
+              :label="t('chooseDate')"
               :max-date="new Date()"
               :start-date="mobile ? new Date() : startDate"
               :multi-calendars="mobile ? false : 2"
@@ -244,8 +245,8 @@
               variant="solo"
               flat
               hide-details="auto"
-              label="Тип операции"
-              placeholder="Тип операции"
+              :label="t('pronounce.typeOperationTitle')"
+              :placeholder="t('pronounce.typeOperationTitle')"
               density="compact"
               menu-icon="mdi-chevron-down"
               clearable
@@ -259,7 +260,7 @@
               variant="solo"
               flat
               hide-details="auto"
-              label="Статус"
+              :label="t('pronounce.typeOperationTitle')"
               placeholder="Статус"
               density="compact"
               menu-icon="mdi-chevron-down"
@@ -288,6 +289,9 @@
             <v-sheet>
               {{ item.executedAt ? dayjs(item.executedAt).format('DD.MM.YYYY') : '-' }}
             </v-sheet>
+          </template>
+          <template #[`item.operation`]="{ item }">
+            {{ t(`pronounce.operationTable.operationTypes.${item.operation}`) }}
           </template>
           <template #[`item.status`]="{ item }">
             <v-sheet class="font-semibold" :class="getStatusClass(item.status)">

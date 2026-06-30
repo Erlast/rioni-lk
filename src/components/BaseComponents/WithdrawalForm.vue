@@ -6,7 +6,7 @@
   import { useNotify } from '@/stores/notifyStore.ts';
   import { useDictionaryStore } from '@/stores/dictionariesStore.ts';
   import { usePortfolioStore } from '@/stores/portfolioStore.ts';
-  import { countries } from '@/utils/data.ts';
+  import CountryAutocomplete from '@/components/BaseComponents/CountryAutocomplete.vue';
 
   const { mobile } = useDisplay();
   const { toClipboard } = useClipboard();
@@ -116,12 +116,12 @@
                     class="btn-send"
                     @click="withdrawalHandle"
                   >
-                    Вывести всю сумму
+                    {{ t('withdrawal.allSum') }}
                   </v-btn>
                 </v-sheet>
               </v-sheet>
               <v-sheet class="font-smaller text-type-text">
-                Обратите внимание, что может взиматься комиссия
+                {{ t('withdrawal.subtext') }}
               </v-sheet>
             </v-sheet>
             <v-sheet class="d-flex flex-column ga-2">
@@ -129,33 +129,28 @@
                 {{ t('withdrawal.accountDetailsTitle') }}
               </v-sheet>
               <v-sheet class="d-flex ga-2">
-                <v-autocomplete
-                  v-model="country"
-                  variant="solo"
-                  flat
-                  density="compact"
-                  :items="countries"
-                  hide-details="auto"
-                  persistent-placeholder
-                  :placeholder="t('withdrawal.countryTitle')"
-                />
-                <v-text-field
-                  v-model="bankName"
-                  variant="solo"
-                  density="compact"
-                  flat
-                  hide-details="auto"
-                  placeholder="Наименование банка"
-                >
-                  <template v-slot:append-inner>
-                    <v-icon
-                      icon="mdi-content-copy"
-                      color="common"
-                      size="x-small"
-                      @click="copy(bankName)"
-                    />
-                  </template>
-                </v-text-field>
+                <v-sheet width="50%">
+                  <CountryAutocomplete v-model="country" />
+                </v-sheet>
+                <v-sheet width="50%">
+                  <v-text-field
+                    v-model="bankName"
+                    variant="solo"
+                    density="compact"
+                    flat
+                    hide-details="auto"
+                    :placeholder="t('withdrawal.bankName')"
+                  >
+                    <template v-slot:append-inner>
+                      <v-icon
+                        icon="mdi-content-copy"
+                        color="common"
+                        size="x-small"
+                        @click="copy(bankName)"
+                      />
+                    </template>
+                  </v-text-field>
+                </v-sheet>
               </v-sheet>
               <v-sheet class="d-flex ga-2">
                 <v-text-field
@@ -203,9 +198,6 @@
                 <v-btn variant="flat" rounded="ml" class="btn-send" @click="withdrawalHandle">
                   {{ t('withdrawal.withdrawalBtn') }}
                 </v-btn>
-              </v-sheet>
-              <v-sheet class="font-smaller text-type-text">
-                Комиссия вывода сотавит 2% от общей суммы = $56
               </v-sheet>
             </v-sheet>
           </v-sheet>

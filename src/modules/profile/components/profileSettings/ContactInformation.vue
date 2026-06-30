@@ -1,13 +1,13 @@
 <script setup lang="ts">
   import { addressType, contactType } from '@/api/types';
   import { useAccountStore } from '@/stores/accountStore';
-  import { countries } from '@/utils/data';
   import { computed, onMounted, reactive, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useVuelidate } from '@vuelidate/core';
   import { email, helpers, requiredIf } from '@vuelidate/validators';
   import { useDisplay } from 'vuetify';
   import PhoneFields from '@/components/BaseComponents/PhoneFields.vue';
+  import CountryAutocomplete from '@/components/BaseComponents/CountryAutocomplete.vue';
 
   const { t } = useI18n();
   const accountStore = useAccountStore();
@@ -299,7 +299,7 @@
           class="text-type-text font-smaller cursor-pointer"
           @click="addContact('email')"
         >
-          + добавить E-mail
+          {{t('profile.modals.settings.emailAddBtn') }}
         </v-sheet>
       </v-sheet>
 
@@ -328,9 +328,7 @@
                 ></v-checkbox>
               </v-sheet>
             </v-col>
-            <v-col v-if="!mobile" cols="3" class="pa-0">
-
-            </v-col>
+            <v-col v-if="!mobile" cols="3" class="pa-0"></v-col>
           </v-sheet>
           <v-sheet class="d-flex">
             <v-col :cols="mobile ? 10 : 9" class="pa-0">
@@ -361,7 +359,7 @@
           class="text-type-text font-smaller cursor-pointer"
           @click="addContact('phone')"
         >
-          + добавить телефон
+         {{t('profile.modals.settings.phoneAddBtn') }}
         </v-sheet>
       </v-sheet>
 
@@ -395,20 +393,11 @@
         </v-sheet>
         <v-sheet class="d-flex justify-space-between ga-2" :class="{ 'flex-column': mobile }">
           <v-sheet :width="mobile ? '100%' : '33%'">
-            <v-autocomplete
+            <CountryAutocomplete
               v-model="state.address1.country"
-              variant="solo"
-              hide-details="auto"
-              placeholder="Страна"
-              flat
-              :label="t('profile.modals.settings.countryTitle')"
-              density="compact"
-              auto-select-first
-              clearable
-              :items="countries"
               :error-messages="v$.address1.country.$errors[0]?.$message as string"
-              @update:modelValue="v$.address1.country.$touch"
-            ></v-autocomplete>
+              @update:model-value="v$.address1.country.$touch"
+            />
           </v-sheet>
           <v-sheet :width="mobile ? '100%' : '33%'">
             <v-text-field
@@ -468,17 +457,10 @@
         </v-sheet>
         <v-sheet class="d-flex justify-space-between ga-2" :class="{ 'flex-column': mobile }">
           <v-sheet :width="mobile ? '100%' : '33%'">
-            <v-autocomplete
+            <CountryAutocomplete
               v-model="state.address2.country"
-              variant="solo"
-              hide-details="auto"
-              flat
-              :label="t('profile.modals.settings.countryTitle')"
-              density="compact"
-              :items="countries"
-              clearable
               :error-messages="v$.address2.country.$errors[0]?.$message as string"
-              @update:modelValue="v$.address2.country.$touch"
+              @update:model-value="v$.address2.country.$touch"
             />
           </v-sheet>
           <v-sheet :width="mobile ? '100%' : '33%'">

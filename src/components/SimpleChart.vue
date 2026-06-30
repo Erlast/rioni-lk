@@ -113,6 +113,8 @@
   });
 
   const chartOptions = computed<any>(() => {
+    // Track locale dependency so chart re-renders when language changes
+    void locale.value;
     const data = accountChartCostStore.data;
     const values = data.length > 0 ? data.map(d => d.value) : [0];
     const dataMax = Math.max(...values);
@@ -155,6 +157,8 @@
         zoom: {
           enabled: false
         }
+        // locales: [{ name: 'ru' }, { name: 'ge' }],
+        // defaultLocale: 'en'
       },
       stroke: {
         curve: 'straight',
@@ -182,7 +186,14 @@
         type: 'datetime',
         labels: {
           datetimeUTC: false,
-          format: 'MMM dd'
+          formatter: (value: number) => {
+            const date = new Date(value);
+            const currentLocale = locale.value;
+            const months = monthsByLocale[currentLocale] || englishMonths;
+            const month = months[date.getMonth()];
+            const day = date.getDate();
+            return `${month} ${day}`;
+          }
         },
         axisBorder: {
           show: false
@@ -198,9 +209,10 @@
         labels: {
           formatter: (value: number) => {
             if (Math.abs(value) >= 10000) {
-              return Math.round(value / 1000) + 'k';
+              const suffix = locale.value === 'ge' ? ' ათასი' : 'k';
+              return Math.round(value / 1000) + suffix;
             }
-            return value.toLocaleString();
+            return value;
           }
         }
       },
@@ -224,14 +236,23 @@
       },
       tooltip: {
         x: {
-          format: 'MMM dd, yyyy'
+          formatter: (value: number) => {
+            const date = new Date(value);
+            const currentLocale = locale.value;
+            const months = monthsByLocale[currentLocale] || englishMonths;
+            const month = months[date.getMonth()];
+            const day = date.getDate();
+            const year = date.getFullYear();
+            return `${month} ${day}, ${year}`;
+          }
         },
         y: {
           formatter: (value: number) => {
             if (dataMax > 10000) {
-              return Math.round(value / 1000) + 'k';
+              const suffix = locale.value === 'ge' ? ' ათასი' : 'k';
+              return Math.round(value / 1000) + suffix;
             }
-            return value.toLocaleString();
+            return value;
           }
         }
       },
@@ -302,7 +323,14 @@
         type: 'datetime',
         labels: {
           datetimeUTC: false,
-          format: 'MMM dd'
+          formatter: (value: number) => {
+            const date = new Date(value);
+            const currentLocale = locale.value;
+            const months = monthsByLocale[currentLocale] || englishMonths;
+            const month = months[date.getMonth()];
+            const day = date.getDate();
+            return currentLocale === 'ru' ? `${day} ${month}` : `${month} ${day}`;
+          }
         },
         axisBorder: {
           show: false
@@ -318,7 +346,8 @@
         labels: {
           formatter: (value: number) => {
             if (Math.abs(value) >= 10000) {
-              return Math.round(value / 1000) + 'k';
+              const suffix = locale.value === 'ge' ? ' ათასი' : 'k';
+              return Math.round(value / 1000) + suffix;
             }
             return value.toLocaleString();
           }
@@ -386,6 +415,7 @@
       </v-sheet>
       <apexchart
         ref="chart"
+        :key="locale"
         class="simple-chart"
         :options="chartOptions"
         :series="series"

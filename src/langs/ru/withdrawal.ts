@@ -8,5 +8,8 @@ export const withdrawal = {
   iban: 'IBAN',
   swift: 'SWIFT',
   text: 'Нет необходимых реквизитов?',
-  addDetails: 'Добавьте реквизиты'
+  addDetails: 'Добавьте реквизиты',
+  allSum: 'Вывести всю сумму',
+  subtext: 'Обратите внимание, что может взиматься комиссия',
+  bankName: 'Наименование банка'
 };

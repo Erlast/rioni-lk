@@ -1,7 +1,9 @@
 <script setup lang="ts">
   import { useDisplay } from 'vuetify';
+  import { useI18n } from 'vue-i18n';
 
   const { mobile } = useDisplay();
+  const { t } = useI18n();
 </script>
 
 <template>
@@ -9,23 +11,24 @@
     class="d-flex flex-column ga-2 rounded-xxl pa-6"
     style="background-color: var(--color-Choosen) !important"
   >
-    <v-sheet>Требования брокера</v-sheet>
+    <v-sheet>{{ t('profile.requirements.title') }}</v-sheet>
     <v-sheet class="d-flex flex-column ga-2">
       <v-sheet
         class="d-flex ga-2 rounded-20 pa-6"
-        :class="{ 'align-center': !mobile }"
+        :class="{ 'align-center justify-space-between': !mobile }"
         style="background-color: white !important"
       >
-        <v-sheet>
-          <v-img src="/img/component_1.png" alt="Component" :width="mobile ? 52 : 72" />
-        </v-sheet>
-        <v-sheet class="d-flex flex-column ga-2">
-          <v-sheet class="font-default font-semibold text-hard-blue">
-            Название/раздел требования
-          </v-sheet>
+        <v-sheet class="d-flex ga-2" :class="{ 'align-center': !mobile }">
           <v-sheet>
-            Небольшая инструкция пояснение, что необходимо сделать/предоставить/куда перейти/что
-            будет если не сделать этого
+            <v-img src="/img/component_1.png" alt="Component" :width="mobile ? 52 : 72" />
+          </v-sheet>
+          <v-sheet class="d-flex flex-column ga-2">
+            <v-sheet class="font-default font-semibold text-hard-blue">
+              {{ t('profile.requirements.sectionTitle') }}
+            </v-sheet>
+            <v-sheet>
+              {{ t('profile.requirements.sectionDescription') }}
+            </v-sheet>
           </v-sheet>
         </v-sheet>
         <v-sheet
@@ -48,7 +51,7 @@
             <template #prepend>
               <v-img width="16" src="/img/calendar.png" />
             </template>
-            Добавить напоминание
+            {{ t('profile.requirements.addReminderBtn') }}
           </v-btn>
 
           <v-btn
@@ -62,24 +65,24 @@
           >
             <v-icon icon="mdi-download" />
           </v-btn>
-          <v-btn v-else variant="flat" rounded="mr" class="btn-custom btn-upload">Загрузить</v-btn>
+          <v-btn v-else variant="flat" rounded="mr" class="btn-custom btn-upload">
+            {{ t('profile.requirements.downloadBtn') }}
+          </v-btn>
         </v-sheet>
       </v-sheet>
       <v-sheet
         class="d-flex ga-2 rounded-20 pa-6"
-        :class="{ 'align-center': !mobile }"
+        :class="{ 'align-center justify-space-between': !mobile }"
         style="background-color: white !important"
       >
-        <v-sheet>
-          <v-img src="/img/component_2.png" alt="Component" :width="mobile ? 52 : 72" />
-        </v-sheet>
-        <v-sheet class="d-flex flex-column ga-2">
-          <v-sheet class="font-default font-semibold text-hard-blue">
-            Название/раздел требования
-          </v-sheet>
+        <v-sheet class="d-flex ga-2" :class="{ 'align-center': !mobile }">
           <v-sheet>
-            Небольшая инструкция пояснение, что необходимо сделать/предоставить/куда перейти/что
-            будет если не сделать этого
+            <v-img src="/img/component_2.png" alt="Component" :width="mobile ? 52 : 72" />
+          </v-sheet>
+          <v-sheet class="d-flex flex-column ga-2">
+            <v-sheet class="font-default font-semibold text-hard-blue">
+              {{ t('profile.requirements.sectionTitle') }}
+            </v-sheet>
           </v-sheet>
         </v-sheet>
         <v-sheet
@@ -99,7 +102,7 @@
           </v-btn>
 
           <v-btn v-else variant="flat" rounded="mr" class="btn-custom btn-created">
-            Напоминание создано
+            {{ t('profile.requirements.reminderCreated') }}
           </v-btn>
 
           <v-btn
@@ -113,24 +116,24 @@
           >
             <v-icon icon="mdi-download" />
           </v-btn>
-          <v-btn v-else variant="flat" rounded="mr" class="btn-custom btn-upload">Загрузить</v-btn>
+          <v-btn v-else variant="flat" rounded="mr" class="btn-custom btn-upload">
+            {{ t('profile.requirements.downloadBtn') }}
+          </v-btn>
         </v-sheet>
       </v-sheet>
       <v-sheet
         class="d-flex ga-2 rounded-20 pa-6"
-        :class="{ 'align-center': !mobile }"
+        :class="{ 'align-center justify-space-between': !mobile }"
         style="background-color: white !important"
       >
-        <v-sheet>
-          <v-img src="/img/component_3.png" alt="Component" :width="mobile ? 52 : 72" />
-        </v-sheet>
-        <v-sheet class="d-flex flex-column ga-2">
-          <v-sheet class="font-default font-semibold text-hard-blue">
-            Название/раздел требования
-          </v-sheet>
+        <v-sheet class="d-flex ga-2" :class="{ 'align-center': !mobile }">
           <v-sheet>
-            Небольшая инструкция пояснение, что необходимо сделать/предоставить/куда перейти/что
-            будет если не сделать этого
+            <v-img src="/img/component_3.png" alt="Component" :width="mobile ? 52 : 72" />
+          </v-sheet>
+          <v-sheet class="d-flex flex-column ga-2">
+            <v-sheet class="font-default font-semibold text-hard-blue">
+              {{ t('profile.requirements.sectionTitle') }}
+            </v-sheet>
           </v-sheet>
         </v-sheet>
         <v-sheet :class="{ 'flex-column': mobile }" :max-width="mobile ? 65 : 'auto'">
@@ -146,25 +149,23 @@
             <v-icon icon="mdi-autorenew" />
           </v-btn>
           <v-btn v-else variant="flat" rounded="mr" class="btn-custom btn-process">
-            Запрос в обработке
+            {{ t('profile.requirements.inProcess') }}
           </v-btn>
         </v-sheet>
       </v-sheet>
       <v-sheet
         class="d-flex ga-2 rounded-20 pa-6"
-        :class="{ 'align-center': !mobile }"
+        :class="{ 'align-center justify-space-between': !mobile }"
         style="background-color: white !important"
       >
-        <v-sheet>
-          <v-img src="/img/component_4.png" alt="Component" :width="mobile ? 52 : 72" />
-        </v-sheet>
-        <v-sheet class="d-flex flex-column ga-2">
-          <v-sheet class="font-default font-semibold text-hard-blue">
-            Название/раздел требования
-          </v-sheet>
+        <v-sheet class="d-flex ga-2" :class="{ 'align-center': !mobile }">
           <v-sheet>
-            Небольшая инструкция пояснение, что необходимо сделать/предоставить/куда перейти/что
-            будет если не сделать этого
+            <v-img src="/img/component_4.png" alt="Component" :width="mobile ? 52 : 72" />
+          </v-sheet>
+          <v-sheet class="d-flex flex-column ga-2">
+            <v-sheet class="font-default font-semibold text-hard-blue">
+              {{ t('profile.requirements.sectionTitle') }}
+            </v-sheet>
           </v-sheet>
         </v-sheet>
         <v-sheet
@@ -184,7 +185,7 @@
           </v-btn>
 
           <v-btn v-else variant="flat" rounded="mr" class="btn-custom btn-created">
-            Напоминание создано
+            {{ t('profile.requirements.reminderCreated') }}
           </v-btn>
 
           <v-btn
@@ -198,7 +199,9 @@
           >
             <v-icon icon="mdi-download" />
           </v-btn>
-          <v-btn v-else variant="flat" rounded="mr" class="btn-custom btn-upload">Загрузить</v-btn>
+          <v-btn v-else variant="flat" rounded="mr" class="btn-custom btn-upload">
+            {{ t('profile.requirements.downloadBtn') }}
+          </v-btn>
         </v-sheet>
       </v-sheet>
     </v-sheet>

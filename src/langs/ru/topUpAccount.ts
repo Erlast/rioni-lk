@@ -18,6 +18,12 @@ export const topUpAccount = {
   previewTitle: 'Предпросмотр реквизитов',
   pdfPreview: 'Предпросмотр',
   downloadPdf: 'Скачать PDF',
+  downloadSuccess: 'PDF успешно скачан',
   close: 'Закрыть',
   share: 'Поделиться',
+  pdfError: 'Ошибка при генерации PDF',
+  downloadTitle: 'Rioni Capital — Реквизиты для пополнения',
+  information: 'Информация о платеже',
+  shareNotSupported: 'Функция share не поддерживается на этом устройстве',
+  date: 'Дата'
 };

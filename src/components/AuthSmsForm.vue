@@ -2,7 +2,7 @@
   import { useI18n } from 'vue-i18n';
   import type { ICodeModel } from '@/api/types';
   import authService from '@/api/authService';
-  import { onMounted, onUnmounted, reactive, ref } from 'vue';
+  import { onMounted, onUnmounted, reactive, ref, watch } from 'vue';
   import { helpers, required } from '@vuelidate/validators';
   import { useVuelidate } from '@vuelidate/core';
   import Timer from '@/components/BaseComponents/CodeTimer.vue';
@@ -23,7 +23,7 @@
   const router = useRouter();
   const otpInputRef = ref<HTMLInputElement | null>(null);
   const interval = ref();
-  const btnDisabled = ref(false);
+  const btnDisabled = ref(true);
 
   const initialState = {
     code: code
@@ -40,8 +40,8 @@
       required: helpers.withMessage(
         t('validations.required', { field: t('auth.codeLabel') }),
         required
-      )
-      //$autoDirty: true
+      ),
+      $autoDirty: true
     }
   };
 
@@ -72,6 +72,14 @@
       }
     }
   };
+
+  const OTP_LENGTH = 6;
+
+  watch(code, newCode => {
+    if (newCode.length === OTP_LENGTH) {
+      sendSms();
+    }
+  });
 
   const sendSmsAgain = async () => {
     try {
@@ -148,9 +156,11 @@
           v-model="code"
           autocomplete="one-time-code"
           inputmode="numeric"
+          length="6"
           max-width="246"
           focused
           :error="!!v.code.$errors.length"
+          @finish="btnDisabled = false"
         ></v-otp-input>
         <v-sheet
           v-if="!!v.code.$errors.length"

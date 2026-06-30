@@ -5,14 +5,15 @@
   import i18n from '@/utils/i18n.ts';
 
   interface Language {
-    code: 'ru' | 'en';
+    code: 'ru' | 'en' | 'ge';
     name: string;
     flag: string;
   }
 
   const languages: Language[] = [
     { code: 'ru', name: 'Русский', flag: '/flags/4x3/ru.svg' },
-    { code: 'en', name: 'English', flag: '/flags/4x3/gb.svg' }
+    { code: 'en', name: 'English', flag: '/flags/4x3/gb.svg' },
+    { code: 'ge', name: 'ქართული', flag: '/flags/4x3/ge.svg' }
   ];
 
   const { locale } = useI18n();
@@ -21,7 +22,7 @@
     return languages.find(lang => lang.code === locale.value) || languages[0];
   });
 
-  const selectLanguage = (code: 'ru' | 'en') => {
+  const selectLanguage = (code: 'ru' | 'en' | 'ge') => {
     locale.value = code;
     i18n.global.locale.value = code;
     localStorage.setItem('user-locale', code);

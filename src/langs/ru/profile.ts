@@ -26,12 +26,14 @@ export const profile = {
       emailTitle: 'E-mail',
       useForAuthentificationTitle: 'Использовать для авторизации',
       confirmedTitle: 'Подтвержден',
+      emailAddBtn: '+ добавить E-mail',
       phoneTitle: 'Телефон',
+      phoneAddBtn: '+ добавить телефон',
       helpText:
-        'Внимание! При изменении адреса, Вам необходимо сразу предоставить подтверждающие документы, в противном случае операции по вашему счету будут временно недосутпны',
+        'Внимание! При изменении адреса, Вам необходимо сразу предоставить подтверждающие документы, в противном случае операции по вашему счету будут временно недосутпны.',
       addressTitle: 'Адрес регистрации',
       address2Title: 'Фактический адрес',
-      useAsPostTitle: 'Использовать  как почтовый',
+      useAsPostTitle: 'Использовать как почтовый',
       confirmAddressText: 'Для подтверждения данного адреса, вам необходимо',
       confirmAddressLinkText: 'загрузить документы сюда',
       countryTitle: 'Страна',
@@ -49,13 +51,13 @@ export const profile = {
       taxResidenciesTitle: 'Налоговые резидентства',
       chooseText1: 'Выберите',
       chooseText2: 'все страны',
-      chooseText3: 'в которых вы являетесь налоговым резидентом',
+      chooseText3: 'в которых вы являетесь налоговым резидентом.',
       countryTitle: 'Страна',
       innTitle: 'ИНН',
       additionalInformationTitle: 'Дополнительные сведения',
       beneficiariesTitle: 'Имеются бенефициары',
       pepTitle: 'Являюсь PEP (politically exposed person)',
-      residenceTitle: ' Вид на жительство и аналоги документа',
+      residenceTitle: 'Вид на жительство и аналоги документа',
       chooseText4: 'Выберите все страны, где имеется вид на жительство',
       issuedByTitle: 'Кем выдан',
       documentNumberTitle: 'Номер документа',
@@ -67,7 +69,7 @@ export const profile = {
       companyNameTitle: 'Название компании',
       industryTitle: 'Отрасль',
       jobTitle: 'Должность',
-      phoneNumberTitle: 'Номер телефона',
+      emailTitle: 'E-mail',
       memberOfNPOTitle: 'Состою в некомерческой организации (НКО)',
       memberOfNGOTitle: 'Состою в неправительственной организации (НПО)',
       selfEmployedStatusTitle: 'Статус самозанятого',
@@ -88,5 +90,16 @@ export const profile = {
     profileData: {
       title: 'Анкета Бенефициара'
     }
+  },
+  requirements: {
+    title: 'Требования брокера',
+    sectionTitle: 'Название/раздел требования',
+    sectionDescription:
+      'Небольшая инструкция пояснение, что необходимо сделать/предоставить/куда перейти/что\n' +
+      '            будет если не сделать этого',
+    addReminderBtn: 'Добавить напоминание',
+    downloadBtn: 'Загрузить',
+    reminderCreated: 'Напоминание создано',
+    inProcess: 'Запрос в обработке'
   }
 };

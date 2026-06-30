@@ -1,10 +1,12 @@
 <script setup lang="ts">
   import { ref, onMounted } from 'vue';
   import { itemsFlags, phoneCountriesSorted, type FlagItem } from '@/utils/data.ts';
+  import { useI18n } from 'vue-i18n';
 
   const localeToFlag: Record<string, string> = {
     ru: 'ru',
-    en: 'gb'
+    en: 'gb',
+    ge: 'ge'
   };
 
   const props = defineProps<{
@@ -13,13 +15,13 @@
   }>();
 
   const modelValue = defineModel<string>();
+  const { t } = useI18n();
 
   const findCountryByPhoneCode = (phoneValue: string) => {
     if (!phoneValue) return null;
-    // Убираем всё кроме цифр и +
     const cleaned = phoneValue.replace(/[^\d+]/g, '');
     if (!cleaned.startsWith('+')) return null;
-    const digits = cleaned.slice(1); // убираем +
+    const digits = cleaned.slice(1);
     for (const country of phoneCountriesSorted) {
       if (country.code && digits.startsWith(country.code)) {
         return country;
@@ -28,12 +30,9 @@
     return null;
   };
 
-  // Per-contact selected flag refs for phone inputs (keyed by idx)
   const phoneItems = ref<Record<number, any>>({});
 
-  // Устанавливаем флаг по умолчанию: сначала по номеру, если не удалось — из локали
   onMounted(() => {
-    // Пробуем определить страну по переданному номеру телефона
     let defaultCountry: FlagItem | undefined;
 
     if (modelValue.value) {
@@ -43,7 +42,6 @@
       }
     }
 
-    // Если определить не удалось — берём флаг из сохранённой локали
     if (!defaultCountry) {
       const userLocale = localStorage.getItem('user-locale') || 'ru';
       const flagImage = localeToFlag[userLocale] || 'ru';
@@ -59,20 +57,16 @@
     const input = event.target as HTMLInputElement;
     let value = input.value;
 
-    // Разрешаем только цифры и знак +
     value = value.replace(/[^\d+]/g, '');
 
-    // Если начали печатать цифру без ведущего +, добавляем + автоматически
     if (value.length > 0 && !value.startsWith('+')) {
       value = '+' + value;
     }
 
     input.value = value;
 
-    // Обновляем значение через v-model
     modelValue.value = value;
 
-    // Пытаемся определить страну по коду
     const found = findCountryByPhoneCode(value);
     if (found) {
       phoneItems.value[props.idx] = found;
@@ -117,6 +111,7 @@
         :model-value="modelValue"
         :disabled="isMain"
         variant="solo"
+        :label="t('phoneNumber')"
         flat
         hide-details="auto"
         @input="onPhoneInput"

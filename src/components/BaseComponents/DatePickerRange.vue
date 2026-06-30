@@ -4,19 +4,39 @@
   import { computed, onMounted, ref, useTemplateRef } from 'vue';
   import dayjs from 'dayjs';
   import { vMaska } from 'maska/vue';
-  import { ru } from 'date-fns/locale';
+  import { ru, enGB, ka } from 'date-fns/locale';
 
   import IDatePickerProps from '@/components/types/DatePicker';
   import { MaskaDetail } from 'maska';
+  import { useI18n } from 'vue-i18n';
+  import i18n from '@/utils/i18n.ts';
 
+  const { t } = useI18n();
   const date = ref();
-  const presetDates = ref([
-    { label: 'Неделя', value: [dayjs().subtract(1, 'week').toDate(), dayjs().toDate()] },
-    { label: 'Месяц', value: [dayjs().subtract(1, 'month').toDate(), dayjs().toDate()] },
-    { label: 'Три месяца', value: [dayjs().subtract(3, 'months').toDate(), dayjs().toDate()] },
-    { label: 'Пол года', value: [dayjs().subtract(6, 'months').toDate(), dayjs().toDate()] },
-    { label: 'Год', value: [dayjs().subtract(1, 'year').toDate(), dayjs().toDate()] }
-  ]);
+  const presetDates = computed(() => {
+    return [
+      {
+        label: t('calendar.presets.week'),
+        value: [dayjs().subtract(1, 'week').toDate(), dayjs().toDate()]
+      },
+      {
+        label: t('calendar.presets.month'),
+        value: [dayjs().subtract(1, 'month').toDate(), dayjs().toDate()]
+      },
+      {
+        label: t('calendar.presets.threeMonth'),
+        value: [dayjs().subtract(3, 'months').toDate(), dayjs().toDate()]
+      },
+      {
+        label: t('calendar.presets.halfYear'),
+        value: [dayjs().subtract(6, 'months').toDate(), dayjs().toDate()]
+      },
+      {
+        label: t('calendar.presets.year'),
+        value: [dayjs().subtract(1, 'year').toDate(), dayjs().toDate()]
+      }
+    ];
+  });
 
   const format = (date: Date) => {
     if (date && Array.isArray(date)) {
@@ -34,7 +54,17 @@
     }
   };
 
-  const { label = 'Выберите дату', errorMessages = [] } = defineProps<IDatePickerProps>();
+  const locale = computed(() => {
+    if (i18n.global.locale.value === 'ru') {
+      return ru;
+    }
+    if (i18n.global.locale.value === 'ge') {
+      return ka;
+    }
+    return enGB;
+  });
+
+  const { label = 'Choose date', errorMessages = [] } = defineProps<IDatePickerProps>();
 
   const modelValue = defineModel<(string | undefined)[]>();
 
@@ -131,7 +161,7 @@
     range
     :format="format"
     text-input
-    :locale="ru"
+    :locale="locale"
     teleport
     :time-config="{ enableTimePicker: false }"
     @update:model-value="updateModelValue"
@@ -174,7 +204,7 @@
       </v-text-field>
     </template>
     <template #action-buttons>
-      <v-btn density="compact" flat @click="selectDate">Выбрать</v-btn>
+      <v-btn density="compact" flat @click="selectDate">{{ t('calendar.applyBtn') }}</v-btn>
     </template>
   </VueDatePicker>
 </template>

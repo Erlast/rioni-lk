@@ -1,26 +1,33 @@
 export const pronounce = {
   operationTable: {
-    numberOperationTitle: '№ Поручения',
-    createdDateTitle: 'Дата создания',
-    operationDateTitle: 'Дата исполнения',
-    operationTypeTitle: 'Операция',
-    cbTitle: 'ЦБ',
-    amountTitle: 'Кол-во',
-    sumTitle: 'Сумма',
-    statusTitle: 'Статус',
+    numberOperationTitle: 'Order No.',
+    createdDateTitle: 'Date of creation',
+    operationDateTitle: 'Execution date',
+    operationTypeTitle: 'Operation',
+    cbTitle: 'CB',
+    amountTitle: 'Quantity',
+    sumTitle: 'Sum',
+    statusTitle: 'Status',
     statuses: {
-      inProcess: 'В обработке',
-      completed: 'Исполнено',
-      canceled: 'Отказано'
+      inProcess: 'In progress',
+      completed: 'Done',
+      canceled: 'Denied'
+    },
+    operationTypes: {
+      trans: 'Translation of DS',
+      credit: 'Crediting of DS',
+      writeOff: 'Write-off of DS'
     }
   },
-  topUpBtn: 'Пополнение счета',
-  tradeOrdersBtn: 'Торговые поручения',
-  withdrawalBtn: 'Вывод денежных средств',
-  entryPapersBtn: 'Зачисление бумаг',
-  transferBtn: 'Перевод бумаг',
-  historyOrdersTitle: 'История операций',
-  brokerAccountTitle: 'Брокерский счет',
-  costTitle: 'Стоимость в',
-  freeMoneyTitle: 'Свободные деньги'
+  topUpBtn: 'Top up account',
+  tradeOrdersBtn: 'Trade orders',
+  withdrawalBtn: 'Withdrawal of funds',
+  entryPapersBtn: 'Entry of papers',
+  transferBtn: 'Translation of papers',
+  historyOrdersTitle: 'History of assignments',
+  brokerAccountTitle: 'Brokerage account',
+  costTitle: 'Price in',
+  freeMoneyTitle: 'Available funds',
+  typeOperationTitle: 'Type of operation',
+  statusFilterTitle: 'Status'
 };

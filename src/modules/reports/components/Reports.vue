@@ -1,7 +1,10 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { computed, reactive, ref } from 'vue';
   import { useDisplay } from 'vuetify';
   import { useI18n } from 'vue-i18n';
+  import DatePickerRange from '@/components/BaseComponents/DatePickerRange.vue';
+  import { FilterOrdersRequestModel } from '@/components/types/OperationHistory.ts';
+  import dayjs from 'dayjs';
 
   const tag = ref('full');
   const { mobile } = useDisplay();
@@ -16,6 +19,25 @@
       name: t('reports.tags.short')
     }
   ];
+
+  const filterData = reactive<Partial<FilterOrdersRequestModel>>({
+    periodStart: undefined,
+    periodEnd: undefined
+  });
+
+  const period = computed({
+    get: () => {
+      return [filterData.periodStart, filterData.periodEnd];
+    },
+    set: value => {
+      filterData.periodStart = value[0];
+      filterData.periodEnd = value[1];
+    }
+  });
+
+  const startDate = computed(() => {
+    return dayjs().subtract(1, 'month').toDate();
+  });
 </script>
 
 <template>
@@ -29,23 +51,17 @@
     </v-sheet>
     <v-sheet class="d-flex ga-2 flex-column">
       <v-sheet class="d-flex align-center justify-space-between">
-        <v-sheet class="d-flex ga-2 align-center">
-          <v-btn v-if="!mobile" variant="flat" rounded="mr" class="btn-custom">
-            {{ t('reports.period.today') }}
-          </v-btn>
-
-          <v-icon icon="mdi-calendar-blank-outline" />
-          <v-icon v-if="!mobile" icon="mdi-chevron-left" />
-          <v-icon v-if="!mobile" icon="mdi-chevron-right" />
-
-          <v-sheet>{{ t('reports.period.custom') }}</v-sheet>
+        <v-sheet class="d-flex ga-2 align-center" width="400">
+          <DatePickerRange
+            v-model="period"
+            :label="t('chooseDate')"
+            :max-date="new Date()"
+            :start-date="mobile ? new Date() : startDate"
+            :multi-calendars="mobile ? false : 2"
+          />
         </v-sheet>
 
-        <v-sheet class="d-flex ga-2 align-center">
-          <span class="fi fi-ru rounded-circle" />
-          <span>RU</span>
-          <v-icon icon="mdi-chevron-down"></v-icon>
-        </v-sheet>
+        <v-sheet class="d-flex ga-2 align-center"></v-sheet>
       </v-sheet>
 
       <v-sheet

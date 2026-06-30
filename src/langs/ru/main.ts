@@ -9,6 +9,8 @@ import { notice } from './notice.ts';
 import { topUpAccount } from './topUpAccount.ts';
 import { withdrawal } from './withdrawal.ts';
 import { auth } from './auth.ts';
+import { countries } from './countries.ts';
+import { calendar } from './calendar.ts';
 
 export const ru = {
   header,
@@ -22,10 +24,13 @@ export const ru = {
   topUpAccount,
   withdrawal,
   auth,
+  countries,
+  calendar,
   logout: 'Выйти',
   chooseDate: 'Выберите дату',
   back: 'Назад',
   next: 'Отправить',
+  phoneNumber: 'Номер телефона',
   title: {
     auth: 'Личный какбинет - Вход',
     portfolio: 'Личный кабинет — Счета',

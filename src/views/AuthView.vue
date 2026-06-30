@@ -60,7 +60,10 @@
     <LanguageSelect />
   </v-sheet>
 
-  <div :class="['d-flex', 'align-center', 'justify-center', 'bg-image']" style="height: 100vh">
+  <div
+    :class="['d-flex', 'align-center', 'justify-center', 'bg-image']"
+    style="height: calc(100vh - 68px)"
+  >
     <v-card :width="mobile ? '100%' : 720" height="480" class="elevation-0 rounded-xxl pa-5">
       <v-card-title v-if="!mobile"><RioniLogo /></v-card-title>
       <v-card-text

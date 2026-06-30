@@ -1,40 +1,19 @@
 export const footer = {
-  bigText1: 'Общество с ограниченной ответственностью «Rioni Capital». ID 405664017.',
+  bigText1:
+    'Limited Liability Company "Rioni Capital". ID 405664017. Bloomberg LEI: 254900SE3WOGKBD2RF35.',
   bigText2:
-    'Bloomberg LEI: 254900SE3WOGKBD2RF35. Уважаемые пользователи, обращаем ваше внимание, что до\n' +
-    '      получения лицензии национального банка Грузии компания «RIONI CAPITAL LLC» не оказывает\n' +
-    '      брокерские услуги на финансовом рынке.',
+    'Dear users, please note that until receiving a license from the National Bank of Georgia, the company "Rioni Capital LLC" does not provide brokerage services in the financial market.',
   bigText3:
-    'Ознакомиться с информацией в отношении ООО «Rioni Capital» можно на официальном сайте компании\n' +
-    '      в сети Интернет по адресу: (Link in progress) Получить подробную информацию об услугах и\n' +
-    '      тарифах ООО «Rioni Capital», можно по адресу: I-й переулок - Ольги Сологашвили 5, Тбилиси,\n' +
-    '      0131, Грузия; в сети Интернет по адресу: (Link in progress), по телефону: +995 595436655.\n' +
-    '      Ознакомиться с обучающим материалами по финансовым продуктам можно в сети интернет по адресу:\n' +
-    '      (Link in progress). Размещенная на сайте информация носит исключительно информативный\n' +
-    '      характер, не является индивидуальной инвестиционной рекомендацией, гарантией и/или обещанием\n' +
-    '      эффективности деятельности (доходности вложений) в будущем, и финансовые инструменты либо\n' +
-    '      операции, упомянутые в ней, могут не соответствовать вашему инвестиционному профилю и\n' +
-    '      инвестиционным целям и ожиданиям. ООО "Rioni Capital" не гарантирует достижения ожидаемой\n' +
-    '      доходности. Прежде чем начать инвестировать на финансовом рынке, следует внимательно\n' +
-    '      ознакомиться с рисками сопутствующими этому процессу. Стоимость финансовых активов, в которые\n' +
-    '      вы вложили свои средства, может увеличиваться и уменьшаться, результаты инвестирования в\n' +
-    '      прошлом не определяют доходы в будущем, государство не гарантирует доходность ваших\n' +
-    '      инвестиций. Взимание комиссий уменьшит доходность ваших инвестиций. Определение соответствия\n' +
-    '      финансового инструмента либо операции вашим интересам, инвестиционным целям, инвестиционному\n' +
-    '      горизонту и уровню допустимого риска является вашей задачей. ООО «Rioni Capital» не несет\n' +
-    '      ответственности за возможные убытки в случае совершения операций либо инвестирования в\n' +
-    '      финансовые инструменты, упомянутые в данной информации, и не рекомендует использовать\n' +
-    '      указанную информацию в качестве единственного источника информации при принятии\n' +
-    '      инвестиционного решения. Rioni Capital LLC. All rights reserved ® Tbilisi. Georgia.2024',
+    'You can get information about Rioni Capital LLC on the official website of the company on the Internet at the following address: (Link in progress) You can get detailed information about the services and tariffs of Rioni Capital LLC at the following address: 1st Lane - Olga Sologashvili 5, Tbilisi, 0131, Georgia; on the Internet at the following address: (Link in progress), by phone: +995 595436655. You can get acquainted with training materials on financial products on the Internet at the following address: (Link in progress). The information provided on this website is for informational purposes only and does not constitute individual investment advice, a guarantee, or promise of future performance (investment returns). The financial instruments or transactions mentioned therein may not be suitable for your investment profile, goals, or expectations. Rioni Capital LLC does not guarantee the expected return. Before investing in the financial market, you should carefully consider the associated risks. The value of the financial assets in which you have invested may increase or decrease. Past investment results do not determine future returns. The state does not guarantee the profitability of your investments. Charging commissions will reduce the return on your investment. It is up to you to determine whether a financial instrument or transaction suits your interests, investment objectives, investment horizon, and risk tolerance. Rioni Capital LLC is not responsible for any losses resulting from transactions or investments in financial instruments mentioned in this information and does not recommend using this information as the sole source of information when making an investment decision. Rioni Capital LLC. All rights reserved ® Tbilisi. Georgia.2024',
   contactsTitle: 'Contact',
   officePeriod: '(office) from-to 9:00-20:00',
   emailTitle: 'Email',
   feedbackTitle: 'Any suggestions? Contact us',
   feedbackPlaceholder: 'Comment',
   feedbackSubmit: 'Send',
-  link1: 'Политика конфиденциальности',
-  link2: 'Политика использования cookies',
-  link3: 'Политика обработки персональных данных',
+  link1: 'Privacy Policy',
+  link2: 'Cookie Policy ',
+  link3: 'Personal data processing policy',
   menuTitle: 'Menu',
   menu: {
     about: 'About us',

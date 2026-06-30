@@ -3,7 +3,6 @@
   import { IResidencePermit, ITaxResidenceModel } from '@/api/types';
   import { useAccountStore } from '@/stores/accountStore';
   import { useNotify } from '@/stores/notifyStore';
-  import { countries, itemsFlags } from '@/utils/data';
   import { filterDigits } from '@/utils/filters';
   import { inject, onMounted, Ref, ref, reactive } from 'vue';
   import { useI18n } from 'vue-i18n';
@@ -12,9 +11,9 @@
   import { helpers, requiredIf } from '@vuelidate/validators';
   import { useDisplay } from 'vuetify';
   import PhoneFields from '@/components/BaseComponents/PhoneFields.vue';
+  import CountryAutocomplete from '@/components/BaseComponents/CountryAutocomplete.vue';
 
   const { t } = useI18n();
-  const item = ref();
   const notifyStore = useNotify();
   const accountStore = useAccountStore();
   const isSending = ref(false);
@@ -124,7 +123,6 @@
   };
 
   onMounted(async () => {
-    item.value = itemsFlags[0];
     state.taxResidences = await accountsService.profileTaxResidences();
     state.residencePermits = await accountsService.profileResidencePermits();
     if (!state.taxResidences.length) {
@@ -171,14 +169,8 @@
                 <v-sheet class="number-count">{{ index + 1 }}</v-sheet>
               </v-sheet>
               <v-sheet width="100%">
-                <v-autocomplete
+                <CountryAutocomplete
                   v-model="state.taxResidences[index].country"
-                  variant="solo"
-                  flat
-                  density="compact"
-                  :items="countries"
-                  hide-details="auto"
-                  :label="t('profile.modals.anketa.countryTitle')"
                   :error="v$.taxResidences.$each.$response.$errors[index].country.$invalid"
                   :error-messages="
                     v$.taxResidences.$each.$response.$errors[index].country.length
@@ -249,14 +241,8 @@
           >
             <v-sheet class="d-flex justify-space-between ga-2" :class="{ 'flex-column': mobile }">
               <v-sheet :width="mobile ? '100%' : '50%'">
-                <v-autocomplete
+                <CountryAutocomplete
                   v-model="permit.country"
-                  :label="t('profile.modals.anketa.countryTitle')"
-                  variant="solo"
-                  flat
-                  hide-details="auto"
-                  density="compact"
-                  :items="countries"
                   :error="v$.residencePermits.$each.$response.$errors[index].country.$invalid"
                   :error-messages="
                     v$.residencePermits.$each.$response.$errors[index].country.length
@@ -360,7 +346,6 @@
           <v-sheet class="d-flex justify-space-between ga-2" :class="{ 'flex-column': mobile }">
             <v-sheet class="d-flex ga-2" :width="mobile ? '100%' : '50%'">
               <PhoneFields v-model="accountStore.data.companyPhone" />
-
             </v-sheet>
             <v-sheet :width="mobile ? '100%' : '50%'">
               <v-text-field
@@ -368,7 +353,7 @@
                 variant="solo"
                 flat
                 hide-details="auto"
-                label="E-mail"
+                :label="t('profile.modals.anketa.emailTitle')"
               ></v-text-field>
             </v-sheet>
           </v-sheet>

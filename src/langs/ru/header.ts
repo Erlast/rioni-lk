@@ -3,5 +3,5 @@ export const header = {
   market: 'Рынок',
   pronouns: 'Поручения',
   reports: 'Отчеты',
-  analitics: 'Аналитика'
+  analytics: 'Аналитика'
 };

@@ -1,19 +1,19 @@
 export const reports = {
   banner: {
-    title: 'Отчеты брокера',
-    subtitle: 'Следите за прошедшими сделками и анализируйте резульаты в удобном для вас формате'
+    title: 'Broker reports',
+    subtitle: 'Track completed trades and analyze results in a format convenient for you'
   },
   tags: {
-    full: 'Полный отчет',
-    short: 'Краткий отчет'
+    full: 'Full report',
+    short: 'Short report'
   },
   reportTypes: {
-    broker: 'Брокерский отчет'
+    broker: 'Broker report'
   },
   period: {
-    today: 'Сегодня',
-    custom: '31 марта – 6 апреля 2025г'
+    today: 'Today',
+    custom: 'March 31 – April 6, 2025'
   },
-  reportBtn: 'Сформировать отчет',
-  noReportText: 'За выбранный период операции отсутствуют'
+  reportBtn: 'Generate report',
+  noReportText: 'No transactions for the selected period'
 };

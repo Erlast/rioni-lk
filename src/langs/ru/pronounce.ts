@@ -12,6 +12,11 @@ export const pronounce = {
       inProcess: 'В обработке',
       completed: 'Исполнено',
       canceled: 'Отказано'
+    },
+    operationTypes: {
+      trans: 'Перевод ДС',
+      credit: 'Зачисление ДС',
+      writeOff: 'Списание ДС'
     }
   },
   topUpBtn: 'Пополнение счета',
@@ -22,5 +27,7 @@ export const pronounce = {
   historyOrdersTitle: 'История операций',
   brokerAccountTitle: 'Брокерский счет',
   costTitle: 'Стоимость в',
-  freeMoneyTitle: 'Свободные деньги'
+  freeMoneyTitle: 'Свободные деньги',
+  typeOperationTitle: 'Тип операции',
+  statusFilterTitle: 'Статус'
 };
