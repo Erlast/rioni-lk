@@ -137,6 +137,20 @@ a {
   }
 }
 
+.filter-control {
+  border: 1px solid var(--color-Choosen);
+  border-radius: 20px;
+
+  .v-field-label {
+    font-size: 14px;
+  }
+
+  .v-field__input {
+    font-size: 14px;
+  }
+
+}
+
 .v-input--error {
   .v-field__overlay {
     border: 1px solid var(--color-AdditionalError);

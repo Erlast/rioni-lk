@@ -48,7 +48,7 @@ httpCommunicator.interceptors.response.use(
       anyError.status = status;
     }
 
-    if (status === 401 && url !== '/auth/refresh') {
+    if (status === 403 && url !== '/auth/refresh') {
       const authStore = useAuthStore();
       const hasToken = !!authStore.token;
 

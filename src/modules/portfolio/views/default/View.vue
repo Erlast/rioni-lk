@@ -15,6 +15,11 @@
   import { useMediaQuery } from '@vueuse/core';
   import TopUpForm from '@/components/BaseComponents/TopUpForm.vue';
   import router from '@/router';
+  import TopUp from '@/assets/icons/topUp.vue';
+  import Wallet from '@/assets/icons/wallet.vue';
+  import Balance from '@/assets/icons/balance.vue';
+  import Nickel from '@/assets/icons/nickel.vue';
+  import Coin from '@/assets/icons/coin.vue';
 
   const { t } = useI18n();
 
@@ -45,7 +50,7 @@
 
   const actionTitles = [
     'portfolio.reportsTitle',
-    'portfolio.historyTitle',
+    'portfolio.historyTitle'
     // 'portfolio.analyticTitle'
   ];
 
@@ -120,8 +125,8 @@
             :height="mobile ? '100%' : 'auto'"
           >
             <v-sheet class="d-flex ga-2 align-center">
-              <v-sheet width="36">
-                <v-img src="/img/topUp-icon.png" alt="top-up-icon" />
+              <v-sheet width="36" class="d-flex align-center">
+                <v-icon icon="rioni:balance" size="36" />
               </v-sheet>
               <v-sheet class="font-big-semibold text-gradient">
                 {{ account ? formatNumber(account.balance) : 0 }}
@@ -160,9 +165,8 @@
             "
           >
             <v-sheet class="d-flex ga-2 align-center">
-              <v-sheet width="19">
-                <v-img src="/img/wallet-icon.png" width="19" />
-              </v-sheet>
+              <v-icon icon="rioni:wallet" size="19" />
+
               <v-sheet class="text-dark-blue font-default">
                 {{ t('portfolio.freeMoneyTitle') }}
               </v-sheet>
@@ -184,9 +188,8 @@
             style="background-color: white !important; line-height: normal"
           >
             <v-sheet class="d-flex ga-2 align-center">
-              <v-sheet width="19">
-                <v-img src="/img/nickel-icon.png" width="19" />
-              </v-sheet>
+              <v-icon icon="rioni:nickel" size="19" />
+
               <v-sheet class="text-dark-blue font-default">
                 {{ t('portfolio.todayResultTitle') }}
               </v-sheet>
@@ -232,9 +235,8 @@
             "
           >
             <v-sheet class="d-flex ga-2 align-center">
-              <v-sheet width="19">
-                <v-img src="/img/coin-icon.png" width="19" />
-              </v-sheet>
+              <v-icon icon="rioni:coin" size="19" />
+
               <v-sheet class="text-dark-blue font-default">
                 {{ t('portfolio.depositTitle') }}
               </v-sheet>

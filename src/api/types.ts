@@ -86,6 +86,13 @@ export interface IAssetModel {
   active: boolean;
 }
 
+export interface IPortfolioAssetsParams {
+  page: number;
+  perPage: number;
+  search: string;
+  types: string[] | null;
+}
+
 export interface IProfitModel {
   investedSum: number;
   totalDiff: number;

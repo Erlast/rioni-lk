@@ -8,6 +8,7 @@
   import { useDisplay } from 'vuetify';
   import AssetsTabMobile from '@/components/AssetsTabMobile.vue';
   import { useMediaQuery } from '@vueuse/core';
+  import { debounce } from 'lodash-es';
 
   const { t, locale } = useI18n();
   const tabsStore = useTabsStore();
@@ -20,6 +21,7 @@
 
   const tab = ref<Asset>('' as Asset);
   const instrumentsMain = computed(() => assetsStore.getAssets);
+  const search = ref();
 
   type UITab = { name: string; title: string };
 
@@ -29,6 +31,10 @@
       title: t(tb.titleKey) as string
     }))
   );
+
+  const onSearch = debounce(() => {
+    assetsStore.params.search = search.value;
+  }, 100);
 
   const loadAssets = async () => {
     switch (tab.value) {
@@ -74,19 +80,37 @@
   );
 </script>
 <template>
-  <v-tabs v-model="tab" hide-slider>
-    <v-tab
-      v-for="tb in uiTabs"
-      :key="tb.name"
-      :value="tb.name"
-      :data-name="tb.name"
-      class="tab-center rounded-tt-lg hover-icon text-common"
-      selected-class="selected"
-      hide-slider
-    >
-      {{ tb.title }}
-    </v-tab>
-  </v-tabs>
+  <v-sheet class="d-flex align-center" :class="{ 'justify-space-between': !mobile }">
+    <v-tabs v-model="tab" hide-slider>
+      <v-tab
+        v-for="tb in uiTabs"
+        :key="tb.name"
+        :value="tb.name"
+        :data-name="tb.name"
+        class="tab-center rounded-tt-lg hover-icon text-common"
+        selected-class="selected"
+        hide-slider
+      >
+        {{ tb.title }}
+      </v-tab>
+    </v-tabs>
+    <v-sheet v-if="!mobile" min-width="250" class="d-flex justify-end">
+      <v-text-field
+        v-model="search"
+        label="Поиск"
+        flat
+        class="filter-control"
+        append-inner-icon="mdi-magnify"
+        rounded="xl"
+        variant="solo"
+        density="compact"
+        hide-details
+        max-width="200"
+        @update:modelValue="onSearch"
+      ></v-text-field>
+    </v-sheet>
+  </v-sheet>
+
   <v-tabs-window v-model="tab">
     <v-tabs-window-item
       v-for="tb in tabs"
@@ -106,7 +130,10 @@
           :current-asset="tab"
           :items="instrumentsMain"
         />
-        <v-sheet v-if="mobile && !landscape" class="font-smaller d-flex align-center ga-2 justify-center">
+        <v-sheet
+          v-if="mobile && !landscape"
+          class="font-smaller d-flex align-center ga-2 justify-center"
+        >
           <v-icon icon="mdi-screen-rotation"></v-icon>
           <span>{{ t('portfolio.rotateTip') }}</span>
         </v-sheet>
@@ -137,5 +164,16 @@
 
   .v-btn.v-btn--density-default {
     --v-btn-height: 26px;
+  }
+
+  .v-input {
+    :deep(.v-field__input) {
+      min-height: 30px !important;
+    }
+    &.v-input--density-compact {
+      :deep(.v-field--variant-solo) {
+        --v-input-control-height: 30px !important;
+      }
+    }
   }
 </style>

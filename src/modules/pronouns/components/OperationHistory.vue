@@ -233,6 +233,7 @@
           <v-sheet class="d-flex align-center" min-width="240">
             <DatePickerRange
               v-model="period"
+              variant="outlined"
               :label="t('chooseDate')"
               :max-date="new Date()"
               :start-date="mobile ? new Date() : startDate"
@@ -242,7 +243,9 @@
           <v-sheet class="d-flex align-center" width="180">
             <v-select
               v-model="operationTypes"
+              class="filter-control"
               variant="solo"
+              rounded="xl"
               flat
               hide-details="auto"
               :label="t('pronounce.typeOperationTitle')"
@@ -257,7 +260,9 @@
           <v-sheet class="d-flex align-center" width="160">
             <v-select
               v-model="operationStatus"
+              class="filter-control"
               variant="solo"
+              rounded="xl"
               flat
               hide-details="auto"
               :label="t('pronounce.typeOperationTitle')"
@@ -364,6 +369,17 @@
 
     :deep(.v-data-table__td) {
       border-bottom: 0 !important;
+    }
+  }
+
+  .v-input {
+    :deep(.v-field__input) {
+      min-height: 30px !important;
+    }
+    &.v-input--density-compact {
+      :deep(.v-field--variant-solo) {
+        --v-input-control-height: 30px !important;
+      }
     }
   }
 </style>

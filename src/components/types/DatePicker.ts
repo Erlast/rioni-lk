@@ -6,4 +6,5 @@ export default interface IDatePickerProps {
   density?: 'comfortable' | 'compact' | 'default';
   maxDate?: Date | string;
   disabled?: boolean;
+  variant?: 'solo' | 'outlined';
 }

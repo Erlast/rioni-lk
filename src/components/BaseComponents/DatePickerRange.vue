@@ -64,7 +64,11 @@
     return enGB;
   });
 
-  const { label = 'Choose date', errorMessages = [] } = defineProps<IDatePickerProps>();
+  const {
+    label = 'Choose date',
+    errorMessages = [],
+    variant
+  } = withDefaults(defineProps<IDatePickerProps>(), { variant: 'solo' });
 
   const modelValue = defineModel<(string | undefined)[]>();
 
@@ -174,9 +178,11 @@
         variant="solo"
         flat
         class="date-picker-v"
+        :class="{ 'date-picker-outlined': variant === 'outlined' }"
         density="compact"
         inputmode="none"
         autocomplete="off"
+        rounded="xl"
         hide-details
         :error-messages="
           errorMessages.map(e =>
@@ -211,10 +217,33 @@
 
 <style scoped lang="scss">
   .date-picker-v {
-    --v-input-control-height: 40px;
+    --v-input-control-height: 30px;
+    :deep(.v-field-label) {
+      font-size: 14px;
+    }
+
+    :deep(.v-field__input) {
+      font-size: 14px;
+    }
+
+    &.date-picker-outlined {
+      border: 1px solid var(--color-Choosen);
+      border-radius: 20px;
+    }
 
     .append-inner-icon {
       cursor: pointer;
+    }
+  }
+
+  .v-input {
+    :deep(.v-field__input) {
+      min-height: 30px !important;
+    }
+    &.v-input--density-compact {
+      :deep(.v-field--variant-solo) {
+        --v-input-control-height: 30px !important;
+      }
     }
   }
 </style>

@@ -31,7 +31,7 @@
 </script>
 
 <template>
-  <div class="papers-table font-default">
+  <v-sheet class="papers-table font-default">
     <div class="papers-header">
       <v-row class="papers-row" v-if="props.currentAsset !== 'currency'">
         <v-col class="d-flex table-cell align-center justify-center" style="max-width: 70px">
@@ -234,7 +234,7 @@
         </v-sheet>
       </v-col>
     </v-row>
-  </div>
+  </v-sheet>
 </template>
 
 <style scoped lang="scss">

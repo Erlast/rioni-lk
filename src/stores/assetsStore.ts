@@ -1,7 +1,7 @@
 import portfolioService from '@/api/portfolioService';
 import { useNotify } from '@/stores/notifyStore';
 import { defineStore } from 'pinia';
-import { IAssetModel, IPortfolioModel } from '@/api/types';
+import { IAssetModel, IPortfolioAssetsParams, IPortfolioModel } from '@/api/types';
 import { InstrumentTypes as IT } from '@/api/enum';
 import {
   createIntervalUpdateActions,
@@ -12,8 +12,8 @@ import {
 
 interface IState extends IIntervalUpdateState {
   data: IPortfolioModel;
-  types: string[] | null;
   loading: boolean;
+  params: IPortfolioAssetsParams;
   error?: Error;
 }
 
@@ -37,10 +37,15 @@ interface IActions extends IIntervalUpdateActions {
 export const useAssetsStore = defineStore<'assets', IState, IGetters, IActions>('assets', {
   state: (): IState => ({
     ...intervalUpdateState(),
-    types: null,
+    params: {
+      page: 1,
+      perPage: 10,
+      search: '',
+      types: null
+    },
     data: {
       assets: [],
-      profit: { investedSum:0,totalDiff: 0},
+      profit: { investedSum: 0, totalDiff: 0 },
       paperSum: 0
     },
     loading: false,
@@ -52,14 +57,13 @@ export const useAssetsStore = defineStore<'assets', IState, IGetters, IActions>(
     async load() {
       this.loading = true;
       try {
-        const data = await portfolioService.assets(this.types);
+        const data = await portfolioService.assets(this.params);
         if (data) {
           this.data = data;
         } else {
           this.data.assets = [];
           this.data.profit = { investedSum: 0, totalDiff: 0 };
         }
-      
       } catch (error: any) {
         this.error = { name: error.code, message: error.message };
         const notify = useNotify();
@@ -70,7 +74,7 @@ export const useAssetsStore = defineStore<'assets', IState, IGetters, IActions>(
     },
     async autoUpdate() {
       try {
-        const data = await portfolioService.assets(this.types);
+        const data = await portfolioService.assets(this.params);
         if (data) {
           this.data = data;
         } else {
@@ -87,26 +91,26 @@ export const useAssetsStore = defineStore<'assets', IState, IGetters, IActions>(
       this.$reset();
     },
     async portfolioAssetsAction() {
-      this.types = [IT.Action];
+      this.params.types = [IT.Action];
     },
     async portfolioAssetsObligation() {
-      this.types = [IT.Obligation];
+      this.params.types = [IT.Obligation];
     },
     async portfolioAssetsCurrency() {
-      this.types = [IT.Currency];
+      this.params.types = [IT.Currency];
     },
     async portfolioAssetsOption() {
-      this.types = [IT.Option];
+      this.params.types = [IT.Option];
     },
     async portfolioAssetsFuturies() {
-      this.types = [IT.Futuries];
+      this.params.types = [IT.Futuries];
     }
   },
   getters: {
     getAssets(state: IState) {
       return state.data.assets.sort((a, b) => {
         return a.active === b.active ? 0 : a.active ? -1 : 1;
-      })
+      });
     }
   }
 });

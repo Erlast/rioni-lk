@@ -6,6 +6,11 @@ import arrowRightWhite from './arrowRightWhite.vue';
 import arrowRightWhiteB from './arrowRightWhiteB.vue';
 import formCheckOff from './formCheckOff.vue';
 import formCheckOn from './formCheckOn.vue';
+import topUp from './topUp.vue';
+import wallet from './wallet.vue';
+import balance from './balance.vue';
+import nickel from './nickel.vue';
+import coin from './coin.vue';
 
 const customSvgNameToComponent: any = {
   checkOn,
@@ -13,11 +18,16 @@ const customSvgNameToComponent: any = {
   arrowRightWhite,
   arrowRightWhiteB,
   formCheckOff,
-  formCheckOn
+  formCheckOn,
+  topUp,
+  wallet,
+  balance,
+  nickel,
+  coin
 };
 
 const rioniIcons: IconSet = {
-  component: (props: IconProps) => h(customSvgNameToComponent[props.icon])
+  component: (props: IconProps) => h(customSvgNameToComponent[props.icon as string]),
 };
 
 export { rioniIcons /* aliases */ };

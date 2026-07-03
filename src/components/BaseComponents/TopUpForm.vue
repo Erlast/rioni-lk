@@ -7,6 +7,7 @@
   import html2canvas from 'html2canvas';
   import jsPDF from 'jspdf';
   import { useDisplay } from 'vuetify';
+  import TopUp from '@/assets/icons/topUp.vue';
 
   const { t } = useI18n();
   const notifyStore = useNotify();
@@ -808,7 +809,9 @@
   <slot name="button">
     <v-btn variant="flat" rounded="mr" @click="openTopUp" height="50" class="btn-top-up">
       <template #prepend>
-        <v-img width="26" src="/img/topUp-btn-icon.png" />
+        <v-sheet rounded="circle" class="d-flex align-center justify-center pa-1" style="background-color: white !important;">
+          <TopUp />
+        </v-sheet>
       </template>
       {{ t('portfolio.topUpBtn') }}
     </v-btn>

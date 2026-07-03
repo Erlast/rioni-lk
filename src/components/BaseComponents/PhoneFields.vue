@@ -30,15 +30,80 @@
     return null;
   };
 
+  /**
+   * Extract country code from raw digit string (e.g., '71234567890' -> '7').
+   * Returns null if no country code can be matched.
+   */
+  const detectCountryCode = (rawDigits: string): string | null => {
+    if (!rawDigits) return null;
+    const phone = '+' + rawDigits;
+    const found = findCountryByPhoneCode(phone);
+    return found?.code || null;
+  };
+
+  /**
+   * Format raw digits into a phone mask: +<code> (###) ###-##-##
+   * Example: formatPhoneNumber('7', '71234567890') -> '+7 (123) 456-78-90'
+   * The mask supports up to 10 local digits.
+   */
+  const formatPhoneNumber = (countryCode: string, rawDigits: string): string => {
+    const localDigits = rawDigits.slice(countryCode.length).slice(0, 10);
+    let formatted = `+${countryCode}`;
+
+    if (localDigits.length === 0) return formatted;
+
+    // Opening bracket + first 3 digits
+    formatted += ' (';
+    formatted += localDigits.slice(0, 3);
+
+    if (localDigits.length > 3) {
+      // Close bracket, then next 3 digits
+      formatted += ') ';
+      formatted += localDigits.slice(3, 6);
+    }
+
+    if (localDigits.length > 6) {
+      // Dash + next 2 digits
+      formatted += '-';
+      formatted += localDigits.slice(6, 8);
+    }
+
+    if (localDigits.length > 8) {
+      // Dash + last 2 digits
+      formatted += '-';
+      formatted += localDigits.slice(8, 10);
+    }
+
+    return formatted;
+  };
+
+  /**
+   * Calculate cursor position after reformatting based on where the user was typing.
+   * We find the position of the last typed digit in the formatted string.
+   */
+  const setCursorToEnd = (input: HTMLInputElement) => {
+    requestAnimationFrame(() => {
+      const pos = input.value.length;
+      input.setSelectionRange(pos, pos);
+    });
+  };
+
   const phoneItems = ref<Record<number, any>>({});
 
   onMounted(() => {
     let defaultCountry: FlagItem | undefined;
 
     if (modelValue.value) {
-      const found = findCountryByPhoneCode(modelValue.value);
-      if (found) {
-        defaultCountry = found;
+      // Format the initial value if it has a valid country code
+      const rawDigits = modelValue.value.replace(/[^\d]/g, '');
+      const countryCode = detectCountryCode(rawDigits);
+      if (countryCode) {
+        const found = findCountryByPhoneCode('+' + rawDigits);
+        if (found) {
+          defaultCountry = found;
+          const formatted = formatPhoneNumber(countryCode, rawDigits);
+          modelValue.value = formatted;
+        }
       }
     }
 
@@ -55,28 +120,46 @@
 
   const onPhoneInput = (event: Event) => {
     const input = event.target as HTMLInputElement;
-    let value = input.value;
 
-    value = value.replace(/[^\d+]/g, '');
+    // Extract only digits from the input
+    const rawDigits = input.value.replace(/[^\d]/g, '');
 
-    if (value.length > 0 && !value.startsWith('+')) {
-      value = '+' + value;
+    if (rawDigits.length === 0) {
+      input.value = '';
+      modelValue.value = '';
+      return;
     }
 
-    input.value = value;
+    // Try to detect country code from the digits
+    const countryCode = detectCountryCode(rawDigits);
 
-    modelValue.value = value;
+    if (countryCode) {
+      // Country code detected — apply phone mask formatting
+      const formatted = formatPhoneNumber(countryCode, rawDigits);
+      input.value = formatted;
+      modelValue.value = formatted;
 
-    const found = findCountryByPhoneCode(value);
-    if (found) {
-      phoneItems.value[props.idx] = found;
+      // Update the selected flag if it matches a country
+      const found = findCountryByPhoneCode('+' + rawDigits);
+      if (found) {
+        phoneItems.value[props.idx] = found;
+      }
+    } else {
+      // Country code not yet fully entered — show raw digits with + prefix
+      const raw = '+' + rawDigits;
+      input.value = raw;
+      modelValue.value = raw;
     }
+
+    // Restore cursor to end after reformatting
+    setCursorToEnd(input);
   };
 
   const onPhoneCountryChange = (val: any) => {
     phoneItems.value[props.idx] = val;
     if (val?.code) {
-      modelValue.value = '+' + val.code;
+      const digits = val.code;
+      modelValue.value = '+' + digits;
     }
   };
 </script>
@@ -89,6 +172,7 @@
         variant="solo"
         flat
         density="compact"
+        readonly
         :items="itemsFlags"
         hide-details="auto"
         return-object
