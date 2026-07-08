@@ -67,19 +67,19 @@
   const {
     label = 'Choose date',
     errorMessages = [],
-    variant
-  } = withDefaults(defineProps<IDatePickerProps>(), { variant: 'solo' });
+    variant = 'solo'
+  } = defineProps<IDatePickerProps>();
 
   const modelValue = defineModel<(string | undefined)[]>();
 
   const isHovered = ref(false);
   const myDate = ref();
-  const datepicker = ref(null);
+  const datepicker = ref<InstanceType<typeof VueDatePicker> | null>(null);
   const optionsDefault = {
     mask: '##.##.#### - ##.##.####'
   };
 
-  const dp = useTemplateRef('datepicker');
+  const dp = useTemplateRef<InstanceType<typeof VueDatePicker>>('datepicker');
 
   const selectDate = () => {
     dp.value?.selectDate();
@@ -119,6 +119,12 @@
       date.value[0] ? dayjs(date.value[0]).format('YYYY-MM-DDTHH:mm:ssZ') : null,
       date.value[1] ? dayjs(date.value[1]).format('YYYY-MM-DDTHH:mm:ssZ') : null
     ]);
+
+    if (date.value && date.value[0] && date.value[1]) {
+      setTimeout(() => {
+        datepicker.value?.closeMenu();
+      }, 100);
+    }
   };
 
   const updateDate = (dt: string) => {

@@ -31,6 +31,7 @@ export const en = {
   back: 'Back',
   next: 'Send',
   phoneNumber: 'Phone Number',
+  suffix: 'k',
   title: {
     auth: 'Personal account - Login',
     portfolio: 'Personal account — Portfolio',

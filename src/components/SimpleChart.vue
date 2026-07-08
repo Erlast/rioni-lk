@@ -112,38 +112,43 @@
     return `${formatDate(startDate, true)} - ${formatDate(endDate, true)}`;
   });
 
+  function calcAxisBounds(dataMin: number, dataMax: number) {
+    const absMax = Math.max(Math.abs(dataMin), Math.abs(dataMax));
+    if (absMax === 0) return { min: -1, max: 1 };
+
+    const roughStep = absMax / 5;
+    const magnitude = Math.pow(10, Math.floor(Math.log10(roughStep)));
+    const normalized = roughStep / magnitude;
+
+    let niceStep: number;
+    if (normalized <= 1.5) niceStep = 1;
+    else if (normalized <= 3.5) niceStep = 2;
+    else if (normalized <= 7) niceStep = 5;
+    else niceStep = 10;
+    niceStep *= magnitude;
+
+    let yMin: number, yMax: number;
+    if (dataMin >= 0) {
+      yMin = 0;
+      yMax = Math.ceil(dataMax / niceStep) * niceStep;
+    } else if (dataMax <= 0) {
+      yMin = -Math.ceil(Math.abs(dataMin) / niceStep) * niceStep;
+      yMax = 0;
+    } else {
+      yMin = -Math.ceil(Math.abs(dataMin) / niceStep) * niceStep;
+      yMax = Math.ceil(dataMax / niceStep) * niceStep;
+    }
+
+    return { min: yMin, max: yMax };
+  }
+
   const chartOptions = computed<any>(() => {
-    // Track locale dependency so chart re-renders when language changes
     void locale.value;
     const data = accountChartCostStore.data;
     const values = data.length > 0 ? data.map(d => d.value) : [0];
     const dataMax = Math.max(...values);
     const dataMin = Math.min(...values);
-    const absMax = Math.max(Math.abs(dataMin), Math.abs(dataMax));
-    const roughStep = absMax / 3;
-    const magnitude = Math.pow(10, Math.floor(Math.log10(roughStep)));
-    const normalized = roughStep / magnitude;
-    let niceStep;
-    if (normalized <= 1) niceStep = 1;
-    else if (normalized <= 2) niceStep = 2;
-    else if (normalized <= 5) niceStep = 5;
-    else niceStep = 10;
-    niceStep *= magnitude;
-
-    let yMin, yMax;
-    if (dataMin >= 0) {
-      yMin = 0;
-      yMax = niceStep * 5;
-    } else if (dataMax <= 0) {
-      yMin = -niceStep * 5;
-      yMax = 0;
-    } else {
-      const maxAbsValue = Math.max(Math.abs(dataMin), Math.abs(dataMax));
-      const rangeStep = Math.ceil(maxAbsValue / 2.5);
-      const niceRangeStep = Math.ceil(rangeStep / magnitude) * magnitude;
-      yMin = -niceRangeStep * 2;
-      yMax = niceRangeStep * 3;
-    }
+    const { min: yMin, max: yMax } = calcAxisBounds(dataMin, dataMax);
 
     return {
       chart: {
@@ -157,8 +162,6 @@
         zoom: {
           enabled: false
         }
-        // locales: [{ name: 'ru' }, { name: 'ge' }],
-        // defaultLocale: 'en'
       },
       stroke: {
         curve: 'straight',
@@ -186,12 +189,19 @@
         type: 'datetime',
         labels: {
           datetimeUTC: false,
+          offsetX: 15,
           formatter: (value: number) => {
             const date = new Date(value);
             const currentLocale = locale.value;
             const months = monthsByLocale[currentLocale] || englishMonths;
             const month = months[date.getMonth()];
             const day = date.getDate();
+            const year = date.getFullYear();
+            if (accountChartCostStore.timeframe === 'allPeriod') {
+              return currentLocale === 'ru'
+                ? `${day} ${month} ${year}`
+                : `${month} ${day}, ${year}`;
+            }
             return `${month} ${day}`;
           }
         },
@@ -209,8 +219,7 @@
         labels: {
           formatter: (value: number) => {
             if (Math.abs(value) >= 10000) {
-              const suffix = locale.value === 'ge' ? ' ათასი' : 'k';
-              return Math.round(value / 1000) + suffix;
+              return Math.round(value / 1000) + t('suffix');
             }
             return value;
           }
@@ -249,8 +258,7 @@
         y: {
           formatter: (value: number) => {
             if (dataMax > 10000) {
-              const suffix = locale.value === 'ge' ? ' ათასი' : 'k';
-              return Math.round(value / 1000) + suffix;
+              return Math.round(value / 1000) + t('suffix');
             }
             return value;
           }
@@ -291,44 +299,26 @@
       accountChartCostStore.data.length > 0 ? accountChartCostStore.data.map(d => d.value) : [0];
     const dataMax = Math.max(...values);
     const dataMin = Math.min(...values);
-
-    const absMax = Math.max(Math.abs(dataMin), Math.abs(dataMax));
-    const roughStep = absMax / 3;
-    const magnitude = Math.pow(10, Math.floor(Math.log10(roughStep)));
-    const normalized = roughStep / magnitude;
-    let niceStep;
-    if (normalized <= 1) niceStep = 1;
-    else if (normalized <= 2) niceStep = 2;
-    else if (normalized <= 5) niceStep = 5;
-    else niceStep = 10;
-    niceStep *= magnitude;
-
-    let yMin, yMax;
-    if (dataMin >= 0) {
-      yMin = 0;
-      yMax = niceStep * 5;
-    } else if (dataMax <= 0) {
-      yMin = -niceStep * 5;
-      yMax = 0;
-    } else {
-      const maxAbsValue = Math.max(Math.abs(dataMin), Math.abs(dataMax));
-      const rangeStep = Math.ceil(maxAbsValue / 2.5);
-      const niceRangeStep = Math.ceil(rangeStep / magnitude) * magnitude;
-      yMin = -niceRangeStep * 2;
-      yMax = niceRangeStep * 3;
-    }
+    const { min: yMin, max: yMax } = calcAxisBounds(dataMin, dataMax);
 
     const updatedOptions = {
       xaxis: {
         type: 'datetime',
         labels: {
           datetimeUTC: false,
+          offsetX: 15,
           formatter: (value: number) => {
             const date = new Date(value);
             const currentLocale = locale.value;
             const months = monthsByLocale[currentLocale] || englishMonths;
             const month = months[date.getMonth()];
             const day = date.getDate();
+            const year = date.getFullYear();
+            if (accountChartCostStore.timeframe === 'allPeriod') {
+              return currentLocale === 'ru'
+                ? `${day} ${month} ${year}`
+                : `${month} ${day}, ${year}`;
+            }
             return currentLocale === 'ru' ? `${day} ${month}` : `${month} ${day}`;
           }
         },
@@ -346,8 +336,7 @@
         labels: {
           formatter: (value: number) => {
             if (Math.abs(value) >= 10000) {
-              const suffix = locale.value === 'ge' ? ' ათასი' : 'k';
-              return Math.round(value / 1000) + suffix;
+              return Math.round(value / 1000) + t('suffix');
             }
             return value.toLocaleString();
           }

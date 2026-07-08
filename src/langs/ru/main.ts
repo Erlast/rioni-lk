@@ -31,6 +31,7 @@ export const ru = {
   back: 'Назад',
   next: 'Отправить',
   phoneNumber: 'Номер телефона',
+  suffix: 'тыс.',
   title: {
     auth: 'Личный какбинет - Вход',
     portfolio: 'Личный кабинет — Счета',

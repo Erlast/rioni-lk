@@ -98,16 +98,7 @@
         </v-col>
       </v-row>
     </div>
-    <v-sheet v-if="loading">
-      <v-skeleton-loader
-        v-if="loading"
-        class="mx-auto elevation-0"
-        max-width="100%"
-        type="chip@6, ossein, table-thead, table-row@4, table-row-divider, table-tfoot, divider,text"
-      ></v-skeleton-loader>
-    </v-sheet>
-
-    <div v-else class="papers-body">
+    <div class="papers-body">
       <v-sheet v-if="props.currentAsset !== 'currency'">
         <v-row
           v-for="item in rawItems"

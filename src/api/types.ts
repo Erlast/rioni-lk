@@ -66,6 +66,10 @@ export interface IPortfolioModel {
   assets: IAssetModel[];
   profit: IProfitModel;
   paperSum: number;
+  total:number;
+  totalPages: number;
+  page: number;
+  perPage: number;
 }
 
 export interface IAssetModel {

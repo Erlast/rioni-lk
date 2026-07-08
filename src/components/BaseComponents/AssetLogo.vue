@@ -16,10 +16,12 @@
 
 <template>
   <v-img
+    width="36"
+    height="36"
     max-width="36"
     max-height="36"
     class="img-zoom"
-    :src="logo ?? null"
+    :src="logo ? `${logo}?${Math.random()}` : null"
     lazy-src="/img/no-img.png"
     :alt="ticker + paperType"
   />

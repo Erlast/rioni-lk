@@ -46,7 +46,11 @@ export const useAssetsStore = defineStore<'assets', IState, IGetters, IActions>(
     data: {
       assets: [],
       profit: { investedSum: 0, totalDiff: 0 },
-      paperSum: 0
+      paperSum: 0,
+      total: 0,
+      totalPages: 1,
+      page: 1,
+      perPage: 10
     },
     loading: false,
     error: undefined

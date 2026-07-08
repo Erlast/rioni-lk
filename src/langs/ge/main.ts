@@ -31,6 +31,7 @@ export const ge = {
   back: 'უკან',
   next: 'გაგზავნა',
   phoneNumber: 'ტელეფონის ნომერი',
+  suffix: 'ათასი',
   title: {
     auth: 'პირადი კაბინეტი - შესვლა',
     portfolio: 'პირადი კაბინეტი — პორტფელი',

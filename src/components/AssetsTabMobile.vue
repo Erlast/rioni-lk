@@ -252,7 +252,7 @@
   }
 
   .paper-row {
-    height: 72px;
+    max-height: 120px;
     align-items: center;
 
     .table-cell {
