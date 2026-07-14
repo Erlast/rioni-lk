@@ -44,7 +44,11 @@ export const profile = {
       nicknameTitle: 'Username',
       uploadAvatarTitle: 'Upload an avatar',
       loginTitle: 'Login',
-      passwordTitle: 'Password'
+      passwordTitle: 'Password',
+      confirmAvatarDeleteTitle: 'Confirm action',
+      confirmAvatarDelete: 'Do you want to delete avatar?',
+      cancelBtn: 'Cancel',
+      okBtn: 'OK'
     },
     anketa: {
       anketaTitle: 'Questionnaire',

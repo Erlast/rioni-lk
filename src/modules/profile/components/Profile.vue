@@ -33,8 +33,18 @@
       >
         <v-sheet :width="mobile ? 127 : 170">
           <v-img
+            v-if="accountStore.data.photoUrl"
             :src="accountStore.data.photoUrl"
             alt="photo"
+            :height="mobile ? 127 : 170"
+            :width="mobile ? 127 : 170"
+            aspect-ratio="1/1"
+            rounded="mg"
+            cover
+          />
+          <v-img
+            v-else
+            src="/img/no-avatar.png"
             :height="mobile ? 127 : 170"
             :width="mobile ? 127 : 170"
             aspect-ratio="1/1"

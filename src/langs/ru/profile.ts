@@ -44,7 +44,11 @@ export const profile = {
       nicknameTitle: 'Никнейм',
       uploadAvatarTitle: 'Загрузить аватар',
       loginTitle: 'Логин',
-      passwordTitle: 'Пароль'
+      passwordTitle: 'Пароль',
+      confirmAvatarDeleteTitle: 'Подтвердите удаление',
+      confirmAvatarDelete: 'Вы точно хотите удалить аватар?',
+      cancelBtn: 'Отмена',
+      okBtn: 'OK'
     },
     anketa: {
       anketaTitle: 'Анкета',

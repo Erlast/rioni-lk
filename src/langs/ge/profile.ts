@@ -44,7 +44,11 @@ export const profile = {
       nicknameTitle: 'მომხმარებლის სახელი',
       uploadAvatarTitle: 'ავატარის ატვირთვა',
       loginTitle: 'მომხმარებლის სახელი',
-      passwordTitle: 'პაროლი'
+      passwordTitle: 'პაროლი',
+      confirmAvatarDeleteTitle: 'წაშლის დადასტურება',
+      confirmAvatarDelete: 'ნამდვილად გსურთ ავატარის წაშლა?',
+      cancelBtn: 'გაუქმება',
+      okBtn: 'დიახ'
     },
     anketa: {
       anketaTitle: 'კითხვარი',

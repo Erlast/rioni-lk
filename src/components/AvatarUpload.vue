@@ -1,3 +1,4 @@
+x
 <script setup lang="ts">
   import accountsService from '@/api/accountService';
   import { useAccountStore } from '@/stores/accountStore';
@@ -13,6 +14,21 @@
   const fileUpload = ref<File>();
   const needPreview = ref(false);
   const isLoading = ref(false);
+  const dialog = ref(false);
+
+  const cancelBlock = () => {
+    dialog.value = false;
+  };
+
+  const confirmBlock = async () => {
+    try {
+      await accountsService.deleteAvatar();
+      accountStore.data.photoUrl = '';
+      dialog.value = false;
+    } catch (e) {
+      notifyStore.showServiceError(e);
+    }
+  };
 
   watch(
     () => fileUpload.value,
@@ -47,7 +63,35 @@
     show-size
     class="upload-content border-0 pa-0"
   >
-    <template v-slot:icon></template>
+    <template v-slot:icon>
+      <v-btn
+        v-if="accountStore.data.photoUrl"
+        icon="mdi-close"
+        variant="flat"
+        class="position-absolute"
+        density="compact"
+        style="top: 20px; right: 5px"
+        @click="dialog = true"
+      />
+      <v-dialog v-model="dialog" max-width="400">
+        <v-card>
+          <v-card-title class="text-background-blue font-semibold pa-4">
+            {{ t('profile.modals.settings.confirmAvatarDeleteTitle') }}
+          </v-card-title>
+          <v-card-text>
+            {{ t('profile.modals.settings.confirmAvatarDelete') }}
+          </v-card-text>
+          <v-card-actions class="pa-4">
+            <v-btn variant="text" rounded="lg" @click="cancelBlock">
+              {{ t('profile.modals.settings.cancelBtn') }}
+            </v-btn>
+            <v-btn variant="flat" rounded="lg" color="element-check" @click="confirmBlock">
+              <v-sheet class="text-white">{{ t('profile.modals.settings.okBtn') }}</v-sheet>
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </template>
     <template v-slot:browse="{ props: itemProps }">
       <v-btn :loading="isLoading" v-bind="itemProps" variant="text" rounded="lg">
         <v-icon icon="mdi-arrow-down" />
@@ -63,8 +107,9 @@
           width="146"
           height="146"
           :src="accountStore.data.photoUrl"
+          lazy-src="/img/no-avatar.png"
         />
-        <v-img v-else width="146" height="146" src="/img/avatar-default.png" />
+        <v-img v-else width="146" height="146" src="/img/no-avatar.png" />
       </v-sheet>
     </template>
     <template v-slot:divider></template>

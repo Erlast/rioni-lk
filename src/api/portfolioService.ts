@@ -16,13 +16,11 @@ const portfolioService = {
       return response.data;
     });
   },
-  async assets(params: IPortfolioAssetsParams): Promise<IPortfolioModel> {
+  async assets(accountId: number, params: IPortfolioAssetsParams): Promise<IPortfolioModel> {
     let config = {};
     if (params) {
       const filteredParams = Object.fromEntries(
-        Object.entries(params).filter(
-          ([, value]) => value !== null && value !== ''
-        )
+        Object.entries(params).filter(([, value]) => value !== null && value !== '')
       );
       config = {
         params: filteredParams,
@@ -31,9 +29,11 @@ const portfolioService = {
         }
       };
     }
-    return httpCommunicator.get(`/portfolio/assets`, config).then((response: AxiosResponse) => {
-      return response.data;
-    });
+    return httpCommunicator
+      .get(`/portfolio/${accountId}/assets`, config)
+      .then((response: AxiosResponse) => {
+        return response.data;
+      });
   },
   async portfolioData(accountId: number, timeframe: TimeframeType): Promise<IAccountCostModel[]> {
     return httpCommunicator

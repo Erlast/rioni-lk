@@ -9,6 +9,8 @@ import {
   IIntervalUpdateState,
   intervalUpdateState
 } from '@/stores/intervalUpdateStore';
+import { useAccountStore } from '@/stores/accountStore.ts';
+import { usePortfolioStore } from '@/stores/portfolioStore.ts';
 
 interface IState extends IIntervalUpdateState {
   data: IPortfolioModel;
@@ -61,12 +63,21 @@ export const useAssetsStore = defineStore<'assets', IState, IGetters, IActions>(
     async load() {
       this.loading = true;
       try {
-        const data = await portfolioService.assets(this.params);
-        if (data) {
-          this.data = data;
-        } else {
+        const portfolioStore = usePortfolioStore();
+        const accountId = portfolioStore.data.currentAccount
+          ? portfolioStore.data.currentAccount.id
+          : null;
+        if (!accountId) {
           this.data.assets = [];
           this.data.profit = { investedSum: 0, totalDiff: 0 };
+        } else {
+          const data = await portfolioService.assets(accountId, this.params);
+          if (data) {
+            this.data = data;
+          } else {
+            this.data.assets = [];
+            this.data.profit = { investedSum: 0, totalDiff: 0 };
+          }
         }
       } catch (error: any) {
         this.error = { name: error.code, message: error.message };
@@ -78,12 +89,21 @@ export const useAssetsStore = defineStore<'assets', IState, IGetters, IActions>(
     },
     async autoUpdate() {
       try {
-        const data = await portfolioService.assets(this.params);
-        if (data) {
-          this.data = data;
-        } else {
+        const portfolioStore = usePortfolioStore();
+        const accountId = portfolioStore.data.currentAccount
+          ? portfolioStore.data.currentAccount.id
+          : null;
+        if (!accountId) {
           this.data.assets = [];
           this.data.profit = { investedSum: 0, totalDiff: 0 };
+        } else {
+          const data = await portfolioService.assets(accountId, this.params);
+          if (data) {
+            this.data = data;
+          } else {
+            this.data.assets = [];
+            this.data.profit = { investedSum: 0, totalDiff: 0 };
+          }
         }
       } catch (error: any) {
         this.error = { name: error.code, message: error.message };

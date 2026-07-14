@@ -73,7 +73,7 @@ const accountsService = {
   },
 
   async deleteAvatar() {
-    return httpCommunicator.delete(`/profile/avatar/me`);
+    return httpCommunicator.delete(`/profile/me/avatar`);
   }
 };
 export default accountsService;
