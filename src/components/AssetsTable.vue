@@ -9,6 +9,7 @@
   import AssetsTabMobile from '@/components/AssetsTabMobile.vue';
   import { useMediaQuery } from '@vueuse/core';
   import { debounce } from 'lodash-es';
+  import CustomPaginator from '@/components/BaseComponents/CustomPaginator.vue';
 
   const { t, locale } = useI18n();
   const tabsStore = useTabsStore();
@@ -63,9 +64,6 @@
   });
 
   const changePage = (page: number) => {
-    if (page < 1 || page > assetsStore.data.totalPages) {
-      return;
-    }
     assetsStore.params.page = page;
     loadAssets();
   };
@@ -160,42 +158,12 @@
       </v-sheet>
     </v-tabs-window-item>
   </v-tabs-window>
-  <v-sheet v-if="isPaginatorVisible" class="d-flex justify-end ga-1 align-center">
-    <v-sheet
-      class="rounded-circle bg-main d-flex align-center justify-center"
-      :class="{ 'cursor-pointer': assetsStore.data.page > 1 }"
-      height="30"
-      width="30"
-      @click="changePage(assetsStore.data.page - 1)"
-    >
-      <v-icon icon="mdi-chevron-left" :disabled="assetsStore.data.page === 1" />
-    </v-sheet>
-    <v-sheet class="d-flex justify-space-between align-center px-4 bg-main rounded-xl" height="30">
-      <v-sheet
-        v-for="page in assetsStore.data.totalPages"
-        :key="page"
-        class="rounded-ml d-flex justify-center align-center cursor-pointer"
-        :class="{ 'bg-element text-white': page === assetsStore.data.page }"
-        width="30"
-        height="30"
-        @click="changePage(page)"
-      >
-        {{ page }}
-      </v-sheet>
-    </v-sheet>
-    <v-sheet
-      class="rounded-circle bg-main d-flex align-center justify-center"
-      :class="{ 'cursor-pointer': assetsStore.data.page < assetsStore.data.totalPages }"
-      height="30"
-      width="30"
-      @click="changePage(assetsStore.data.page + 1)"
-    >
-      <v-icon
-        icon="mdi-chevron-right"
-        :disabled="assetsStore.data.page === assetsStore.data.totalPages"
-      />
-    </v-sheet>
-  </v-sheet>
+  <custom-paginator
+    v-if="isPaginatorVisible"
+    v-model="assetsStore.data.page"
+    :total-pages="assetsStore.data.totalPages"
+    @update:model-value="changePage"
+  />
 </template>
 <style scoped lang="scss">
   .v-tabs {

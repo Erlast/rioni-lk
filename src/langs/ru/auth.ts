@@ -1,12 +1,13 @@
 export const auth = {
   login: 'Логин',
   password: 'Пароль',
-  codeTitle: 'Ввод кода',
+  codeTitle: 'Введите код подтверждения',
+  codeSubtitle: 'Код отправлен на номер телефона {phoneNumber}',
   sendCodeAgain: 'Отправить код повторно',
   codeDelayPrepend: 'Не пришел код?',
   codeDelay: 'Отправить повторно через {delay} сек',
-  enterTitle: 'Вход',
-  continue: 'Продолжить',
+  enterTitle: 'Добро пожаловать!',
+  continue: 'Войти в аккаунт',
   codeLabel: 'Код',
   enterConfirmationCode: 'Введите код подтверждения',
   slogan: 'Rioni Capital – европейский брокер с грузинским колоритом'

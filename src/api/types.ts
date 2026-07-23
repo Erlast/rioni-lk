@@ -66,7 +66,7 @@ export interface IPortfolioModel {
   assets: IAssetModel[];
   profit: IProfitModel;
   paperSum: number;
-  total:number;
+  total: number;
   totalPages: number;
   page: number;
   perPage: number;
@@ -169,6 +169,7 @@ export interface ITokenModel {
   access_token?: string;
   token_type?: 'bearer' | string;
   sms_code_id?: number;
+  phone_masked?: string;
 }
 
 export interface ICredentialModel {

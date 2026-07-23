@@ -9,8 +9,13 @@
   import { IOrderModel } from '@/api/types.ts';
   import dayjs from 'dayjs';
   import DatePickerRange from '@/components/BaseComponents/DatePickerRange.vue';
-  import { FilterOrdersRequestModel, OperationTypes } from '@/components/types/OperationHistory.ts';
+  import {
+    DataOptions,
+    FilterOrdersRequestModel,
+    OperationTypes
+  } from '@/components/types/OperationHistory.ts';
   import { debounce } from 'lodash-es';
+  import CustomPaginator from '@/components/BaseComponents/CustomPaginator.vue';
 
   const { mobile } = useDisplay();
   const { t } = useI18n();
@@ -193,6 +198,12 @@
     handlerFetch();
   };
 
+  const onPaginationChange = (e: DataOptions) => {
+    tableOptions.page = e.page;
+    tableOptions.itemsPerPage = e.itemsPerPage;
+    handlerFetch();
+  };
+
   watch(
     () => period.value,
     () => {
@@ -265,8 +276,8 @@
               rounded="xl"
               flat
               hide-details="auto"
-              :label="t('pronounce.typeOperationTitle')"
-              placeholder="Статус"
+              :label="t('pronounce.operationTable.statusTitle')"
+              :placeholder="t('pronounce.operationTable.statusTitle')"
               density="compact"
               menu-icon="mdi-chevron-down"
               clearable
@@ -282,9 +293,18 @@
           :page="tableOptions.page"
           :items-per-page="tableOptions.itemsPerPage"
           :items="operations"
-          :items-length="operations.length"
-          hide-default-footer
+          :items-length="totalCount"
+          @update:options="onPaginationChange"
         >
+          <template v-slot:bottom>
+            <v-sheet class="mb-2 mr-2">
+              <custom-paginator
+                v-if="Math.floor(totalCount / tableOptions.itemsPerPage) > 1"
+                v-model="tableOptions.page"
+                :total-pages="Math.floor(totalCount / tableOptions.itemsPerPage)"
+              />
+            </v-sheet>
+          </template>
           <template #[`item.createdAt`]="{ item }">
             <v-sheet>
               {{ item.createdAt ? dayjs(item.createdAt).format('DD.MM.YYYY') : '-' }}

@@ -47,7 +47,7 @@
 <template>
   <v-sheet
     class="d-flex justify-end align-center pa-4"
-    style="background-color: var(--color-MainBackground) !important"
+    style="background-color: var(--color-Choosen) !important"
   >
     <v-sheet
       v-if="mobile"
@@ -62,26 +62,17 @@
 
   <div
     :class="['d-flex', 'align-center', 'justify-center', 'bg-image']"
-    style="height: calc(100vh - 68px)"
+    style="height: calc(100vh - 68px); background-color: var(--color-Choosen) !important"
   >
-    <v-card :width="mobile ? '100%' : 720" height="480" class="elevation-0 rounded-xxl pa-5">
-      <v-card-title v-if="!mobile"><RioniLogo /></v-card-title>
-      <v-card-text
-        class="d-flex align-center mt-6"
-        :class="{ 'justify-space-between': !mobile, 'justify-center': mobile }"
-      >
-        <v-sheet v-if="!mobile" class="d-flex justify-center" width="50%">
-          <v-sheet class="d-flex flex-column align-center justify-center" max-width="230">
-            <v-img src="/img/rioni-logo-big.png" max-width="150" width="150" />
-            <v-sheet class="text-hard-blue">
-              {{ t('auth.slogan') }}
-            </v-sheet>
-          </v-sheet>
-        </v-sheet>
-        <v-sheet width="320">
-          <AuthForm v-if="!authStore.isSmsSend" @login="loginHandle" />
-          <AuthSmsForm v-else @send-sms="smsSend" />
-        </v-sheet>
+    <v-card
+      :width="mobile ? '100%' : 760"
+      height="520"
+      class="elevation-0 rounded-xxl"
+      style="background-color: white !important"
+    >
+      <v-card-text class="pa-0 h-100">
+        <AuthForm v-if="!authStore.isSmsSend" @login="loginHandle" />
+        <AuthSmsForm v-else @send-sms="smsSend" />
       </v-card-text>
     </v-card>
   </div>

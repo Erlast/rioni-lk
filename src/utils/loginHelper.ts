@@ -21,7 +21,7 @@ export async function proceedStores(data: ITokenModel, credential?: ICredentialM
       authStore.setDataSms(credential);
     }
     authStore.setIdAuth(data.sms_code_id);
-    // authStore.setMaskedPhoneNumber(data.phone)
+    authStore.setMaskedPhoneNumber(data.phone_masked)
     authStore.setTimerSms(300);
     authStore.setSmsSend(true);
   }

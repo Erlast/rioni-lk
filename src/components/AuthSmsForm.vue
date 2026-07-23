@@ -10,6 +10,8 @@
   import { useNotify } from '@/stores/notifyStore.ts';
   import { useRouter } from 'vue-router';
   import { proceedStores } from '@/utils/loginHelper.ts';
+  import RioniLogo from '@/components/RioniLogo.vue';
+  import { useDisplay } from 'vuetify';
 
   interface OTPCredential extends Credential {
     code: string;
@@ -24,6 +26,7 @@
   const otpInputRef = ref<HTMLInputElement | null>(null);
   const interval = ref();
   const btnDisabled = ref(true);
+  const { mobile } = useDisplay();
 
   const initialState = {
     code: code
@@ -146,70 +149,70 @@
 </script>
 
 <template>
-  <v-sheet class="rounded-xxl pa-5" style="background-color: var(--color-LightBlue) !important">
-    <v-sheet class="text-hard-blue font-22">{{ t('auth.codeTitle') }}</v-sheet>
-    <v-sheet class="text-type-text font-smaller">{{ t('auth.enterConfirmationCode') }}</v-sheet>
-    <v-form ref="loginForm" fast-fail @submit.prevent="sendSms">
-      <v-sheet class="mt-2">
-        <v-otp-input
-          ref="otpInputRef"
-          v-model="code"
-          autocomplete="one-time-code"
-          inputmode="numeric"
-          length="6"
-          max-width="246"
-          focused
-          :error="!!v.code.$errors.length"
-          @finish="btnDisabled = false"
-        ></v-otp-input>
-        <v-sheet
-          v-if="!!v.code.$errors.length"
-          class="d-flex justify-center mb-2"
-          :class="[v.code.$errors.length ? 'text-additional-error' : '']"
-        >
-          {{ v.code.$errors[0].$message }}
+  <v-sheet class="d-flex flex-column rounded-xxl pa-5">
+    <v-sheet v-if="!mobile"><RioniLogo /></v-sheet>
+    <v-sheet class="d-flex ga-1 font-12 cursor-pointer text-additional-link mt-4" @click="backToAuth()">
+      <v-icon icon="mdi-arrow-left" />
+      <v-sheet>Назад</v-sheet>
+    </v-sheet>
+    <v-sheet class="d-flex justify-center">
+      <v-sheet class="d-flex flex-column align-center justify-center" max-width="355">
+        <v-sheet class="text-hard-blue font-22">{{ t('auth.codeTitle') }}</v-sheet>
+        <v-sheet class="text-type-text font-smaller">
+          {{ t('auth.codeSubtitle', { phoneNumber: authStore.maskedPhone }) }}
         </v-sheet>
+        <v-form ref="loginForm" fast-fail @submit.prevent="sendSms">
+          <v-sheet class="mt-2">
+            <v-otp-input
+              ref="otpInputRef"
+              v-model="code"
+              autocomplete="one-time-code"
+              inputmode="numeric"
+              length="6"
+              max-width="246"
+              focused
+              :error="!!v.code.$errors.length"
+              @finish="btnDisabled = false"
+            ></v-otp-input>
+            <v-sheet
+              v-if="!!v.code.$errors.length"
+              class="d-flex justify-center mb-2"
+              :class="[v.code.$errors.length ? 'text-additional-error' : '']"
+            >
+              {{ v.code.$errors[0].$message }}
+            </v-sheet>
+          </v-sheet>
+          <v-sheet class="d-flex flex-column ga-2">
+            <v-btn
+              :disabled="btnDisabled"
+              variant="flat"
+              rounded="lg"
+              bg="type-text"
+              color="type-text"
+              type="submit"
+              block
+            >
+              <v-sheet class="text-white">{{ t('next') }}</v-sheet>
+            </v-btn>
+            <v-btn
+              v-if="authStore.timerSms <= 0"
+              ref="smsSendAgain"
+              rounded="lg"
+              variant="flat"
+              bg="white"
+              color="white"
+              block
+              @click="sendSmsAgain"
+            >
+              <v-sheet class="text-hard-blue">{{ t('auth.sendCodeAgain') }}</v-sheet>
+            </v-btn>
+            <div v-if="authStore.timerSms > 0" class="d-flex font-small mb-6 justify-start">
+              <Timer v-model="authStore.timerSms" />
+            </div>
+          </v-sheet>
+        </v-form>
       </v-sheet>
-      <v-sheet class="d-flex flex-column ga-2">
-        <v-btn
-          :disabled="btnDisabled"
-          variant="flat"
-          rounded="lg"
-          bg="type-text"
-          color="type-text"
-          type="submit"
-          block
-        >
-          <v-sheet class="text-white">{{ t('next') }}</v-sheet>
-        </v-btn>
-        <v-btn
-          v-if="authStore.timerSms <= 0"
-          ref="smsSendAgain"
-          rounded="lg"
-          variant="flat"
-          bg="white"
-          color="white"
-          block
-          @click="sendSmsAgain"
-        >
-          <v-sheet class="text-hard-blue">{{ t('auth.sendCodeAgain') }}</v-sheet>
-        </v-btn>
-        <v-btn
-          ref="btnBackToAuth"
-          variant="flat"
-          bg="white"
-          color="white"
-          rounded="lg"
-          block
-          @click="backToAuth"
-        >
-          <v-sheet class="text-hard-blue">{{ t('back') }}</v-sheet>
-        </v-btn>
-        <div v-if="authStore.timerSms > 0" class="d-flex font-small mb-6 justify-start">
-          <Timer v-model="authStore.timerSms" />
-        </div>
-      </v-sheet>
-    </v-form>
+    </v-sheet>
   </v-sheet>
 </template>
 
@@ -227,8 +230,8 @@
       min-width: 40px !important;
     }
 
-    :deep(.v-field__outline) {
-      --v-field-border-width: 0;
-    }
+    //:deep(.v-field__outline) {
+    //  --v-field-border-width: 0;
+    //}
   }
 </style>

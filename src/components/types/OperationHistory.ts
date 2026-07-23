@@ -15,3 +15,11 @@ export type FilterOrdersRequestModel = {
   page?: number;
   limit?: number;
 };
+
+export type DataOptions = {
+  page: number;
+  itemsPerPage: number;
+  sortBy?: [];
+  groupBy?: [];
+  search?: string;
+};
