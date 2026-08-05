@@ -21,9 +21,10 @@ export async function proceedStores(data: ITokenModel, credential?: ICredentialM
       authStore.setDataSms(credential);
     }
     authStore.setIdAuth(data.sms_code_id);
-    authStore.setMaskedPhoneNumber(data.phone_masked)
+    authStore.setMaskedPhoneNumber(data.phone_masked);
     authStore.setTimerSms(300);
     authStore.setSmsSend(true);
+    authStore.setBlockedTimeLeft(0);
   }
 }
 
@@ -34,4 +35,14 @@ export const clearTempData = () => {
   authStore.setDataSms(undefined);
   authStore.setIdAuth(0);
   authStore.setMaskedPhoneNumber('');
+  authStore.setBlockedTimeLeft(0);
+};
+
+export const setBlocked = (timeLeft: number) => {
+  const authStore = useAuthStore();
+  authStore.setBlockedTimeLeft(timeLeft);
+  authStore.setSmsSend(true);
+  if (timeLeft === 0) {
+    clearTempData();
+  }
 };

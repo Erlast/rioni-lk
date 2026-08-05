@@ -9,7 +9,6 @@ import {
   IIntervalUpdateState,
   intervalUpdateState
 } from '@/stores/intervalUpdateStore';
-import { useAccountStore } from '@/stores/accountStore.ts';
 import { usePortfolioStore } from '@/stores/portfolioStore.ts';
 
 interface IState extends IIntervalUpdateState {

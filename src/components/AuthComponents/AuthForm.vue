@@ -5,9 +5,10 @@
   import { useI18n } from 'vue-i18n';
   import type { ICredentialModel } from '@/api/types';
   import { useNotify } from '@/stores/notifyStore.ts';
-  import { useDisplay, useTheme } from 'vuetify';
-  import { loginStoreData } from '@/utils/loginHelper.ts';
+  import { useDisplay } from 'vuetify';
+  import { loginStoreData, setBlocked } from '@/utils/loginHelper.ts';
   import RioniLogo from '@/components/RioniLogo.vue';
+  import { useRouter } from 'vue-router';
 
   const loading = ref(false);
   const login = ref('');
@@ -15,6 +16,7 @@
   const visible = ref<boolean>(false);
   const { t } = useI18n();
   const $externalResults = ref<{ [key: string]: string[] }>({});
+  const router = useRouter();
 
   const { mobile } = useDisplay();
 
@@ -67,8 +69,11 @@
         loading.value = false;
       }
     } catch (error: any) {
-      if (error.status === 403) {
+      if (error.status === 403 || error.status === 401) {
         $externalResults.value.password = [t('validations.wrongLoginOrPassword')];
+        $externalResults.value.login = [''];
+      } else if (error.status === 422) {
+        setBlocked(error.response.data.timeLeft);
       } else {
         notifyStore.showServiceError(error);
       }
@@ -97,7 +102,7 @@
                 variant="solo"
                 rounded
                 flat
-                hide-details="auto"
+                hide-details
                 label=""
                 :error="v$.login.$invalid"
                 :error-messages="v$.login.$errors.map(e => e.$message)"
@@ -109,6 +114,7 @@
                 v-model="password"
                 variant="solo"
                 flat
+                class="field-password"
                 rounded
                 hide-details="auto"
                 :type="!visible ? 'password' : 'text'"
@@ -127,8 +133,14 @@
                   </v-sheet>
                 </template>
               </v-text-field>
+              <v-sheet
+                class="d-flex justify-end text-additional-link cursor-pointer font-smaller"
+                @click="router.push('/auth/reset-password')"
+              >
+                {{ t('auth.forgotPassword') }}
+              </v-sheet>
             </v-sheet>
-            <v-sheet class="d-flex flex-column ga-2 mt-4">
+            <v-sheet class="d-flex flex-column ga-2 mt-2">
               <v-btn
                 :loading="loading"
                 variant="flat"
@@ -138,8 +150,12 @@
                 type="submit"
                 block
               >
-                <v-sheet class="text-white">{{ t('auth.continue') }}</v-sheet>
+                <v-sheet class="text-white">{{ t('auth.enterBtn') }}</v-sheet>
               </v-btn>
+            </v-sheet>
+            <v-sheet class="d-flex justify-center font-smaller ga-1">
+              {{ t('auth.haveNoAccountYet') }}
+              <span class="text-additional-link cursor-pointer">{{ t('auth.reg') }}</span>
             </v-sheet>
           </v-sheet>
         </v-form>
@@ -166,19 +182,26 @@
 
 <style lang="scss">
   #loginForm {
+    .v-input--error {
+      &.field-password {
+        input {
+          border-radius: 8px 0 0 8px;
+          border-right: 0;
+        }
+      }
+
+      input {
+        border-radius: 8px;
+        border: 1px solid red;
+      }
+    }
+
     .v-field {
       background-color: white !important;
     }
 
     input {
       border-radius: 8px;
-    }
-
-    input:-webkit-autofill {
-      //-webkit-box-shadow: unset !important;
-      //-webkit-text-fill-color: unset;
-      //background-color: unset;
-      //transition: unset;
     }
   }
 </style>

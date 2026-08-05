@@ -17,32 +17,39 @@
   const modelValue = defineModel<string | number | null>();
 
   const isActive = ref(false);
-  const timerInterval = () =>
-    setInterval(() => {
+  const timerId = ref<ReturnType<typeof setInterval> | null>(null);
+
+  const startInterval = () => {
+    if (timerId.value !== null) return;
+    timerId.value = setInterval(() => {
       if (typeof modelValue.value !== 'number') {
-        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
         modelValue.value = 0;
       }
       if (modelValue.value > 0) {
         modelValue.value--;
       } else {
-        pauseTimer(); // Останавливаем таймер, когда он доходит до 0
+        pauseTimer();
       }
     }, 1000);
+  };
+
+  const clearTimer = () => {
+    if (timerId.value !== null) {
+      clearInterval(timerId.value);
+      timerId.value = null;
+    }
+  };
 
   const formattedTime = computed(() => {
     if (typeof modelValue.value !== 'number') {
-      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
       modelValue.value = 0;
     }
-    //const minutes = Math.floor(modelValue.value / 60)
     const minutes = Math.floor(modelValue.value / 60);
     const seconds = modelValue.value % 60;
 
     if (props.showLeadingZero) {
       return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
     } else {
-      // Если минуты равны 0, показываем только секунды
       if (minutes === 0) {
         return `${seconds}`;
       } else {
@@ -54,14 +61,14 @@
   const startTimer = () => {
     if (!isActive.value) {
       isActive.value = true;
-      timerInterval();
+      startInterval();
     }
   };
 
   const pauseTimer = () => {
     if (isActive.value) {
       isActive.value = false;
-      clearInterval(timerInterval());
+      clearTimer();
     }
   };
 
@@ -70,7 +77,7 @@
   });
 
   onUnmounted(() => {
-    clearInterval(timerInterval());
+    clearTimer();
   });
 </script>
 

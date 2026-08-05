@@ -41,7 +41,8 @@ export const ru = {
     profile: 'Личный кабинет — Профиль',
     notifications: 'Личный кабинет — Уведомления',
     reports: 'Личный кабинет — Отчет',
-    notfound: 'Личный кабинет — 404'
+    notfound: 'Личный кабинет — 404',
+    auth_reset_password: 'Личный кабинет - Восстановление пароля'
   },
   errorTemporaryUnavailable: {
     message: 'Что-то пошло не так',

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { jwtDecode } from 'jwt-decode';
 import { LocationQuery } from 'vue-router';
-import { IAccountAttributes, ICredentialModel } from '@/api/types';
+import { IContactModel, ICredentialModel } from '@/api/types';
 
 interface IEntryPoint {
   url: string | undefined;
@@ -16,6 +16,9 @@ interface IState {
   idAuth?: number;
   maskedPhone?: string;
   dataSms?: ICredentialModel;
+  blockedTimeLeft: number;
+  recoverSmsId: number;
+  dataRecover?: IContactModel;
 }
 
 interface IGetter {
@@ -34,6 +37,9 @@ interface IAction {
   setMaskedPhoneNumber: (phoneNumber: string | undefined) => void;
   clearEntryPoint: () => void;
   setDataSms: (data: ICredentialModel | undefined) => void;
+  setBlockedTimeLeft: (blockedTimeLeft: number) => void;
+  setRecoverSmsId: (smsId: number) => void;
+  setDataRecover: (dataRecover: IContactModel) => void;
 }
 
 export const useAuthStore = defineStore<'auth', IState, IGetter, IAction>('auth', {
@@ -44,7 +50,10 @@ export const useAuthStore = defineStore<'auth', IState, IGetter, IAction>('auth'
     entryPoint: undefined,
     idAuth: 0,
     maskedPhone: '',
-    dataSms: undefined
+    dataSms: undefined,
+    blockedTimeLeft: 0,
+    recoverSmsId: 0,
+    dataRecover: undefined
   }),
   persist: true,
   actions: {
@@ -75,6 +84,15 @@ export const useAuthStore = defineStore<'auth', IState, IGetter, IAction>('auth'
 
     setMaskedPhoneNumber(phoneNumber: string | undefined) {
       this.maskedPhone = phoneNumber;
+    },
+    setBlockedTimeLeft(blockedTimeLeft: number) {
+      this.blockedTimeLeft = blockedTimeLeft;
+    },
+    setRecoverSmsId(smsId: number) {
+      this.recoverSmsId = smsId;
+    },
+    setDataRecover(dataRecover: IContactModel) {
+      this.dataRecover = dataRecover;
     }
   },
   getters: {

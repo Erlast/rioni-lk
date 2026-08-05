@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { useI18n } from 'vue-i18n';
+  import GlossaryText from '@/components/GlossaryText.vue';
 
   const { t } = useI18n();
 </script>
@@ -9,7 +10,7 @@
     <v-sheet class="d-flex flex-column justify-end ga-2">
       <v-sheet class="font-20 font-semibold">{{ t('reports.banner.title') }}</v-sheet>
       <v-sheet max-width="350">
-        {{ t('reports.banner.subtitle') }}
+        <GlossaryText :text="t('reports.banner.subtitle')" />
       </v-sheet>
     </v-sheet>
   </v-sheet>

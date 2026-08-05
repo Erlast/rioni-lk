@@ -3,7 +3,7 @@
   import ActionCards from '@/components/ActionCards.vue';
   import { useI18n } from 'vue-i18n';
   import { useAccountStore } from '@/stores/accountStore';
-  import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+  import { onMounted, onUnmounted, ref, watch } from 'vue';
   import { usePortfolioStore } from '@/stores/portfolioStore';
   import AssetsTable from '@/components/AssetsTable.vue';
   import { useAssetsStore } from '@/stores/assetsStore';
@@ -15,11 +15,7 @@
   import { useMediaQuery } from '@vueuse/core';
   import TopUpForm from '@/components/BaseComponents/TopUpForm.vue';
   import router from '@/router';
-  import TopUp from '@/assets/icons/topUp.vue';
-  import Wallet from '@/assets/icons/wallet.vue';
-  import Balance from '@/assets/icons/balance.vue';
-  import Nickel from '@/assets/icons/nickel.vue';
-  import Coin from '@/assets/icons/coin.vue';
+  import CurrenciesWidget from '@/components/BaseComponents/CurrenciesWidget.vue';
 
   const { t } = useI18n();
 
@@ -108,6 +104,7 @@
     <v-sheet class="d-flex ga-5">
       <v-sheet width="180" v-if="!mobile">
         <Notice></Notice>
+        <CurrenciesWidget />
         <!-- <Calendar></Calendar>
         <MarketToday></MarketToday> -->
       </v-sheet>

@@ -1,7 +1,6 @@
 import { IAccountModel } from '@/api/types';
 import { defineStore } from 'pinia';
 import portfolioService from '@/api/portfolioService';
-import { useAccountStore } from './accountStore';
 
 interface PorfolioStoreModel {
   accounts: IAccountModel[];

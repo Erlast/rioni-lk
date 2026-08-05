@@ -198,3 +198,33 @@ export interface IOrderModel {
   amount: number;
   status: number;
 }
+
+export interface IContactModel {
+  value: string;
+  type: 'phone' | 'email';
+}
+
+export type languageType = 'ru' | 'ge' | 'en';
+
+export interface IGlossaryModel {
+  id: number;
+  source_no: number;
+  language: languageType;
+  letter: string;
+  term: string;
+  english: string;
+  definition: string;
+}
+
+export interface INBGRatesModel {
+  rates: IRateModel[];
+  rss_date: string;
+}
+
+export interface IRateModel {
+  code: string;
+  rate: string;
+  change: string;
+  direction: string;
+  icon: string;
+}

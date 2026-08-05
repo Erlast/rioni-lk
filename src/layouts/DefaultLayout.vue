@@ -20,7 +20,7 @@
 
 <template>
   <HeaderMobileView v-if="mobile && !landscape" />
-  <HeaderView v-if="!mobile" />
+  <HeaderView v-if="!mobile" />x
   <v-main app>
     <v-sheet class="main-wrapper">
       <v-container

@@ -17,13 +17,17 @@ import { useDictionaryStore } from '@/stores/dictionariesStore';
 import { useAuthStore } from '@/stores/authStore';
 import AuthView from '@/views/AuthView.vue';
 import NotFoundView from '@/views/NotFoundView.vue';
+import AuthLayout from '@/layouts/AuthLayout.vue';
+import RecoveryView from '@/views/RecoveryView.vue';
+import { useGlossaryStore } from '@/stores/glossaryStore.ts';
 
 type NavigationResult = RouteLocationRaw | undefined;
 
 export async function handleNavigation(
   to: RouteLocationNormalized,
   authStore: ReturnType<typeof useAuthStore>,
-  dictionaryStore: ReturnType<typeof useDictionaryStore>
+  dictionaryStore: ReturnType<typeof useDictionaryStore>,
+  glossaryStore: ReturnType<typeof useGlossaryStore>
 ): Promise<NavigationResult> {
   if (to.meta.disabled) {
     return { name: 'notfound' };
@@ -34,6 +38,7 @@ export async function handleNavigation(
 
   async function loadData() {
     await dictionaryStore.fetchDictionaries();
+    await glossaryStore.loadTerms();
   }
 
   if (isAuthenticated) {
@@ -73,7 +78,6 @@ export async function handleNavigation(
     return { name: 'auth' };
   }
 
-  // Логика редиректов для авторизованных пользователей
   if (to.name === 'auth' && isAuthenticated) {
     return { path: '/' };
   }
@@ -84,16 +88,27 @@ export async function handleNavigation(
     return { path: url, query };
   }
 
-
   return undefined;
 }
 
 const routes = [
   {
     path: '/auth',
-    name: 'auth',
-    component: AuthView,
-    meta: { requiresAuth: false }
+    component: AuthLayout,
+    children: [
+      {
+        path: '',
+        name: 'auth',
+        component: AuthView,
+        meta: { requiresAuth: false }
+      },
+      {
+        path: 'reset-password',
+        name: 'reset-password',
+        component: RecoveryView,
+        meta: { requiresAuth: false }
+      }
+    ]
   },
   {
     path: '/',
@@ -158,8 +173,9 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const dictionariesStore = useDictionaryStore();
   const authStore = useAuthStore();
+  const glossaryStore = useGlossaryStore();
   try {
-    const result = await handleNavigation(to, authStore, dictionariesStore);
+    const result = await handleNavigation(to, authStore, dictionariesStore, glossaryStore);
 
     if (result) {
       next(result);

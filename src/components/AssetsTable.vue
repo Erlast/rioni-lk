@@ -9,7 +9,7 @@
   import AssetsTabMobile from '@/components/AssetsTabMobile.vue';
   import { useMediaQuery } from '@vueuse/core';
   import { debounce } from 'lodash-es';
-  import CustomPaginator from '@/components/BaseComponents/CustomPaginator.vue';
+  import BasePaginator from '@/components/BaseComponents/BasePaginator.vue';
 
   const { t, locale } = useI18n();
   const tabsStore = useTabsStore();
@@ -59,12 +59,13 @@
     await assetsStore.load();
   };
 
-  const isPaginatorVisible = computed(() => {
-    return assetsStore.data.totalPages > 1;
-  });
-
   const changePage = (page: number) => {
     assetsStore.params.page = page;
+    loadAssets();
+  };
+
+  const changePerPage = (perPage: number) => {
+    assetsStore.params.perPage = perPage;
     loadAssets();
   };
 
@@ -158,11 +159,12 @@
       </v-sheet>
     </v-tabs-window-item>
   </v-tabs-window>
-  <custom-paginator
-    v-if="isPaginatorVisible"
+  <base-paginator
     v-model="assetsStore.data.page"
     :total-pages="assetsStore.data.totalPages"
+    :per-page="assetsStore.data.perPage"
     @update:model-value="changePage"
+    @update:per-page="changePerPage"
   />
 </template>
 <style scoped lang="scss">

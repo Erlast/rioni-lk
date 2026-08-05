@@ -3,9 +3,13 @@
   import { useI18n } from 'vue-i18n';
 
   import i18n from '@/utils/i18n.ts';
+  import { useGlossaryStore } from '@/stores/glossaryStore.ts';
+  import { languageType } from '@/api/types.ts';
+
+  const glossaryStore = useGlossaryStore();
 
   interface Language {
-    code: 'ru' | 'en' | 'ge';
+    code: languageType;
     name: string;
     flag: string;
   }
@@ -22,10 +26,11 @@
     return languages.find(lang => lang.code === locale.value) || languages[0];
   });
 
-  const selectLanguage = (code: 'ru' | 'en' | 'ge') => {
+  const selectLanguage = (code: languageType) => {
     locale.value = code;
     i18n.global.locale.value = code;
     localStorage.setItem('user-locale', code);
+    glossaryStore.loadTerms();
   };
 </script>
 

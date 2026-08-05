@@ -1,15 +1,15 @@
 <script setup lang="ts">
   import { useI18n } from 'vue-i18n';
   import type { ICodeModel } from '@/api/types';
-  import authService from '@/api/authService';
-  import { onMounted, onUnmounted, reactive, ref, watch } from 'vue';
+  import authService from '@/api/authService.ts';
+  import { computed, onMounted, onUnmounted, reactive, ref, watch } from 'vue';
   import { helpers, required } from '@vuelidate/validators';
   import { useVuelidate } from '@vuelidate/core';
   import Timer from '@/components/BaseComponents/CodeTimer.vue';
   import { useAuthStore } from '@/stores/authStore';
   import { useNotify } from '@/stores/notifyStore.ts';
   import { useRouter } from 'vue-router';
-  import { proceedStores } from '@/utils/loginHelper.ts';
+  import { clearTempData, proceedStores, setBlocked } from '@/utils/loginHelper.ts';
   import RioniLogo from '@/components/RioniLogo.vue';
   import { useDisplay } from 'vuetify';
 
@@ -27,6 +27,8 @@
   const interval = ref();
   const btnDisabled = ref(true);
   const { mobile } = useDisplay();
+  const isActive = ref(false);
+  const blockedTimerId = ref<ReturnType<typeof setInterval> | null>(null);
 
   const initialState = {
     code: code
@@ -48,10 +50,59 @@
     }
   };
 
+  const formattedTimeLeft = computed(() => {
+    if (typeof authStore.blockedTimeLeft !== 'number') {
+      authStore.setBlockedTimeLeft(0);
+    }
+    const minutes = Math.floor(authStore.blockedTimeLeft / 60);
+    const seconds = authStore.blockedTimeLeft % 60;
+
+    if (minutes === 0) {
+      return `${seconds}`;
+    } else {
+      return `${minutes}:${String(seconds).padStart(2, '0')}`;
+    }
+  });
+
+  const startBlockedTimer = () => {
+    if (blockedTimerId.value !== null) return;
+    blockedTimerId.value = setInterval(() => {
+      if (typeof authStore.blockedTimeLeft !== 'number') {
+        authStore.setBlockedTimeLeft(0);
+      }
+      if (authStore.blockedTimeLeft > 0) {
+        authStore.blockedTimeLeft--;
+      } else {
+        clearTempData();
+        pauseTimer();
+      }
+    }, 1000);
+  };
+
+  const clearBlockedTimer = () => {
+    if (blockedTimerId.value !== null) {
+      clearInterval(blockedTimerId.value);
+      blockedTimerId.value = null;
+    }
+  };
+
+  const startTimer = () => {
+    if (!isActive.value) {
+      isActive.value = true;
+      startBlockedTimer();
+    }
+  };
+
+  const pauseTimer = () => {
+    if (isActive.value) {
+      isActive.value = false;
+      clearBlockedTimer();
+    }
+  };
+
   const v = useVuelidate(rules, state, { $externalResults });
 
   const sendSms = async () => {
-    // eslint-disable-next-line no-useless-catch
     try {
       v.value.$touch();
 
@@ -68,8 +119,10 @@
         btnDisabled.value = false;
       }
     } catch (error: any) {
-      if (error.status === 422 || error.status === 403) {
+      if (error.status === 400 || error.status === 403) {
         $externalResults.value.code = [t('validations.wrongCode')];
+      } else if (error.status === 422) {
+        setBlocked(error.response.data.timeLeft);
       } else {
         notifyStore.showServiceError(error);
       }
@@ -137,25 +190,33 @@
       otpInputRef.value.focus();
     }
 
-    await startOTPListener();
+    if (authStore.blockedTimeLeft === 0) {
+      await startOTPListener();
 
-    interval.value = setInterval(startOTPListener, 10000);
+      interval.value = setInterval(startOTPListener, 10000);
+    } else {
+      startTimer();
+    }
   });
 
   onUnmounted(() => {
     abortController?.abort();
     clearInterval(interval.value);
+    clearBlockedTimer();
   });
 </script>
 
 <template>
-  <v-sheet class="d-flex flex-column rounded-xxl pa-5">
+  <v-sheet class="d-flex flex-column rounded-xxl pa-5" style="height: 80%">
     <v-sheet v-if="!mobile"><RioniLogo /></v-sheet>
-    <v-sheet class="d-flex ga-1 font-12 cursor-pointer text-additional-link mt-4" @click="backToAuth()">
+    <v-sheet
+      class="d-flex ga-1 font-smaller cursor-pointer text-additional-link mt-4"
+      @click="backToAuth()"
+    >
       <v-icon icon="mdi-arrow-left" />
-      <v-sheet>Назад</v-sheet>
+      <v-sheet>{{ t('auth.back') }}</v-sheet>
     </v-sheet>
-    <v-sheet class="d-flex justify-center">
+    <v-sheet v-if="!authStore.blockedTimeLeft" class="d-flex justify-center h-100 align-center">
       <v-sheet class="d-flex flex-column align-center justify-center" max-width="355">
         <v-sheet class="text-hard-blue font-22">{{ t('auth.codeTitle') }}</v-sheet>
         <v-sheet class="text-type-text font-smaller">
@@ -176,7 +237,7 @@
             ></v-otp-input>
             <v-sheet
               v-if="!!v.code.$errors.length"
-              class="d-flex justify-center mb-2"
+              class="d-flex justify-center mb-2 font-smaller"
               :class="[v.code.$errors.length ? 'text-additional-error' : '']"
             >
               {{ v.code.$errors[0].$message }}
@@ -184,33 +245,40 @@
           </v-sheet>
           <v-sheet class="d-flex flex-column ga-2">
             <v-btn
-              :disabled="btnDisabled"
-              variant="flat"
-              rounded="lg"
-              bg="type-text"
-              color="type-text"
-              type="submit"
-              block
-            >
-              <v-sheet class="text-white">{{ t('next') }}</v-sheet>
-            </v-btn>
-            <v-btn
               v-if="authStore.timerSms <= 0"
               ref="smsSendAgain"
               rounded="lg"
               variant="flat"
-              bg="white"
-              color="white"
+              bg="element"
+              color="element"
               block
               @click="sendSmsAgain"
             >
-              <v-sheet class="text-hard-blue">{{ t('auth.sendCodeAgain') }}</v-sheet>
+              <v-sheet class="text-white">{{ t('auth.sendCodeAgain') }}</v-sheet>
             </v-btn>
             <div v-if="authStore.timerSms > 0" class="d-flex font-small mb-6 justify-start">
               <Timer v-model="authStore.timerSms" />
             </div>
           </v-sheet>
         </v-form>
+      </v-sheet>
+    </v-sheet>
+    <v-sheet v-else class="d-flex flex-column justify-center h-100 align-center">
+      <v-sheet max-width="420">
+        <v-sheet width="100%" height="113" class="d-flex justify-center">
+          <v-img src="/img/blocked.png" width="113" />
+        </v-sheet>
+        <v-sheet
+          class="d-flex justify-center text-center font-22 font-semibold text-hard-blue mb-4 mt-2"
+        >
+          {{ t('auth.attemptCountErrorTitle') }}
+        </v-sheet>
+        <v-sheet class="text-center font-smaller">
+          {{ t('auth.timeLeftText') }}
+          <span class="text-additional-error">
+            {{ t('auth.timeLeftTimer', { delay: formattedTimeLeft }) }}
+          </span>
+        </v-sheet>
       </v-sheet>
     </v-sheet>
   </v-sheet>
@@ -225,13 +293,21 @@
 
   .v-otp-input {
     :deep(.v-field) {
-      height: 40px !important;
-      width: 40px !important;
-      min-width: 40px !important;
+      height: 50px !important;
+      width: 50px !important;
+      min-width: 50px !important;
+      color: var(--color-Element) !important;
     }
 
-    //:deep(.v-field__outline) {
-    //  --v-field-border-width: 0;
-    //}
+    :deep(.v-field--focused) {
+      .v-field__outline {
+        --v-field-border-opacity: 0.38;
+      }
+    }
+
+    :deep(.v-field__outline) {
+      --v-field-border-opacity: 0.18;
+      --v-field-border-width: 1px;
+    }
   }
 </style>

@@ -3,6 +3,7 @@
   import OperationHistory from '@/modules/pronouns/components/OperationHistory.vue';
   import Notice from '@/components/Notice.vue';
   import { useDisplay } from 'vuetify';
+  import CurrenciesWidget from '@/components/BaseComponents/CurrenciesWidget.vue';
 
   const { mobile } = useDisplay();
 </script>
@@ -15,6 +16,7 @@
     </v-sheet>
     <v-sheet width="180" v-if="!mobile">
       <Notice></Notice>
+      <CurrenciesWidget bordered />
     </v-sheet>
   </v-sheet>
 </template>

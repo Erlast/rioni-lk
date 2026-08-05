@@ -15,7 +15,7 @@
     OperationTypes
   } from '@/components/types/OperationHistory.ts';
   import { debounce } from 'lodash-es';
-  import CustomPaginator from '@/components/BaseComponents/CustomPaginator.vue';
+  import BasePaginator from '@/components/BaseComponents/BasePaginator.vue';
 
   const { mobile } = useDisplay();
   const { t } = useI18n();
@@ -204,6 +204,11 @@
     handlerFetch();
   };
 
+  const updatePerPage = (perPage: number) => {
+    tableOptions.itemsPerPage = perPage;
+    handlerFetch();
+  };
+
   watch(
     () => period.value,
     () => {
@@ -297,11 +302,12 @@
           @update:options="onPaginationChange"
         >
           <template v-slot:bottom>
-            <v-sheet class="mb-2 mr-2">
-              <custom-paginator
-                v-if="Math.floor(totalCount / tableOptions.itemsPerPage) > 1"
+            <v-sheet class="my-4 ml-2">
+              <base-paginator
                 v-model="tableOptions.page"
                 :total-pages="Math.floor(totalCount / tableOptions.itemsPerPage)"
+                :per-page="tableOptions.itemsPerPage"
+                @update:per-page="updatePerPage"
               />
             </v-sheet>
           </template>

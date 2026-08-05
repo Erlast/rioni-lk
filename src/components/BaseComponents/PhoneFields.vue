@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue';
-  import { itemsFlags, phoneCountriesSorted, type FlagItem } from '@/utils/data.ts';
+  import { nextTick, onMounted, ref } from 'vue';
+  import { type FlagItem, itemsFlags, phoneCountriesSorted } from '@/utils/data.ts';
   import { useI18n } from 'vue-i18n';
 
   const localeToFlag: Record<string, string> = {
@@ -9,13 +9,21 @@
     ge: 'ge'
   };
 
-  const props = defineProps<{
+  interface IProps {
     idx?: number;
     isMain?: boolean;
-  }>();
+    error?: boolean;
+    loading?: boolean;
+  }
+
+  const props = withDefaults(defineProps<IProps>(), {
+    loading: false
+  });
 
   const modelValue = defineModel<string>();
   const { t } = useI18n();
+
+  const emits = defineEmits(['keyup']);
 
   const findCountryByPhoneCode = (phoneValue: string) => {
     if (!phoneValue) return null;
@@ -30,10 +38,6 @@
     return null;
   };
 
-  /**
-   * Extract country code from raw digit string (e.g., '71234567890' -> '7').
-   * Returns null if no country code can be matched.
-   */
   const detectCountryCode = (rawDigits: string): string | null => {
     if (!rawDigits) return null;
     const phone = '+' + rawDigits;
@@ -41,35 +45,26 @@
     return found?.code || null;
   };
 
-  /**
-   * Format raw digits into a phone mask: +<code> (###) ###-##-##
-   * Example: formatPhoneNumber('7', '71234567890') -> '+7 (123) 456-78-90'
-   * The mask supports up to 10 local digits.
-   */
   const formatPhoneNumber = (countryCode: string, rawDigits: string): string => {
     const localDigits = rawDigits.slice(countryCode.length).slice(0, 10);
     let formatted = `+${countryCode}`;
 
     if (localDigits.length === 0) return formatted;
 
-    // Opening bracket + first 3 digits
     formatted += ' (';
     formatted += localDigits.slice(0, 3);
 
     if (localDigits.length > 3) {
-      // Close bracket, then next 3 digits
       formatted += ') ';
       formatted += localDigits.slice(3, 6);
     }
 
     if (localDigits.length > 6) {
-      // Dash + next 2 digits
       formatted += '-';
       formatted += localDigits.slice(6, 8);
     }
 
     if (localDigits.length > 8) {
-      // Dash + last 2 digits
       formatted += '-';
       formatted += localDigits.slice(8, 10);
     }
@@ -77,10 +72,6 @@
     return formatted;
   };
 
-  /**
-   * Calculate cursor position after reformatting based on where the user was typing.
-   * We find the position of the last typed digit in the formatted string.
-   */
   const setCursorToEnd = (input: HTMLInputElement) => {
     requestAnimationFrame(() => {
       const pos = input.value.length;
@@ -94,15 +85,14 @@
     let defaultCountry: FlagItem | undefined;
 
     if (modelValue.value) {
-      // Format the initial value if it has a valid country code
       const rawDigits = modelValue.value.replace(/[^\d]/g, '');
       const countryCode = detectCountryCode(rawDigits);
       if (countryCode) {
         const found = findCountryByPhoneCode('+' + rawDigits);
         if (found) {
           defaultCountry = found;
-          const formatted = formatPhoneNumber(countryCode, rawDigits);
-          modelValue.value = formatted;
+
+          modelValue.value = formatPhoneNumber(countryCode, rawDigits);
         }
       }
     }
@@ -115,43 +105,86 @@
 
     if (defaultCountry) {
       phoneItems.value[props.idx] = defaultCountry;
+      if (!modelValue.value && defaultCountry.code) {
+        modelValue.value = '+' + defaultCountry.code;
+      }
     }
   });
+
+  const getMaxLocalDigits = (countryCode: string): number => {
+    if (countryCode === '7' || countryCode === '1') return 10;
+    return 12;
+  };
+
+  const onPhoneKeydown = (event: KeyboardEvent) => {
+    if (event.key.length !== 1 || event.key < '0' || event.key > '9') return;
+
+    const input = event.target as HTMLInputElement;
+    const rawDigits = input.value.replace(/[^\d]/g, '');
+    const countryCode = detectCountryCode(rawDigits);
+
+    let maxDigits = 11;
+    if (countryCode) {
+      const maxLocal = getMaxLocalDigits(countryCode);
+      maxDigits = countryCode.length + maxLocal;
+    }
+
+    const selectionLen = input.selectionEnd - input.selectionStart;
+    const newDigitCount = rawDigits.length - selectionLen + 1;
+
+    if (newDigitCount > maxDigits) {
+      event.preventDefault();
+    }
+  };
 
   const onPhoneInput = (event: Event) => {
     const input = event.target as HTMLInputElement;
 
-    // Extract only digits from the input
-    const rawDigits = input.value.replace(/[^\d]/g, '');
+    let rawDigits = input.value.replace(/[^\d]/g, '');
 
     if (rawDigits.length === 0) {
-      input.value = '';
       modelValue.value = '';
       return;
     }
-
-    // Try to detect country code from the digits
     const countryCode = detectCountryCode(rawDigits);
 
     if (countryCode) {
-      // Country code detected — apply phone mask formatting
-      const formatted = formatPhoneNumber(countryCode, rawDigits);
-      input.value = formatted;
-      modelValue.value = formatted;
+      const maxLocalDigits = getMaxLocalDigits(countryCode);
+      const maxTotalDigits = countryCode.length + maxLocalDigits;
+      rawDigits = rawDigits.slice(0, maxTotalDigits);
 
-      // Update the selected flag if it matches a country
+      const formatted = formatPhoneNumber(countryCode, rawDigits);
+
+      if (modelValue.value !== formatted) {
+        modelValue.value = formatted;
+      }
+      if (input.value !== formatted) {
+        input.value = formatted;
+      }
+
       const found = findCountryByPhoneCode('+' + rawDigits);
       if (found) {
         phoneItems.value[props.idx] = found;
       }
     } else {
-      // Country code not yet fully entered — show raw digits with + prefix
+      rawDigits = rawDigits.slice(0, 4);
       const raw = '+' + rawDigits;
-      input.value = raw;
-      modelValue.value = raw;
+      if (modelValue.value !== raw) {
+        modelValue.value = raw;
+      }
+      if (input.value !== raw) {
+        input.value = raw;
+      }
     }
 
-    // Restore cursor to end after reformatting
+    nextTick(() => {
+      const formatted = modelValue.value;
+      if (formatted && input.value !== formatted) {
+        input.value = formatted;
+        setCursorToEnd(input);
+      }
+    });
+
     setCursorToEnd(input);
   };
 
@@ -169,6 +202,7 @@
     <v-col cols="2" class="pa-0">
       <v-select
         :disabled="isMain"
+        class="flag"
         variant="solo"
         flat
         density="compact"
@@ -176,6 +210,7 @@
         :items="itemsFlags"
         hide-details="auto"
         return-object
+        :error="error"
         :model-value="phoneItems[idx]"
         @update:model-value="onPhoneCountryChange"
       >
@@ -193,15 +228,29 @@
     <v-col cols="9" class="pa-0">
       <v-text-field
         :model-value="modelValue"
+        class="phone-number"
         :disabled="isMain"
         variant="solo"
         :label="t('phoneNumber')"
         flat
+        :loading="loading"
         hide-details="auto"
+        :error="error"
         @input="onPhoneInput"
+        @keydown="onPhoneKeydown"
+        @keyup="emits('keyup', modelValue)"
       ></v-text-field>
     </v-col>
   </v-sheet>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+  .v-input.phone-number {
+    &.v-input--error {
+      :deep(.v-field__overlay) {
+        border-radius: 0 8px 8px 0;
+        border-left: 0;
+      }
+    }
+  }
+</style>
