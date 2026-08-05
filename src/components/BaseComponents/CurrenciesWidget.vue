@@ -36,7 +36,7 @@
     <v-sheet class="pt-2">
       <v-sheet
         class="scroll-box d-flex flex-column ga-2 overflow-x-hidden overflow-y-auto"
-        max-height="520"
+        max-height="320"
       >
         <v-sheet
           class="rate-box d-flex align-center justify-space-between pr-2 pb-2 border-b-sm ml-2"
@@ -44,15 +44,15 @@
           v-for="currency in currenciesStore.data.rates"
           :key="currency.code"
         >
-          <v-sheet class="d-flex ga-1 font-14">
+          <v-sheet class="d-flex ga-1 font-small">
             <span class="">{{ currencyFlags[currency.code] }}</span>
             <span class="">{{ currency.code }}/GEL</span>
           </v-sheet>
 
-          <v-sheet class="d-flex flex-column justify-end align-end">
-            <v-sheet class="font-smaller">{{ currency.rate }}</v-sheet>
+          <v-sheet class="d-flex ga-1 justify-end align-center">
+            <v-sheet class="font-small">{{ currency.rate }}</v-sheet>
             <v-sheet
-              class="d-flex ga-1 font-smaller"
+              class="d-flex ga-1 font-8"
               :class="`rioni-currency-widget-full__change--${currency.direction}`"
             >
               <span class="rioni-currency-widget-full__change-icon">{{ currency.icon }}</span>
@@ -63,7 +63,7 @@
       </v-sheet>
     </v-sheet>
     <v-sheet
-      class="px-2 border-t-sm rounded-b-lg"
+      class="px-2 pb-2 border-t-sm rounded-b-lg"
       style="border-color: var(--color-Choosen) !important; background-color: white !important"
     >
       <a
@@ -102,58 +102,6 @@
     border-bottom: none !important;
   }
 
-  .rioni-currency-widget-full__left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    min-width: 0;
-    max-width: 180px;
-  }
-
-  .rioni-currency-widget-full__flag {
-    font-size: 12px;
-    line-height: 1;
-    flex-shrink: 0;
-  }
-
-  .rioni-currency-widget-full__ticker {
-    font-size: 12px;
-    line-height: 1.2;
-    font-weight: 500;
-    color: #111111;
-    white-space: nowrap;
-  }
-
-  .rioni-currency-widget-full__right {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 10px;
-    flex-shrink: 0;
-  }
-
-  .rioni-currency-widget-full__rate {
-    min-width: 74px;
-    font-size: 12px;
-    line-height: 1.2;
-    font-weight: 500;
-    color: #111111;
-    text-align: right;
-    white-space: nowrap;
-  }
-
-  .rioni-currency-widget-full__change {
-    min-width: 62px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 4px;
-    font-size: 12px;
-    line-height: 1;
-    font-weight: 600;
-    white-space: nowrap;
-  }
-
   .rioni-currency-widget-full__change--up {
     color: #0b8f55 !important;
   }
@@ -167,7 +115,7 @@
   }
 
   .rioni-currency-widget-full__change-icon {
-    font-size: 10px;
+    font-size: 8px;
     line-height: 1;
   }
 
