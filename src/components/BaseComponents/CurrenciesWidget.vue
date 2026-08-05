@@ -33,13 +33,13 @@
     style="background-color: white !important"
     :style="bordered ? 'border-color:var(--color-Choosen) !important' : ''"
   >
-    <v-sheet>
+    <v-sheet class="pt-2">
       <v-sheet
         class="scroll-box d-flex flex-column ga-2 overflow-x-hidden overflow-y-auto"
         max-height="520"
       >
         <v-sheet
-          class="rate-box d-flex align-center justify-space-between pa-2 pl-0 border-b-sm ml-2"
+          class="rate-box d-flex align-center justify-space-between pr-2 pb-2 border-b-sm ml-2"
           style="border-color: var(--color-Choosen) !important"
           v-for="currency in currenciesStore.data.rates"
           :key="currency.code"
