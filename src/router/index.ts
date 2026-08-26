@@ -20,6 +20,9 @@ import NotFoundView from '@/views/NotFoundView.vue';
 import AuthLayout from '@/layouts/AuthLayout.vue';
 import RecoveryView from '@/views/RecoveryView.vue';
 import { useGlossaryStore } from '@/stores/glossaryStore.ts';
+import UnderConstruct from '@/views/UnderConstruct.vue';
+import EducationView from '@/views/EducationView.vue';
+import { useAccountStore } from '@/stores/accountStore.ts';
 
 type NavigationResult = RouteLocationRaw | undefined;
 
@@ -27,7 +30,8 @@ export async function handleNavigation(
   to: RouteLocationNormalized,
   authStore: ReturnType<typeof useAuthStore>,
   dictionaryStore: ReturnType<typeof useDictionaryStore>,
-  glossaryStore: ReturnType<typeof useGlossaryStore>
+  glossaryStore: ReturnType<typeof useGlossaryStore>,
+  accountStore: ReturnType<typeof useAccountStore>
 ): Promise<NavigationResult> {
   if (to.meta.disabled) {
     return { name: 'notfound' };
@@ -39,6 +43,7 @@ export async function handleNavigation(
   async function loadData() {
     await dictionaryStore.fetchDictionaries();
     await glossaryStore.loadTerms();
+    await accountStore.load()
   }
 
   if (isAuthenticated) {
@@ -155,6 +160,19 @@ const routes = [
         name: 'notification',
         component: NotificationDefaultView,
         meta: { requiresAuth: true }
+      },
+      {
+        path: 'education',
+        name: 'education',
+        component: EducationView,
+        redirect: '/under-construct',
+        meta: { requiresAuth: true }
+      },
+      {
+        path: 'under-construct',
+        name: 'underConstruct',
+        component: UnderConstruct,
+        meta: { requiresAuth: true }
       }
     ]
   },
@@ -174,8 +192,9 @@ router.beforeEach(async (to, from, next) => {
   const dictionariesStore = useDictionaryStore();
   const authStore = useAuthStore();
   const glossaryStore = useGlossaryStore();
+  const accountStore = useAccountStore();
   try {
-    const result = await handleNavigation(to, authStore, dictionariesStore, glossaryStore);
+    const result = await handleNavigation(to, authStore, dictionariesStore, glossaryStore, accountStore);
 
     if (result) {
       next(result);

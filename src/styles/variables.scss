@@ -16,6 +16,8 @@ $colorDarkBlue2: #142b40;
 $colorHardBlue: #2E4376;
 $colorLightGrey: #a7a7a7;
 $colorLightBlue: #eef3f8;
+$colorBlueOcean: rgb(103, 148, 218);
+$colorBlackDisabled: rgba(0, 0, 0, 0.38);
 
 @mixin export_css_colors {
   :root {
@@ -37,5 +39,7 @@ $colorLightBlue: #eef3f8;
     --color-HardBlue: #{$colorHardBlue};
     --color-LightGrey: #{$colorLightGrey};
     --color-LightBlue: #{$colorLightBlue};
+    --color-OceanBlue: #{$colorBlueOcean};
+    --color-BlackDisabled: #{$colorBlackDisabled};
   }
 }

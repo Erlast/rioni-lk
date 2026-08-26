@@ -8,13 +8,13 @@
   import jsPDF from 'jspdf';
   import { useDisplay } from 'vuetify';
   import TopUp from '@/assets/icons/topUp.vue';
+  import CopyFields from '@/components/BaseComponents/CopyFields.vue';
 
   const { t } = useI18n();
   const notifyStore = useNotify();
   const dialog = ref(false);
   const previewDialog = ref(false);
   const pdfPreviewDialog = ref(false);
-  const { toClipboard } = useClipboard();
   const { mobile } = useDisplay();
   const isMobile = ref(false);
   const pdfBlobUrl = ref('');
@@ -39,11 +39,6 @@
   const openTopUp = () => {
     checkMobile();
     dialog.value = true;
-  };
-
-  const copy = async (text: string) => {
-    await toClipboard(text);
-    notifyStore.show(t('topUpAccount.textCopied'), '', 'info', 'copy', 2000);
   };
 
   const getFormData = () => {
@@ -498,132 +493,7 @@
                 />
               </v-sheet>
             </v-sheet>
-            <v-sheet class="d-flex flex-column ga-2">
-              <v-sheet class="font-smaller text-type-text">
-                {{ t('topUpAccount.accountDetailsTitle') }}
-              </v-sheet>
-              <v-sheet class="d-flex ga-2">
-                <v-text-field
-                  v-model="iban"
-                  variant="solo"
-                  density="compact"
-                  flat
-                  hide-details="auto"
-                  readonly
-                  placeholder="GE01PS1234567000000000"
-                >
-                  <template v-slot:append-inner>
-                    <v-icon
-                      icon="mdi-content-copy"
-                      color="common"
-                      size="x-small"
-                      @click="copy(iban)"
-                    />
-                  </template>
-                </v-text-field>
-                <v-text-field
-                  v-model="bankName"
-                  variant="solo"
-                  density="compact"
-                  flat
-                  readonly
-                  hide-details="auto"
-                  placeholder="JSC Paysera"
-                >
-                  <template v-slot:append-inner>
-                    <v-icon
-                      icon="mdi-content-copy"
-                      color="common"
-                      size="x-small"
-                      @click="copy(bankName)"
-                    />
-                  </template>
-                </v-text-field>
-              </v-sheet>
-              <v-sheet class="d-flex ga-2">
-                <v-text-field
-                  v-model="swiftBic"
-                  variant="solo"
-                  density="compact"
-                  flat
-                  readonly
-                  hide-details="auto"
-                  placeholder="PSRAGE22"
-                >
-                  <template v-slot:append-inner>
-                    <v-icon
-                      icon="mdi-content-copy"
-                      color="common"
-                      size="x-small"
-                      @click="copy(swiftBic)"
-                    />
-                  </template>
-                </v-text-field>
-                <v-text-field
-                  v-model="country"
-                  variant="solo"
-                  density="compact"
-                  readonly
-                  flat
-                  hide-details="auto"
-                  :placeholder="t('topUpAccount.country')"
-                >
-                  <template v-slot:append-inner>
-                    <v-icon
-                      icon="mdi-content-copy"
-                      color="common"
-                      size="x-small"
-                      @click="copy(country)"
-                    />
-                  </template>
-                </v-text-field>
-              </v-sheet>
-              <v-sheet class="d-flex ga-2">
-                <v-text-field
-                  v-model="address"
-                  variant="solo"
-                  density="compact"
-                  flat
-                  readonly
-                  hide-details="auto"
-                  :placeholder="t('topUpAccount.address')"
-                >
-                  <template v-slot:append-inner>
-                    <v-icon
-                      icon="mdi-content-copy"
-                      color="common"
-                      size="x-small"
-                      @click="copy(address)"
-                    />
-                  </template>
-                </v-text-field>
-              </v-sheet>
-            </v-sheet>
-            <v-sheet class="d-flex flex-column ga-2">
-              <v-sheet class="font-smaller text-type-text">
-                {{ t('topUpAccount.paymentPurposeTitle') }}
-              </v-sheet>
-              <v-sheet class="d-flex ga-2">
-                <v-text-field
-                  v-model="paymentPurpose"
-                  variant="solo"
-                  density="compact"
-                  flat
-                  readonly
-                  hide-details="auto"
-                  :placeholder="t('topUpAccount.paymentPurpose')"
-                >
-                  <template v-slot:append-inner>
-                    <v-icon
-                      icon="mdi-content-copy"
-                      color="common"
-                      size="x-small"
-                      @click="copy(paymentPurpose)"
-                    />
-                  </template>
-                </v-text-field>
-              </v-sheet>
-            </v-sheet>
+            <CopyFields />
             <v-sheet
               class="rounded-ml px-6 py-4 font-small"
               style="background-color: var(--color-LightGreen) !important"
@@ -809,7 +679,11 @@
   <slot name="button">
     <v-btn variant="flat" rounded="mr" @click="openTopUp" height="50" class="btn-top-up">
       <template #prepend>
-        <v-sheet rounded="circle" class="d-flex align-center justify-center pa-1" style="background-color: white !important;">
+        <v-sheet
+          rounded="circle"
+          class="d-flex align-center justify-center pa-1"
+          style="background-color: white !important"
+        >
           <TopUp />
         </v-sheet>
       </template>
@@ -819,19 +693,6 @@
 </template>
 
 <style scoped lang="scss">
-  .modal-window {
-    .v-input {
-      :deep(.v-field__overlay) {
-        background-color: var(--color-LightBlue);
-      }
-    }
-
-    :deep(.v-field__field) {
-      --v-disabled-opacity: 1;
-      --v-high-emphasis-opacity: 1;
-      font-size: 14px;
-    }
-  }
   .btn-top-up {
     padding: 0 30px;
     font-size: 16px;
@@ -848,24 +709,16 @@
     right: 16px;
     top: 16px;
     display: flex;
-    /* justify-content: center; */
     align-items: center;
 
     .v-icon {
       width: 25px;
       height: 25px;
-      /* display: flex; */
-      // margin-top: -7px;
-      // margin-left: 0.1rem;
     }
   }
 
   .btn-custom {
-    //padding: 0 30px;
-    //font-size: 16px;
     color: white;
-    //height: 72px;
-    //width: 33%;
     background: var(--color-Element) !important;
   }
 

@@ -74,6 +74,9 @@ const accountsService = {
 
   async deleteAvatar() {
     return httpCommunicator.delete(`/profile/me/avatar`);
+  },
+  async profileTariffSave(data: any) {
+    return httpCommunicator.post(`/profile/tariff`, data);
   }
 };
 export default accountsService;

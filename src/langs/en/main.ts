@@ -41,7 +41,8 @@ export const en = {
     profile: 'Personal account — Profile',
     notifications: 'Personal account — Notifications',
     reports: 'Personal account — Reports',
-    notfound: 'Personal account — 404'
+    notfound: 'Personal account — 404',
+    under_construct: 'Личный кабинет - Страница в разработке'
   },
   errorTemporaryUnavailable: {
     message: 'Something went wrong. Please try again later',

@@ -6,11 +6,15 @@ import { usePortfolioStore } from './portfolioStore';
 
 interface IState {
   data: IProfileModel;
+  accountConfirmStep: number;
 }
 interface IGetter {
   getAccountCurrency: (s: IState) => ICurrencyModel | undefined;
   getPhone: (s: IState) => string;
   getEmail: (s: IState) => string;
+  isNewAccount: (s: IState) => boolean;
+  addressingByFIO: (s: IState) => string;
+
   [key: string]: any;
 }
 interface IAction {
@@ -52,8 +56,11 @@ export const useAccountStore = defineStore<'account', IState, IGetter, IAction>(
       isPep: false,
       noResidencePermit: false,
       contacts: [],
-      addresses: []
-    }
+      addresses: [],
+      balance: 0,
+      tariffId: null
+    },
+    accountConfirmStep: 0
   }),
   persist: true,
   getters: {
@@ -87,12 +94,23 @@ export const useAccountStore = defineStore<'account', IState, IGetter, IAction>(
         return findItem.value;
       }
       return '';
+    },
+    isNewAccount: state => {
+      return (
+        state.data.addresses.filter(item => item.isConfirmed).length === 0 ||
+        state.data.balance === 0 ||
+        state.data.tariffId === null
+      );
+    },
+    addressingByFIO: state => {
+      return state.data.patronymic
+        ? `${state.data.name} ${state.data.patronymic}`
+        : state.data.name;
     }
   },
   actions: {
     async load() {
       try {
-
         this.data = await accountsService.profile();
       } catch (error) {
         console.error('Ошибка при получении profile:', error);

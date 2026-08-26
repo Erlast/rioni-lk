@@ -41,7 +41,8 @@ export const ge = {
     profile: 'პირადი კაბინეტი — პროფილი',
     notifications: 'პირადი კაბინეტი — შეტყობინებები',
     reports: 'პირადი კაბინეტი — ანგარიშგებები',
-    notfound: 'პირადი კაბინეტი — 404'
+    notfound: 'პირადი კაბინეტი — 404',
+    under_construct: 'Личный кабинет - Страница в разработке'
   },
   errorTemporaryUnavailable: {
     message: 'რაღაც შეფერხდა',

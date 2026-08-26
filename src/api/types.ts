@@ -35,6 +35,8 @@ export interface IProfileModel {
   noResidencePermit: boolean;
   contacts: IProfileContactModel[];
   addresses: IProfileAddressModel[];
+  balance: number;
+  tariffId: number | null;
 }
 
 export interface IDictionariesModel {
@@ -227,4 +229,10 @@ export interface IRateModel {
   change: string;
   direction: string;
   icon: string;
+}
+
+export interface ITariffModel {
+  id: number;
+  name: string;
+  description: string;
 }

@@ -24,6 +24,8 @@
         'element': var(--color-Element),
         'hard-blue': var(--color-HardBlue),
         'type-text': var(--color-TypeText),
+        'choice': var(--color-Choosen),
+        'ocean-blue': var(--color-OceanBlue),
       )
     ),
     'color': (
@@ -44,6 +46,7 @@
         'choice': var(--color-Choosen),
         'light-grey': var(--color-LightGrey),
         'light-blue': var(--color-LightBlue),
+        'ocean-blue': var(--color-OceanBlue),
       )
     ),
     'text': (
@@ -64,6 +67,7 @@
         'choice': var(--color-Choosen),
         'light-grey': var(--color-LightGrey),
         'light-blue': var(--color-LightBlue),
+        'ocean-blue': var(--color-OceanBlue),
       )
     ),
     'border-radius': (
@@ -75,6 +79,7 @@
         'mr': 16px,
         '20': 20px,
         'xxl': 30px,
+        '40': 40px,
         'l-60': 60px 0 0 60px
       )
     ),

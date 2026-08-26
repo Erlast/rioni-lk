@@ -45,17 +45,19 @@
           :key="currency.code"
         >
           <v-sheet class="d-flex ga-1 font-small">
-            <span class="">{{ currencyFlags[currency.code] }}</span>
-            <span class="">{{ currency.code }}/GEL</span>
+            <span>{{ currencyFlags[currency.code] ?? '🏳️' }}</span>
+            <span>{{ currency.code }}/GEL</span>
           </v-sheet>
 
           <v-sheet class="d-flex ga-1 justify-end align-center">
             <v-sheet class="font-small">{{ currency.rate }}</v-sheet>
             <v-sheet
               class="d-flex ga-1 font-8"
-              :class="`rioni-currency-widget-full__change--${currency.direction}`"
+              :class="`rioni-currency-widget-full__change--${currency.direction ?? 'neutral'}`"
             >
-              <span class="rioni-currency-widget-full__change-icon">{{ currency.icon }}</span>
+              <span class="rioni-currency-widget-full__change-icon">
+                {{ currency.icon ?? '•' }}
+              </span>
               <span class="rioni-currency-widget-full__change-value">{{ currency.change }}</span>
             </v-sheet>
           </v-sheet>

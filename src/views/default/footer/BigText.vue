@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { useI18n } from 'vue-i18n';
+  import dayjs from 'dayjs';
 
   const { t } = useI18n();
 </script>
@@ -11,7 +12,7 @@
       <br />
       {{ t('footer.bigText2') }}
       <br />
-      {{t('footer.bigText3') }}
+      {{ t('footer.bigText3', { year: dayjs().year() }) }}
     </span>
   </v-sheet>
 </template>

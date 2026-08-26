@@ -8,6 +8,7 @@
   import FooterMobileView from '@/views/default/FooterMobileView.vue';
   import { useMediaQuery } from '@vueuse/core';
   import { useRoute } from 'vue-router';
+  import AccountConfirm from '@/components/AccountConfirm/Index.vue';
 
   const { mobile } = useDisplay();
   const accountStore = useAccountStore();
@@ -19,8 +20,10 @@
 </script>
 
 <template>
+  <AccountConfirm />
   <HeaderMobileView v-if="mobile && !landscape" />
-  <HeaderView v-if="!mobile" />x
+  <HeaderView v-if="!mobile" />
+  x
   <v-main app>
     <v-sheet class="main-wrapper">
       <v-container

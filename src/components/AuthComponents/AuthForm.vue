@@ -87,13 +87,42 @@
   <v-sheet
     class="d-flex align-center h-100"
     :class="{ 'justify-space-between': !mobile, 'justify-center': mobile }"
-    style="background-color: var(--color-MainBackground) !important"
   >
-    <v-sheet width="50%" class="d-flex flex-column pa-5" height="100%">
-      <v-sheet v-if="!mobile"><RioniLogo /></v-sheet>
-      <v-sheet class="rounded-xxl pa-8 mt-6">
+    <v-sheet
+      :width="mobile ? '100%' : '50%'"
+      class="d-flex flex-column"
+      :class="{ 'pa-5': !mobile }"
+      height="100%"
+    >
+      <v-sheet :class="{ 'pa-5 d-flex justify-center': mobile }">
+        <v-sheet
+          v-if="mobile"
+          max-width="230"
+          class="d-flex justify-space-between align-center ga-4"
+        >
+          <v-img src="/img/rioni-logo-big.png" max-width="60" width="60" />
+          <v-sheet class="d-flex flex-column align-center justify-center">
+            <v-sheet class="text-hard-blue font-smaller">
+              {{ t('auth.slogan') }}
+            </v-sheet>
+          </v-sheet>
+        </v-sheet>
+        <RioniLogo v-else />
+      </v-sheet>
+      <v-sheet
+        class="rounded-xxl pa-8"
+        :class="{ 'mt-6': !mobile, 'mt-1': mobile }"
+        width="100%"
+        style="background-color: var(--color-MainBackground) !important"
+      >
         <v-sheet class="text-hard-blue font-22 mb-1">{{ t('auth.enterTitle') }}</v-sheet>
-        <v-form id="loginForm" ref="loginForm" fast-fail @submit.prevent="loginHandle">
+        <v-form
+          id="loginForm"
+          ref="loginForm"
+          :class="{ 'auth-mobile': mobile }"
+          fast-fail
+          @submit.prevent="loginHandle"
+        >
           <v-sheet class="d-flex flex-column ga-2">
             <v-sheet class="d-flex flex-column ga-1">
               <v-sheet class="text-type-text font-smaller">{{ t('auth.login') }}</v-sheet>
@@ -143,6 +172,7 @@
             <v-sheet class="d-flex flex-column ga-2 mt-2">
               <v-btn
                 :loading="loading"
+                class="btn-login-handle"
                 variant="flat"
                 rounded="lg"
                 bg="middle-blue"
@@ -153,12 +183,16 @@
                 <v-sheet class="text-white">{{ t('auth.enterBtn') }}</v-sheet>
               </v-btn>
             </v-sheet>
-            <v-sheet class="d-flex justify-center font-smaller ga-1">
+            <v-sheet v-if="!mobile" class="d-flex justify-center font-smaller ga-1">
               {{ t('auth.haveNoAccountYet') }}
               <span class="text-additional-link cursor-pointer">{{ t('auth.reg') }}</span>
             </v-sheet>
           </v-sheet>
         </v-form>
+      </v-sheet>
+      <v-sheet v-if="mobile" class="d-flex justify-center font-smaller ga-1 mt-6">
+        {{ t('auth.haveNoAccountYet') }}
+        <span class="text-additional-link cursor-pointer">{{ t('auth.reg') }}</span>
       </v-sheet>
     </v-sheet>
     <v-sheet
@@ -202,6 +236,17 @@
 
     input {
       border-radius: 8px;
+    }
+    &.auth-mobile {
+      .v-field__field {
+        font-size: 20px;
+      }
+      input {
+        height: 50px;
+      }
+      .btn-login-handle {
+        height: 44px;
+      }
     }
   }
 </style>

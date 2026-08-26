@@ -16,8 +16,14 @@
   </v-sheet>
   <v-sheet class="footer-bottom-block">
     <v-sheet v-if="!mobile" class="text-type-text">{{ t('footer.emailTitle') }}</v-sheet>
-    <v-sheet class="text-white">адрес.почты@gmail.ru</v-sheet>
+    <v-sheet class="text-white">
+      <a href="mailto:clients@rioni-capital.ge">clients@rioni-capital.ge</a>
+    </v-sheet>
   </v-sheet>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+  a {
+    color: white;
+  }
+</style>
