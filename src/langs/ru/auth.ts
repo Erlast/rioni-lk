@@ -21,5 +21,9 @@ export const auth = {
     '          попытку входа',
   timeLeftTimer: 'через {delay}',
   recoverPermissionTitle: 'Восстановить доступ',
-  continue: 'Продолжить'
+  continue: 'Продолжить',
+  name: 'Имя',
+  phoneNumber: 'Номер телефона',
+  confirmPassword: 'Повторите пароль',
+  generatePassword: 'сгенерируйте'
 };

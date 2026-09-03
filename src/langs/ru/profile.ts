@@ -93,6 +93,9 @@ export const profile = {
     },
     profileData: {
       title: 'Анкета Бенефициара'
+    },
+    tariff: {
+      tariffTitle: 'Тарифный план'
     }
   },
   requirements: {

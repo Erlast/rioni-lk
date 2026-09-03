@@ -19,5 +19,6 @@ export const auth = {
   timeLeftText:
     'უსაფრთხოების მიზნით, პირად კაბინეტში შესვლა დროებით მიუწვდომელია. შეგიძლიათ გაიმეოროთ\n' +
     '          შესვლის მცდელობა',
-  timeLeftTimer: '{delay}-ის შემდეგ'
+  timeLeftTimer: '{delay}-ის შემდეგ',
+  generatePassword: 'გენერირება'
 };

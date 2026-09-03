@@ -23,6 +23,7 @@ import { useGlossaryStore } from '@/stores/glossaryStore.ts';
 import UnderConstruct from '@/views/UnderConstruct.vue';
 import EducationView from '@/views/EducationView.vue';
 import { useAccountStore } from '@/stores/accountStore.ts';
+import RegistartionView from '@/views/RegistartionView.vue';
 
 type NavigationResult = RouteLocationRaw | undefined;
 
@@ -111,6 +112,12 @@ const routes = [
         path: 'reset-password',
         name: 'reset-password',
         component: RecoveryView,
+        meta: { requiresAuth: false }
+      },
+      {
+        path: 'registration',
+        name: 'registration',
+        component: RegistartionView,
         meta: { requiresAuth: false }
       }
     ]

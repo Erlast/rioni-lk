@@ -5,7 +5,7 @@
   import { useI18n } from 'vue-i18n';
   import { useRouter } from 'vue-router';
   import { useAuthStore } from '@/stores/authStore.ts';
-  import OTPFormRecoverPassword from '@/components/AuthComponents/OTPFormRecoverPassword.vue';
+  import OTPForm from '@/components/AuthComponents/OTPForm.vue';
 
   const { mobile } = useDisplay();
   const { t } = useI18n();
@@ -54,7 +54,7 @@
             <v-sheet>{{ t('auth.back') }}</v-sheet>
           </v-sheet>
           <recover-password v-if="!authStore.recoverSmsId" />
-          <OTPFormRecoverPassword v-else />
+          <OTPForm v-else />
         </v-sheet>
       </v-sheet>
     </v-sheet>

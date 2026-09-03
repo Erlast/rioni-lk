@@ -37,6 +37,7 @@ export interface IProfileModel {
   addresses: IProfileAddressModel[];
   balance: number;
   tariffId: number | null;
+  tariffStartDate: string | null;
 }
 
 export interface IDictionariesModel {
@@ -203,7 +204,22 @@ export interface IOrderModel {
 
 export interface IContactModel {
   value: string;
-  type: 'phone' | 'email';
+  type: 'phone' | 'email' | 'login'
+}
+
+export interface IRegistrationModel {
+  name: string;
+  login?: string;
+  phone: string;
+  email: string;
+  password?: string;
+  confirm_password?: string;
+  privacy_policy: boolean;
+  confirm_adds: boolean;
+}
+
+export interface IRegistrationSendSmsModel {
+  phone: string;
 }
 
 export type languageType = 'ru' | 'ge' | 'en';

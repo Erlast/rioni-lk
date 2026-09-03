@@ -4,14 +4,21 @@
   import FirstStep from '@/components/AccountConfirm/FirstStep.vue';
   import SecondStep from '@/components/AccountConfirm/SecondStep.vue';
   import ThirdStep from '@/components/AccountConfirm/ThirdStep.vue';
+  import { useDisplay } from 'vuetify';
 
   const accountStore = useAccountStore();
+
+  const { mobile } = useDisplay();
 </script>
 
 <template>
-  <v-dialog v-model="accountStore.isNewAccount" max-width="800" height="535">
+  <v-dialog
+    v-model="accountStore.isNewAccount"
+    max-width="800"
+    :height="accountStore.accountConfirmStep === 3 ? 645 : 535"
+  >
     <v-card class="pa-6 position-relative">
-      <v-sheet class="position-absolute" style="top: 20px; left: 20px">
+      <v-sheet :class="{ 'position-absolute': !mobile }" style="top: 20px; left: 20px">
         <v-img src="/img/min-logo.png" width="90" />
       </v-sheet>
       <StartStep v-if="accountStore.accountConfirmStep === 0" />

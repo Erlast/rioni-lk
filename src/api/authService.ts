@@ -1,8 +1,15 @@
-import clearStores from '@/utils/clearStores'
-import httpCommunicator from './httpCommunicator'
-import { useAuthStore } from '@/stores/authStore'
-import type { ICodeModel, IContactModel, ICredentialModel, ITokenModel } from '@/api/types';
-import type { AxiosResponse } from 'axios'
+import clearStores from '@/utils/clearStores';
+import httpCommunicator from './httpCommunicator';
+import { useAuthStore } from '@/stores/authStore';
+import type {
+  ICodeModel,
+  IContactModel,
+  ICredentialModel,
+  IRegistrationModel,
+  IRegistrationSendSmsModel,
+  ITokenModel
+} from '@/api/types';
+import type { AxiosResponse } from 'axios';
 
 const authService = {
   async login(credentials: ICredentialModel) {
@@ -78,7 +85,35 @@ const authService = {
     );
 
     return response.data;
+  },
+
+  async registrationSendSms(registrationSendSmsRequest: IRegistrationSendSmsModel) {
+    const response: AxiosResponse = await httpCommunicator.post(
+      '/auth/registration-sms-code',
+      registrationSendSmsRequest,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    return response.data;
+  },
+
+  async registration(registrationRequest: IRegistrationModel) {
+    const response: AxiosResponse = await httpCommunicator.post(
+      '/auth/registration',
+      registrationRequest,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    return response.data;
   }
 };
 
-export default authService
+export default authService;

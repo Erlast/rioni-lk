@@ -10,12 +10,15 @@
   import accountsService from '@/api/accountService';
   import CountryAutocomplete from '@/components/BaseComponents/CountryAutocomplete.vue';
   import PhoneFields from '@/components/BaseComponents/PhoneFields.vue';
+  import { allowedTypes } from '@/utils/fileSystem';
 
   const showProfileData = inject<Ref<boolean>>('showProfileData', ref(false));
   const { t } = useI18n();
   const accountStore = useAccountStore();
   const isSending = ref(false);
   const notifyStore = useNotify();
+  const fileInput = ref<HTMLInputElement | null>(null);
+  const selectedDocuments = ref<File[]>([]);
 
   const initialState = {
     name: accountStore.data.name,
@@ -102,7 +105,13 @@
   };
 
   const openDialogUploadDocuments = () => {
-    console.log('here');
+    fileInput.value?.click();
+  };
+
+  const onFilesSelected = (event: Event) => {
+    const input = event.target as HTMLInputElement;
+    selectedDocuments.value = input.files ? Array.from(input.files) : [];
+    input.value = '';
   };
 </script>
 
@@ -325,6 +334,14 @@
       </v-sheet>
     </v-sheet>
   </v-card>
+  <input
+    ref="fileInput"
+    type="file"
+    multiple
+    :accept="allowedTypes.join(',')"
+    class="d-none"
+    @change="onFilesSelected"
+  />
 </template>
 
 <style scoped lang="scss">

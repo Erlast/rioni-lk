@@ -1,12 +1,13 @@
 <script setup lang="ts">
   import { useAuthStore } from '@/stores/authStore';
   import AuthForm from '../components/AuthComponents/AuthForm.vue';
-  import AuthSmsForm from '../components/AuthComponents/AuthSmsForm.vue';
   import { stringToPositiveHash } from '@/utils/number.extensions.ts';
   import { useNotification } from '@kyvg/vue3-notification';
   import { useNotify } from '@/stores/notifyStore.ts';
   import { useRouter } from 'vue-router';
   import { clearTempData } from '@/utils/loginHelper.ts';
+  import OTPForm from '@/components/AuthComponents/OTPForm.vue';
+  import authService from '@/api/authService.ts';
 
   const authStore = useAuthStore();
   const { notify } = useNotification();
@@ -27,6 +28,12 @@
     }
   };
 
+  const sendSmsAgain = async () => {
+    const response = await authService.login(authStore.dataSms);
+
+    authStore.setIdAuth(response.sms_code_id);
+  };
+
   const smsSend = async () => {
     try {
       await router.push('/');
@@ -40,7 +47,7 @@
 
 <template>
   <AuthForm v-if="!authStore.isSmsSend" @login="loginHandle" />
-  <AuthSmsForm v-else @send-sms="smsSend" />
+  <OTPForm v-else @send-sms="smsSend" @send-sms-again="sendSmsAgain" @back="router.push('/')" />
 </template>
 
 <style scoped lang="scss">

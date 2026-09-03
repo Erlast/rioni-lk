@@ -1,13 +1,14 @@
 <script setup lang="ts">
   import { useAccountStore } from '@/stores/accountStore.ts';
+  import { useDisplay } from 'vuetify';
 
   const accountStore = useAccountStore();
+  const { mobile } = useDisplay();
 
   const goToStep = (step: number, disabled: boolean): void => {
     if (disabled) {
       return;
     }
-    console.log(step, disabled);
     accountStore.accountConfirmStep = step;
   };
 </script>
@@ -17,12 +18,15 @@
     class="d-flex flex-column justify-end align-center position-relative"
     style="min-height: 50px"
   >
-    <v-sheet class="font-18 text-hard-blue">
+    <v-sheet
+      class="font-18 text-hard-blue"
+      :style="mobile ? 'word-break:break-all; white-space: wrap;' : ''"
+    >
       {{ accountStore.addressingByFIO }}, добро пожаловать в личный кабинет!
     </v-sheet>
   </v-card-title>
-  <v-card-text class="d-flex flex-column ga-4">
-    <v-sheet>
+  <v-card-text class="d-flex flex-column ga-4" :class="{ 'pa-0': mobile }">
+    <v-sheet :class="{ 'mt-2': mobile }">
       Для доступа к торговой системе личного кабинета, вам необходимо завершить верифакацию
       аккаунта. Для этого выполните следующие шаги:
     </v-sheet>

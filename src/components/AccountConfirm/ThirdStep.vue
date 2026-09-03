@@ -1,16 +1,32 @@
 <script setup lang="ts">
+  import { ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useAccountStore } from '@/stores/accountStore.ts';
+  import accountsService from '@/api/accountService';
+  import AddressesForm from '@/components/BaseComponents/AddressesForm.vue';
 
   const accountStore = useAccountStore();
   const { t } = useI18n();
+  const addressesFormRef = ref<InstanceType<typeof AddressesForm> | null>(null);
 
   const backToStart = () => {
     accountStore.accountConfirmStep = 0;
   };
 
   const confirmAddress = async () => {
-    await accountStore.load();
+    addressesFormRef.value?.syncAddresses();
+    await accountsService.profileAddressesSave(accountStore.data.addresses);
+
+    const selectedDocuments = addressesFormRef.value?.selectedDocuments || [];
+    const selectedDocuments2 = addressesFormRef.value?.selectedDocuments2 || [];
+
+    if (selectedDocuments.length) {
+      await accountsService.uploadFiles(selectedDocuments, '/documents/addresses/actual');
+    }
+    if (selectedDocuments2.length) {
+      await accountsService.uploadFiles(selectedDocuments2, '/documents/addresses/registration');
+    }
+
     backToStart();
   };
 </script>
@@ -54,17 +70,9 @@
           </li>
         </ul>
       </v-sheet>
-      <v-sheet>
-        При наличии документа подтверждающего адрес, вы можете
-        <span class="text-additional-link">загрузить его здесь</span>
-      </v-sheet>
-      <v-sheet>
-        Либо вы можете подготовить необходимые документы и перейти к подтверждению
-        <span class="text-element-check">в Настройках профиля</span>
-        после подтверждения двух предыдущих шагов
-      </v-sheet>
+      <AddressesForm ref="addressesFormRef" />
     </v-sheet>
-    <v-sheet class="mt-6">
+    <v-sheet class="">
       <v-btn variant="flat" rounded="mr" color="ocean-blue" @click="confirmAddress">
         <v-sheet class="text-white">Подтвердить адрес</v-sheet>
       </v-btn>
@@ -74,28 +82,25 @@
 
 <style scoped lang="scss">
   ul {
-    list-style: none; /* Убираем стандартные маркеры (точки, кружки) */
-    padding-left: 0; /* Убираем отступ слева, если нужен */
+    list-style: none;
+    padding-left: 0;
   }
 
   ul li {
-    padding-left: 20px; /* Отступ для текста от маркера */
-    position: relative; /* Для позиционирования псевдоэлемента */
-    margin-bottom: 5px; /* Отступ между пунктами */
+    padding-left: 20px;
+    position: relative;
   }
 
-  /* Добавляем тире через псевдоэлемент ::before */
   ul li::before {
-    content: '-'; /* Сам маркер — тире */
+    content: '-';
     position: absolute;
-    left: 0; /* Прижимаем к левому краю li */
-    top: 0; /* Выравниваем по верхнему краю строки */
-    color: #333; /* Цвет маркера (можно изменить) */
-    font-weight: bold; /* Можно сделать жирным */
+    left: 0;
+    top: 0;
+    color: #333;
+    font-weight: bold;
   }
 
-  /* Альтернативный вариант — если нужно тире с пробелом */
   ul li.space::before {
-    content: '- '; /* Тире с пробелом */
+    content: '- ';
   }
 </style>

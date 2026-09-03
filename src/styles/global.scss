@@ -1,5 +1,9 @@
 @include export_css_colors;
 
+.v-main {
+  --v-layout-top: 60px !important;
+}
+
 #app {
   background-color: var(--color-MainBackground);
   margin: 0;
@@ -72,7 +76,7 @@ a {
   font-weight: 600;
 }
 
-.font-18{
+.font-18 {
   font-size: 18px;
 }
 
@@ -217,31 +221,57 @@ a {
     padding-bottom: 0px;
   }
 
-  /* select */
-  .v-field__overlay {
-    background-color: #fff;
-    opacity: 1;
+  #registrationForm {
+    /* autofill override */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 1000px var(--color-LightBlue) inset !important;
+      -webkit-text-fill-color: inherit !important;
+      background-color: var(--color-LightBlue) !important;
+      transition: background-color 5000s ease-in-out 0s;
+    }
+
+    .v-field__input {
+      &::-webkit-autofill,
+      &::-webkit-autofill:hover,
+      &::-webkit-autofill:focus,
+      &::-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 1000px var(--color-LightBlue) inset !important;
+        -webkit-text-fill-color: inherit !important;
+        background-color: var(--color-LightBlue) !important;
+      }
+    }
   }
 
-  /* autofill override */
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,
-  input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
-    -webkit-text-fill-color: inherit !important;
-    background-color: #fff !important;
-    transition: background-color 5000s ease-in-out 0s;
-  }
+  #recoverForm, #loginForm, #registrationSmsCodeForm {
+    /* select */
+    .v-field__overlay {
+      background-color: #fff;
+      opacity: 1;
+    }
 
-  .v-field__input {
-    &::-webkit-autofill,
-    &::-webkit-autofill:hover,
-    &::-webkit-autofill:focus,
-    &::-webkit-autofill:active {
+    /* autofill override */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
       -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
       -webkit-text-fill-color: inherit !important;
       background-color: #fff !important;
+      transition: background-color 5000s ease-in-out 0s;
+    }
+
+    .v-field__input {
+      &::-webkit-autofill,
+      &::-webkit-autofill:hover,
+      &::-webkit-autofill:focus,
+      &::-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+        -webkit-text-fill-color: inherit !important;
+        background-color: #fff !important;
+      }
     }
   }
 
@@ -285,6 +315,7 @@ a {
   .v-input--density-default {
     --v-input-control-height: 0px;
   }
+
 }
 
 /* формы */

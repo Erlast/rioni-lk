@@ -185,14 +185,24 @@
             </v-sheet>
             <v-sheet v-if="!mobile" class="d-flex justify-center font-smaller ga-1">
               {{ t('auth.haveNoAccountYet') }}
-              <span class="text-additional-link cursor-pointer">{{ t('auth.reg') }}</span>
+              <span
+                class="text-additional-link cursor-pointer"
+                @click="router.push('/auth/registration')"
+              >
+                {{ t('auth.reg') }}
+              </span>
             </v-sheet>
           </v-sheet>
         </v-form>
       </v-sheet>
       <v-sheet v-if="mobile" class="d-flex justify-center font-smaller ga-1 mt-6">
         {{ t('auth.haveNoAccountYet') }}
-        <span class="text-additional-link cursor-pointer">{{ t('auth.reg') }}</span>
+        <span
+          class="text-additional-link cursor-pointer"
+          @click="router.push('/auth/registration')"
+        >
+          {{ t('auth.reg') }}
+        </span>
       </v-sheet>
     </v-sheet>
     <v-sheet

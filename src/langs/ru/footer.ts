@@ -28,7 +28,8 @@ export const footer = {
     '      указанную информацию в качестве единственного источника информации при принятии\n' +
     '      инвестиционного решения. Rioni Capital LLC. All rights reserved ® Tbilisi. Georgia.{year}',
   contactsTitle: 'Контакты',
-  officePeriod: '(Офис) Пн-Пт 9:00-20:00',
+  officePeriod: '12 - Goderdzi Chokheli 1-st Turne, Tbilisi, 0159, Georgia',
+  officeSubtitle: 'Обслуживание физических лиц  осуществляется только дистанционно!',
   emailTitle: 'Почта',
   feedbackTitle: 'Есть предложения? Свяжитесь с нами',
   feedbackPlaceholder: 'Комментарий',
@@ -44,6 +45,8 @@ export const footer = {
     education: 'Обучение',
     news: 'Новости',
     documents: 'Документы',
-    career: 'Карьера'
+    career: 'Карьера',
+    market: 'Рынок',
+    dxfina: 'DxFina'
   }
 };

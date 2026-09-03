@@ -7,7 +7,7 @@
 
 <template>
   <v-sheet class="d-flex ga-2" max-width="390" :height="mobile ? 51 : 64">
-    <SocialItems />
+    <SocialItems :width="mobile ? 51 : 64"/>
   </v-sheet>
 </template>
 

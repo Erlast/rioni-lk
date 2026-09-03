@@ -10,7 +10,7 @@
   <v-container class="pa-0" max-width="1280">
     <v-sheet class="footer">
       <v-sheet class="d-flex flex-column ga-2">
-        <v-sheet class="d-flex ga-6 pb-6" style="border-bottom: 1px solid var(--color-HardBlue)">
+        <v-sheet class="d-flex ga-6 pb-6">
           <v-sheet width="50%">
             <v-sheet class="footer-top__logo" />
           </v-sheet>

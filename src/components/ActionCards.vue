@@ -100,7 +100,7 @@
         :style="`background: url(${thirdCardBg}) no-repeat; background-size:cover;`"
       >
         <v-sheet class="text-white">{{ t(actionTitles[2]) }}</v-sheet>
-        <v-sheet>
+        <v-sheet @click="emit('click-card', 3)">
           <v-sheet class="position-absolute top-0 right-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"

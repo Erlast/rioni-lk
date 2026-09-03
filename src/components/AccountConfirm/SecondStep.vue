@@ -5,19 +5,17 @@
   import { ITariffModel } from '@/api/types.ts';
   import dictionariesService from '@/api/dictionariesService.ts';
   import accountService from '@/api/accountService.ts';
+  import TariffList from '@/components/BaseComponents/TariffList.vue';
 
   const accountStore = useAccountStore();
   const { t } = useI18n();
-  const tariffs = ref<ITariffModel[]>([]);
+
   const tariffId = ref<number | null>(null);
 
   const backToStart = () => {
     accountStore.accountConfirmStep = 0;
   };
 
-  const setTariff = (id: number) => {
-    tariffId.value = id;
-  };
 
   const chooseTariff = async () => {
     const request = { tariffId: tariffId.value };
@@ -29,10 +27,6 @@
       console.log(error);
     }
   };
-
-  onMounted(async () => {
-    tariffs.value = await dictionariesService.tariffs();
-  });
 </script>
 
 <template>
@@ -52,23 +46,11 @@
     </v-sheet>
     <v-sheet class="">
       Выберите тарифный план, который соответствует вашим задачам и желаемым условиям облсуживания.
-      Ознакомьтесь с официальным документом о тарифных планах брокера
-      <v-icon icon="mdi-arrow-right" />
+      <span class="text-additional-link cursor-pointer">Ознакомьтесь с официальным документом о тарифных планах брокера
+        <v-icon icon="mdi-arrow-right" /></span>
     </v-sheet>
     <v-sheet class="d-flex flex-column ga-1">
-      <v-sheet
-        v-for="tariff in tariffs"
-        :key="tariff.id"
-        class="tariff-bar d-flex align-center justify-space-between px-4 py-3 font-14 text-middle-blue rounded-ml text-common"
-        :class="{ active: tariffId === tariff.id }"
-        @click="setTariff(tariff.id)"
-      >
-        <v-sheet class="tariff-name">{{ tariff.name }}</v-sheet>
-        <v-icon
-          class="tariff-option text-element"
-          :icon="tariffId === tariff.id ? 'mdi-circle' : `mdi-circle-outline`"
-        />
-      </v-sheet>
+     <tariff-list v-model:tariff-id="tariffId"/>
     </v-sheet>
     <v-sheet class="mt-4">
       <v-btn
@@ -85,20 +67,5 @@
 </template>
 
 <style scoped lang="scss">
-  .tariff-bar {
-    cursor: pointer;
-    background-color: var(--color-MainBackground) !important;
-    .tariff-name,
-    .tariff-option {
-      opacity: 0.3;
-    }
-    &.active {
-      cursor: default;
-      background-color: var(--color-Choosen) !important;
-      .tariff-name,
-      .tariff-option {
-        opacity: 1 !important;
-      }
-    }
-  }
+
 </style>

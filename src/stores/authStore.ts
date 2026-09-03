@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { jwtDecode } from 'jwt-decode';
 import { LocationQuery } from 'vue-router';
-import { IContactModel, ICredentialModel } from '@/api/types';
+import { IContactModel, ICredentialModel, IRegistrationModel } from '@/api/types';
 
 interface IEntryPoint {
   url: string | undefined;
@@ -19,6 +19,8 @@ interface IState {
   blockedTimeLeft: number;
   recoverSmsId: number;
   dataRecover?: IContactModel;
+  registrationData?: IRegistrationModel;
+  registrationStep: number;
 }
 
 interface IGetter {
@@ -53,7 +55,9 @@ export const useAuthStore = defineStore<'auth', IState, IGetter, IAction>('auth'
     dataSms: undefined,
     blockedTimeLeft: 0,
     recoverSmsId: 0,
-    dataRecover: undefined
+    dataRecover: undefined,
+    registrationData: undefined,
+    registrationStep: 0
   }),
   persist: true,
   actions: {

@@ -19,8 +19,8 @@
 
 <style scoped lang="scss">
   .text-big {
-    padding: 20px 0;
-    border-bottom: 1px solid var(--color-HardBlue);
-    border-top: 1px solid var(--color-HardBlue);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--color-LightGrey);
+    border-top: 1px solid var(--color-LightGrey);
   }
 </style>

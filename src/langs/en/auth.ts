@@ -19,5 +19,6 @@ export const auth = {
   timeLeftText:
     'For security reasons, access to your personal account is temporarily unavailable. You can try\n' +
     '          again',
-  timeLeftTimer: 'in {delay}'
+  timeLeftTimer: 'in {delay}',
+  generatePassword: 'Generate'
 };

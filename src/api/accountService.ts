@@ -77,6 +77,19 @@ const accountsService = {
   },
   async profileTariffSave(data: any) {
     return httpCommunicator.post(`/profile/tariff`, data);
+  },
+
+  async uploadFiles(files: File[], path: string) {
+    const formData = new FormData();
+    files.forEach((file: File) => {
+      formData.append('file', file);
+    });
+    formData.append('path', path);
+    return httpCommunicator.post(`/files/upload`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
   }
 };
 export default accountsService;

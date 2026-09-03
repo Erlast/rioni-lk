@@ -43,7 +43,8 @@ export const ru = {
     reports: 'Личный кабинет — Отчет',
     notfound: 'Личный кабинет — 404',
     auth_reset_password: 'Личный кабинет - Восстановление пароля',
-    under_construct: 'Личный кабинет - Страница в разработке'
+    under_construct: 'Личный кабинет - Страница в разработке',
+    auth_registration: 'Регистрация'
   },
   errorTemporaryUnavailable: {
     message: 'Что-то пошло не так',

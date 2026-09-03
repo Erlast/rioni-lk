@@ -8,7 +8,6 @@
   import Timer from '@/components/BaseComponents/CodeTimer.vue';
   import { useAuthStore } from '@/stores/authStore';
   import { useNotify } from '@/stores/notifyStore.ts';
-  import { useRouter } from 'vue-router';
   import { clearTempData, proceedStores, setBlocked } from '@/utils/loginHelper.ts';
   import RioniLogo from '@/components/RioniLogo.vue';
   import { useDisplay } from 'vuetify';
@@ -22,7 +21,6 @@
   const authStore = useAuthStore();
   const $externalResults = ref<{ [key: string]: string[] }>({});
   const notifyStore = useNotify();
-  const router = useRouter();
   const otpInputRef = ref<HTMLInputElement | null>(null);
   const interval = ref();
   const btnDisabled = ref(true);
@@ -34,7 +32,7 @@
     code: code
   };
 
-  const emit = defineEmits(['sendSms']);
+  const emit = defineEmits(['sendSms', 'sendSmsAgain', 'back']);
 
   const state = reactive({
     ...initialState
@@ -145,9 +143,7 @@
         code.value = '';
         v.value.code.$reset();
         btnDisabled.value = false;
-        const response = await authService.login(authStore.dataSms);
-
-        authStore.setIdAuth(response.sms_code_id);
+        emit('sendSmsAgain');
       } else {
         throw new Error('Credential is undefined');
       }
@@ -162,7 +158,7 @@
     authStore.setDataSms(undefined);
     authStore.setIdAuth(0);
     authStore.setMaskedPhoneNumber('');
-    router.push('/');
+    emit('back');
   };
   let abortController: AbortController | null = null;
 
@@ -207,7 +203,10 @@
 </script>
 
 <template>
-  <v-sheet class="d-flex flex-column rounded-xxl pa-5" style="height: 80%">
+  <v-sheet
+    class="d-flex flex-column rounded-xxl pa-5 h-100"
+    style="background-color: white !important"
+  >
     <v-sheet v-if="!mobile"><RioniLogo /></v-sheet>
     <v-sheet
       class="d-flex ga-1 font-smaller cursor-pointer text-additional-link mt-4"
@@ -216,7 +215,7 @@
       <v-icon icon="mdi-arrow-left" />
       <v-sheet>{{ t('auth.back') }}</v-sheet>
     </v-sheet>
-    <v-sheet v-if="!authStore.blockedTimeLeft" class="d-flex justify-center h-100 align-center">
+    <v-sheet v-if="!authStore.blockedTimeLeft" class="d-flex justify-center align-center" style="height: 60%">
       <v-sheet class="d-flex flex-column align-center justify-center" max-width="355">
         <v-sheet class="text-hard-blue font-22">{{ t('auth.codeTitle') }}</v-sheet>
         <v-sheet class="text-type-text font-smaller">
