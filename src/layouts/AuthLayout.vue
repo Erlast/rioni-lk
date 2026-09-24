@@ -1,5 +1,4 @@
 <script setup lang="ts">
-  import RioniLogo from '@/components/RioniLogo.vue';
   import LanguageSelect from '@/components/LanguageSelect.vue';
   import { useDisplay } from 'vuetify';
 
@@ -10,14 +9,6 @@
     class="d-flex justify-end align-center pa-4"
     style="background-color: var(--color-Choosen) !important"
   >
-    <!--    <v-sheet-->
-    <!--      v-if="mobile"-->
-    <!--      class="position-absolute d-flex align-center justify-space-between w-100 px-8"-->
-    <!--      height="46"-->
-    <!--      :class="{ 'mt-3': mobile }"-->
-    <!--    >-->
-    <!--      <RioniLogo />-->
-    <!--    </v-sheet>-->
     <LanguageSelect />
   </v-sheet>
 
@@ -28,7 +19,7 @@
     <v-card
       :width="mobile ? '100%' : 760"
       height="520"
-      class="elevation-0 rounded-xxl"
+      class="elevation-0 rounded-xxl ma-3"
       :style="
         mobile
           ? 'background-color: white !important'

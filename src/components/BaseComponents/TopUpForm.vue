@@ -731,4 +731,12 @@
     max-height: 60vh;
     overflow-y: auto;
   }
+
+  .modal-window {
+    .v-input {
+      :deep(.v-field__overlay) {
+        background-color: var(--color-LightBlue);
+      }
+    }
+  }
 </style>

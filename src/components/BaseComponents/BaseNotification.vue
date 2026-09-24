@@ -148,7 +148,7 @@
             {{ t(`notification.sessionEnd.${mobile ? 'mobileDescription' : 'description'}`) }}
           </div>
         </div>
-        <v-sheet class="position-absolute">
+        <v-sheet class="position-absolute" style="right: 24px">
           <CloseButton
             @click="
               () => {
@@ -188,7 +188,7 @@
             v-html="formatText(props.item.title)"
           />
           <div :class="{ 'body-b1': !mobile, 'body-b3': mobile }" v-html="props.item.text"></div>
-          <v-sheet class="position-absolute">
+          <v-sheet class="position-absolute" style="right: 24px">
             <CloseButton
               @click="
                 () => {
@@ -217,7 +217,7 @@
           {{ props.item.title }}
         </div>
         <div :class="{ 'body-b1': !mobile, 'body-b3': mobile }" v-html="props.item.text"></div>
-        <v-sheet class="position-absolute right-0 pr-4">
+        <v-sheet class="position-absolute" style="right: 24px">
           <CloseButton
             @click="
               () => {

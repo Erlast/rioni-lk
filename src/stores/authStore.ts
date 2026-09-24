@@ -42,6 +42,7 @@ interface IAction {
   setBlockedTimeLeft: (blockedTimeLeft: number) => void;
   setRecoverSmsId: (smsId: number) => void;
   setDataRecover: (dataRecover: IContactModel) => void;
+  clearRegistrationData: () => void;
 }
 
 export const useAuthStore = defineStore<'auth', IState, IGetter, IAction>('auth', {
@@ -97,6 +98,10 @@ export const useAuthStore = defineStore<'auth', IState, IGetter, IAction>('auth'
     },
     setDataRecover(dataRecover: IContactModel) {
       this.dataRecover = dataRecover;
+    },
+    clearRegistrationData() {
+      this.registrationStep = 0;
+      this.registrationData = undefined;
     }
   },
   getters: {

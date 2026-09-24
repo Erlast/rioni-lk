@@ -88,7 +88,7 @@ export const profile = {
       blockedAccount: 'Blocked',
       confirmBlockTitle: 'Confirm action',
       confirmBlockText: 'Do you want to block this account?',
-      okBtn: 'ОК',
+      okBtn: 'OK',
       cancelBtn: 'Cancel'
     },
     profileData: {

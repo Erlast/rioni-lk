@@ -4,9 +4,11 @@
   import { useAccountStore } from '@/stores/accountStore.ts';
   import accountsService from '@/api/accountService';
   import AddressesForm from '@/components/BaseComponents/AddressesForm.vue';
+  import { useDisplay } from 'vuetify';
 
   const accountStore = useAccountStore();
   const { t } = useI18n();
+  const { mobile } = useDisplay();
   const addressesFormRef = ref<InstanceType<typeof AddressesForm> | null>(null);
 
   const backToStart = () => {
@@ -36,46 +38,62 @@
     class="d-flex flex-column justify-end align-center position-relative"
     style="min-height: 50px"
   >
-    <v-sheet class="font-18 text-hard-blue">Подтвердите адрес</v-sheet>
+    <v-sheet class="font-18 text-hard-blue">{{ t('accountConfirm.addressConfirmTitle') }}</v-sheet>
   </v-card-title>
-  <v-card-text class="d-flex flex-column ga-2 py-0 px-2">
+  <v-card-text class="d-flex flex-column ga-2 px-0 pb-0">
     <v-sheet
-      class="d-flex ga-1 font-smaller cursor-pointer text-additional-link mt-4"
+      v-if="!mobile"
+      class="d-flex ga-1 font-smaller cursor-pointer text-additional-link"
       @click="backToStart()"
     >
       <v-icon icon="mdi-arrow-left" />
-      <v-sheet>{{ t('auth.back') }}</v-sheet>
+      <v-sheet>{{ t('accountConfirm.back') }}</v-sheet>
     </v-sheet>
-    <v-sheet class="d-flex flex-column ga-4" style="line-height: 20px">
-      <v-sheet>
+    <v-sheet class="d-flex flex-column ga-4" :class="{ 'font-smaller': mobile }">
+      <v-sheet :class="{ 'text-center': mobile }">
         <v-sheet>
-          Для завершения верификации необходимо
+          <span>{{ t('accountConfirm.addressConfirmDescription.text1') }}</span>
           <span class="text-element-check">
-            загрузить документ подтверждающий адрес вашего проживания.
+            {{ t('accountConfirm.addressConfirmDescription.text2') }}
           </span>
-        </v-sheet>
-        <v-sheet>
-          Документ должен содержать ваши ФИО и полный адрес проживания. Загрузите документ из
-          допустимого перечня:
+          <span>{{ t('accountConfirm.addressConfirmDescription.text3') }}</span>
+          <br />
+          <span>{{ t('accountConfirm.addressConfirmDescription.text4') }}</span>
         </v-sheet>
       </v-sheet>
       <v-sheet>
         <ul>
-          <li>банковская выписка;</li>
-          <li>счёт за коммунальные услуги;</li>
-          <li>официальный документ государственного органа;</li>
+          <li>{{ t('accountConfirm.addressConfirmDescription.list.marker1') }}</li>
+          <li>{{ t('accountConfirm.addressConfirmDescription.list.marker2') }}</li>
+          <li>{{ t('accountConfirm.addressConfirmDescription.list.marker3') }}</li>
           <li>
-            другие документы из
-            <span class="text-additional-link">утверждённого перечня.</span>
+            {{ t('accountConfirm.addressConfirmDescription.list.marker4part1') }}
+            <span class="text-additional-link">
+              {{ t('accountConfirm.addressConfirmDescription.list.marker4part2') }}
+            </span>
           </li>
         </ul>
       </v-sheet>
-      <AddressesForm ref="addressesFormRef" />
+      <AddressesForm
+        class="confirm-address-form"
+        ref="addressesFormRef"
+        :show-confirm-buttons="false"
+      />
     </v-sheet>
     <v-sheet class="">
-      <v-btn variant="flat" rounded="mr" color="ocean-blue" @click="confirmAddress">
-        <v-sheet class="text-white">Подтвердить адрес</v-sheet>
+      <v-btn variant="flat" rounded="mr" color="ocean-blue" :block="mobile" @click="confirmAddress">
+        <v-sheet class="text-white">
+          {{ t('accountConfirm.addressConfirmBtn') }}
+        </v-sheet>
       </v-btn>
+    </v-sheet>
+    <v-sheet
+      v-if="mobile"
+      class="d-flex ga-1 font-smaller justify-center cursor-pointer text-additional-link mt-6"
+      @click="backToStart()"
+    >
+      <v-icon icon="mdi-arrow-left" />
+      <v-sheet>{{ t('accountConfirm.back') }}</v-sheet>
     </v-sheet>
   </v-card-text>
 </template>

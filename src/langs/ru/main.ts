@@ -11,6 +11,10 @@ import { withdrawal } from './withdrawal.ts';
 import { auth } from './auth.ts';
 import { countries } from './countries.ts';
 import { calendar } from './calendar.ts';
+import { errors } from './errors.ts';
+import { tariffs } from './tariffs.ts';
+import { registration } from './registration.ts';
+import { accountConfirm } from './accountConfirm.ts';
 
 export const ru = {
   header,
@@ -26,6 +30,10 @@ export const ru = {
   auth,
   countries,
   calendar,
+  errors,
+  tariffs,
+  registration,
+  accountConfirm,
   logout: 'Выйти',
   chooseDate: 'Выберите дату',
   back: 'Назад',
@@ -45,14 +53,5 @@ export const ru = {
     auth_reset_password: 'Личный кабинет - Восстановление пароля',
     under_construct: 'Личный кабинет - Страница в разработке',
     auth_registration: 'Регистрация'
-  },
-  errorTemporaryUnavailable: {
-    message: 'Что-то пошло не так',
-    description: 'Временно недоступно'
-  },
-  errors: {
-    pdfGenerateError: 'Ошибка при генерации PDF',
-    pdfNotAvailableForDownload: 'Поделиться файлом невозможно. PDF будет скачан.',
-    downloadError: 'Не удалось поделиться файлом'
   }
 };

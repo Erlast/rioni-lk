@@ -11,6 +11,10 @@ import { withdrawal } from './withdrawal.ts';
 import { auth } from './auth.ts';
 import { countries } from './countries.ts';
 import { calendar } from './calendar.ts';
+import { errors } from './errors.ts';
+import { tariffs } from './tariffs.ts';
+import { registration } from './registration.ts';
+import { accountConfirm } from './accountConfirm.ts';
 
 export const ge = {
   header,
@@ -26,6 +30,10 @@ export const ge = {
   auth,
   countries,
   calendar,
+  errors,
+  tariffs,
+  registration,
+  accountConfirm,
   logout: 'გასვლა',
   chooseDate: 'აირჩიეთ თარიღი',
   back: 'უკან',
@@ -42,15 +50,8 @@ export const ge = {
     notifications: 'პირადი კაბინეტი — შეტყობინებები',
     reports: 'პირადი კაბინეტი — ანგარიშგებები',
     notfound: 'პირადი კაბინეტი — 404',
-    under_construct: 'Личный кабинет - Страница в разработке'
-  },
-  errorTemporaryUnavailable: {
-    message: 'რაღაც შეფერხდა',
-    description: 'დროებით მიუწვდომელია'
-  },
-  errors: {
-    pdfGenerateError: 'შეცდომა PDF-ის გენერაციის დროს',
-    pdfNotAvailableForDownload: 'ფაილის გაზიარება შეუძლებელია. PDF გადმოიწერება.',
-    downloadError: 'ფაილის გაზიარება ვერ მოხერხდა'
+    auth_reset_password: 'პირადი კაბინეტი - პაროლის აღდგენა',
+    under_construct: 'პირადი კაბინეტი - გვერდი მუშავდება',
+    auth_registration: 'რეგისტრაცია'
   }
 };

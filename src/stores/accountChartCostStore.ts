@@ -1,5 +1,5 @@
-import { useNotify } from '@/stores/notifyStore.ts';
 import { defineStore } from 'pinia';
+import { handleError } from '@/utils/errorHandler';
 import { IAccountCostModel } from '@/api/types';
 import {
   createIntervalUpdateActions,
@@ -62,8 +62,7 @@ export const useAccountChartCostStore = defineStore<'accountChartCost', IState, 
             : [];
         } catch (error: any) {
           this.error = { name: error.code, message: error.message };
-          const notify = useNotify();
-          notify.showServiceError(error);
+          handleError(error);
         } finally {
           this.loading = false;
         }
@@ -79,8 +78,7 @@ export const useAccountChartCostStore = defineStore<'accountChartCost', IState, 
             : [];
         } catch (error: any) {
           this.error = { name: error.code, message: error.message };
-          const notify = useNotify();
-          notify.showServiceError(error);
+          handleError(error);
         }
       },
 

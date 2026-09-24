@@ -1,5 +1,5 @@
-import { useNotify } from '@/stores/notifyStore';
 import { defineStore } from 'pinia';
+import { handleError } from '@/utils/errorHandler';
 import { INBGRatesModel, IRateModel } from '@/api/types';
 import {
   createIntervalUpdateActions,
@@ -48,8 +48,7 @@ export const useCurrenciesStore = defineStore<'currencies', IState, IGetters, IA
           this.data = await currenciesService.currencies();
         } catch (error: any) {
           this.error = { name: error.code, message: error.message };
-          const notify = useNotify();
-          notify.showServiceError(error);
+          handleError(error);
         } finally {
           this.loading = false;
         }
@@ -59,8 +58,7 @@ export const useCurrenciesStore = defineStore<'currencies', IState, IGetters, IA
           this.data = await currenciesService.currencies();
         } catch (error: any) {
           this.error = { name: error.code, message: error.message };
-          const notify = useNotify();
-          notify.showServiceError(error);
+          handleError(error);
         }
       },
       clearStore() {

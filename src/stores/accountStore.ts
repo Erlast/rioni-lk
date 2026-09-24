@@ -1,6 +1,7 @@
 import accountsService from '@/api/accountService';
 import { ICurrencyModel, IProfileModel } from '@/api/types';
 import { defineStore } from 'pinia';
+import { handleError } from '@/utils/errorHandler';
 import { useDictionaryStore } from './dictionariesStore';
 import { usePortfolioStore } from './portfolioStore';
 
@@ -113,7 +114,7 @@ export const useAccountStore = defineStore<'account', IState, IGetter, IAction>(
       try {
         this.data = await accountsService.profile();
       } catch (error) {
-        console.error('Ошибка при получении profile:', error);
+        handleError(error, { silent: true, context: { source: 'accountStore.load' } });
       }
     },
     clearStore() {

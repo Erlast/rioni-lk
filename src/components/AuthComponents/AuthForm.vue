@@ -9,6 +9,7 @@
   import { loginStoreData, setBlocked } from '@/utils/loginHelper.ts';
   import RioniLogo from '@/components/RioniLogo.vue';
   import { useRouter } from 'vue-router';
+  import { useAuthStore } from '@/stores/authStore.ts';
 
   const loading = ref(false);
   const login = ref('');
@@ -17,6 +18,7 @@
   const { t } = useI18n();
   const $externalResults = ref<{ [key: string]: string[] }>({});
   const router = useRouter();
+  const authStore = useAuthStore();
 
   const { mobile } = useDisplay();
 
@@ -80,6 +82,11 @@
 
       loading.value = false;
     }
+  };
+
+  const toReg = () => {
+    authStore.registrationStep = 0;
+    router.push('/auth/registration');
   };
 </script>
 
@@ -197,10 +204,7 @@
       </v-sheet>
       <v-sheet v-if="mobile" class="d-flex justify-center font-smaller ga-1 mt-6">
         {{ t('auth.haveNoAccountYet') }}
-        <span
-          class="text-additional-link cursor-pointer"
-          @click="router.push('/auth/registration')"
-        >
+        <span class="text-additional-link cursor-pointer" @click="toReg">
           {{ t('auth.reg') }}
         </span>
       </v-sheet>

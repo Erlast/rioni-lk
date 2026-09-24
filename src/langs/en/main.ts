@@ -11,6 +11,10 @@ import { topUpAccount } from './topUpAccount.ts';
 import { withdrawal } from './withdrawal.ts';
 import { countries } from './countries.ts';
 import { calendar } from './calendar.ts';
+import { errors } from './errors.ts';
+import { tariffs } from './tariffs.ts';
+import { registration } from './registration.ts';
+import { accountConfirm } from './accountConfirm.ts';
 
 export const en = {
   header,
@@ -26,6 +30,10 @@ export const en = {
   auth,
   countries,
   calendar,
+  errors,
+  tariffs,
+  registration,
+  accountConfirm,
   logout: 'Logout',
   chooseDate: 'Choose Date',
   back: 'Back',
@@ -42,15 +50,8 @@ export const en = {
     notifications: 'Personal account — Notifications',
     reports: 'Personal account — Reports',
     notfound: 'Personal account — 404',
-    under_construct: 'Личный кабинет - Страница в разработке'
-  },
-  errorTemporaryUnavailable: {
-    message: 'Something went wrong. Please try again later',
-    description: 'Unavailable'
-  },
-  errors: {
-    pdfGenerateError: 'PDF generate error',
-    pdfNotAvailableForDownload: 'Not available for share. PDF will be downloaded.',
-    downloadError: 'Share error'
+    auth_reset_password: 'Personal account - Password recovery',
+    under_construct: 'Personal account - Page under construction',
+    auth_registration: 'Registration'
   }
 };

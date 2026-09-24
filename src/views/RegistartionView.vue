@@ -4,6 +4,7 @@
   import OTPForm from '@/components/AuthComponents/OTPForm.vue';
   import RegistrationAdditionalForm from '@/components/AuthComponents/RegistrationAdditionalForm.vue';
   import { useRouter } from 'vue-router';
+  import RegistrationSuccess from '@/components/AuthComponents/RegistrationSuccess.vue';
 
   const authStore = useAuthStore();
   const router = useRouter();
@@ -28,6 +29,7 @@
   />
 
   <RegistrationAdditionalForm v-if="authStore.registrationStep === 2" />
+  <RegistrationSuccess v-if="authStore.registrationStep === 3" />
 </template>
 
 <style scoped lang="scss"></style>

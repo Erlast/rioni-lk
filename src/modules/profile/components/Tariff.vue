@@ -9,6 +9,7 @@
   import { usePortfolioStore } from '@/stores/portfolioStore.ts';
   import dayjs from 'dayjs';
   import accountService from '@/api/accountService.ts';
+  import { handleError } from '@/utils/errorHandler.ts';
 
   let showTariffs = inject('showTariffs');
   const { mobile } = useDisplay();
@@ -17,6 +18,7 @@
   const portfolioStore = usePortfolioStore();
   const tariffId = ref<number | null>(null);
   const show = ref(false);
+  const showResult = ref(false);
 
   const tariffs = ref<ITariffModel[]>([]);
 
@@ -27,8 +29,13 @@
   });
 
   const saveTariff = async () => {
-    await accountService.profileTariffSave(tariffId.value);
-    await accountStore.load();
+    try {
+      await accountService.profileTariffSave(tariffId.value);
+      await accountStore.load();
+      showResult.value = true;
+    } catch (error) {
+      handleError(error, { silent: true, context: { source: 'tariff.save' } });
+    }
   };
 
   onMounted(async () => {
@@ -43,7 +50,7 @@
       <v-sheet>
         <v-card-title>
           <v-sheet class="modal-windows-label">
-            {{ t('profile.modals.tariff.tariffTitle') }}
+            {{ t('tariffs.tariffTitle') }}
             <v-sheet class="button-close" @click="showTariffs = false"></v-sheet>
           </v-sheet>
         </v-card-title>
@@ -54,12 +61,17 @@
               :height="mobile ? 240 : 170"
             >
               <v-sheet>
-                <v-sheet class="text-white font-22">Тариф {{ currentTariff.name }}</v-sheet>
-                <v-sheet>№ БС: {{ portfolioStore.data.currentAccount?.accountNumber }}</v-sheet>
+                <v-sheet class="text-white font-22">
+                  {{ t('tariffs.title') }} {{ currentTariff.name }}
+                </v-sheet>
+                <v-sheet>
+                  {{ t('tariffs.accountNumTitle') }}
+                  {{ portfolioStore.data.currentAccount?.accountNumber }}
+                </v-sheet>
               </v-sheet>
 
               <v-sheet class="d-flex flex-column ga-2">
-                <v-sheet>Дата подключения</v-sheet>
+                <v-sheet>{{ t('tariffs.startDate') }}</v-sheet>
                 <v-sheet
                   class="d-flex ga-2"
                   :class="{ 'flex-column': mobile, 'align-center': !mobile }"
@@ -80,7 +92,7 @@
                       color="middle-blue"
                       @click="show = !show"
                     >
-                      <span class="text-white">Изменить тарифный план</span>
+                      <span class="text-white">{{ t('tariffs.showTariffsBtn') }}</span>
                     </v-btn>
                   </v-sheet>
                 </v-sheet>
@@ -91,7 +103,7 @@
                 class="rounded-mr pa-4 text-white"
                 style="background-color: var(--color-Element) !important"
               >
-                Доступные тарифы
+                {{ t('tariffs.availableTariffs') }}
               </v-sheet>
               <TariffList v-model:tariff-id="tariffId" />
               <v-sheet>
@@ -102,16 +114,34 @@
                   color="middle-blue"
                   @click="saveTariff"
                 >
-                  <span class="text-white">Выбрать тариф</span>
+                  <span class="text-white">{{ t('tariffs.chooseTariffBtn') }}</span>
                 </v-btn>
+                <v-dialog v-model="showResult" width="400">
+                  <v-card class="tariff-result pa-4">
+                    <v-card-title>{{ t('tariffs.resultTariffTitle') }}</v-card-title>
+                    <v-card-text>
+                      {{ t('tariffs.resultTariffDescription') }} {{ currentTariff.name }}
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+
+                      <v-btn :text="t('tariffs.closeBtn')" @click="showResult = false"></v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
               </v-sheet>
             </v-sheet>
             <v-sheet class="">
-              Ознакомится с официальным документом&nbsp;
-              <span class="text-additional-link cursor-pointer">
-                о тарифных планах брокера, можно здесь
+              {{ t('tariffs.officialDocument') }}
+              <a
+                class="text-additional-link cursor-pointer"
+                target="_blank"
+                rel="noreferrer"
+                href="https://rioni-capital.ge/upload/iblock/df5/dv3kqkivpfirnuaol1niunnw3wfl2d72.pdf?from=hub"
+              >
+                {{ t('tariffs.officialDocumentLink') }}
                 <v-icon icon="mdi-arrow-right" />
-              </span>
+              </a>
             </v-sheet>
           </v-sheet>
         </v-card-text>
@@ -125,5 +155,7 @@
     background: url('/img/tariffs-bg.png') no-repeat center center;
     background-size: cover;
     width: 100%;
+  }
+  .tariff-result {
   }
 </style>

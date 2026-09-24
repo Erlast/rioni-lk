@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import User from '@/modules/profile/components/user/User.vue';
   import UserBanksRequisite from '@/modules/profile/components/user/UserBanksRequisite.vue';
-  import { inject, ref } from 'vue';
+  import { inject } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useDisplay } from 'vuetify';
 
@@ -13,7 +13,7 @@
 
 <template>
   <v-card :width="mobile ? 'auto' : 900">
-    <v-sheet class="modal-window">
+    <v-sheet class="modal-window overflow-y-auto overflow-x-hidden">
       <v-sheet>
         <v-card-title>
           <v-sheet class="modal-windows-label">

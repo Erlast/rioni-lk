@@ -215,7 +215,11 @@
       <v-icon icon="mdi-arrow-left" />
       <v-sheet>{{ t('auth.back') }}</v-sheet>
     </v-sheet>
-    <v-sheet v-if="!authStore.blockedTimeLeft" class="d-flex justify-center align-center" style="height: 60%">
+    <v-sheet
+      v-if="!authStore.blockedTimeLeft"
+      class="d-flex justify-center align-center"
+      :style="`height: ${mobile ? '80%' : '60%'}`"
+    >
       <v-sheet class="d-flex flex-column align-center justify-center" max-width="355">
         <v-sheet class="text-hard-blue font-22">{{ t('auth.codeTitle') }}</v-sheet>
         <v-sheet class="text-type-text font-smaller">

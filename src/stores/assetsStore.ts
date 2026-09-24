@@ -1,6 +1,6 @@
 import portfolioService from '@/api/portfolioService';
-import { useNotify } from '@/stores/notifyStore';
 import { defineStore } from 'pinia';
+import { handleError } from '@/utils/errorHandler';
 import { IAssetModel, IPortfolioAssetsParams, IPortfolioModel } from '@/api/types';
 import { InstrumentTypes as IT } from '@/api/enum';
 import {
@@ -80,8 +80,7 @@ export const useAssetsStore = defineStore<'assets', IState, IGetters, IActions>(
         }
       } catch (error: any) {
         this.error = { name: error.code, message: error.message };
-        const notify = useNotify();
-        notify.showServiceError(error);
+        handleError(error);
       } finally {
         this.loading = false;
       }
@@ -106,8 +105,7 @@ export const useAssetsStore = defineStore<'assets', IState, IGetters, IActions>(
         }
       } catch (error: any) {
         this.error = { name: error.code, message: error.message };
-        const notify = useNotify();
-        notify.showServiceError(error);
+        handleError(error);
       }
     },
     clearStore() {

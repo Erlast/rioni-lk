@@ -48,7 +48,9 @@ export const profile = {
       confirmAvatarDeleteTitle: 'Подтвердите удаление',
       confirmAvatarDelete: 'Вы точно хотите удалить аватар?',
       cancelBtn: 'Отмена',
-      okBtn: 'OK'
+      okBtn: 'OK',
+      confirmed: 'Подтвержден',
+      confirmBtn: 'Подтвердить'
     },
     anketa: {
       anketaTitle: 'Анкета',
@@ -93,9 +95,6 @@ export const profile = {
     },
     profileData: {
       title: 'Анкета Бенефициара'
-    },
-    tariff: {
-      tariffTitle: 'Тарифный план'
     }
   },
   requirements: {

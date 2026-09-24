@@ -18,6 +18,7 @@
   } from '@/utils/validators.ts';
   import useClipboard from 'vue-clipboard3';
   import { useNotify } from '@/stores/notifyStore.ts';
+  import { handleError } from '@/utils/errorHandler.ts';
 
   const $externalResults = ref<{ [key: string]: string[] }>({});
   const loading = ref(false);
@@ -180,11 +181,10 @@
     } as IRegistrationModel;
 
     try {
-      const response = await authService.registration(data);
-      console.log(response);
-      authStore.registrationStep = 4;
+      await authService.registration(data);
+      authStore.registrationStep = 3;
     } catch (error) {
-      console.log(error);
+      handleError(error);
     }
   };
 </script>
@@ -192,11 +192,11 @@
 <template>
   <v-sheet class="d-flex flex-column ga-4" width="100%">
     <v-sheet>
-      <v-sheet class="text-hard-blue font-22">Создайте аккаунт</v-sheet>
+      <v-sheet class="text-hard-blue font-22">{{ t('registration.secondStep.title') }}</v-sheet>
       <v-sheet class="font-small">
-        Придумайте логин и пароль
+        {{ t('registration.secondStep.loginPassword') }}
         <span class="text-additional-link cursor-pointer" @click="drawer = true">
-          на основе рекомендаций
+          {{ t('registration.secondStep.recommendations') }}
         </span>
       </v-sheet>
     </v-sheet>
@@ -292,7 +292,7 @@
             type="submit"
             block
           >
-            <v-sheet class="text-white">Создать аккаунт</v-sheet>
+            <v-sheet class="text-white">{{ t('registration.secondStep.createAccount')}}</v-sheet>
           </v-btn>
         </v-sheet>
       </v-sheet>

@@ -20,5 +20,10 @@ export const auth = {
     'For security reasons, access to your personal account is temporarily unavailable. You can try\n' +
     '          again',
   timeLeftTimer: 'in {delay}',
+  recoverPermissionTitle: 'Restore access',
+  continue: 'Continue',
+  name: 'Name',
+  phoneNumber: 'Phone number',
+  confirmPassword: 'Repeat password',
   generatePassword: 'Generate'
 };

@@ -24,6 +24,7 @@ import UnderConstruct from '@/views/UnderConstruct.vue';
 import EducationView from '@/views/EducationView.vue';
 import { useAccountStore } from '@/stores/accountStore.ts';
 import RegistartionView from '@/views/RegistartionView.vue';
+import { handleError } from '@/utils/errorHandler';
 
 type NavigationResult = RouteLocationRaw | undefined;
 
@@ -209,7 +210,7 @@ router.beforeEach(async (to, from, next) => {
       next();
     }
   } catch (error) {
-    console.error('Navigation error:', error);
+    handleError(error, { silent: true, context: { source: 'router.beforeEach' } });
     next(false);
   }
 });

@@ -63,7 +63,7 @@
 
 <template>
   <v-card :width="mobile ? 'auto' : 900">
-    <v-sheet class="modal-window">
+    <v-sheet class="modal-window overflow-y-auto overflow-x-hidden">
       <v-sheet>
         <v-card-title>
           <v-sheet class="modal-windows-label">

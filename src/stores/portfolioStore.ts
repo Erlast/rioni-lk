@@ -1,6 +1,7 @@
 import { IAccountModel } from '@/api/types';
 import { defineStore } from 'pinia';
 import portfolioService from '@/api/portfolioService';
+import { handleError } from '@/utils/errorHandler';
 
 interface PorfolioStoreModel {
   accounts: IAccountModel[];
@@ -32,7 +33,7 @@ export const usePortfolioStore = defineStore<'portfolio', IState, IGetter, IActi
         const { accounts } = await portfolioService.portfolios();
         this.data.accounts = accounts;
       } catch (error) {
-        console.error('Ошибка при получении profile:', error);
+        handleError(error, { silent: true, context: { source: 'portfolioStore.load' } });
       }
     },
     setCurrentAccount() {

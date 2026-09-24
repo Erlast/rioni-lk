@@ -2,9 +2,11 @@
   import { useAccountStore } from '@/stores/accountStore.ts';
   import CopyFields from '@/components/BaseComponents/CopyFields.vue';
   import { useI18n } from 'vue-i18n';
+  import { useDisplay } from 'vuetify';
 
   const accountStore = useAccountStore();
   const { t } = useI18n();
+  const { mobile } = useDisplay();
 
   const backToStart = () => {
     accountStore.accountConfirmStep = 0;
@@ -17,28 +19,32 @@
     style="min-height: 50px"
   >
     <v-sheet class="font-18 text-hard-blue">
-      {{ accountStore.addressingByFIO }}, добро пожаловать в личный кабинет!
+      {{ t('accountConfirm.bankDataConfirmTitle') }}
     </v-sheet>
   </v-card-title>
-  <v-card-text class="d-flex flex-column ga-2">
+  <v-card-text class="d-flex flex-column ga-2 px-0">
     <v-sheet
-      class="d-flex ga-1 font-smaller cursor-pointer text-additional-link mt-4"
+      v-if="!mobile"
+      class="d-flex ga-1 font-smaller cursor-pointer text-additional-link"
       @click="backToStart()"
     >
       <v-icon icon="mdi-arrow-left" />
-      <v-sheet>{{ t('auth.back') }}</v-sheet>
+      <v-sheet>{{ t('accountConfirm.back') }}</v-sheet>
     </v-sheet>
-    <v-sheet>
-      Для доступа к торговой системе личного кабинета, вам необходимо
-      <span class="text-element-check">подтвердить свой банковский счёт</span>
-      . Совершите перевод с банковского счёта, оформленного на ваше имя, используя реквизиты ниже.
-       После поступления средств мы проверим данные банка отправителя и подтвердим ваш счёт для
-      дальнейших пополнений.
+    <v-sheet :class="{ 'text-center font-smaller': mobile }">
+      {{ t('accountConfirm.bankDataConfirmDescription') }}
     </v-sheet>
     <v-sheet class="">
       <CopyFields />
     </v-sheet>
-    <v-sheet class="font-smaller text-additional-link">*Минимальная сумма пополнения $10</v-sheet>
+    <v-sheet
+      v-if="mobile"
+      class="d-flex ga-1 font-smaller justify-center cursor-pointer text-additional-link mt-6"
+      @click="backToStart()"
+    >
+      <v-icon icon="mdi-arrow-left" />
+      <v-sheet>{{ t('accountConfirm.back') }}</v-sheet>
+    </v-sheet>
   </v-card-text>
 </template>
 

@@ -82,7 +82,7 @@
 <template>
   <v-sheet
     class="d-flex flex-column ga-3"
-    :class="{ 'pa-4': mobile, 'pa-8': !mobile }"
+    :class="{ 'pa-4': mobile, 'pa-6': !mobile }"
     rounded="xxl"
     style="background-color: var(--color-MainBackground) !important"
   >

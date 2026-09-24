@@ -25,6 +25,35 @@ import arraySupport from 'dayjs/plugin/arraySupport';
 import 'dayjs/locale/ru';
 import { VFileUpload, VFileUploadItem } from 'vuetify/lib/labs/components.js';
 import VueApexCharts from 'vue3-apexcharts';
+import { registerSentry, type SentryLike } from '@/utils/errorHandler';
+
+// Опциональная интеграция с Sentry. Если @sentry/* ещё не установлен,
+// модуль резолвится динамически и приложение продолжает работу
+// (ошибки пишутся в console.error как fallback).
+async function initSentry(): Promise<void> {
+  const dsn = import.meta.env.VITE_SENTRY_DSN;
+  if (!dsn) {
+    return;
+  }
+  try {
+    const sentryModule = '@sentry/browser';
+    // @ts-ignore — динамический опциональный импорт
+    const mod = await import(/* @vite-ignore */ sentryModule).catch(() => null);
+    if (!mod || typeof mod.init !== 'function') {
+      return;
+    }
+    mod.init({ dsn });
+    const api: SentryLike = {
+      captureException: (error, context) => mod.captureException(error, context),
+      captureMessage: (message, level) => mod.captureMessage(message, level)
+    };
+    registerSentry(api);
+  } catch {
+    // Sentry недоступен — errorHandler использует console fallback.
+  }
+}
+
+void initSentry();
 
 const savedLocale = localStorage.getItem('user-locale') || 'ru';
 

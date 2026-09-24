@@ -18,6 +18,10 @@
   const selectedDocuments = ref<File[]>([]);
   const selectedDocuments2 = ref<File[]>([]);
 
+  withDefaults(defineProps<{ showConfirmButtons?: boolean }>(), {
+    showConfirmButtons: true
+  });
+
   const openDialogUploadDocuments = () => {
     fileInput.value?.click();
   };
@@ -126,6 +130,7 @@
       state.address1.postcode = regAddr.postcode || '';
       state.address1.address = regAddr.address || '';
       state.address1.isMain = regAddr.isMain ?? true;
+      state.address1.isConfirmed = regAddr.isConfirmed ?? false;
     }
 
     const actAddr = accountStore.data.addresses?.find((a: any) => a.addressType === 'actual');
@@ -135,6 +140,7 @@
       state.address2.postcode = actAddr.postcode || '';
       state.address2.address = actAddr.address || '';
       state.address2.isMain = actAddr.isMain ?? false;
+      state.address2.isConfirmed = actAddr.isConfirmed ?? false;
     }
   };
 
@@ -193,181 +199,227 @@
 </script>
 
 <template>
-  <v-sheet class="address-form">
-    <v-sheet class="d-flex flex-column ga-2">
-      <v-sheet class="d-flex w-100 justify-space-between align-center">
-        <v-sheet class="text-type-text">
-          {{ t('profile.modals.settings.addressTitle') }}
-        </v-sheet>
-        <v-checkbox
-          :label="t('profile.modals.settings.useAsPostTitle')"
-          :model-value="state.address1.isMain"
-          hide-details
-          true-icon="rioni:formCheckOn"
-          false-icon="rioni:formCheckOff"
-          @update:model-value="
-            val => {
-              if (val) {
-                state.address1.isMain = true;
-                state.address2.isMain = false;
+  <v-sheet class="address-form d-flex flex-column ga-4">
+    <v-sheet>
+      <v-sheet class="d-flex flex-column ga-2">
+        <v-sheet class="d-flex w-100 justify-space-between align-center">
+          <v-sheet class="text-type-text">
+            {{ t('profile.modals.settings.addressTitle') }}
+          </v-sheet>
+          <v-checkbox
+            :label="t('profile.modals.settings.useAsPostTitle')"
+            :model-value="state.address1.isMain"
+            hide-details
+            true-icon="rioni:formCheckOn"
+            false-icon="rioni:formCheckOff"
+            @update:model-value="
+              val => {
+                if (val) {
+                  state.address1.isMain = true;
+                  state.address2.isMain = false;
+                }
               }
-            }
-          "
-        ></v-checkbox>
-      </v-sheet>
-      <v-sheet class="d-flex justify-space-between ga-2" :class="{ 'flex-column': mobile }">
-        <v-sheet :width="mobile ? '100%' : '33%'">
-          <CountryAutocomplete
-            v-model="state.address1.country"
-            :error-messages="v$.address1.country.$errors[0]?.$message as string"
-            @update:model-value="v$.address1.country.$touch"
-          />
+            "
+          ></v-checkbox>
         </v-sheet>
-        <v-sheet :width="mobile ? '100%' : '33%'">
-          <v-text-field
-            v-model="state.address1.city"
-            variant="solo"
-            hide-details="auto"
-            flat
-            :label="t('profile.modals.settings.cityTitle')"
-            :error-messages="v$.address1.city.$errors[0]?.$message as string"
-            @update:modelValue="v$.address1.city.$touch"
-          ></v-text-field>
+        <v-sheet class="d-flex justify-space-between ga-2" :class="{ 'flex-column': mobile }">
+          <v-sheet :width="mobile ? '100%' : '33%'">
+            <CountryAutocomplete
+              v-model="state.address1.country"
+              :error-messages="v$.address1.country.$errors[0]?.$message as string"
+              @update:model-value="v$.address1.country.$touch"
+            />
+          </v-sheet>
+          <v-sheet :width="mobile ? '100%' : '33%'">
+            <v-text-field
+              v-model="state.address1.city"
+              variant="solo"
+              hide-details="auto"
+              flat
+              :label="t('profile.modals.settings.cityTitle')"
+              :error-messages="v$.address1.city.$errors[0]?.$message as string"
+              @update:modelValue="v$.address1.city.$touch"
+            ></v-text-field>
+          </v-sheet>
+          <v-sheet :width="mobile ? '100%' : '33%'">
+            <v-text-field
+              v-model="state.address1.postcode"
+              variant="solo"
+              flat
+              hide-details="auto"
+              :label="t('profile.modals.settings.postCodeTitle')"
+              :error-messages="v$.address1.postcode.$errors[0]?.$message as string"
+              @update:modelValue="v$.address1.postcode.$touch"
+            ></v-text-field>
+          </v-sheet>
         </v-sheet>
-        <v-sheet :width="mobile ? '100%' : '33%'">
-          <v-text-field
-            v-model="state.address1.postcode"
-            variant="solo"
-            flat
-            hide-details="auto"
-            :label="t('profile.modals.settings.postCodeTitle')"
-            :error-messages="v$.address1.postcode.$errors[0]?.$message as string"
-            @update:modelValue="v$.address1.postcode.$touch"
-          ></v-text-field>
+        <v-sheet class="d-flex ga-2 align-center">
+          <v-sheet :width="mobile ? '100%' : showConfirmButtons ? '66%' : '100%'">
+            <v-text-field
+              v-model="state.address1.address"
+              variant="solo"
+              flat
+              hide-details="auto"
+              :label="t('profile.modals.settings.addressFormTitle')"
+              :error-messages="v$.address1.address.$errors[0]?.$message as string"
+              @update:modelValue="v$.address1.address.$touch"
+            ></v-text-field>
+          </v-sheet>
+          <v-sheet v-if="showConfirmButtons" :width="mobile ? '100%' : '33%'">
+            <v-sheet v-if="state.address1.isConfirmed" class="px-4 text-element-check">
+              {{ t('profile.modals.settings.confirmed') }}
+            </v-sheet>
+            <v-sheet v-else>
+              <v-btn
+                block
+                variant="flat"
+                rounded="ml"
+                color="ocean-blue"
+                :disabled="selectedDocuments2.length === 0"
+              >
+                <v-sheet class="text-white">
+                  {{ t('profile.modals.settings.confirmBtn') }}
+                </v-sheet>
+              </v-btn>
+            </v-sheet>
+          </v-sheet>
         </v-sheet>
       </v-sheet>
-      <v-sheet>
-        <v-text-field
-          v-model="state.address1.address"
-          variant="solo"
-          flat
-          hide-details="auto"
-          :label="t('profile.modals.settings.addressFormTitle')"
-          :error-messages="v$.address1.address.$errors[0]?.$message as string"
-          @update:modelValue="v$.address1.address.$touch"
-        ></v-text-field>
-      </v-sheet>
-    </v-sheet>
-    <v-sheet class="text-type-text font-smaller">
-      {{ t('profile.modals.settings.confirmAddressText') }}
-      <span
-        class="text-additional-link"
-        style="cursor: pointer"
-        @click="openDialogUploadDocuments2"
-      >
-        {{ t('profile.modals.settings.confirmAddressLinkText') }}
-        <v-icon icon="mdi-arrow-down" size="12" />
-      </span>
-      <v-tooltip v-if="selectedDocuments2.length > 0">
-        <template v-slot:activator="{ props }">
-          <span v-bind="props">загруженные файлы</span>
-        </template>
-
-        <span v-if="selectedDocuments2.length" class="text-type-text font-smaller">
-          {{ selectedDocuments2.map(f => f.name).join(`,`) }}
+      <v-sheet class="text-type-text font-smaller">
+        {{ t('profile.modals.settings.confirmAddressText') }}
+        <span
+          class="text-additional-link"
+          style="cursor: pointer"
+          @click="openDialogUploadDocuments2"
+        >
+          {{ t('profile.modals.settings.confirmAddressLinkText') }}
+          <v-icon icon="mdi-arrow-down" size="12" />
         </span>
-      </v-tooltip>
+        <v-tooltip v-if="selectedDocuments2.length > 0">
+          <template v-slot:activator="{ props }">
+            <span v-bind="props">загруженные файлы</span>
+          </template>
+
+          <span v-if="selectedDocuments2.length" class="text-type-text font-smaller">
+            {{ selectedDocuments2.map(f => f.name).join(`,`) }}
+          </span>
+        </v-tooltip>
+      </v-sheet>
+      <input
+        ref="fileInput2"
+        type="file"
+        multiple
+        :accept="allowedTypes.join(',')"
+        class="d-none"
+        @change="onFilesSelected2"
+      />
     </v-sheet>
-    <input
-      ref="fileInput2"
-      type="file"
-      multiple
-      :accept="allowedTypes.join(',')"
-      class="d-none"
-      @change="onFilesSelected2"
-    />
-    <v-sheet class="d-flex flex-column ga-2">
-      <v-sheet class="d-flex justify-space-between align-center">
-        <v-sheet class="text-type-text">
-          {{ t('profile.modals.settings.address2Title') }}
-        </v-sheet>
-        <v-checkbox
-          :label="t('profile.modals.settings.useAsPostTitle')"
-          :model-value="state.address2.isMain"
-          hide-details
-          true-icon="rioni:formCheckOn"
-          false-icon="rioni:formCheckOff"
-          @update:model-value="
-            val => {
-              if (val) {
-                state.address2.isMain = true;
-                state.address1.isMain = false;
+    <v-sheet>
+      <v-sheet class="d-flex flex-column ga-2">
+        <v-sheet class="d-flex justify-space-between align-center">
+          <v-sheet class="text-type-text">
+            {{ t('profile.modals.settings.address2Title') }}
+          </v-sheet>
+          <v-checkbox
+            :label="t('profile.modals.settings.useAsPostTitle')"
+            :model-value="state.address2.isMain"
+            hide-details
+            true-icon="rioni:formCheckOn"
+            false-icon="rioni:formCheckOff"
+            @update:model-value="
+              val => {
+                if (val) {
+                  state.address2.isMain = true;
+                  state.address1.isMain = false;
+                }
               }
-            }
-          "
-        ></v-checkbox>
-      </v-sheet>
-      <v-sheet class="d-flex justify-space-between ga-2" :class="{ 'flex-column': mobile }">
-        <v-sheet :width="mobile ? '100%' : '33%'">
-          <CountryAutocomplete
-            v-model="state.address2.country"
-            :error-messages="v$.address2.country.$errors[0]?.$message as string"
-            @update:model-value="v$.address2.country.$touch"
-          />
+            "
+          ></v-checkbox>
         </v-sheet>
-        <v-sheet :width="mobile ? '100%' : '33%'">
-          <v-text-field
-            v-model="state.address2.city"
-            variant="solo"
-            flat
-            hide-details="auto"
-            :label="t('profile.modals.settings.cityTitle')"
-            :error-messages="v$.address2.city.$errors[0]?.$message as string"
-            @update:modelValue="v$.address2.city.$touch"
-          ></v-text-field>
+        <v-sheet class="d-flex justify-space-between ga-2" :class="{ 'flex-column': mobile }">
+          <v-sheet :width="mobile ? '100%' : '33%'">
+            <CountryAutocomplete
+              v-model="state.address2.country"
+              :error-messages="v$.address2.country.$errors[0]?.$message as string"
+              @update:model-value="v$.address2.country.$touch"
+            />
+          </v-sheet>
+          <v-sheet :width="mobile ? '100%' : '33%'">
+            <v-text-field
+              v-model="state.address2.city"
+              variant="solo"
+              flat
+              hide-details="auto"
+              :label="t('profile.modals.settings.cityTitle')"
+              :error-messages="v$.address2.city.$errors[0]?.$message as string"
+              @update:modelValue="v$.address2.city.$touch"
+            ></v-text-field>
+          </v-sheet>
+          <v-sheet :width="mobile ? '100%' : '33%'">
+            <v-text-field
+              v-model="state.address2.postcode"
+              variant="solo"
+              flat
+              hide-details="auto"
+              :label="t('profile.modals.settings.postCodeTitle')"
+              :error-messages="v$.address2.postcode.$errors[0]?.$message as string"
+              @update:modelValue="v$.address2.postcode.$touch"
+            ></v-text-field>
+          </v-sheet>
         </v-sheet>
-        <v-sheet :width="mobile ? '100%' : '33%'">
-          <v-text-field
-            v-model="state.address2.postcode"
-            variant="solo"
-            flat
-            hide-details="auto"
-            :label="t('profile.modals.settings.postCodeTitle')"
-            :error-messages="v$.address2.postcode.$errors[0]?.$message as string"
-            @update:modelValue="v$.address2.postcode.$touch"
-          ></v-text-field>
+        <v-sheet class="d-flex ga-2 align-center">
+          <v-sheet :width="mobile ? '100%' : showConfirmButtons ? '66%' : '100%'">
+            <v-text-field
+              v-model="state.address2.address"
+              variant="solo"
+              flat
+              hide-details="auto"
+              :label="t('profile.modals.settings.addressFormTitle')"
+              :error-messages="v$.address2.address.$errors[0]?.$message as string"
+              @update:modelValue="v$.address2.address.$touch"
+            ></v-text-field>
+          </v-sheet>
+          <v-sheet v-if="showConfirmButtons" :width="mobile ? '100%' : '33%'">
+            <v-sheet v-if="state.address2.isConfirmed" class="px-4 text-element-check">
+              {{ t('profile.modals.settings.confirmed') }}
+            </v-sheet>
+            <v-sheet v-else>
+              <v-btn
+                block
+                variant="flat"
+                rounded="ml"
+                color="ocean-blue"
+                :disabled="selectedDocuments.length === 0"
+              >
+                <v-sheet class="text-white">{{ t('profile.modals.settings.confirmBtn') }}</v-sheet>
+              </v-btn>
+            </v-sheet>
+          </v-sheet>
         </v-sheet>
       </v-sheet>
-      <v-sheet class="d-flex">
-        <v-text-field
-          v-model="state.address2.address"
-          variant="solo"
-          flat
-          hide-details="auto"
-          :label="t('profile.modals.settings.addressFormTitle')"
-          :error-messages="v$.address2.address.$errors[0]?.$message as string"
-          @update:modelValue="v$.address2.address.$touch"
-        ></v-text-field>
+      <v-sheet class="text-type-text font-smaller">
+        {{ t('profile.modals.settings.confirmAddressText') }}
+        <span
+          class="text-additional-link"
+          style="cursor: pointer"
+          @click="openDialogUploadDocuments"
+        >
+          {{ t('profile.modals.settings.confirmAddressLinkText') }}
+          <v-icon icon="mdi-arrow-down" size="12" />
+        </span>
+        <span v-if="selectedDocuments.length" class="text-type-text font-smaller">
+          {{ selectedDocuments.map(f => f.name).join(', ') }}
+        </span>
       </v-sheet>
+      <input
+        ref="fileInput"
+        type="file"
+        multiple
+        :accept="allowedTypes.join(',')"
+        class="d-none"
+        @change="onFilesSelected"
+      />
     </v-sheet>
-    <v-sheet class="text-type-text font-smaller">
-      {{ t('profile.modals.settings.confirmAddressText') }}
-      <span class="text-additional-link" style="cursor: pointer" @click="openDialogUploadDocuments">
-        {{ t('profile.modals.settings.confirmAddressLinkText') }}
-        <v-icon icon="mdi-arrow-down" size="12" />
-      </span>
-      <span v-if="selectedDocuments.length" class="text-type-text font-smaller">
-        {{ selectedDocuments.map(f => f.name).join(', ') }}
-      </span>
-    </v-sheet>
-    <input
-      ref="fileInput"
-      type="file"
-      multiple
-      :accept="allowedTypes.join(',')"
-      class="d-none"
-      @change="onFilesSelected"
-    />
   </v-sheet>
 </template>
 
@@ -388,11 +440,6 @@
     }
     :deep(input) {
       border-radius: 8px;
-    }
-    .v-input {
-      :deep(.v-field__overlay) {
-        background-color: var(--color-LightBlue);
-      }
     }
   }
 

@@ -11,7 +11,7 @@ export const portfolio = {
   todayResultTitle: "Today's result",
   grow: 'Growth of',
   papersTitle: 'Portfolio composition',
-  emptyData: 'Нет данных',
+  emptyData: 'No data',
   dynamicTitle: 'Portfolio dynamics',
   rotateTip: 'Rotate your device to see full information',
   table: {

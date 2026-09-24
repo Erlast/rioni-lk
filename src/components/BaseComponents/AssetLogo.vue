@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  const props = withDefaults(
+  withDefaults(
     defineProps<{
       paperId: number;
       ticker: string;
@@ -21,7 +21,7 @@
     max-width="36"
     max-height="36"
     class="img-zoom"
-    :src="logo ? `${logo}?${Math.random()}` : null"
+    :src="logo ? `${logo}?${Math.random()}` : ''"
     lazy-src="/img/no-img.png"
     :alt="ticker + paperType"
   />

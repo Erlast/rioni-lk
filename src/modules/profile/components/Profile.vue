@@ -174,7 +174,7 @@
       </v-sheet>
     </v-sheet>
 
-    <v-dialog v-model="showProfileData" width="auto" persistent scrollable>
+    <v-dialog v-model="showProfileData" width="auto" persistent >
       <ProfileData />
     </v-dialog>
   </v-sheet>

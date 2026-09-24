@@ -51,7 +51,6 @@
     width="auto"
     :min-width="mobile ? '100%' : 900"
     persistent
-    scrollable
   >
     <Anketa />
   </v-dialog>
@@ -60,7 +59,6 @@
     width="auto"
     :min-width="mobile ? '100%' : 900"
     persistent
-    scrollable
   >
     <ProfileSettings />
   </v-dialog>
@@ -70,7 +68,6 @@
     width="auto"
     :min-width="mobile ? '100%' : 900"
     persistent
-    scrollable
   >
     <Tariff />
   </v-dialog>

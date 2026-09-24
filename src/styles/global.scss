@@ -9,12 +9,14 @@
   margin: 0;
   padding: 0;
   overflow: auto;
+  line-height: normal;
 }
 
 html {
-  overflow: auto;
+  //overflow: auto;
   text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+  line-height: normal;
 }
 
 a {
@@ -70,6 +72,7 @@ a {
 
 .font-smaller {
   font-size: 12px;
+  line-height: normal;
 }
 
 .font-semibold {
@@ -109,6 +112,14 @@ a {
   height: 23px;
   background-size: contain;
   background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAF2SURBVHgBvVUtV8NAENyrjQcdfDWe+GqC5gegg48uPppgaS2tr0cT3Xp0mEnuwr1wm4S2r/PeNm3ubvbjZrdGFNR1HeGRwOawGHZll75hFewD9mmMOWgcRiFdWItkHCUclKPkIGZ0uRflVOxhz/0szBmIVQc+eXECse/gCQ54LzKzxOkZiIlrae+qwcyWI1Wi2AwQrWAhpSysKJrI58rhHdJ7wXMZWFtirVCcOwk35ImEkSCCGCTbngMSb7kmXgl6uOWHwaZSdD3zYjKQVZYs9ojzoXPYl85kuFG4ltsMqonE7lyrlhFwYyxHgOSHkT1djV0GeJdJWzINnc73U4ilLUU+0cGXI98pG1aBGkc9B1ofNO+NFXwhfy+IGVGGoenIiNlElHGosx85Y5rZYts/1KXH4BXEb/zi1KK18n/BbNfuR0Nup1h2ogM3crtLvsyfRc/JPR4PMg5G+Q5b+xEPklsHjJ4T8w52I7+KIQl1TAlvQqQXwQ+kaaLLnOemQwAAAABJRU5ErkJggg==') no-repeat !important;
+}
+
+.confirm-address-form {
+  .v-input {
+    .v-field__overlay {
+      background-color: var(--color-LightBlue);
+    }
+  }
 }
 
 .v-slide-group__content {

@@ -1,9 +1,11 @@
 <script setup lang="ts">
   import { useAccountStore } from '@/stores/accountStore.ts';
   import { useDisplay } from 'vuetify';
+  import { useI18n } from 'vue-i18n';
 
   const accountStore = useAccountStore();
   const { mobile } = useDisplay();
+  const { t } = useI18n();
 
   const goToStep = (step: number, disabled: boolean): void => {
     if (disabled) {
@@ -20,31 +22,33 @@
   >
     <v-sheet
       class="font-18 text-hard-blue"
-      :style="mobile ? 'word-break:break-all; white-space: wrap;' : ''"
+      :class="{ 'text-center mt-4': mobile }"
+      :style="mobile ? 'white-space: wrap;' : ''"
     >
-      {{ accountStore.addressingByFIO }}, добро пожаловать в личный кабинет!
+      {{ t('accountConfirm.welcome', { name: accountStore.addressingByFIO }) }}
     </v-sheet>
   </v-card-title>
   <v-card-text class="d-flex flex-column ga-4" :class="{ 'pa-0': mobile }">
-    <v-sheet :class="{ 'mt-2': mobile }">
-      Для доступа к торговой системе личного кабинета, вам необходимо завершить верифакацию
-      аккаунта. Для этого выполните следующие шаги:
+    <v-sheet :class="{ 'mt-2 text-center font-smaller': mobile }">
+      {{ t('accountConfirm.welcomeDescription') }}
     </v-sheet>
     <v-sheet class="d-flex flex-column ga-1">
       <v-sheet
-        class="d-flex justify-space-between px-4 py-4 rounded-ml account-confirm"
+        :min-height="mobile ? 80 : 'auto'"
+        class="d-flex align-center justify-space-between px-4 py-4 rounded-ml account-confirm"
         :class="{
           'bg-choice text-middle-blue': accountStore.data.balance > 0,
           'bg-main text-element active': accountStore.data.balance === 0
         }"
         @click="goToStep(1, accountStore.data.balance > 0)"
       >
-        <v-sheet>Подтвердите банковские реквизиты</v-sheet>
+        <v-sheet>{{ t('accountConfirm.welcomeConfirmBankAccount') }}</v-sheet>
         <v-icon v-if="accountStore.data.balance === 0" icon="mdi-arrow-right" />
         <v-icon v-else icon="mdi-check-circle-outline" />
       </v-sheet>
       <v-sheet
-        class="d-flex justify-space-between px-4 py-4 rounded-ml account-confirm"
+        :min-height="mobile ? 80 : 'auto'"
+        class="d-flex align-center justify-space-between px-4 py-4 rounded-ml account-confirm"
         :class="{
           'bg-choice text-middle-blue': accountStore.data.tariffId,
           'bg-main text-element': accountStore.data.tariffId === null,
@@ -53,12 +57,13 @@
         }"
         @click="goToStep(2, accountStore.data.tariffId !== null)"
       >
-        <v-sheet>Выберите тариф</v-sheet>
+        <v-sheet>{{ t('accountConfirm.welcomeChooseTariff') }}</v-sheet>
         <v-icon v-if="accountStore.data.tariffId === null" icon="mdi-arrow-right" />
         <v-icon v-else icon="mdi-check-circle-outline" />
       </v-sheet>
       <v-sheet
-        class="d-flex justify-space-between px-4 py-4 rounded-ml account-confirm"
+        :min-height="mobile ? 80 : 'auto'"
+        class="d-flex align-center justify-space-between px-4 py-4 rounded-ml account-confirm"
         :class="{
           'bg-choice text-middle-blue':
             accountStore.data.addresses.filter(item => item.isConfirmed).length > 0,
@@ -73,7 +78,7 @@
           goToStep(3, accountStore.data.addresses.filter(item => item.isConfirmed).length > 0)
         "
       >
-        <v-sheet>Подтвердите адрес</v-sheet>
+        <v-sheet>{{ t('accountConfirm.welcomeConfirmAddress') }}</v-sheet>
         <v-icon icon="mdi-arrow-right" />
       </v-sheet>
     </v-sheet>

@@ -12,6 +12,7 @@
   import { proceedStores } from '@/utils/loginHelper.ts';
   import RioniLogo from '@/components/RioniLogo.vue';
   import { useDisplay } from 'vuetify';
+  import { handleError } from '@/utils/errorHandler.ts';
 
   const $externalResults = ref<{ [key: string]: string[] }>({});
   const loading = ref(false);
@@ -120,7 +121,7 @@
       };
       authStore.registrationStep = 1;
     } catch (error) {
-      console.log(error);
+      handleError(error);
     }
   };
 </script>
@@ -128,20 +129,36 @@
 <template>
   <v-sheet
     class="d-flex h-100"
-    :class="{ 'justify-center': mobile }"
-    style="background-color: var(--color-MainBackground) !important"
+    :class="{ 'justify-center flex-column': mobile }"
+    :style="`background-color: ${mobile ? 'white' : 'var(--color-MainBackground)'} !important`"
   >
-    <v-sheet class="rounded-xxl h-100 pa-6" width="50%" style="background-color: white !important">
+    <v-sheet
+      class="h-100 pa-6"
+      :class="{ 'rounded-xxl': !mobile }"
+      :width="mobile ? '100%' : '50%'"
+      style="background-color: white !important"
+    >
       <v-sheet v-if="!mobile"><RioniLogo /></v-sheet>
       <v-sheet class="d-flex justify-center align-center" height="80%">
-        <v-sheet v-if="!mobile" class="d-flex">
+        <v-sheet class="d-flex">
           <v-sheet
-            class="d-flex justify-center flex-column align-center"
+            class="d-flex justify-center align-center"
+            :class="{ 'flex-column': !mobile }"
             style="height: fit-content"
           >
-            <v-img src="/img/rioni-logo-big.png" max-width="150" width="150" />
-            <v-sheet class="d-flex flex-column align-center justify-center" max-width="230">
-              <v-sheet class="text-hard-blue font-18 text-center">
+            <v-img
+              src="/img/rioni-logo-big.png"
+              :max-width="mobile ? 60 : 150"
+              :width="mobile ? 60 : 150"
+            />
+            <v-sheet
+              class="d-flex flex-column align-center justify-center"
+              :max-width="mobile ? 150 : 230"
+            >
+              <v-sheet
+                class="text-hard-blue text-center"
+                :class="{ 'font-18': !mobile, 'font-smaller': mobile }"
+              >
                 {{ t('auth.slogan') }}
               </v-sheet>
             </v-sheet>
@@ -149,9 +166,17 @@
         </v-sheet>
       </v-sheet>
     </v-sheet>
-    <v-sheet width="50%" class="d-flex align-center pa-6" height="90%">
+    <v-sheet
+      :width="mobile ? '100%' : '50%'"
+      class="d-flex align-center pa-6"
+      :class="{ 'rounded-xxl': mobile }"
+      :style="mobile ? 'background-color:var(--color-MainBackground) !important' : ''"
+      height="90%"
+    >
       <v-sheet class="d-flex flex-column" width="100%">
-        <v-sheet class="text-hard-blue font-22 mb-1">Регистрация профиля</v-sheet>
+        <v-sheet class="text-hard-blue font-22 mb-1">
+          {{ t('registration.firstStep.title') }}
+        </v-sheet>
         <v-form
           id="registrationSmsCodeForm"
           ref="registrationSmsCodeForm"
@@ -206,9 +231,9 @@
                   false-icon="rioni:formCheckOff"
                 ></v-checkbox>
                 <v-sheet>
-                  Я согласен с
+                  {{ t('registration.firstStep.suggestion') }}
                   <span class="text-additional-link">Rioni T&C</span>
-                  и
+                  {{ t('registration.firstStep.and') }}
                   <span class="text-additional-link">privacy notice</span>
                 </v-sheet>
               </v-sheet>
@@ -222,7 +247,7 @@
                   false-icon="rioni:formCheckOff"
                   v-model="state.confirm_adds"
                 ></v-checkbox>
-                <v-sheet>Я согласен на получение рекламных рассылок</v-sheet>
+                <v-sheet>{{ t('registration.firstStep.adds') }}</v-sheet>
               </v-sheet>
             </v-sheet>
             <v-sheet class="d-flex flex-column ga-1">
@@ -236,12 +261,12 @@
                 type="submit"
                 block
               >
-                <v-sheet class="text-white">Зарегистрироваться</v-sheet>
+                <v-sheet class="text-white">{{ t('registration.firstStep.regBtn') }}</v-sheet>
               </v-btn>
               <v-sheet class="d-flex font-smaller w-100 justify-center">
-                Уже есть аккаунт? &nbsp;
+                {{ t('registration.firstStep.haveAccount') }} &nbsp;
                 <span class="text-additional-link cursor-pointer" @click="router.push('/')">
-                  Войти
+                  {{ t('registration.firstStep.signIn') }}
                 </span>
               </v-sheet>
             </v-sheet>

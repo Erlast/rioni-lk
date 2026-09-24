@@ -1,6 +1,7 @@
 import dictionaryService from '@/api/dictionariesService';
 import { ICurrencyModel } from '@/api/types';
 import { defineStore } from 'pinia';
+import { handleError } from '@/utils/errorHandler';
 
 interface IState {
   currencies: ICurrencyModel[];
@@ -45,7 +46,7 @@ export const useDictionaryStore = defineStore<'dictionaries', IState, IGetter, I
         } catch (error) {
           // сбрасываем состояние если ошибка пришла с сервера
           this.$reset();
-          console.error('Ошибка при получении справочников:', error);
+          handleError(error, { silent: true, context: { source: 'dictionariesStore.fetchDictionaries' } });
         }
       },
       clearStore() {

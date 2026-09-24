@@ -1,9 +1,12 @@
 import { defineStore } from 'pinia';
 import i18n from '@/utils/i18n';
-import axios, { AxiosError } from 'axios';
+import {
+  handleError,
+  type ErrorCategory,
+  type NotifyGroup
+} from '@/utils/errorHandler';
 
 type INotifyType = 'info' | 'success' | 'warn' | 'error';
-type Groups = 'system' | 'app' | 'session' | 'promote' | 'copy';
 
 interface NotificationItem {
   id: number;
@@ -11,14 +14,14 @@ interface NotificationItem {
   description: string;
   type: INotifyType;
   duration?: number;
-  group: Groups;
+  group: NotifyGroup;
 }
 
 interface IState {
   notifications: NotificationItem[];
 }
 
-interface IGetter {
+interface IGetters {
   [key: string]: any;
 }
 
@@ -29,9 +32,10 @@ interface IAction {
     message: string,
     description: string,
     type?: INotifyType,
-    group?: Groups,
+    group?: NotifyGroup,
     duration?: number
   ) => void;
+  handleError: (error: unknown, category?: ErrorCategory) => void;
   showServiceError: (error: unknown) => void;
   focusTesting: () => void;
   clear: () => void;
@@ -39,7 +43,7 @@ interface IAction {
 
 let nextId = 1;
 
-export const useNotify = defineStore<'notify', IState, IGetter, IAction>('notify', {
+export const useNotify = defineStore<'notify', IState, IGetters, IAction>('notify', {
   state: (): IState => ({
     notifications: []
   }),
@@ -58,7 +62,7 @@ export const useNotify = defineStore<'notify', IState, IGetter, IAction>('notify
       message: string,
       description: string,
       type?: INotifyType,
-      group?: Groups,
+      group?: NotifyGroup,
       duration?: number
     ) {
       this.addNotification({
@@ -69,22 +73,18 @@ export const useNotify = defineStore<'notify', IState, IGetter, IAction>('notify
         duration: duration ?? -1
       });
     },
+    handleError(error: unknown, category?: ErrorCategory) {
+      handleError(error, category ? { category } : {});
+    },
     showServiceError(error: unknown) {
-      if (!axios.isAxiosError(error) || error.code !== AxiosError.ERR_NETWORK) {
-        return;
-      }
-      this.addNotification({
-        message: i18n.global.t('errorTemporaryUnavailable.message'),
-        description: i18n.global.t('errorTemporaryUnavailable.description'),
-        group: 'system',
-        type: 'error',
-        duration: -1
-      });
+      // Сохраняем обратную совместимость со старыми вызовами — все ошибки
+      // теперь проходят через централизованный errorHandler.
+      handleError(error);
     },
     focusTesting() {
       this.addNotification({
-        message: i18n.global.t('focusTesting.message'),
-        description: i18n.global.t('focusTesting.description'),
+        message: i18n.global.t('errors.focusTesting.message'),
+        description: i18n.global.t('errors.focusTesting.description'),
         type: 'error',
         group: 'system',
         duration: -1

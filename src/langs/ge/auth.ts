@@ -20,5 +20,10 @@ export const auth = {
     'უსაფრთხოების მიზნით, პირად კაბინეტში შესვლა დროებით მიუწვდომელია. შეგიძლიათ გაიმეოროთ\n' +
     '          შესვლის მცდელობა',
   timeLeftTimer: '{delay}-ის შემდეგ',
+  recoverPermissionTitle: 'წვდომის აღდგენა',
+  continue: 'გაგრძელება',
+  name: 'სახელი',
+  phoneNumber: 'ტელეფონის ნომერი',
+  confirmPassword: 'გაიმეორეთ პაროლი',
   generatePassword: 'გენერირება'
 };

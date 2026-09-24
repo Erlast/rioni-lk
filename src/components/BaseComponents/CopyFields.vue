@@ -3,10 +3,12 @@
   import { ref } from 'vue';
   import { useNotify } from '@/stores/notifyStore.ts';
   import useClipboard from 'vue-clipboard3';
+  import { useDisplay } from 'vuetify';
 
   const { t } = useI18n();
   const notifyStore = useNotify();
   const { toClipboard } = useClipboard();
+  const { mobile } = useDisplay();
 
   const iban = ref('GE01PS1234567000000000');
   const bankName = ref('JSC Paysera');
@@ -27,7 +29,7 @@
       <v-sheet class="font-smaller text-type-text">
         {{ t('topUpAccount.accountDetailsTitle') }}
       </v-sheet>
-      <v-sheet class="d-flex ga-2">
+      <v-sheet class="d-flex ga-2" :class="{ 'flex-column': mobile }">
         <v-text-field
           v-model="iban"
           variant="solo"
@@ -55,7 +57,7 @@
           </template>
         </v-text-field>
       </v-sheet>
-      <v-sheet class="d-flex ga-2">
+      <v-sheet class="d-flex ga-2" :class="{ 'flex-column': mobile }">
         <v-text-field
           v-model="swiftBic"
           variant="solo"

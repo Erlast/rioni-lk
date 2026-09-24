@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import dictionariesService from '@/api/dictionariesService.ts';
 import { IGlossaryModel, languageType } from '@/api/types.ts';
 import i18n from '@/utils/i18n.ts';
+import { handleError } from '@/utils/errorHandler';
 
 interface IState {
   terms: IGlossaryModel[];
@@ -59,7 +60,7 @@ export const useGlossaryStore = defineStore<'glossary', IState, IGetter, IAction
         this.currentLanguage = locale;
         this.lastUpdated = Date.now();
       } catch (error) {
-        console.error('Ошибка при получении глоссария:', error);
+        handleError(error, { silent: true, context: { source: 'glossaryStore.loadTerms' } });
       } finally {
         this.isLoading = false;
       }
