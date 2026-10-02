@@ -14,7 +14,7 @@
   const countryItems = computed(() =>
     countries.map((code: string) => ({
       title: t('countries.' + code),
-      value: code,
+      value: code
     }))
   );
 </script>
@@ -22,10 +22,12 @@
 <template>
   <v-autocomplete
     :model-value="modelValue"
+    class="country-autocomplete"
     variant="solo"
     flat
     hide-details="auto"
     density="compact"
+    :placeholder="t('profile.country')"
     clearable
     :items="countryItems"
     item-title="title"
@@ -42,4 +44,11 @@
   </v-autocomplete>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+  .country-autocomplete {
+    :deep(input::placeholder) {
+      color: rgba(0,0,0,1);
+      opacity: 0.6;
+    }
+  }
+</style>

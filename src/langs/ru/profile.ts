@@ -1,4 +1,5 @@
 export const profile = {
+  country: 'Страна',
   cardTitle: 'Карта клиента',
   nbsTitle: 'Номер БС',
   nduTitle: 'Номер счета ДУ',

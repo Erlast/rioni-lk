@@ -435,7 +435,7 @@
       }
       input {
         border-radius: 8px;
-        border: 1px solid red;
+        //border: 1px solid red;
       }
     }
     :deep(input) {

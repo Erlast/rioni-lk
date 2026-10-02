@@ -3,6 +3,7 @@
   import { useDisplay } from 'vuetify';
   import { useI18n } from 'vue-i18n';
   import TariffList from '@/components/BaseComponents/TariffList.vue';
+  import BaseLoaderOverlay from '@/components/BaseComponents/BaseLoaderOverlay.vue';
   import { useAccountStore } from '@/stores/accountStore.ts';
   import { ITariffModel } from '@/api/types.ts';
   import dictionariesService from '@/api/dictionariesService.ts';
@@ -19,6 +20,7 @@
   const tariffId = ref<number | null>(null);
   const show = ref(false);
   const showResult = ref(false);
+  const loading = ref(false);
 
   const tariffs = ref<ITariffModel[]>([]);
 
@@ -30,11 +32,14 @@
 
   const saveTariff = async () => {
     try {
+      loading.value = true;
       await accountService.profileTariffSave(tariffId.value);
       await accountStore.load();
       showResult.value = true;
     } catch (error) {
       handleError(error, { silent: true, context: { source: 'tariff.save' } });
+    } finally {
+      loading.value = false;
     }
   };
 
@@ -45,8 +50,9 @@
 </script>
 
 <template>
-  <v-card :width="mobile ? 'auto' : 900">
-    <v-sheet class="modal-window">
+  <BaseLoaderOverlay v-if="loading" />
+  <v-card :width="mobile ? 'auto' : 900" class="position-relative">
+    <v-sheet class="modal-window overflow-y-auto overflow-x-hidden">
       <v-sheet>
         <v-card-title>
           <v-sheet class="modal-windows-label">

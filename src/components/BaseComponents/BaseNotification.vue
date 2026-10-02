@@ -110,11 +110,19 @@
     ignore-duplicates
   >
     <template #body="props">
-      <div :class="[...defaultClasses, 'notification-system', 'test-copy', props.item.type]">
-        <div :class="{ 'body-b1-bold': !mobile, 'body-b3-bold': mobile }">
+      <div
+        :class="[
+          ...defaultClasses,
+          'notification-system',
+          'test-copy',
+          'font-semibold',
+          props.item.type
+        ]"
+      >
+        <div>
           {{ props.item.title }}
         </div>
-        <div :class="{ 'body-b1': !mobile, 'body-b3': mobile }" v-html="props.item.text"></div>
+        <div v-html="props.item.text"></div>
         <CloseButton
           @click="
             () => {
@@ -138,11 +146,10 @@
     <template #body="props">
       <div :class="[...defaultClasses, 'session', 'test-session', props.item.type]">
         <div class="d-flex flex-column ga-4">
-          <p class="title-h3">
+          <p class="font-semibold">
             {{ props.item.title }}
           </p>
           <div
-            :class="{ 'body-b1': !mobile, 'body-b3': mobile }"
             style="color: var(--color-TypeText)"
           >
             {{ t(`notification.sessionEnd.${mobile ? 'mobileDescription' : 'description'}`) }}
@@ -184,10 +191,10 @@
         </div>
         <div :class="systemFlexColumn">
           <div
-            :class="{ 'body-b1-bold': !mobile, 'body-b3-bold': mobile }"
+            class="font-semibold"
             v-html="formatText(props.item.title)"
           />
-          <div :class="{ 'body-b1': !mobile, 'body-b3': mobile }" v-html="props.item.text"></div>
+          <div v-html="props.item.text"></div>
           <v-sheet class="position-absolute" style="right: 24px">
             <CloseButton
               @click="
@@ -213,10 +220,10 @@
   >
     <template #body="props">
       <div :class="[...defaultClasses, 'notification-system', 'test-app', props.item.type]">
-        <div :class="{ 'body-b1-bold': !mobile, 'body-b3-bold': mobile }">
+        <div class="font-semibold">
           {{ props.item.title }}
         </div>
-        <div :class="{ 'body-b1': !mobile, 'body-b3': mobile }" v-html="props.item.text"></div>
+        <div v-html="props.item.text"></div>
         <v-sheet class="position-absolute" style="right: 24px">
           <CloseButton
             @click="
@@ -297,7 +304,6 @@
   }
 
   .notification {
-    font-weight: 700;
     padding: 16px;
 
     background: white;

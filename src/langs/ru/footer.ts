@@ -1,3 +1,5 @@
+import { IGlossaryModel } from '@/api/types.ts';
+
 export const footer = {
   bigText1:
     'Общество с ограниченной ответственностью «Rioni Capital». ID 405664017. Bloomberg LEI: 254900SE3WOGKBD2RF35.',
@@ -31,6 +33,8 @@ export const footer = {
   officePeriod: '12 - Goderdzi Chokheli 1-st Turne, Tbilisi, 0159, Georgia',
   officeSubtitle: 'Обслуживание физических лиц  осуществляется только дистанционно!',
   emailTitle: 'Почта',
+  phone: 'Телефон',
+  postalAddress: 'Почтовый адрес',
   feedbackTitle: 'Есть предложения? Свяжитесь с нами',
   feedbackPlaceholder: 'Комментарий',
   feedbackSubmit: 'Отправить',
@@ -47,6 +51,12 @@ export const footer = {
     documents: 'Документы',
     career: 'Карьера',
     market: 'Рынок',
-    dxfina: 'DxFina'
+    dxfina: 'DxFina',
+    codex: 'Ценности',
+    instruments: 'Инструменты',
+    vacancies: 'Вакансии',
+    disclosures: 'Лицензии',
+    glossary: 'Словарь',
+    humor: 'Юмор'
   }
 };

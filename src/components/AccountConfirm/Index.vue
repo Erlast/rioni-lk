@@ -15,7 +15,7 @@
   <v-dialog
     v-model="accountStore.isNewAccount"
     max-width="800"
-    :height="mobile ? 'auto' : accountStore.accountConfirmStep === 3 ? 645 : 535"
+    :height="mobile ? 'auto' : accountStore.accountConfirmStep === 3 ? 665 : 535"
     :min-height="535"
   >
     <v-card class="pa-6 position-relative">

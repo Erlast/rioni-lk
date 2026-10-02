@@ -15,6 +15,7 @@ import { errors } from './errors.ts';
 import { tariffs } from './tariffs.ts';
 import { registration } from './registration.ts';
 import { accountConfirm } from './accountConfirm.ts';
+import notification from '@/modules/notification/components/Notification.vue';
 
 export const ru = {
   header,
@@ -53,5 +54,11 @@ export const ru = {
     auth_reset_password: 'Личный кабинет - Восстановление пароля',
     under_construct: 'Личный кабинет - Страница в разработке',
     auth_registration: 'Регистрация'
+  },
+  notification: {
+    sessionEnd: {
+      description: 'Ваша сессия истекла. Повторите вход.',
+      mobileDescription: 'Ваша сессия истекла. Повторите вход.'
+    }
   }
 };
