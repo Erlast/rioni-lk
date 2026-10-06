@@ -311,3 +311,9 @@ export const currencyFlags = {
   UZS: '🇺🇿',
   ZAR: '🇿🇦'
 };
+
+const localeMap: Record<string, string> = {
+  ge: 'ka-GE'
+};
+
+export const mapLocale = (locale: string) => localeMap[locale] || locale;

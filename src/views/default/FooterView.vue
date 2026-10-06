@@ -5,6 +5,25 @@
   import BigText from '@/views/default/footer/BigText.vue';
   import Links from '@/views/default/footer/Links.vue';
   import Menu from '@/views/default/footer/Menu.vue';
+  import { onMounted, watch } from 'vue';
+  import { useFooterStore } from '@/stores/footerStore.ts';
+  import i18n from '@/utils/i18n.ts';
+  import { mapLocale } from '@/utils/data.ts';
+
+  const footerStore = useFooterStore();
+
+  watch(
+    () => i18n.global.locale.value,
+    newLocale => {
+      footerStore.locale = mapLocale(newLocale);
+      footerStore.lastUpdated = null;
+      footerStore.fetchFooter()
+    }
+  );
+
+  onMounted(async () => {
+    await footerStore.fetchFooter();
+  });
 </script>
 <template>
   <v-container class="pa-0" max-width="1280">
@@ -20,7 +39,7 @@
           <v-sheet width="50%">
             <Menu />
           </v-sheet>
-          <v-sheet class="d-flex flex-column ga-4">
+          <v-sheet class="d-flex flex-column ga-4" width="50%">
             <Contacts />
 
             <Feedback />

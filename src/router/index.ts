@@ -25,6 +25,7 @@ import EducationView from '@/views/EducationView.vue';
 import { useAccountStore } from '@/stores/accountStore.ts';
 import RegistartionView from '@/views/RegistartionView.vue';
 import { handleError } from '@/utils/errorHandler';
+import TestsView from '@/modules/tests/views/View.vue';
 
 type NavigationResult = RouteLocationRaw | undefined;
 
@@ -45,7 +46,7 @@ export async function handleNavigation(
   async function loadData() {
     await dictionaryStore.fetchDictionaries();
     await glossaryStore.loadTerms();
-    await accountStore.load()
+    await accountStore.load();
   }
 
   if (isAuthenticated) {
@@ -102,6 +103,7 @@ const routes = [
   {
     path: '/auth',
     component: AuthLayout,
+    name:'authDefault',
     children: [
       {
         path: '',
@@ -126,6 +128,7 @@ const routes = [
   {
     path: '/',
     component: DefaultLayout,
+    name: 'default',
     children: [
       {
         path: '',
@@ -181,6 +184,12 @@ const routes = [
         name: 'underConstruct',
         component: UnderConstruct,
         meta: { requiresAuth: true }
+      },
+      {
+        path: 'tests',
+        name: 'tests',
+        component: TestsView,
+        meta: { requiresAuth: true }
       }
     ]
   },
@@ -202,7 +211,13 @@ router.beforeEach(async (to, from, next) => {
   const glossaryStore = useGlossaryStore();
   const accountStore = useAccountStore();
   try {
-    const result = await handleNavigation(to, authStore, dictionariesStore, glossaryStore, accountStore);
+    const result = await handleNavigation(
+      to,
+      authStore,
+      dictionariesStore,
+      glossaryStore,
+      accountStore
+    );
 
     if (result) {
       next(result);

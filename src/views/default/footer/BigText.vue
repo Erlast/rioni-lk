@@ -1,19 +1,14 @@
 <script setup lang="ts">
   import { useI18n } from 'vue-i18n';
   import dayjs from 'dayjs';
+  import { useFooterStore } from '@/stores/footerStore.ts';
 
-  const { t } = useI18n();
+  const footerStore = useFooterStore();
 </script>
 
 <template>
   <v-sheet class="mt-6 text-big" style="line-height: 1">
-    <span class="text-white font-8">
-      {{ t('footer.bigText1') }}
-      <br />
-      {{ t('footer.bigText2') }}
-      <br />
-      {{ t('footer.bigText3', { year: dayjs().year() }) }}
-    </span>
+    <span class="text-white font-8" style="white-space: pre-line">{{ footerStore.footer_text }} {{ dayjs().year() }}</span>
   </v-sheet>
 </template>
 

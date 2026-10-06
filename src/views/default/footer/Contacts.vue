@@ -1,7 +1,9 @@
 <script setup lang="ts">
   import { useI18n } from 'vue-i18n';
+  import { useFooterStore } from '@/stores/footerStore.ts';
 
   const { t } = useI18n();
+  const footerStore = useFooterStore();
 </script>
 
 <template>
@@ -9,15 +11,15 @@
     <v-sheet class="d-flex flex-column ga-2">
       <v-sheet class="text-white">
         Email:
-        <a href="mailto:clients@rioni-capital.ge">info@rioni-capital.ge</a>
+        <a href="mailto:clients@rioni-capital.ge">{{ footerStore.email }}</a>
       </v-sheet>
-      <v-sheet class="text-white">{{ t('footer.phone') }}: +995 595 43 66 55</v-sheet>
+      <v-sheet class="text-white">{{ t('footer.phone') }}: {{footerStore.phone_number}}</v-sheet>
 
       <v-sheet>
         <v-sheet class="text-white">
-          {{ t('footer.postalAddress') }}: {{ t('footer.officePeriod') }}
+          {{ t('footer.postalAddress') }}: {{ footerStore.post_address?.name }}
         </v-sheet>
-        <v-sheet class="text-type-text">{{ t('footer.officeSubtitle') }}</v-sheet>
+        <v-sheet class="text-type-text">{{ footerStore.post_address?.subtitle }}</v-sheet>
       </v-sheet>
     </v-sheet>
   </v-sheet>

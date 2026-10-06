@@ -204,7 +204,7 @@ export interface IOrderModel {
 
 export interface IContactModel {
   value: string;
-  type: 'phone' | 'email' | 'login'
+  type: 'phone' | 'email' | 'login';
 }
 
 export interface IRegistrationModel {
@@ -251,4 +251,57 @@ export interface ITariffModel {
   id: number;
   name: string;
   description: string;
+}
+
+export interface IFooterModel {
+
+    email: {
+      createdAt: string;
+      documentId: string;
+      id: number;
+      name: string;
+      publishedAt: string;
+      updatedAt: string;
+    };
+    footerMenu: FooterMenuItem[];
+    locale: string;
+    footerText: {
+      createdAt: string;
+      documentId: string;
+      id: number;
+      locale: string;
+      text: string;
+      publishedAt: string;
+      updatedAt: string;
+    };
+    phoneNumber: {
+      createdAt: string;
+      documentId: string;
+      id: number;
+      name: string;
+      publishedAt: string;
+      updatedAt: string;
+    };
+    postAddress: {
+      createdAt: string;
+      documentId: string;
+      id: number;
+      locale: string;
+      name: string;
+      publishedAt: string;
+      subtitle: string;
+      updatedAt: string;
+    };
+
+}
+
+export interface FooterMenuItem {
+  createdAt: string;
+  documentId: string;
+  id: number;
+  locale: string;
+  publishedAt: string;
+  title: string;
+  url: string;
+  updatedAt: string;
 }

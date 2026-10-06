@@ -29,6 +29,12 @@ export default defineConfig({
         target: 'http://localhost:8081',
         changeOrigin: true,
         secure: false
+      },
+      '/cms': {
+        target: 'http://localhost:1337/api',
+        changeOrigin: true,
+        secure: false,
+        rewrite: path => path.replace(/^\/cms/, '')
       }
     }
   },
