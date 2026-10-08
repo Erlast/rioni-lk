@@ -2,14 +2,14 @@ import { defineStore } from 'pinia';
 import { handleError } from '@/utils/errorHandler';
 import { INBGRatesModel, IRateModel } from '@/api/types';
 import {
-  createIntervalUpdateActions,
-  IIntervalUpdateActions,
-  IIntervalUpdateState,
-  intervalUpdateState
-} from '@/stores/intervalUpdateStore';
+  createDailyUpdateActions,
+  dailyUpdateState,
+  IDailyUpdateActions,
+  IDailyUpdateState
+} from '@/stores/dailyUpdateStore';
 import currenciesService from '@/api/currenciesService.ts';
 
-interface IState extends IIntervalUpdateState {
+interface IState extends IDailyUpdateState {
   data: INBGRatesModel;
   loading: boolean;
   error?: Error;
@@ -21,7 +21,7 @@ interface IGetters {
   [key: string]: any;
 }
 
-interface IActions extends IIntervalUpdateActions {
+interface IActions extends IDailyUpdateActions {
   load: () => Promise<void>;
   autoUpdate: () => Promise<void>;
   clearStore: () => void;
@@ -31,7 +31,7 @@ export const useCurrenciesStore = defineStore<'currencies', IState, IGetters, IA
   'currencies',
   {
     state: (): IState => ({
-      ...intervalUpdateState(),
+      ...dailyUpdateState(),
       data: {
         rates: [],
         rss_date: ''
@@ -41,7 +41,7 @@ export const useCurrenciesStore = defineStore<'currencies', IState, IGetters, IA
     }),
     persist: true,
     actions: {
-      ...createIntervalUpdateActions<'positions'>(),
+      ...createDailyUpdateActions<'currencies'>(),
       async load() {
         this.loading = true;
         try {
