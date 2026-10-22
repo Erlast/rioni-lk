@@ -22,8 +22,7 @@
 <template>
   <AccountConfirm />
   <HeaderMobileView v-if="mobile && !landscape" />
-  <HeaderView v-if="!mobile" />
-  x
+  <HeaderView v-if="!mobile" />xx
   <v-main app>
     <v-sheet class="main-wrapper">
       <v-container

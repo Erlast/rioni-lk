@@ -59,7 +59,8 @@ export const useAccountStore = defineStore<'account', IState, IGetter, IAction>(
       contacts: [],
       addresses: [],
       balance: 0,
-      tariffId: null
+      tariffId: null,
+      tariffStartDate: null
     },
     accountConfirmStep: 0
   }),

@@ -5,26 +5,13 @@ import {
   type RouteLocationRaw
 } from 'vue-router';
 import i18n from '@/utils/i18n';
-import PortfolioDefaultView from '@/modules/portfolio/views/default/View.vue';
-import PronounsDefaultView from '@/modules/pronouns/views/default/View.vue';
-import AnalyticsDefaultView from '../modules/analytics/views/default/View.vue';
-import ReportsDefaultView from '@/modules/reports/views/default/View.vue';
-import MarketDefaultView from '@/modules/market/views/default/View.vue';
-import ProfileDefaultView from '@/modules/profile/views/default/View.vue';
-import NotificationDefaultView from '@/modules/notification/views/default/View.vue';
-import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import { useDictionaryStore } from '@/stores/dictionariesStore';
 import { useAuthStore } from '@/stores/authStore';
-import AuthView from '@/views/AuthView.vue';
-import NotFoundView from '@/views/NotFoundView.vue';
-import AuthLayout from '@/layouts/AuthLayout.vue';
-import RecoveryView from '@/views/RecoveryView.vue';
 import { useGlossaryStore } from '@/stores/glossaryStore.ts';
-import UnderConstruct from '@/views/UnderConstruct.vue';
-import EducationView from '@/views/EducationView.vue';
 import { useAccountStore } from '@/stores/accountStore.ts';
-import RegistartionView from '@/views/RegistartionView.vue';
 import { handleError } from '@/utils/errorHandler';
+import { keycloak, keycloakInit } from '@/utils/keycloak.ts';
+import { routes } from '@/router/routes.ts';
 
 type NavigationResult = RouteLocationRaw | undefined;
 
@@ -39,20 +26,18 @@ export async function handleNavigation(
     return { name: 'notfound' };
   }
 
-  const isAuthenticated = authStore.isAuthenticated;
   const entryPoint = authStore.entryPoint;
 
   async function loadData() {
     await dictionaryStore.fetchDictionaries();
     await glossaryStore.loadTerms();
-    await accountStore.load()
+    await accountStore.load();
   }
 
-  if (isAuthenticated) {
+  if (keycloak.authenticated) {
     await loadData();
   }
 
-  // Установка заголовка страницы
   if (to.path) {
     let path: string;
 
@@ -80,16 +65,16 @@ export async function handleNavigation(
 
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
-  if (requiresAuth && !isAuthenticated) {
+  if (requiresAuth && !keycloak.authenticated) {
     authStore.setEntryPoint({ url: to.path, query: to.query });
     return { name: 'auth' };
   }
 
-  if (to.name === 'auth' && isAuthenticated) {
+  if (to.name === 'auth' && keycloak.authenticated) {
     return { path: '/' };
   }
 
-  if (entryPoint?.url && isAuthenticated) {
+  if (entryPoint?.url && keycloak.authenticated) {
     const { url, query } = entryPoint;
     authStore.clearEntryPoint();
     return { path: url, query };
@@ -98,101 +83,9 @@ export async function handleNavigation(
   return undefined;
 }
 
-const routes = [
-  {
-    path: '/auth',
-    component: AuthLayout,
-    children: [
-      {
-        path: '',
-        name: 'auth',
-        component: AuthView,
-        meta: { requiresAuth: false }
-      },
-      {
-        path: 'reset-password',
-        name: 'reset-password',
-        component: RecoveryView,
-        meta: { requiresAuth: false }
-      },
-      {
-        path: 'registration',
-        name: 'registration',
-        component: RegistartionView,
-        meta: { requiresAuth: false }
-      }
-    ]
-  },
-  {
-    path: '/',
-    component: DefaultLayout,
-    children: [
-      {
-        path: '',
-        name: 'portfolio',
-        component: PortfolioDefaultView,
-        meta: { requiresAuth: true }
-      },
-      {
-        path: 'pronouns',
-        name: 'pronouns',
-        component: PronounsDefaultView,
-        meta: { requiresAuth: true }
-      },
-      {
-        path: 'market',
-        name: 'market',
-        component: MarketDefaultView,
-        meta: { requiresAuth: true }
-      },
-      {
-        path: 'reports',
-        name: 'reports',
-        component: ReportsDefaultView,
-        meta: { requiresAuth: true }
-      },
-      {
-        path: 'analytics',
-        name: 'analytics',
-        component: AnalyticsDefaultView,
-        meta: { requiresAuth: true }
-      },
-      {
-        path: 'profile',
-        name: 'profile',
-        component: ProfileDefaultView,
-        meta: { requiresAuth: true }
-      },
-      {
-        path: 'notification',
-        name: 'notification',
-        component: NotificationDefaultView,
-        meta: { requiresAuth: true }
-      },
-      {
-        path: 'education',
-        name: 'education',
-        component: EducationView,
-        redirect: '/under-construct',
-        meta: { requiresAuth: true }
-      },
-      {
-        path: 'under-construct',
-        name: 'underConstruct',
-        component: UnderConstruct,
-        meta: { requiresAuth: true }
-      }
-    ]
-  },
-  {
-    path: '/:pathMatch(.*)*',
-    name: 'notfound',
-    component: NotFoundView
-  }
-];
-
 const router = createRouter({
   history: createWebHistory(),
+  // @ts-ignore
   routes
 });
 
@@ -202,7 +95,29 @@ router.beforeEach(async (to, from, next) => {
   const glossaryStore = useGlossaryStore();
   const accountStore = useAccountStore();
   try {
-    const result = await handleNavigation(to, authStore, dictionariesStore, glossaryStore, accountStore);
+    await keycloakInit;
+
+    const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+
+    if (requiresAuth && !keycloak.authenticated) {
+      const cleanRedirect = window.location.origin + to.path;
+      await keycloak.login({
+        redirectUri: cleanRedirect,
+        responseMode: 'query'
+      });
+      return next(false);
+    }
+
+    if (to.name === 'auth' && keycloak.authenticated) {
+      return next({ path: '/' });
+    }
+    const result = await handleNavigation(
+      to,
+      authStore,
+      dictionariesStore,
+      glossaryStore,
+      accountStore
+    );
 
     if (result) {
       next(result);

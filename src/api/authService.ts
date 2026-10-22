@@ -10,6 +10,7 @@ import type {
   ITokenModel
 } from '@/api/types';
 import type { AxiosResponse } from 'axios';
+import { keycloak } from '@/utils/keycloak.ts';
 
 const authService = {
   async login(credentials: ICredentialModel) {
@@ -41,13 +42,11 @@ const authService = {
   },
 
   async logout() {
-    clearStores();
-
-    return httpCommunicator.post('/auth/logout').then(() => {
-      const authStore = useAuthStore();
-      authStore.clearToken(); // Очищаем токен через Pinia
-      console.log('Logged out successfully');
+    await keycloak.logout({
+      redirectUri: window.location.origin + '/'
     });
+
+    clearStores();
   },
 
   async refreshToken() {
