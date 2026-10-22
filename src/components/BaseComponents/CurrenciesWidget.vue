@@ -18,7 +18,7 @@
   onMounted(async () => {
     await currenciesStore.load();
 
-    currenciesStore.startAutoUpdate(1500);
+    currenciesStore.startAutoUpdate(19, 0);
   });
 
   onUnmounted(() => {

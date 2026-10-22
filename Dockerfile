@@ -14,6 +14,5 @@ RUN rm -rf /usr/share/nginx/html/*
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 COPY --from=build-stage /app/public/flags /usr/share/nginx/html/flags
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY .htpasswd /etc/nginx/.htpasswd
 
 EXPOSE 80

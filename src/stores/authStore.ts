@@ -24,8 +24,6 @@ interface IState {
 }
 
 interface IGetter {
-  isAuthenticated: (s: IState) => boolean;
-  accountName: (s: IState) => string | undefined;
   [key: string]: any;
 }
 
@@ -102,15 +100,6 @@ export const useAuthStore = defineStore<'auth', IState, IGetter, IAction>('auth'
     clearRegistrationData() {
       this.registrationStep = 0;
       this.registrationData = undefined;
-    }
-  },
-  getters: {
-    isAuthenticated: state => !!state.token,
-    accountName: state => {
-      if (state.token) {
-        return jwtDecode(state.token).sub;
-      }
-      return '';
     }
   }
 });

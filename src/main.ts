@@ -26,6 +26,7 @@ import 'dayjs/locale/ru';
 import { VFileUpload, VFileUploadItem } from 'vuetify/lib/labs/components.js';
 import VueApexCharts from 'vue3-apexcharts';
 import { registerSentry, type SentryLike } from '@/utils/errorHandler';
+import { keycloak, keycloakInit } from '@/utils/keycloak.ts';
 
 // Опциональная интеграция с Sentry. Если @sentry/* ещё не установлен,
 // модуль резолвится динамически и приложение продолжает работу
@@ -55,6 +56,14 @@ async function initSentry(): Promise<void> {
 
 void initSentry();
 
+try {
+  const authenticated = await keycloakInit;
+  if (authenticated) {
+    console.log('Keycloak authenticated', keycloak.tokenParsed);
+  }
+} catch (e) {
+  console.error('Keycloak init failed', e);
+}
 const savedLocale = localStorage.getItem('user-locale') || 'ru';
 
 const allComponents = {

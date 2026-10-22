@@ -10,7 +10,6 @@
 
   const logout = async () => {
     await authService.logout();
-    await router.push('/auth');
   };
 </script>
 
