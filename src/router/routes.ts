@@ -10,11 +10,12 @@ import NotificationDefaultView from '@/modules/notification/views/default/View.v
 import UnderConstruct from '@/views/UnderConstruct.vue';
 import EducationView from '@/views/EducationView.vue';
 import NotFoundView from '@/views/NotFoundView.vue';
+import TestsView from '@/modules/tests/views/View.vue';
 
 export const routes = [
   {
     path: '/auth',
-    component: AuthLayout,
+    component: AuthLayout
   },
   {
     path: '/',
@@ -73,6 +74,12 @@ export const routes = [
         path: 'under-construct',
         name: 'underConstruct',
         component: UnderConstruct,
+        meta: { requiresAuth: true }
+      },
+      {
+        path: 'tests',
+        name: 'tests',
+        component: TestsView,
         meta: { requiresAuth: true }
       }
     ]
